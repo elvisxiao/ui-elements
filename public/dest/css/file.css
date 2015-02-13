@@ -1,0 +1,97 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 1 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFile {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* line 5 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFile input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* line 14 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFile input:hover ~ .zFileText {
+  background: #eee;
+}
+
+/* line 16 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFile .zFileText {
+  display: block;
+  padding: 3px 10px;
+  transition: all 0.3s;
+  background: #fff;
+  color: #555;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* line 25 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable {
+  min-width: 500px;
+}
+
+/* line 27 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tr {
+  height: 35px;
+}
+
+/* line 29 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tr td {
+  padding-left: 20px;
+}
+
+/* line 31 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tbody tr:nth-child(odd) {
+  background: #eee;
+}
+
+/* line 33 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable thead {
+  background: #999;
+  color: #fff;
+}
+
+/* line 36 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable thead th {
+  height: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+}
+
+/* line 41 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tfoot {
+  background: #666;
+}
+
+/* line 43 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tfoot button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  outline: none;
+}
+
+/* line 49 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable tfoot button:focus {
+  background: #eee;
+  border: 1px solid #aaa;
+}
+
+/* line 52 : /Users/elvis/code/ocui/public/css/file.styl */
+.zFileTable .zFile {
+  vertical-align: middle;
+  margin-right: 20px;
+}

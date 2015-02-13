@@ -1,0 +1,83 @@
+extends layout
+
+block content
+    .wrap
+        .boxLeft
+            p 
+                label Type: 
+                select
+                    option ticket#
+                    option ticketID
+                label Query:
+                input(type="text")
+                button(type="button") Search
+                a(href="#") [Advanced]
+            p 
+                label Status:
+                select 
+                    option All
+                    option Un-assigned
+                label Dept:
+                select 
+                    option JP
+                    option IT
+                label Reason:
+                select 
+                    option All
+                    option NAD
+                label PSize:
+                select 
+                    option 20
+                    option 15
+        .boxRight
+            div 
+                div.tagItem
+                    .tagItemHd
+                        p 
+                            label Order id:
+                            span 
+                                input(type="text")
+                                button(type="button") Auto Get 
+                            label SKU
+                            span 
+                                input(type="text")
+                                button(type="button") Add
+                        p 
+                            label.labelFst SN:
+                            span 
+                                input(type="text")
+                            label QUT:
+                            span 
+                                input(type="text")
+                    .tagItemBd
+                        ul 
+                            li
+                                p 
+                                    span
+                                        label Category:
+                                        select 
+                                            option category1
+                                            option category2
+                                        select.mr20 
+                                            option category1
+                                            option category2
+                                    span
+                                        label Priority:
+                                        select 
+                                            option normal1
+                                            option normal2
+                                p
+                                    span   
+                                        label DOA:
+                                        select 
+                                            option category1
+                                            option category2
+                                    span   
+                                        label 100%重现:
+                                        select 
+                                            option category1
+                                            option category2
+                                p 
+                                    label.vt Descripe:
+                                    textarea
+

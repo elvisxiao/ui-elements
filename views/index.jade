@@ -1,0 +1,81 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 Demo - CSV文件预览
+        p 您可以将文件拖拽，或者点击添加按钮，来开始此demo
+        div.fileViewContainer 
+        //- div.uploaderContainer UploaderTitle
+        div
+            a.mr50(href="#", onclick="setError();") 设置错误信息
+            a.mr50(href="#", onclick="clearError();") 清除错误信息
+            a#aGetModels(href="#") 获取ModelList
+        p.alert.alert-info.mt20 此控件依赖于jQuery，在使用前请先在页面引入jQuery。<br>CSV文件的编码格式须为UTF-8.
+        p 使用步骤说明：
+        ol.pb50
+            li 引入js文件，
+                a(href="/dest/oc.js", target="_blank") oc.js
+                span , 或者
+                a(href="/dest/oc.min.js", target="_blank") 压缩版 oc.min.js
+            li 引入css文件：通过传统在head中添加link标签 或者在script中添加指向css路径的“data-occss”属性 script src="/dest/oc.min.js" data-occss="/dest/oc.css"
+                | a(href="/dest/oc.css", target="_blank") oc.css
+            li new oc.FileView('.fileViewContainer');  fileViewContainer一般为一个div容器。
+            li 本页面的伪代码如下
+                pre
+                    |doctype html
+                    |html(lang="zh-CN")
+                    | head
+                    |   title Test
+                    |   script(src="/js/jquery-2.1.3.min.js")
+                    |   script(src="/dest/oc.min.js", data-occss="/dest/oc.css")
+                    |  body
+                    |   div.fileViewContainer
+                    |   
+                    |   script.
+                    |       var fileView = new oc.FileView({
+                    |            container: '.fileViewContainer',
+                    |            maxHeight: 400,
+                    |            heads: ['key1', 'key2']
+                    |        });
+                    |       //fileView.getDataList(); -- 获取modelList
+                    |       //var errorList = [
+                    |            //{row: 1, col: 4, msg: '错了就是错了'},
+                    |            //{row: 2, col: 2, msg: '错了就是错了是错了'},
+                    |            //{row: 3, col: 1, msg: '错了就是错了是错了是错了'}
+                    |        //];
+                    | 
+                    |        //fileView.mark(errorList);  -- 标记错误
+                    |        //fileView.clearMark();      -- 取消所有标记
+
+
+        span 友情链接： 
+            a(href="/uploaderDemo") 文件批量上传
+         
+
+    script.
+        var fileView = new oc.FileView({
+            container: '.fileViewContainer',
+            maxHeight: 400
+        });
+
+        function setError(){
+            var errorList = [
+                {row: 1, col: 4, msg: '错了就是错了'},
+                {row: 2, col: 2, msg: '错了就是错了是错了'},
+                {row: 3, col: 1, msg: '错了就是错了是错了是错了'}
+            ];
+
+            fileView.mark(errorList);
+            return false;
+        }
+        
+        function clearError(e){
+            fileView.clearMark();
+            return false;
+        };
+
+        $('#aGetModels').click(function(e){
+            e.preventDefault();
+            console.log(fileView.getDataList())
+        })
+       

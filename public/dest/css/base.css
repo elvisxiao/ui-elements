@@ -1,0 +1,749 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line undefined : /Users/elvis/code/ocui/public/css/base.styl */
+/*CSS rest*/
+
+/* line 2 : /Users/elvis/code/ocui/public/css/base.styl */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+/* line 9 : /Users/elvis/code/ocui/public/css/base.styl */
+.f12 {
+  font-size: 12px;
+}
+
+/* line 11 : /Users/elvis/code/ocui/public/css/base.styl */
+.f14 {
+  font-size: 14px;
+}
+
+/* line 13 : /Users/elvis/code/ocui/public/css/base.styl */
+.f16 {
+  font-size: 16px;
+}
+
+/* line 15 : /Users/elvis/code/ocui/public/css/base.styl */
+.f18 {
+  font-size: 18px;
+}
+
+/* line 17 : /Users/elvis/code/ocui/public/css/base.styl */
+.f20 {
+  font-size: 20px;
+}
+
+/* line 19 : /Users/elvis/code/ocui/public/css/base.styl */
+.f22 {
+  font-size: 22px;
+}
+
+/* line 21 : /Users/elvis/code/ocui/public/css/base.styl */
+.f24 {
+  font-size: 24px;
+}
+
+/* line 23 : /Users/elvis/code/ocui/public/css/base.styl */
+.f26 {
+  font-size: 26px;
+}
+
+/* line 25 : /Users/elvis/code/ocui/public/css/base.styl */
+.f28 {
+  font-size: 28px;
+}
+
+/* line 27 : /Users/elvis/code/ocui/public/css/base.styl */
+.f30 {
+  font-size: 30px;
+}
+
+/* line 29 : /Users/elvis/code/ocui/public/css/base.styl */
+.f40 {
+  font-size: 40px;
+}
+
+/* line 31 : /Users/elvis/code/ocui/public/css/base.styl */
+.fb {
+  font-weight: bold;
+}
+
+/* line 33 : /Users/elvis/code/ocui/public/css/base.styl */
+.fn {
+  font-weight: normal;
+}
+
+/* line 35 : /Users/elvis/code/ocui/public/css/base.styl */
+.t2 {
+  text-indent: 2em;
+}
+
+/* line 37 : /Users/elvis/code/ocui/public/css/base.styl */
+.lh100 {
+  line-height: 1em;
+}
+
+/* line 39 : /Users/elvis/code/ocui/public/css/base.styl */
+.lh150 {
+  line-height: 1.5em;
+}
+
+/* line 41 : /Users/elvis/code/ocui/public/css/base.styl */
+.lh200 {
+  line-height: 2em;
+}
+
+/* line 43 : /Users/elvis/code/ocui/public/css/base.styl */
+.lh250 {
+  line-height: 2.5em;
+}
+
+/* line 45 : /Users/elvis/code/ocui/public/css/base.styl */
+.lh300 {
+  line-height: 3em;
+}
+
+/* line 47 : /Users/elvis/code/ocui/public/css/base.styl */
+.unl {
+  text-decoration: underline;
+}
+
+/* line 49 : /Users/elvis/code/ocui/public/css/base.styl */
+.no-unl {
+  text-decoration: none;
+}
+
+/* line 52 : /Users/elvis/code/ocui/public/css/base.styl */
+/*定位*/
+
+/* line 53 : /Users/elvis/code/ocui/public/css/base.styl */
+.tl {
+  text-align: left;
+}
+
+/* line 55 : /Users/elvis/code/ocui/public/css/base.styl */
+.tc {
+  text-align: center;
+}
+
+/* line 57 : /Users/elvis/code/ocui/public/css/base.styl */
+.tr {
+  text-align: right;
+}
+
+/* line 59 : /Users/elvis/code/ocui/public/css/base.styl */
+.bc {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 62 : /Users/elvis/code/ocui/public/css/base.styl */
+.fl {
+  float: left;
+  display: inline;
+  overflow: hidden;
+  *zoom: 1;
+}
+
+/* line 67 : /Users/elvis/code/ocui/public/css/base.styl */
+.fr {
+  float: right;
+  display: inline;
+  overflow: hidden;
+  *zoom: 1;
+}
+
+/* line 72 : /Users/elvis/code/ocui/public/css/base.styl */
+.cb {
+  clear: both;
+}
+
+/* line 74 : /Users/elvis/code/ocui/public/css/base.styl */
+.cl {
+  clear: left;
+}
+
+/* line 76 : /Users/elvis/code/ocui/public/css/base.styl */
+.cr {
+  clear: right;
+}
+
+/* line 78 : /Users/elvis/code/ocui/public/css/base.styl */
+.clearfix:before,
+.clearfix:after {
+  content: '';
+  line-height: 0;
+  display: table;
+}
+
+/* line 82 : /Users/elvis/code/ocui/public/css/base.styl */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 84 : /Users/elvis/code/ocui/public/css/base.styl */
+*
+
+/* line 86 : /Users/elvis/code/ocui/public/css/base.styl */
+.vm {
+  vertical-align: middle;
+}
+
+/* line 88 : /Users/elvis/code/ocui/public/css/base.styl */
+.vt {
+  vertical-align: top;
+}
+
+/* line 90 : /Users/elvis/code/ocui/public/css/base.styl */
+.vb {
+  vertical-align: bottom;
+}
+
+/* line 92 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr {
+  position: relative;
+}
+
+/* line 94 : /Users/elvis/code/ocui/public/css/base.styl */
+.pa {
+  position: absolute;
+}
+
+/* line 96 : /Users/elvis/code/ocui/public/css/base.styl */
+.abs-right {
+  position: absolute;
+  right: 0;
+}
+
+/* line 99 : /Users/elvis/code/ocui/public/css/base.styl */
+.zoom {
+  zoom: 1;
+}
+
+/* line 101 : /Users/elvis/code/ocui/public/css/base.styl */
+.hidden {
+  visibility: hidden;
+}
+
+/* line 103 : /Users/elvis/code/ocui/public/css/base.styl */
+.none {
+  display: none;
+}
+
+/* line 105 : /Users/elvis/code/ocui/public/css/base.styl */
+.of {
+  overflow: hidden;
+}
+
+/* line 108 : /Users/elvis/code/ocui/public/css/base.styl */
+/*高度长度*/
+
+/* line 109 : /Users/elvis/code/ocui/public/css/base.styl */
+.w10 {
+  width: 10px;
+}
+
+/* line 111 : /Users/elvis/code/ocui/public/css/base.styl */
+.w20 {
+  width: 20px;
+}
+
+/* line 113 : /Users/elvis/code/ocui/public/css/base.styl */
+.w30 {
+  width: 30px;
+}
+
+/* line 115 : /Users/elvis/code/ocui/public/css/base.styl */
+.w40 {
+  width: 40px;
+}
+
+/* line 117 : /Users/elvis/code/ocui/public/css/base.styl */
+.w50 {
+  width: 50px;
+}
+
+/* line 119 : /Users/elvis/code/ocui/public/css/base.styl */
+.w60 {
+  width: 60px;
+}
+
+/* line 121 : /Users/elvis/code/ocui/public/css/base.styl */
+.w70 {
+  width: 70px;
+}
+
+/* line 123 : /Users/elvis/code/ocui/public/css/base.styl */
+.w80 {
+  width: 80px;
+}
+
+/* line 125 : /Users/elvis/code/ocui/public/css/base.styl */
+.w90 {
+  width: 90px;
+}
+
+/* line 127 : /Users/elvis/code/ocui/public/css/base.styl */
+.w100 {
+  width: 100px;
+}
+
+/* line 129 : /Users/elvis/code/ocui/public/css/base.styl */
+.w150 {
+  width: 150px;
+}
+
+/* line 131 : /Users/elvis/code/ocui/public/css/base.styl */
+.w200 {
+  width: 200px;
+}
+
+/* line 133 : /Users/elvis/code/ocui/public/css/base.styl */
+.w250 {
+  width: 250px;
+}
+
+/* line 135 : /Users/elvis/code/ocui/public/css/base.styl */
+.w300 {
+  width: 300px;
+}
+
+/* line 137 : /Users/elvis/code/ocui/public/css/base.styl */
+.w400 {
+  width: 400px;
+}
+
+/* line 139 : /Users/elvis/code/ocui/public/css/base.styl */
+.w500 {
+  width: 500px;
+}
+
+/* line 141 : /Users/elvis/code/ocui/public/css/base.styl */
+.w600 {
+  width: 600px;
+}
+
+/* line 143 : /Users/elvis/code/ocui/public/css/base.styl */
+.w700 {
+  width: 700px;
+}
+
+/* line 145 : /Users/elvis/code/ocui/public/css/base.styl */
+.w800 {
+  width: 800px;
+}
+
+/* line 147 : /Users/elvis/code/ocui/public/css/base.styl */
+.w {
+  width: 100%;
+}
+
+/* line 150 : /Users/elvis/code/ocui/public/css/base.styl */
+.h50 {
+  height: 50px;
+}
+
+/* line 152 : /Users/elvis/code/ocui/public/css/base.styl */
+.h100 {
+  height: 100px;
+}
+
+/* line 154 : /Users/elvis/code/ocui/public/css/base.styl */
+.h200 {
+  height: 200px;
+}
+
+/* line 156 : /Users/elvis/code/ocui/public/css/base.styl */
+.h300 {
+  height: 300px;
+}
+
+/* line 158 : /Users/elvis/code/ocui/public/css/base.styl */
+.h500 {
+  height: 500px;
+}
+
+/* line 160 : /Users/elvis/code/ocui/public/css/base.styl */
+.h {
+  height: 100%;
+}
+
+/* line 163 : /Users/elvis/code/ocui/public/css/base.styl */
+/*边距*/
+
+/* line 164 : /Users/elvis/code/ocui/public/css/base.styl */
+.m10 {
+  margin: 10px;
+}
+
+/* line 166 : /Users/elvis/code/ocui/public/css/base.styl */
+.m15 {
+  margin: 15px;
+}
+
+/* line 168 : /Users/elvis/code/ocui/public/css/base.styl */
+.m20 {
+  margin: 20px;
+}
+
+/* line 170 : /Users/elvis/code/ocui/public/css/base.styl */
+.m25 {
+  margin: 25px;
+}
+
+/* line 172 : /Users/elvis/code/ocui/public/css/base.styl */
+.m30 {
+  margin: 30px;
+}
+
+/* line 175 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt5 {
+  margin-top: 5px;
+}
+
+/* line 177 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt10 {
+  margin-top: 10px;
+}
+
+/* line 179 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt15 {
+  margin-top: 15px;
+}
+
+/* line 181 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt20 {
+  margin-top: 20px;
+}
+
+/* line 183 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt30 {
+  margin-top: 30px;
+}
+
+/* line 185 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt40 {
+  margin-top: 40px;
+}
+
+/* line 187 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt50 {
+  margin-top: 50px;
+}
+
+/* line 189 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt70 {
+  margin-top: 70px;
+}
+
+/* line 191 : /Users/elvis/code/ocui/public/css/base.styl */
+.mt100 {
+  margin-top: 100px;
+}
+
+/* line 194 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb5 {
+  margin-bottom: 5px;
+}
+
+/* line 196 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb10 {
+  margin-bottom: 10px;
+}
+
+/* line 198 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb15 {
+  margin-bottom: 15px;
+}
+
+/* line 200 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb20 {
+  margin-bottom: 20px;
+}
+
+/* line 202 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb30 {
+  margin-bottom: 30px;
+}
+
+/* line 204 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb50 {
+  margin-bottom: 50px;
+}
+
+/* line 206 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb70 {
+  margin-bottom: 70px;
+}
+
+/* line 208 : /Users/elvis/code/ocui/public/css/base.styl */
+.mb100 {
+  margin-bottom: 100px;
+}
+
+/* line 211 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml5 {
+  margin-left: 5px;
+}
+
+/* line 213 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml10 {
+  margin-left: 10px;
+}
+
+/* line 215 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml15 {
+  margin-left: 15px;
+}
+
+/* line 217 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml20 {
+  margin-left: 20px;
+}
+
+/* line 219 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml30 {
+  margin-left: 30px;
+}
+
+/* line 221 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml40 {
+  margin-left: 40px;
+}
+
+/* line 223 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml50 {
+  margin-left: 50px;
+}
+
+/* line 225 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml70 {
+  margin-left: 70px;
+}
+
+/* line 227 : /Users/elvis/code/ocui/public/css/base.styl */
+.ml100 {
+  margin-left: 100px;
+}
+
+/* line 230 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr5 {
+  margin-right: 5px;
+}
+
+/* line 232 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr10 {
+  margin-right: 10px;
+}
+
+/* line 234 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr15 {
+  margin-right: 15px;
+}
+
+/* line 236 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr20 {
+  margin-right: 20px;
+}
+
+/* line 238 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr30 {
+  margin-right: 30px;
+}
+
+/* line 240 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr50 {
+  margin-right: 50px;
+}
+
+/* line 242 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr70 {
+  margin-right: 50px;
+}
+
+/* line 244 : /Users/elvis/code/ocui/public/css/base.styl */
+.mr100 {
+  margin-right: 100px;
+}
+
+/* line 247 : /Users/elvis/code/ocui/public/css/base.styl */
+.p5 {
+  padding: 5px;
+}
+
+/* line 249 : /Users/elvis/code/ocui/public/css/base.styl */
+.p10 {
+  padding: 10px;
+}
+
+/* line 251 : /Users/elvis/code/ocui/public/css/base.styl */
+.p15 {
+  padding: 15px;
+}
+
+/* line 253 : /Users/elvis/code/ocui/public/css/base.styl */
+.p20 {
+  padding: 20px;
+}
+
+/* line 255 : /Users/elvis/code/ocui/public/css/base.styl */
+.p30 {
+  padding: 30px;
+}
+
+/* line 257 : /Users/elvis/code/ocui/public/css/base.styl */
+.p50 {
+  padding: 50px;
+}
+
+/* line 261 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt5 {
+  padding-top: 5px;
+}
+
+/* line 263 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt10 {
+  padding-top: 10px;
+}
+
+/* line 265 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt15 {
+  padding-top: 15px;
+}
+
+/* line 267 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt20 {
+  padding-top: 20px;
+}
+
+/* line 269 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt30 {
+  padding-top: 30px;
+}
+
+/* line 271 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt50 {
+  padding-top: 50px;
+}
+
+/* line 273 : /Users/elvis/code/ocui/public/css/base.styl */
+.pt70 {
+  padding-top: 70px;
+}
+
+/* line 276 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb5 {
+  padding-bottom: 5px;
+}
+
+/* line 278 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb10 {
+  padding-bottom: 10px;
+}
+
+/* line 280 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb15 {
+  padding-bottom: 15px;
+}
+
+/* line 282 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb20 {
+  padding-bottom: 20px;
+}
+
+/* line 284 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb30 {
+  padding-bottom: 30px;
+}
+
+/* line 286 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb50 {
+  padding-bottom: 50px;
+}
+
+/* line 288 : /Users/elvis/code/ocui/public/css/base.styl */
+.pb70 {
+  padding-bottom: 70px;
+}
+
+/* line 291 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl5 {
+  padding-left: 5px;
+}
+
+/* line 293 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl10 {
+  padding-left: 10px;
+}
+
+/* line 295 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl15 {
+  padding-left: 15px;
+}
+
+/* line 297 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl20 {
+  padding-left: 20px;
+}
+
+/* line 299 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl30 {
+  padding-left: 30px;
+}
+
+/* line 301 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl50 {
+  padding-left: 50px;
+}
+
+/* line 303 : /Users/elvis/code/ocui/public/css/base.styl */
+.pl70 {
+  padding-left: 70px;
+}
+
+/* line 306 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr5 {
+  padding-right: 5px;
+}
+
+/* line 308 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr10 {
+  padding-right: 10px;
+}
+
+/* line 310 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr15 {
+  padding-right: 15px;
+}
+
+/* line 312 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr20 {
+  padding-right: 20px;
+}
+
+/* line 314 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr30 {
+  padding-right: 30px;
+}
+
+/* line 316 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr50 {
+  padding-right: 50px;
+}
+
+/* line 318 : /Users/elvis/code/ocui/public/css/base.styl */
+.pr70 {
+  padding-right: 70px;
+}
+
+/* line 321 : /Users/elvis/code/ocui/public/css/base.styl */
+.last {
+  margin-right: 0 !important;
+  border-right: 0 !important;
+}
