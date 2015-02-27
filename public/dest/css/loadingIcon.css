@@ -1,9 +1,9 @@
 
-/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 1 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 
-/* line 7 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 7 : /Users/elvis/bitbucket/ocui/public/css/loadingIcon.styl */
 @-webkit-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -14,7 +14,7 @@
   }
 }
 
-/* line 11 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 11 : /Users/elvis/bitbucket/ocui/public/css/loadingIcon.styl */
 @-moz-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -25,7 +25,7 @@
   }
 }
 
-/* line 15 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 15 : /Users/elvis/bitbucket/ocui/public/css/loadingIcon.styl */
 @-o-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -36,11 +36,11 @@
   }
 }
 
-/* line 19 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 19 : /Users/elvis/bitbucket/ocui/public/css/loadingIcon.styl */
 .zLoadingIcon {
   font-family: 'icomoon';
   font-size: 25px;
-  display: block;
+  display: inline-block;
   color: #aaa;
   vertical-align: middle;
   -webkit-animation: zLoading 2s linear infinite normal;
@@ -58,12 +58,12 @@
   font-smoothing: antialiased;
 }
 
-/* line 32 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 32 : /Users/elvis/bitbucket/ocui/public/css/loadingIcon.styl */
 .zLoadingIcon:before {
   content: "\e982";
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 3 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 @-moz-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -74,7 +74,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 3 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 @-webkit-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -85,7 +85,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 3 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 @-o-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -96,7 +96,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 3 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 @-ms-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -107,7 +107,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 3 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
 @keyframes zLoading {
   0% {
     transform: rotate(0deg);
