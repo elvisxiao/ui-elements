@@ -1,0 +1,125 @@
+
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 2 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  position: relative;
+  width: 82px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+/* line 13 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn input {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* line 23 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn i {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  top: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn i:before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  position: absolute;
+  top: 4px;
+}
+
+/* line 51 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.zToggleBtnSm {
+  height: 24px;
+  line-height: 24px;
+  width: 58px;
+}
+
+/* line 56 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.zToggleBtnSm i:before {
+  width: 18px;
+  height: 18px;
+top3px
+}
+
+/* line 62 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.zToggleBtnSm .zToggleBtnOFF {
+  padding-left: 28px;
+}
+
+/* line 65 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.zToggleBtnSm .zToggleBtnON {
+  padding-left: 15px;
+}
+
+/* line 69 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn .zToggleBtnON {
+  left: -100%;
+  background: #34495e;
+  color: #1abc9c;
+  padding-left: 25px;
+  font-style: normal;
+}
+
+/* line 76 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn .zToggleBtnON:before {
+  background: #1abc9c;
+  right: 5px;
+}
+
+/* line 80 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn .zToggleBtnOFF {
+  left: 0;
+  background: #cbd2d8;
+  color: #fff;
+  padding-left: 35px;
+  font-style: normal;
+}
+
+/* line 87 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn .zToggleBtnOFF:before {
+  background: #7f8b97;
+  left: 5px;
+}
+
+/* line 91 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.active .zToggleBtnON {
+  left: 0;
+}
+
+/* line 94 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+.zToggleBtn.active .zToggleBtnOFF {
+  left: 100%;
+}

@@ -655,6 +655,9 @@ var Tree = function(options){
 	}
 
 	self._renderRecusive = function(dataList, ele, level){
+		if(!dataList){
+			return;
+		}
 		var len = dataList.length;
 		if(len > 0){
 			ele.addClass('hasMore');
@@ -800,6 +803,7 @@ var TreeSelect = function(options){
 	this.selectedList = null;
 	this.ele = null;
 	this.filterParams = {};
+	this.valueChangeHanlder = null;
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -867,6 +871,8 @@ var TreeSelect = function(options){
 			if(p.html() === 'All'){
 				self.ele.find('input').val('All');
 			}
+			
+			self.valueChangeHanlder && self.valueChangeHanlder();
 		})
 		.on('input', 'input', function(){
 			self._clear();
@@ -997,14 +1003,32 @@ module.exports = TreeSelect;
 },{}],8:[function(require,module,exports){
 var UI = {};
 
-UI.toggleBtn = function(){
-    $('.zToggleBtn').each(function(){
-        var ele = $(this).removeClass('zToggleBtn');
-        var span = $('<span class="zToggleBtn"><i class="zToggleBtnON">ON</i><i class="zToggleBtnOFF">OFF</i>' +  ele[0].outerHTML + '</span>');
-        ele.replaceWith(span);
+UI.toggleBtn = function(on, off){
+    if(on === undefined){
+        on = 'ON';
+        off = 'OFF';
+    }
+    var self = this;
+    $('.zToggleBtn, .zToggleBtnSm').each(function(){
+        var ele = $(this);
+        self.toggleOneBtn(ele, on, off);
     })
+},
 
-    $('.zToggleBtn').off('change', 'input').on('change', 'input', function(){
+UI.toggleOneBtn = function(btn, on, off){
+    console.log('eee')
+    var btnClass = 'zToggleBtn';
+    btn.removeClass('zToggleBtn');
+    if(btn.hasClass('zToggleBtnSm')){
+        btn.removeClass('zToggleBtnSm');
+        btnClass += ' zToggleBtnSm';
+    }
+
+    var span = $('<span class="' + btnClass + '"><i class="zToggleBtnON">' + on + '</i><i class="zToggleBtnOFF">' + off + '</i>' +  btn[0].outerHTML + '</span>');
+    btn.replaceWith(span);
+    
+    span.off('change', 'input').on('change', 'input', function(){
+        console.log('333');
         if(this.checked){
             $(this).parents('.zToggleBtn:eq(0)').addClass('active');
         }
@@ -1024,6 +1048,7 @@ UI.autoComplete = function(ele, array, cb){
     }
     ele.off('keyup').off('keydown').off('blur');
     ele.on('keydown', function(e){
+        console.log('keydow');
         if(e.keyCode === 13){
             event.preventDefault();
             return false;
@@ -1031,17 +1056,45 @@ UI.autoComplete = function(ele, array, cb){
     })
     ele.on('keyup', function(e){
         var ipt = $(this);
+        var ul = ipt.next('ul.zAutoComplete');
 
-        if(e.keyCode === 13){
-            var val = $('.zAutoComplete li.active').html();
-            if(val){
-                ipt.val(val);
-                $('.zAutoComplete').remove();
+        if(e.keyCode === 40){
+            var focusLi = ul.find('li.active');
+            if(focusLi.length === 0){
+                ul.find('li:eq(0)').addClass('active');
+            }
+            else{
+                var nextLi = focusLi.next('li');
+                if(nextLi.length > 0){
+                    nextLi.addClass('active');
+                    focusLi.removeClass('active');
+                }
             }
 
-            event.preventDefault();
+            return;
+        }
+        if(e.keyCode === 38){
+            var focusLi = ul.find('li.active');
+            if(focusLi.length === 0){
+                return;
+            }
+            
+            var prevLi = focusLi.prev('li');
+            if(prevLi.length > 0){
+                prevLi.addClass('active');
+                focusLi.removeClass('active');
+            }
 
-            return false;
+            return;
+        }
+
+        if(e.keyCode === 13){
+            var focusLi = ul.find('li.active');
+            if(focusLi.length > 0){
+                ipt.val(focusLi.html());
+                ul.remove();
+            }
+            return;
         }
         
         var source = array;
@@ -1080,25 +1133,26 @@ UI.autoComplete = function(ele, array, cb){
 
         var ul = $('<ul class="zAutoComplete"></ul>');
         for(var i = 0; i < len; i++){
-            ul.append('<li>' + matchedArray[i] + '</li>');
+            ul.append('<li tabindex="0">' + matchedArray[i] + '</li>');
         }
-        var top = ipt.offset().top + ipt.outerHeight();
-        var left = ipt.offset().left;
+        var top = ipt.position().top + ipt.outerHeight();
+        var left = ipt.position().left;
         ul.css({top: top, left: left}).on('click', 'li', function(){
             var slc = $(this).html();
             ipt.val(slc);
             $('.zAutoComplete').remove();
             cb && cb(slc);
-        }).on('mouseenter', 'li', function(){
+        })
+        .on('mouseenter', 'li', function(){
             ul.find('.active').removeClass('active');
             $(this).addClass('active');
-        });
+        })
         
         ipt.after(ul);
 
     }).on('blur', function(){
         setTimeout(function(){
-            $('.zAutoComplete').remove();
+            // $('.zAutoComplete').remove();
         }, 200);
     });
 }

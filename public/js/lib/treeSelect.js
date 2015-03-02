@@ -12,6 +12,7 @@ var TreeSelect = function(options){
 	this.selectedList = null;
 	this.ele = null;
 	this.filterParams = {};
+	this.valueChangeHanlder = null;
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -79,6 +80,8 @@ var TreeSelect = function(options){
 			if(p.html() === 'All'){
 				self.ele.find('input').val('All');
 			}
+			
+			self.valueChangeHanlder && self.valueChangeHanlder();
 		})
 		.on('input', 'input', function(){
 			self._clear();

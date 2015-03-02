@@ -26,6 +26,9 @@ var Tree = function(options){
 	}
 
 	self._renderRecusive = function(dataList, ele, level){
+		if(!dataList){
+			return;
+		}
 		var len = dataList.length;
 		if(len > 0){
 			ele.addClass('hasMore');
