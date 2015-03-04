@@ -1062,7 +1062,9 @@ UI.toggleOneBtn = function(btn, on, off){
         btn.removeClass('zToggleBtnSm');
         btnClass += ' zToggleBtnSm';
     }
-
+    if(btn.checked){
+        btnClass += ' active';
+    }
     var span = $('<span class="' + btnClass + '"><i class="zToggleBtnON">' + on + '</i><i class="zToggleBtnOFF">' + off + '</i>' +  btn[0].outerHTML + '</span>');
     btn.replaceWith(span);
     
