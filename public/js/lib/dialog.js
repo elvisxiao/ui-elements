@@ -1,7 +1,15 @@
 var Dialog = {};
 
-Dialog.tips = function(msg, time, cb){
+Dialog.removeMadal = function(){
     this.removeAllTips();
+    this.close();
+},
+
+Dialog.removeAllTips = function(){
+    $(".zLoading, .tips").remove();
+},
+
+Dialog.tips = function(msg, time, cb){
     if(time === undefined){
         time = 1500;
     }
@@ -16,7 +24,7 @@ Dialog.tips = function(msg, time, cb){
 }
 
 Dialog.loading = function(msg){
-    this.removeAllTips();
+    this.removeMadal();
     var loading = $('<div class="zLoading"></div><div class="tips">' + msg + '</div>');
     loading.appendTo('body');
     var width = $(".tips").width();
@@ -24,24 +32,30 @@ Dialog.loading = function(msg){
 
     return loading;
 }
-       
-Dialog.confirm = function(msg, cbOK, cbNO){
-    this.removeMadal();
+
+Dialog.confirm = function(msg, cbOK, cbNO, required){
     var confirm = $('<div class="zLoading"></div><div class="tips confirm w500">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
-        var ipt = confirm.find('input');
+        var ipt = confirm.find('input, textarea');
         var val = '';
         if(ipt.length > 0){
             val = ipt.val();
         }
-        confirm.remove();
+        
         if($(this).hasClass('btnOK')){
+            if(required === true && ipt.length > 0 && (!val) ){
+                Dialog.tips('message is required.');
+                ipt.focus();
+                return;
+            }
             cbOK && cbOK(val);
         }
         else{
             cbNO && cbNO(val);
         }
-    }).on('click', 'input', function(){
+
+        confirm.remove();
+    }).on('click', 'input, textarea', function(){
         confirm.removeClass('has-error');
     });
 
@@ -52,7 +66,7 @@ Dialog.confirm = function(msg, cbOK, cbNO){
 }
 
 Dialog.open = function(title, content){
-    this.removeAllTips();
+    this.removeMadal();
     if(!content){
         content = title;
         title = '';

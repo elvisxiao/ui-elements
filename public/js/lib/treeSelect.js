@@ -152,34 +152,60 @@ var TreeSelect = function(options){
 
 	//采取模糊匹配....
 	self.filter = function(){
-		self.ele.find('li.zTreeSelectItem').hide().each(function(){
-			var li = $(this);
-			var item = li.data();
-			var vali = true;
-			for(var key in self.filterParams){
-				var val = self.filterParams[key];
-				if(!val){
-					continue;
-				}
-				val = val.toUpperCase();
-				var realVal = item[key];
-				if(!realVal){
-					vali = false;
-					break;
-				}
-				realVal = realVal.toString().toUpperCase();
-				if(realVal.indexOf(val) === -1){
-					vali = false;
-					break;
-				}
-			}
+        self.ele.find('li.zTreeSelectItem').removeClass('hidden').show();
+        if(!self.filterParams){
+            return;
+        }
+        if(self.filterParams && self.filterParams.description){
+            self.ele.find('li.zTreeSelectItem[data-level="1"]').addClass('hidden').each(function(){
+                var li = $(this);
+                var item = li.data();
+                if(!item.description || item.description.indexOf(self.filterParams.description) !== -1){
+                    li.removeClass('hidden');
+                }
+            })
+        }
+        if(self.filterParams.name){
+            self.ele.find('li.zTreeSelectItem:visible').hide().each(function(){
+                var li = $(this);
+                var item = li.data();
+                if(item.name.indexOf(self.filterParams.name) > -1){
+                    li.show();
+                    li.find('li').show();
+                    li.parents('li.zTreeSelectItem').show();
+                }
+            })
+        }
+    }
+	// self.filter = function(){
+	// 	self.ele.find('li.zTreeSelectItem').hide().each(function(){
+	// 		var li = $(this);
+	// 		var item = li.data();
+	// 		var vali = true;
+	// 		for(var key in self.filterParams){
+	// 			var val = self.filterParams[key];
+	// 			if(!val){
+	// 				continue;
+	// 			}
+	// 			val = val.toUpperCase();
+	// 			var realVal = item[key];
+	// 			if(!realVal){
+	// 				vali = false;
+	// 				break;
+	// 			}
+	// 			realVal = realVal.toString().toUpperCase();
+	// 			if(realVal.indexOf(val) === -1){
+	// 				vali = false;
+	// 				break;
+	// 			}
+	// 		}
 
-			if(vali === true){
-				li.show();
-				li.parents('li.zTreeSelectItem').show();
-			}
-		})
-	}
+	// 		if(vali === true){
+	// 			li.show();
+	// 			li.parents('li.zTreeSelectItem').show();
+	// 		}
+	// 	})
+	// }
 
 	self._renderRecusive = function(dataList, ele, level){
 		var len = dataList.length;
@@ -187,12 +213,12 @@ var TreeSelect = function(options){
 		if(level === 0){
 			ul.css('max-height', self.config.height);
 			if(self.config.showAll){
-				$('<li class="zTreeSelectItem"><p data-level="0" style="padding-left:10px">All</p></li>').appendTo(ul);
+				$('<li class="zTreeSelectItem" data-level="0"><p style="padding-left:10px">All</p></li>').appendTo(ul);
 			}
 		}
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			var li = $('<li class="zTreeSelectItem"><p data-level="' + level + '" style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
+			var li = $('<li class="zTreeSelectItem" data-level="' + level + '"><p style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
 				self._renderRecusive(one.items, li, level + 1);

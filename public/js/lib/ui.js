@@ -13,7 +13,6 @@ UI.toggleBtn = function(on, off){
 },
 
 UI.toggleOneBtn = function(btn, on, off){
-    console.log('eee')
     var btnClass = 'zToggleBtn';
     btn.removeClass('zToggleBtn');
     if(btn.hasClass('zToggleBtnSm')){

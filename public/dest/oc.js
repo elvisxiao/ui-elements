@@ -256,8 +256,16 @@
 },{}],2:[function(require,module,exports){
 var Dialog = {};
 
-Dialog.tips = function(msg, time, cb){
+Dialog.removeMadal = function(){
     this.removeAllTips();
+    this.close();
+},
+
+Dialog.removeAllTips = function(){
+    $(".zLoading, .tips").remove();
+},
+
+Dialog.tips = function(msg, time, cb){
     if(time === undefined){
         time = 1500;
     }
@@ -272,7 +280,7 @@ Dialog.tips = function(msg, time, cb){
 }
 
 Dialog.loading = function(msg){
-    this.removeAllTips();
+    this.removeMadal();
     var loading = $('<div class="zLoading"></div><div class="tips">' + msg + '</div>');
     loading.appendTo('body');
     var width = $(".tips").width();
@@ -280,24 +288,30 @@ Dialog.loading = function(msg){
 
     return loading;
 }
-       
-Dialog.confirm = function(msg, cbOK, cbNO){
-    this.removeMadal();
+
+Dialog.confirm = function(msg, cbOK, cbNO, required){
     var confirm = $('<div class="zLoading"></div><div class="tips confirm w500">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
-        var ipt = confirm.find('input');
+        var ipt = confirm.find('input, textarea');
         var val = '';
         if(ipt.length > 0){
             val = ipt.val();
         }
-        confirm.remove();
+        
         if($(this).hasClass('btnOK')){
+            if(required === true && ipt.length > 0 && (!val) ){
+                Dialog.tips('message is required.');
+                ipt.focus();
+                return;
+            }
             cbOK && cbOK(val);
         }
         else{
             cbNO && cbNO(val);
         }
-    }).on('click', 'input', function(){
+
+        confirm.remove();
+    }).on('click', 'input, textarea', function(){
         confirm.removeClass('has-error');
     });
 
@@ -308,7 +322,7 @@ Dialog.confirm = function(msg, cbOK, cbNO){
 }
 
 Dialog.open = function(title, content){
-    this.removeAllTips();
+    this.removeMadal();
     if(!content){
         content = title;
         title = '';
@@ -943,34 +957,60 @@ var TreeSelect = function(options){
 
 	//采取模糊匹配....
 	self.filter = function(){
-		self.ele.find('li.zTreeSelectItem').hide().each(function(){
-			var li = $(this);
-			var item = li.data();
-			var vali = true;
-			for(var key in self.filterParams){
-				var val = self.filterParams[key];
-				if(!val){
-					continue;
-				}
-				val = val.toUpperCase();
-				var realVal = item[key];
-				if(!realVal){
-					vali = false;
-					break;
-				}
-				realVal = realVal.toString().toUpperCase();
-				if(realVal.indexOf(val) === -1){
-					vali = false;
-					break;
-				}
-			}
+        self.ele.find('li.zTreeSelectItem').removeClass('hidden').show();
+        if(!self.filterParams){
+            return;
+        }
+        if(self.filterParams && self.filterParams.description){
+            self.ele.find('li.zTreeSelectItem[data-level="1"]').addClass('hidden').each(function(){
+                var li = $(this);
+                var item = li.data();
+                if(!item.description || item.description.indexOf(self.filterParams.description) !== -1){
+                    li.removeClass('hidden');
+                }
+            })
+        }
+        if(self.filterParams.name){
+            self.ele.find('li.zTreeSelectItem:visible').hide().each(function(){
+                var li = $(this);
+                var item = li.data();
+                if(item.name.indexOf(self.filterParams.name) > -1){
+                    li.show();
+                    li.find('li').show();
+                    li.parents('li.zTreeSelectItem').show();
+                }
+            })
+        }
+    }
+	// self.filter = function(){
+	// 	self.ele.find('li.zTreeSelectItem').hide().each(function(){
+	// 		var li = $(this);
+	// 		var item = li.data();
+	// 		var vali = true;
+	// 		for(var key in self.filterParams){
+	// 			var val = self.filterParams[key];
+	// 			if(!val){
+	// 				continue;
+	// 			}
+	// 			val = val.toUpperCase();
+	// 			var realVal = item[key];
+	// 			if(!realVal){
+	// 				vali = false;
+	// 				break;
+	// 			}
+	// 			realVal = realVal.toString().toUpperCase();
+	// 			if(realVal.indexOf(val) === -1){
+	// 				vali = false;
+	// 				break;
+	// 			}
+	// 		}
 
-			if(vali === true){
-				li.show();
-				li.parents('li.zTreeSelectItem').show();
-			}
-		})
-	}
+	// 		if(vali === true){
+	// 			li.show();
+	// 			li.parents('li.zTreeSelectItem').show();
+	// 		}
+	// 	})
+	// }
 
 	self._renderRecusive = function(dataList, ele, level){
 		var len = dataList.length;
@@ -978,12 +1018,12 @@ var TreeSelect = function(options){
 		if(level === 0){
 			ul.css('max-height', self.config.height);
 			if(self.config.showAll){
-				$('<li class="zTreeSelectItem"><p data-level="0" style="padding-left:10px">All</p></li>').appendTo(ul);
+				$('<li class="zTreeSelectItem" data-level="0"><p style="padding-left:10px">All</p></li>').appendTo(ul);
 			}
 		}
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			var li = $('<li class="zTreeSelectItem"><p data-level="' + level + '" style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
+			var li = $('<li class="zTreeSelectItem" data-level="' + level + '"><p style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
 				self._renderRecusive(one.items, li, level + 1);
@@ -1016,7 +1056,6 @@ UI.toggleBtn = function(on, off){
 },
 
 UI.toggleOneBtn = function(btn, on, off){
-    console.log('eee')
     var btnClass = 'zToggleBtn';
     btn.removeClass('zToggleBtn');
     if(btn.hasClass('zToggleBtnSm')){

@@ -65,26 +65,27 @@
   height: 24px;
   line-height: 24px;
   width: 58px;
+  font-size: 12px;
 }
 
-/* line 56 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 57 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn.zToggleBtnSm i:before {
   width: 18px;
   height: 18px;
 top3px
 }
 
-/* line 62 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 63 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn.zToggleBtnSm .zToggleBtnOFF {
   padding-left: 28px;
 }
 
-/* line 65 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 66 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn.zToggleBtnSm .zToggleBtnON {
   padding-left: 15px;
 }
 
-/* line 69 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 70 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn .zToggleBtnON {
   left: -100%;
   background: #34495e;
@@ -93,13 +94,13 @@ top3px
   font-style: normal;
 }
 
-/* line 76 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 77 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn .zToggleBtnON:before {
   background: #1abc9c;
   right: 5px;
 }
 
-/* line 80 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 81 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn .zToggleBtnOFF {
   left: 0;
   background: #cbd2d8;
@@ -108,18 +109,18 @@ top3px
   font-style: normal;
 }
 
-/* line 87 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 88 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn .zToggleBtnOFF:before {
   background: #7f8b97;
   left: 5px;
 }
 
-/* line 91 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 92 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn.active .zToggleBtnON {
   left: 0;
 }
 
-/* line 94 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
+/* line 95 : /Users/elvis/bitbucket/ocui/public/css/toggleButton.styl */
 .zToggleBtn.active .zToggleBtnOFF {
   left: 100%;
 }
