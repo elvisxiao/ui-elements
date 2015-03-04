@@ -736,7 +736,7 @@ var Tree = function(options){
 			e.stopPropagation();
 			var p = $(this).parent().parent();
 			p.addClass('zTreeEdit');
-			p.html('<input type="text" name="name"><input type="text" name="description"><i class="iconRight icon-checkmark"></i>');
+			p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
 			var model = p.parent().data();
 			p.find('[name="name"]').val(model.name);
 			p.find('[name="description"]').val(model.description);
@@ -779,7 +779,7 @@ var Tree = function(options){
 				ul = $('<ul></ul>').appendTo(li);
 			}
 			var newLi = $('<li class="zTreeItem"></li>');
-			newLi.append('<p class="zTreeEdit"><input type="text" name="name"><input type="text" name="description"><i class="iconRight icon-checkmark"></i></p>');
+			newLi.append('<p class="zTreeEdit"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
 		})
 	}
