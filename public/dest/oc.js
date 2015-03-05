@@ -1013,6 +1013,9 @@ var TreeSelect = function(options){
 	// }
 
 	self._renderRecusive = function(dataList, ele, level){
+		if(!dataList){
+			return;
+		}
 		var len = dataList.length;
 		var ul = $('<ul></ul>');
 		if(level === 0){
