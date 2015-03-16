@@ -79,7 +79,7 @@
 }
 
 /* line 61 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
-.zDialog .close {
+.zDialog .zDialogTitle>.close {
   position: absolute;
   display: block;
   width: 30px;
@@ -101,20 +101,21 @@
   background: #000;
   opacity: 0.5;
   display: block;
+  z-index: 999;
 }
 
-/* line 80 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 81 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog {
   top: 0;
   opacity: 0;
 }
 
-/* line 83 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 84 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:before {
   display: none;
 }
 
-/* line 85 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 86 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:after {
-  content: "Massage";
+  content: "Message";
 }

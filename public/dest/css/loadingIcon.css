@@ -43,10 +43,10 @@
   display: inline-block;
   color: #aaa;
   vertical-align: middle;
-  -webkit-animation: zLoading 2s linear infinite normal;
-  -moz-animation: zLoading 2s linear infinite normal;
-  -o-animation: zLoading 2s linear infinite normal;
-  animation: zLoading 2s linear infinite normal;
+  -webkit-animation: zLoading 1s linear infinite normal;
+  -moz-animation: zLoading 1s linear infinite normal;
+  -o-animation: zLoading 1s linear infinite normal;
+  animation: zLoading 1s linear infinite normal;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

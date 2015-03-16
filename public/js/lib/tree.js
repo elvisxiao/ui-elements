@@ -25,6 +25,26 @@ var Tree = function(options){
 		self._bindEvents();
 	}
 
+	self.filter = function(keyword){
+		self.removeFilterTag();
+		if(!keyword){
+            return;
+        }
+        keyword = keyword.toUpperCase();
+        self.ele.find('.zTreeItem:gt(0)').removeClass('active').each(function(){
+            var item = $(this);
+            var name = item.find('>p').html().toUpperCase();
+            if(name.indexOf(keyword) === 0){
+                item.parents('.zTreeItem').addClass('active');
+                item.addClass('treeTag');
+            }
+        })
+	}
+
+	self.removeFilterTag = function(){
+		self.ele.find('.treeTag').removeClass('treeTag');
+	}
+
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
 			return;
@@ -59,7 +79,7 @@ var Tree = function(options){
 			$(this).parent().toggleClass('active');
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
-			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2"></i></span>').hide().appendTo(this).fadeIn(1000);
+			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2 none"></i></span>').hide().appendTo(this).fadeIn(1000);
 		})
 		.on('mouseleave', '.zTreeItem p', function(){
 			$(this).find('.zTreeControl').remove();
@@ -109,7 +129,9 @@ var Tree = function(options){
 			var model = li.data();
 			if(!model || !model.id){
 				model = {};
-				model.fid = li.parents('.zTreeItem:eq(0)').data().id;
+				var parentModel = li.parents('.zTreeItem:eq(0)').data()
+				model.fid = parentModel.id;
+				model.level = parseInt(parentModel.level) + 1;
 			}
 			model.name = li.find('[name="name"]').val();
 			model.description = li.find('[name="description"]').val();

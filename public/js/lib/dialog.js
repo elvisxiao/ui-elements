@@ -13,6 +13,10 @@ Dialog.tips = function(msg, time, cb){
     if(time === undefined){
         time = 1500;
     }
+    if(typeof time === 'function'){
+        cb = time;
+        time = 1000;
+    }
     var tips = $('<div class="tips">' + msg + '</div>');
     tips.appendTo('body');
     var width = tips.width();
@@ -34,7 +38,7 @@ Dialog.loading = function(msg){
 }
 
 Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm w500">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
+    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
@@ -71,8 +75,10 @@ Dialog.open = function(title, content){
         content = title;
         title = '';
     }
-    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p>' + content + '</div></div>').appendTo(document.body);
+    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p></div></div>').appendTo(document.body);
     var dialog = dialogCover.find('.zDialog');
+    dialog.append(content);
+
     var width = dialog.outerWidth();
     var height = dialog.outerHeight();
     dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%'});

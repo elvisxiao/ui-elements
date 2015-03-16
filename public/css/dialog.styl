@@ -1,11 +1,11 @@
 .zLoading
-    position: fixed
-    top: 0
-    bottom: 0
-    left: 0
-    right: 0
-    background: rgba(0, 0, 0, 0.4)
-    z-index:1000
+    position fixed
+    top 0
+    bottom 0
+    left 0
+    right 0
+    background rgba(0, 0, 0, 0.4)
+    z-index 1000
 
 
 
@@ -58,7 +58,7 @@
     margin-right 15px
 .zDialog:before, .zDialog:after
     display none
-.zDialog .close
+.zDialog .zDialogTitle>.close
     position absolute
     display block
     width 30px
@@ -77,10 +77,11 @@
     background #000
     opacity .5
     display block
+    z-index 999
 .zDialog
     top 0
     opacity 0
 .tips.confirm:before
     display none
 .tips.confirm:after
-    content "Massage"
+    content "Message"

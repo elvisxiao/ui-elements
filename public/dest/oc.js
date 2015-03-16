@@ -269,6 +269,10 @@ Dialog.tips = function(msg, time, cb){
     if(time === undefined){
         time = 1500;
     }
+    if(typeof time === 'function'){
+        cb = time;
+        time = 1000;
+    }
     var tips = $('<div class="tips">' + msg + '</div>');
     tips.appendTo('body');
     var width = tips.width();
@@ -290,7 +294,7 @@ Dialog.loading = function(msg){
 }
 
 Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm w500">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
+    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
@@ -327,8 +331,10 @@ Dialog.open = function(title, content){
         content = title;
         title = '';
     }
-    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p>' + content + '</div></div>').appendTo(document.body);
+    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p></div></div>').appendTo(document.body);
     var dialog = dialogCover.find('.zDialog');
+    dialog.append(content);
+
     var width = dialog.outerWidth();
     var height = dialog.outerHeight();
     dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%'});
@@ -668,6 +674,26 @@ var Tree = function(options){
 		self._bindEvents();
 	}
 
+	self.filter = function(keyword){
+		self.removeFilterTag();
+		if(!keyword){
+            return;
+        }
+        keyword = keyword.toUpperCase();
+        self.ele.find('.zTreeItem:gt(0)').removeClass('active').each(function(){
+            var item = $(this);
+            var name = item.find('>p').html().toUpperCase();
+            if(name.indexOf(keyword) === 0){
+                item.parents('.zTreeItem').addClass('active');
+                item.addClass('treeTag');
+            }
+        })
+	}
+
+	self.removeFilterTag = function(){
+		self.ele.find('.treeTag').removeClass('treeTag');
+	}
+
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
 			return;
@@ -702,7 +728,7 @@ var Tree = function(options){
 			$(this).parent().toggleClass('active');
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
-			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2"></i></span>').hide().appendTo(this).fadeIn(1000);
+			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2 none"></i></span>').hide().appendTo(this).fadeIn(1000);
 		})
 		.on('mouseleave', '.zTreeItem p', function(){
 			$(this).find('.zTreeControl').remove();
@@ -752,7 +778,9 @@ var Tree = function(options){
 			var model = li.data();
 			if(!model || !model.id){
 				model = {};
-				model.fid = li.parents('.zTreeItem:eq(0)').data().id;
+				var parentModel = li.parents('.zTreeItem:eq(0)').data()
+				model.fid = parentModel.id;
+				model.level = parseInt(parentModel.level) + 1;
 			}
 			model.name = li.find('[name="name"]').val();
 			model.description = li.find('[name="description"]').val();
@@ -898,7 +926,12 @@ var TreeSelect = function(options){
 			self.ele.removeClass('active');
 			if(!self.selectedItem){
 				self.filterParams.name = null;
-				self.ele.find('input').val('');
+				if(self.config.showAll){
+					self.ele.find('input').val('All');
+				}
+				else{
+					self.ele.find('input').val('');
+				}
 			}
 		})
 	}
@@ -974,7 +1007,7 @@ var TreeSelect = function(options){
             self.ele.find('li.zTreeSelectItem:visible').hide().each(function(){
                 var li = $(this);
                 var item = li.data();
-                if(item.name.indexOf(self.filterParams.name) > -1){
+                if(item.name && item.name.indexOf(self.filterParams.name) > -1){
                     li.show();
                     li.find('li').show();
                     li.parents('li.zTreeSelectItem').show();
@@ -982,35 +1015,6 @@ var TreeSelect = function(options){
             })
         }
     }
-	// self.filter = function(){
-	// 	self.ele.find('li.zTreeSelectItem').hide().each(function(){
-	// 		var li = $(this);
-	// 		var item = li.data();
-	// 		var vali = true;
-	// 		for(var key in self.filterParams){
-	// 			var val = self.filterParams[key];
-	// 			if(!val){
-	// 				continue;
-	// 			}
-	// 			val = val.toUpperCase();
-	// 			var realVal = item[key];
-	// 			if(!realVal){
-	// 				vali = false;
-	// 				break;
-	// 			}
-	// 			realVal = realVal.toString().toUpperCase();
-	// 			if(realVal.indexOf(val) === -1){
-	// 				vali = false;
-	// 				break;
-	// 			}
-	// 		}
-
-	// 		if(vali === true){
-	// 			li.show();
-	// 			li.parents('li.zTreeSelectItem').show();
-	// 		}
-	// 	})
-	// }
 
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
@@ -1185,7 +1189,7 @@ UI.autoComplete = function(ele, array, cb){
             var slc = $(this).html();
             ipt.val(slc);
             $('.zAutoComplete').remove();
-            cb && cb(slc);
+            cb && cb(slc, $(this).parents('ul:eq(0)').prev('input'));
         })
         .on('mouseenter', 'li', function(){
             ul.find('.active').removeClass('active');
@@ -1196,9 +1200,111 @@ UI.autoComplete = function(ele, array, cb){
 
     }).on('blur', function(){
         setTimeout(function(){
-            // $('.zAutoComplete').remove();
+            $('.zAutoComplete').remove();
         }, 200);
     });
+}
+
+UI.cbx = function(){
+    $('.zCbx').off('change', 'input').on('change', 'input', function(){
+        if(this.checked){
+            $(this).parent().addClass('active');
+        }
+        else{
+            $(this).parent().removeClass('active');
+        }
+    });
+    return {
+        check: function(ele){
+            if(!ele.hasClass('zCbx')){
+                if(ele.find('input:checkbox').length === 0){
+                    return console.warn("zCkb does not contain a input:checkbox item");
+                }
+                ele.addClass('active').find('input:checkbox')[0].checked = true;
+            }
+        },
+        unCheck: function(ele){
+            if(ele.hasClass('zCbx')){
+                if(ele.find('input:checkbox').length === 0){
+                    return console.warn("zCkb does not contain a input:checkbox item");
+                }
+                ele.removeClass('active').find('input:checkbox')[0].checked = false;
+            }
+        }
+    };
+};
+
+UI.mutiSelect = function(){
+    $("select.zMutiSelect").each(function(){
+        var ele = $(this);
+        var width = ele.outerWidth();
+        var height = ele.height() + 'px';
+        var name = ele.attr('name');
+        if(name === undefined){
+            name = '';
+        }
+        var zEle = $('<div class="zMutiSelectDiv"><div class="zMutiSelectText"></div><div class="zMutiSelectMain"><ul></ul></div></div>');
+        zEle.css('width', width);
+        zEle.find('.zMutiSelectText').css({'height': height, 'line-height': height}).html(ele.attr('data-slc'));
+
+        var lis = '';
+        ele.find('option').each(function(i, item){
+            lis += '<li><label class="zCbx"><input type="checkbox", name="' + name + '" value="' + item.value + '">' + item.innerHTML + '</label></li>';
+        });
+        lis += '<li><button class="btnPrimary btnXs" type="button">Confirm</button></li>';
+        zEle.find('ul').html(lis);
+
+        ele.replaceWith(zEle);
+    });
+
+
+    UI.cbx();
+    var bindEvent = function(){
+        var selectDiv = $(".zMutiSelectDiv");
+        selectDiv.off('click', 'button').off('click', '.zMutiSelectText');
+
+        selectDiv.on('click', '.zMutiSelectText', function(){
+            var select  = $(this).parents('.zMutiSelectDiv:eq(0)');
+            
+            if(!select.hasClass('active')){
+                select.addClass('active').find('.zMutiSelectMain').show();
+                var text = this.innerHTML;
+                var textArr = text.split(';');
+                select.find('.zCbx').removeClass('active').find('input:checkbox').attr('checked', false);
+                for(var i in textArr){
+                    var val = textArr[i];
+                    var cbx = select.find('input:checkbox[value="' + val + '"]');
+                    if(cbx.length > 0) {
+                        cbx[0].checked = true;
+                        cbx.parent().addClass('active');
+                    }
+                }
+            }
+            else{
+                select.removeClass('active').find('.zMutiSelectMain').hide();
+            }
+        }).on('click', 'button', function(e){
+            var select  = $(this).parents('.zMutiSelectDiv:eq(0)');
+            var main = $(this).parents('.zMutiSelectMain:eq(0)');
+            var values = '';
+            main.find('input:checked').each(function(){
+                values += this.value + ';';
+            });
+            if(values){
+                values = values.slice(0, -1);
+            }
+            select.removeClass('active').find('.zMutiSelectText').html(values);
+            main.hide();
+            e.stopPropagation();
+        }).click(function(e){
+            e.stopPropagation();
+        });
+
+        $('html').click(function(){
+            selectDiv.removeClass('active').find('.zMutiSelectMain').hide();
+        });
+    } ;
+    bindEvent();
 }
 
 module.exports = UI;

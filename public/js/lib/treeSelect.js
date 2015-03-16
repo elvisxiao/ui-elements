@@ -93,7 +93,12 @@ var TreeSelect = function(options){
 			self.ele.removeClass('active');
 			if(!self.selectedItem){
 				self.filterParams.name = null;
-				self.ele.find('input').val('');
+				if(self.config.showAll){
+					self.ele.find('input').val('All');
+				}
+				else{
+					self.ele.find('input').val('');
+				}
 			}
 		})
 	}
@@ -169,7 +174,7 @@ var TreeSelect = function(options){
             self.ele.find('li.zTreeSelectItem:visible').hide().each(function(){
                 var li = $(this);
                 var item = li.data();
-                if(item.name.indexOf(self.filterParams.name) > -1){
+                if(item.name && item.name.indexOf(self.filterParams.name) > -1){
                     li.show();
                     li.find('li').show();
                     li.parents('li.zTreeSelectItem').show();
@@ -177,35 +182,6 @@ var TreeSelect = function(options){
             })
         }
     }
-	// self.filter = function(){
-	// 	self.ele.find('li.zTreeSelectItem').hide().each(function(){
-	// 		var li = $(this);
-	// 		var item = li.data();
-	// 		var vali = true;
-	// 		for(var key in self.filterParams){
-	// 			var val = self.filterParams[key];
-	// 			if(!val){
-	// 				continue;
-	// 			}
-	// 			val = val.toUpperCase();
-	// 			var realVal = item[key];
-	// 			if(!realVal){
-	// 				vali = false;
-	// 				break;
-	// 			}
-	// 			realVal = realVal.toString().toUpperCase();
-	// 			if(realVal.indexOf(val) === -1){
-	// 				vali = false;
-	// 				break;
-	// 			}
-	// 		}
-
-	// 		if(vali === true){
-	// 			li.show();
-	// 			li.parents('li.zTreeSelectItem').show();
-	// 		}
-	// 	})
-	// }
 
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
