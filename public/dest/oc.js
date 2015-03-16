@@ -1189,7 +1189,7 @@ UI.autoComplete = function(ele, array, cb){
             var slc = $(this).html();
             ipt.val(slc);
             $('.zAutoComplete').remove();
-            cb && cb(slc, $(this).parents('ul:eq(0)').prev('input'));
+            cb && cb(slc, ipt);
         })
         .on('mouseenter', 'li', function(){
             ul.find('.active').removeClass('active');
