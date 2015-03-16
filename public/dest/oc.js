@@ -1007,7 +1007,7 @@ var TreeSelect = function(options){
             self.ele.find('li.zTreeSelectItem:visible').hide().each(function(){
                 var li = $(this);
                 var item = li.data();
-                if(item.name && item.name.indexOf(self.filterParams.name) > -1){
+                if(item.name && item.name.toUpperCase().indexOf(self.filterParams.name.toUpperCase()) > -1){
                     li.show();
                     li.find('li').show();
                     li.parents('li.zTreeSelectItem').show();
