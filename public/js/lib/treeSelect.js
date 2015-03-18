@@ -31,6 +31,10 @@ var TreeSelect = function(options){
 		
 		self.ele.appendTo($(self.config.container));
 
+		var top = self.ele.offset().top;
+        var windowHeight = $(document).height();
+        self.ele.find('>ul').css('max-height', windowHeight - top - 150);
+        
 		self._bindEvents();
 
 		if(self.config.showAll){
@@ -122,11 +126,11 @@ var TreeSelect = function(options){
 		var selectedLi = null;
 		self.selectedList = [];
 		var text = '';
-
+		
 		self.ele.find('li').each(function(){
 			var ele = $(this);
 			var model = ele.data();
-			if(model && model.id && model.id === id){
+			if(model && model.id && model.id == id){
 				selectedLi = ele;
 				self.selectedItem = ele.data();
 				self.selectedList.push(self.selectedItem);
