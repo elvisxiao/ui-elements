@@ -184,19 +184,19 @@ UI.cbx = function(){
     };
 };
 
-UI.mutiSelect = function(){
-    $("select.zMutiSelect").each(function(){
+UI.multiSelect = function(){
+    $("select.zMultiSelect").each(function(){
         var ele = $(this);
         var width = ele.outerWidth();
-        var height = ele.height() + 'px';
+        var height = ele.outerHeight() + 'px';
         var name = ele.attr('name');
         if(name === undefined){
             name = '';
         }
-        var zEle = $('<div class="zMutiSelectDiv"><div class="zMutiSelectText"></div><div class="zMutiSelectMain"><ul></ul></div></div>');
+        var zEle = $('<div class="zMultiSelect"><div class="zMultiSelectText"></div><div class="zMultiSelectMain"><ul></ul></div></div>');
         zEle.css('width', width);
-        zEle.find('.zMutiSelectText').css({'height': height, 'line-height': height}).html(ele.attr('data-slc'));
-
+        zEle.find('.zMultiSelectText').css({'height': height, 'line-height': height}).html(ele.attr('data-slc'));
+        
         var lis = '';
         ele.find('option').each(function(i, item){
             lis += '<li><label class="zCbx"><input type="checkbox", name="' + name + '" value="' + item.value + '">' + item.innerHTML + '</label></li>';
@@ -210,14 +210,13 @@ UI.mutiSelect = function(){
 
     UI.cbx();
     var bindEvent = function(){
-        var selectDiv = $(".zMutiSelectDiv");
-        selectDiv.off('click', 'button').off('click', '.zMutiSelectText');
-
-        selectDiv.on('click', '.zMutiSelectText', function(){
-            var select  = $(this).parents('.zMutiSelectDiv:eq(0)');
-            
+        var selectDiv = $(".zMultiSelect");
+        // selectDiv.off('click', 'button').off('click', '.zMultiSelectText');
+        
+        selectDiv.on('click', '.zMultiSelectText', function(){
+            var select  = $(this).parents('.zMultiSelect:eq(0)');
             if(!select.hasClass('active')){
-                select.addClass('active').find('.zMutiSelectMain').show();
+                select.addClass('active').find('.zMultiSelectMain').show();
                 var text = this.innerHTML;
                 var textArr = text.split(';');
                 select.find('.zCbx').removeClass('active').find('input:checkbox').attr('checked', false);
@@ -231,11 +230,11 @@ UI.mutiSelect = function(){
                 }
             }
             else{
-                select.removeClass('active').find('.zMutiSelectMain').hide();
+                select.removeClass('active').find('.zMultiSelectMain').hide();
             }
         }).on('click', 'button', function(e){
-            var select  = $(this).parents('.zMutiSelectDiv:eq(0)');
-            var main = $(this).parents('.zMutiSelectMain:eq(0)');
+            var select  = $(this).parents('.zMultiSelect:eq(0)');
+            var main = $(this).parents('.zMultiSelectMain:eq(0)');
             var values = '';
             main.find('input:checked').each(function(){
                 values += this.value + ';';
@@ -243,7 +242,7 @@ UI.mutiSelect = function(){
             if(values){
                 values = values.slice(0, -1);
             }
-            select.removeClass('active').find('.zMutiSelectText').html(values);
+            select.removeClass('active').find('.zMultiSelectText').html(values);
             main.hide();
             e.stopPropagation();
         }).click(function(e){
@@ -251,7 +250,7 @@ UI.mutiSelect = function(){
         });
 
         $('html').click(function(){
-            selectDiv.removeClass('active').find('.zMutiSelectMain').hide();
+            selectDiv.removeClass('active').find('.zMultiSelectMain').hide();
         });
     } ;
     bindEvent();

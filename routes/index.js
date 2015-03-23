@@ -23,6 +23,10 @@ router.get('/treeDialogSelect', function(req, res) {
 	res.render('treeDialogSelect');
 });
 
+router.get('/multiSelect', function(req, res) {
+	res.render('multiSelect');
+});
+
 router.post('/upload', function(req, res) {
 	try{
 	// 	console.log(req);
