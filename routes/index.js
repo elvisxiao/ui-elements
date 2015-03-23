@@ -19,6 +19,10 @@ router.get('/treeSelect', function(req, res) {
 	res.render('treeSelect');
 });
 
+router.get('/treeDialogSelect', function(req, res) {
+	res.render('treeDialogSelect');
+});
+
 router.post('/upload', function(req, res) {
 	try{
 	// 	console.log(req);

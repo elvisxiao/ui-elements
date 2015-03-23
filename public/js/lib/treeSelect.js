@@ -13,7 +13,7 @@ var TreeSelect = function(options){
 	this.ele = null;
 	this.filterParams = {};
 	this.valueChangeHanlder = null;
-
+	
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -112,7 +112,7 @@ var TreeSelect = function(options){
 		self.selectedList = [];
 		// self.ele.find('input').val('');
 	}
-
+	
 	self.setSelected = function(id){
 		if(!id){
 			self.selectedItem = null;

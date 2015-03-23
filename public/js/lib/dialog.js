@@ -38,7 +38,7 @@ Dialog.loading = function(msg){
 }
 
 Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
+    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
@@ -69,7 +69,7 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
     return confirm;
 }
 
-Dialog.open = function(title, content){
+Dialog.open = function(title, content, cb){
     this.removeMadal();
     if(!content){
         content = title;
@@ -101,7 +101,9 @@ Dialog.open = function(title, content){
     dialog.animate({
         top: top,
         opacity: 1
-    }, 500)
+    }, 500, function(){
+        cb && cb();
+    })
 }
 
 Dialog.close = function(){

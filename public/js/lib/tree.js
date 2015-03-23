@@ -158,7 +158,7 @@ var Tree = function(options){
 				ul = $('<ul></ul>').appendTo(li);
 			}
 			var newLi = $('<li class="zTreeItem"></li>');
-			newLi.append('<p class="zTreeEdit"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
+			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
 		})
 	}

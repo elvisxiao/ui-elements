@@ -294,7 +294,7 @@ Dialog.loading = function(msg){
 }
 
 Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20">确定</button><button class="btn btn-default btn-sm btnCancel" style="margin-right: 0">取消</button></div></div>');
+    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
@@ -325,7 +325,7 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
     return confirm;
 }
 
-Dialog.open = function(title, content){
+Dialog.open = function(title, content, cb){
     this.removeMadal();
     if(!content){
         content = title;
@@ -357,7 +357,9 @@ Dialog.open = function(title, content){
     dialog.animate({
         top: top,
         opacity: 1
-    }, 500)
+    }, 500, function(){
+        cb && cb();
+    })
 }
 
 Dialog.close = function(){
@@ -596,18 +598,22 @@ module.exports = FileView;
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
 	oc.TreeSelect = require('./treeSelect');
+	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
+		cssPath = cssPath.replace('oc.css', 'icons/style.css');
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
 		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3000/dest/oc.css'}).appendTo("head");
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/oc.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./dialog":2,"./fileView":3,"./localStorage":5,"./tree":6,"./treeSelect":7,"./ui":8,"./uploader":9}],5:[function(require,module,exports){
+},{"./dialog":2,"./fileView":3,"./localStorage":5,"./tree":6,"./treeDialogSelect":7,"./treeSelect":8,"./ui":9,"./uploader":10}],5:[function(require,module,exports){
 
 var LocalStorage = {
 	storage : window.localStorage
@@ -807,7 +813,7 @@ var Tree = function(options){
 				ul = $('<ul></ul>').appendTo(li);
 			}
 			var newLi = $('<li class="zTreeItem"></li>');
-			newLi.append('<p class="zTreeEdit"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
+			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
 		})
 	}
@@ -831,6 +837,316 @@ var Tree = function(options){
 
 module.exports = Tree;
 },{}],7:[function(require,module,exports){
+var TreeDialogSelect = function(ipt, dataList){
+	this.ele = $(ipt);
+	this.valueChangeHanlder = null;
+	this.dialogPanel = $('<div class="treeDialogSelect"></div>');
+	this.dataList = dataList;
+	this.productLine = null;
+	this.keyword = '';
+	this.canSelectedFolder = false;
+
+	var self = this;
+
+	self._render = function(){
+		self.dialogPanel.append('<div class="borderBottom pb10 pl10"><span style="padding-right:58px;">Search:</span><input id="txtKeyword" type="text" class="ipt w200">' + 
+			'<span class="ml20 f12 spanInfo" style="color:#888"><i class="icon-info mr5" style="color:#eea236;"></i>eg:Search to the items and it\'s children. </span></div>');
+
+		if(self.canSelectedFolder){
+			self.dialogPanel.find('.spanInfo').append(' Double click to select the folder.');
+		}
+		var resposibleUl = $('<ul class="ulResposible ulData"><li class="liTitle">Resposibles:</li></ul>');
+        var productLines = [];
+
+        for(var i = 0; i < self.dataList.length; i++){
+            var item = self.dataList[i];
+            var li = $('<li class="liFolder">' + item.name + '</li>').data(item);
+            li.appendTo(resposibleUl);
+            if(item.items){
+                item.items.map(function(model){
+                    var description = model.description;
+                    if(!description){
+                        return true;
+                    }
+                    var lines = description.split(/[\s|,]/g);
+                    for(var i = 0; i < lines.length; i ++){
+                        if($.inArray(lines[i], productLines) === -1){
+                            productLines.push(lines[i]);
+                        }
+                    }
+                })
+            }
+        }
+        productLines.sort();
+
+        var cateUl = $('<ul class="ulProductLine"><li class="liTitle">Product Lines:</li></ul>');
+        productLines.map(function(model){
+            cateUl.append('<li>' + model + '</li>');
+        })
+        if(self.productLine){
+        	cateUl.find('li:contains(' + self.productLine + ')').addClass('active');
+        }
+        cateUl.appendTo(self.dialogPanel);
+        resposibleUl.appendTo(self.dialogPanel);
+
+        self._bindEvents();
+	}
+
+	//render的时候标记选择项------------------
+	self._setSelected = function(){
+		var selectedList = self.ele.data('selectedList');
+		if(selectedList && selectedList.length > 0){
+			selectedList.map(function(model){
+				var currentUl = $('.zDialog .ulData:last');
+				var li = currentUl.find('li:eq(' + model.eleIndex + ')').addClass('active');
+				self._renderChild(currentUl, li);
+			})
+		}
+	}
+
+	self._renderChild = function(ele, li){
+		var model = li.data();
+		if(model.items && model.items.length){
+			var ul = $('<ul class="ulData"><li class="liTitle">Children:</li></ul>');
+			model.items.map(function(one){
+				var li = $('<li title="' + one.name + '">' + one.name + '</li>').data(one);
+				if(!one.items || one.items.length === 0){
+					li.addClass('liData');
+				}
+				else{
+					li.addClass('liFolder');
+				}
+				ul.append(li);
+
+				if(self.productLine && ele.hasClass('ulResposible') && one.description && one.description.indexOf(self.productLine) === -1){
+					li.hide();
+				}
+			})
+
+			ele.after(ul);
+			if(model.items && model.items.length > 0 && self._needFilter(li)){
+				self.filter(ul.find('li'));
+			}
+		}
+	}
+
+	//li本身满足过滤条件，或者li的父元素满足过滤条件---------
+	self._needFilter = function(li){
+		var lis = li.parent().prevAll('.ulData').find('li.active');
+		lis = li.add(lis);
+
+		var ret = false;
+		lis.each(function(){
+			var oneLi = $(this);
+			var model = oneLi.data();
+			var name = model.name.toUpperCase();
+			var oneRet = false;
+			//品线过滤---------------------------------------
+			if(model.description && self.productLine && model.description.indexOf(self.productLine) === -1){
+				return true;
+			}
+			else if(self.keyword && name.indexOf(self.keyword) !== 0){
+				return true;
+			}
+
+			ret = true;
+			return false;
+		})
+
+		return !ret;
+	}
+
+	self._bindEvents = function(){
+		self.ele.off('click').on('click', function(){		
+			self.dialogPanel.html('');
+			self._render();
+
+			self.keyword = null;
+			oc.dialog.open('', self.dialogPanel, function(){
+				$('.zDialog').css('top', '5%');
+        		self._setSelected();
+			});
+			self.dialogClickHanlder();
+		})
+	}
+
+	self.filter = function(lis){
+		if(!lis){
+			lis = $('ul.ulData li');
+		}
+		lis.each(function(){
+			var li = $(this).show();
+			if(li.hasClass('liTitle')){
+				return true;
+			}
+
+			var model = li.data();
+			//品线过滤---------------------------------------
+			if(model.description && self.productLine && model.description.indexOf(self.productLine) === -1){
+				li.hide();
+				return true;
+			}
+
+			//搜索过滤---------------------------------------
+			var name = model.name.toUpperCase();
+			if(self.keyword && name.indexOf(self.keyword) !== 0){
+				// li.hide();
+				//看看子节点有没有符合的
+				if(!self.filterChildren(model.items)){
+					li.hide();
+				}
+			}
+		})
+	}
+
+	self.filterChildren = function(list){
+		var ret = false;
+
+		var filterList = function(list){
+			if(!list || list.length === 0){
+				return ret;
+			}
+			if(ret === true){
+				return ret;
+			}
+
+			for(var i = 0; i < list.length; i++){
+				if(ret === true){
+					return true;
+				}
+				var model = list[i];
+				var oneRet = true;
+				var name = model.name.toUpperCase();
+				if(model.description && self.productLine && model.description.indexOf(self.productLine) === -1){
+					oneRet = false;
+				}
+				else if(self.keyword && name.indexOf(self.keyword) !== 0){
+					oneRet = false;
+				}
+
+				if(oneRet === true){
+					ret = true;
+					return true;
+				}
+
+				filterList(model.items);
+			}
+		}
+
+		filterList(list);
+
+		return ret;
+	}
+
+	self.selectedHanlder = function(e){
+		var li = $(this);
+		if(li.hasClass('liFolder') && !self.canSelectedFolder){
+			return;
+		}
+		var selectedItem = li.data();
+		selectedItem.eleIndex = li.index();
+		self.ele.data('selectedItem', selectedItem);
+		var ul = li.parent();
+		var selectedList = [];
+		ul.prevAll('ul.ulData').each(function(){
+			var activeLi = $(this).find('li.active');
+			activeLi.data().eleIndex = activeLi.index();
+			selectedList.push(activeLi.data());
+		})
+		selectedList.reverse();
+		selectedList.push(selectedItem);
+		self.ele.data('selectedList', selectedList);
+
+		self.ele.val(this.innerHTML);
+		oc.dialog.close();
+	}
+
+	//dialog上点击的事件---------------------
+	self.dialogClickHanlder = function(){
+		$('.zDialog')
+		.on('click', 'li.liFolder', function(){
+			var clickLi = $(this);
+			var ul = clickLi.parent();
+			ul.find('.active').removeClass('active');
+			clickLi.addClass('active');
+			ul.nextAll('.ulData').remove();
+			// var model = clickLi.data();
+			self._renderChild(ul, clickLi);
+		})
+		//双击文件夹选项---------------------------
+		.on('dblclick', 'li.liFolder',  self.selectedHanlder)
+		//点击非文件夹选项---------------------------
+		.on('click', 'li.liData', self.selectedHanlder)
+		
+		//品线过滤-------------------------------
+		.on('click', '.ulProductLine li:gt(0)', function(){
+			var li = $(this);
+			if(li.hasClass('active')){
+				li.removeClass('active');
+				self.productLine = null;
+				$('.zDialog .ulData:eq(1) li').show();
+				return;
+			}
+			li.parent().find('.active').removeClass('active');
+			li.addClass('active');
+			self.productLine = li.html();
+
+			self.filter();
+		})
+		.on('input', '#txtKeyword', function(){
+			self.keyword = $.trim(this.value).toUpperCase();
+			self.filter();
+		})
+	}
+
+	self.setSelectedByIds = function(ids){
+		var selectedList = [];
+		var selectedItem = null;
+
+		if(!ids || !ids.length){
+			self.ele.html('');
+		}
+		var dataList = $.extend([], self.dataList);
+
+		for(var i = 0; i < ids.length; i ++){
+			var id = ids[i];
+			if(!id){
+				break;
+			}
+
+			var model = null;
+			for(var j = 0; j < dataList.length; j++){
+				var one = dataList[j];
+				if(one.id == id){
+					model = one;
+					break;
+				}
+			}
+			
+			if(!model){
+				break;
+			}
+			model.eleIndex = j + 1;
+			dataList = $.extend([], model.items);
+			selectedList.push(model);
+			selectedItem = model;
+		}
+
+		var name = '';
+		if(selectedItem){
+			name = selectedItem.name;
+		}
+		
+		self.ele.data('selectedList', selectedList);
+		self.ele.data('selectedItem', selectedItem);
+		self.ele.val(name);
+	}
+
+	self._render();
+}
+
+module.exports = TreeDialogSelect;
+},{}],8:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -846,7 +1162,7 @@ var TreeSelect = function(options){
 	this.ele = null;
 	this.filterParams = {};
 	this.valueChangeHanlder = null;
-
+	
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -945,7 +1261,7 @@ var TreeSelect = function(options){
 		self.selectedList = [];
 		// self.ele.find('input').val('');
 	}
-
+	
 	self.setSelected = function(id){
 		if(!id){
 			self.selectedItem = null;
@@ -1051,7 +1367,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var UI = {};
 
 UI.toggleBtn = function(on, off){
@@ -1312,7 +1628,7 @@ UI.mutiSelect = function(){
 }
 
 module.exports = UI;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var Uploader = function(options) {
 	var self = this;
 

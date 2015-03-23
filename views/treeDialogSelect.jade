@@ -7,9 +7,9 @@ block content
             margin-right: 10px;
         }
     div(style="width: 1000px; margin: 0 auto;")
-        h2 Demo - 树形选择框 TreeSelect
+        h2 Demo - 树形选择框 TreeDialogSelect
         
-        div.treeContainer
+        input#iptTree.ipt(type="text")
         //- div.uploaderContainer UploaderTitle
         p.alert.alert-info.mt30 此控件依赖于jQuery，在使用前请先在页面引入jQuery。<br>CSV文件的编码格式须为UTF-8.
         p 使用步骤说明：
@@ -44,14 +44,11 @@ block content
     script(src="/mockData/tree.json")
     script.
         var dataList = TREEDATA;
-        var treeSelect = new oc.TreeSelect({
-            dataList: dataList.items, 
-            container: '.treeContainer', 
-            iptClass: 'form-control input-sm', 
-            width: '200px'
-        });
-      
-        console.log(treeSelect.selectedItem);
-        console.log(treeSelect.selectedList);
+        var treeDialogSelect = new oc.TreeDialogSelect('#iptTree', dataList.items);
+        treeDialogSelect.productLine = '01';
+        treeDialogSelect.canSelectedFolder = true;
+
+        treeDialogSelect.setSelectedByIds([9, 11]);
+        
 
 
