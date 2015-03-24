@@ -46,15 +46,10 @@
   line-height: 26px;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
-/* line 32 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
-.zTreeSelect ul li p:hover {
-  background: #60adfb;
-  color: #fff;
-}
-
-/* line 35 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
+/* line 36 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
 .zTreeSelect ul li p:focus {
   background: #60adfb;
   color: #fff;
@@ -62,6 +57,12 @@
 }
 
 /* line 40 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
+.zTreeSelect ul li.zTreeSelectItem.active>p {
+  background: #60adfb;
+  color: #fff;
+}
+
+/* line 43 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
 .zTreeSelect >ul {
   position: absolute;
   z-index: 10000;
@@ -82,16 +83,16 @@
   overflow: auto;
 }
 
-/* line 60 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
+/* line 63 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
 
-/* line 61 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
+/* line 64 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
 .zTreeSelect.active:after {
   margin-top: -9px;
   border-top: 6px solid transparent;
   border-bottom: 6px solid #777;
 }
 
-/* line 65 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
+/* line 68 : /Users/elvis/bitbucket/ocui/public/css/treeSelect.styl */
 .zTreeSelect.active >ul {
   display: block;
 }

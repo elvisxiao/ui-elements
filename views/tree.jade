@@ -4,64 +4,12 @@ block content
     div(style="width: 1000px; margin: 0 auto;")
         h2 Demo - 树形结构 Tree
         
-
-                
-
+    script(src="/mockData/tree.json")
     script.
-        data = {
-            name: '树根节点',
-            items: [
-                {
-                    description: 'description',
-                    name: '一级节点1',
-                    id: 1,
-                    items: [
-                        {
-                            description: '',
-                            name: '二级节点1',
-                            id: 10,
-                            items: [
-                                {
-                                    name: '三级节点1',
-                                    id: 100
-                                },
-                                {
-                                    name: '三级节点1',
-                                    id: 101
-                                },
-                                {
-                                    description: 'description',
-                                    name: '二级节点3',
-                                    id: 102
-                                }
-                            ]
-                        },
-                        {
-                            description: 'description',
-                            name: '二级节点2',
-                            id: 11
-                        },
-                        {
-                            description: 'description',
-                            name: '二级节点3',
-                            id: 12
-                        }
-                    ]
-                },
-                {
-                    description: 'description',
-                    name: '一级节点2',
-                    id: 2
-                },
-                {
-                    description: 'description',
-                    name: '一级节点3',
-                    id: 3
-                }
-            ]
-        };
+        var dataList = TREEDATA;
+    
         var tree = new oc.Tree({
-            data: data
+            data: dataList
         });
         
     

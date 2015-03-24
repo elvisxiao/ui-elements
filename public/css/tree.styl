@@ -122,9 +122,13 @@
                 width 300px 
             .iconRight
                 position absolute
-                right 7px 
+                right 0px 
                 color #fff
-                top 7px
+                top 0px
+                height 100%
+                width 30px
+                line-height 30px
+                text-align center
             .zLoadingIcon
                 right 2px
                 top 3px
@@ -153,12 +157,17 @@
                     
         >p.zTreeEdit
             background #46b8da
+            &:hover
+                color #444
             &:before
                 border-top 6px solid #fff
             &:after
                 display none
             .icon-plus2, .icon-cog
                 display none
+        >p.zTreeAdd
+            .icon-minus2 
+                display block !important
 
     .zTreeItem.active>ul
         display block
@@ -166,6 +175,58 @@
 
     .treeTag>p
         animation treeTag 2s linear infinite normal
-
-
+        
+.zTree.zTreeOrganization  
+    .zTreeItem>p 
+        font-family 'icomoon'
+        padding-left 30px
+        border 1px solid transparent
+        &:before
+            border 0
+            content "\e601" 
+            position absolute
+            top 0
+            left 0px 
+            height 100%
+            width 28px
+            line-height 28px
+            font-size 24px
+            color #46b8da
+            transition font .3s
+        &:hover
+            background #fff
+            color #46b8da
+            &:before
+                border 1px solid transparent
+    .zTreeItem.hasMore
+        >p 
+            position relative
+            &:before
+                content "\e930"
+                padding-top 0
+                font-size 24px
+                
+    p.zTreeEdit
+        border 1px solid #46b8da
+        input[name=name]
+            width 200px
+        input[name=description]
+            display none
+        &:before
+            color #fff
+            padding-top 0
+            margin-top 0
+            margin-left 0
+            padding-left 2px
+            width 30px
+        &:hover
+            background #46b8da !important
+            
+    p.zTreeFolder
+        &:before
+            content "\e930"
+            font-size 18px
+            padding-left 6px
+        
+    
 

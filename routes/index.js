@@ -27,6 +27,10 @@ router.get('/multiSelect', function(req, res) {
 	res.render('multiSelect');
 });
 
+router.get('/organization', function(req, res) {
+	res.render('organization');
+});
+
 router.post('/upload', function(req, res) {
 	try{
 	// 	console.log(req);

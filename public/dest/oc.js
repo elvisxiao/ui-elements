@@ -673,9 +673,10 @@ var Tree = function(options){
 		self.ele = $('<ul class="zTree"></ul>');
 		var li = $('<li class="zTreeItem"><p>' + self.config.data.name + '</p></li>').data(self.config.data);
 		li.appendTo(self.ele);
-
+		
 		self._renderRecusive(self.config.data.items, li, 0);
-		self.ele.appendTo($(this.config.container));
+		$(this.config.container).find('.zTree').remove();
+		$(this.config.container).append(self.ele);
 
 		self._bindEvents();
 	}
@@ -1191,6 +1192,50 @@ var TreeSelect = function(options){
 		}
 	}
 
+	self._selectedP = function(p){
+		if(p.length === 0){
+			return;
+		}
+		var text = '';
+		self.selectedItem = p.parent().data();
+		self.selectedList = [];
+		p.parents('.zTreeSelectItem').each(function(){
+			var li = $(this);
+			var item = li.data();
+			self.selectedList.push(item);
+			if(!text){
+				text = item.name;
+			}
+			else{
+				text = item.name + ' - ' + text;
+			}
+		})
+		self.selectedList.reverse();
+		self.ele.find('input').val(text).attr('data-id', self.selectedItem.id || '');
+		self.ele.removeClass('active');
+		if(p.html() === 'All'){
+			self.ele.find('input').val('All');
+		}
+		
+		self.valueChangeHanlder && self.valueChangeHanlder();
+	}
+
+	self._setActive = function(){
+		var model = self.ele.find('.zTreeSelectItem.active').data();
+		if(model && model.id){
+			self.ele.find('.zTreeSelectItem:visible').each(function(i, ele){
+				var ele = $(ele);
+				if(ele.data().id == model.id){
+					self.currentActive = i;
+					return false;
+				}
+			})
+		}
+		else{
+			self.currentActive = null;
+		}
+	}
+
 	self._bindEvents = function(){
 		self.ele.on('click', function(e){
 			e.stopPropagation();
@@ -1198,6 +1243,7 @@ var TreeSelect = function(options){
 				return;
 			}
 			self.ele.addClass('active');
+			self._setActive();
 			self.filter();
 
 			if(self.selectedItem){
@@ -1213,33 +1259,68 @@ var TreeSelect = function(options){
 		.on('click', 'p', function(e){
 			e.stopPropagation();
 			var p = $(this);
-			var text = '';
-			self.selectedItem = p.parent().data();
-			self.selectedList = [];
-			p.parents('.zTreeSelectItem').each(function(){
-				var li = $(this);
-				var item = li.data();
-				self.selectedList.push(item);
-				if(!text){
-					text = item.name;
-				}
-				else{
-					text = item.name + ' - ' + text;
-				}
-			})
-			self.selectedList.reverse();
-			self.ele.find('input').val(text).attr('data-id', self.selectedItem.id || '');
-			self.ele.removeClass('active');
-			if(p.html() === 'All'){
-				self.ele.find('input').val('All');
-			}
-			
-			self.valueChangeHanlder && self.valueChangeHanlder();
+			self._selectedP(p);
 		})
-		.on('input', 'input', function(){
+		.on('input', 'input', function(e){
+			self.ele.find('.zTreeSelectItem.active').removeClass('active');
 			self._clear();
 			self.filterParams.name = this.value;
 			self.filter();
+		})
+		.on('mouseenter', 'li.zTreeSelectItem', function(){
+			self.ele.find('.zTreeSelectItem.active').removeClass('active');
+			$(this).addClass('active');
+			self._setActive();
+		})
+		.find('input').on('keyup', function(e){
+			var code = e.keyCode;
+			var activeLi = self.ele.find('.zTreeSelectItem.active');
+			if(code === 13){
+				var p = activeLi.find('>p');
+				self._selectedP(p);
+				return;
+			}
+			if(code !== 40 && code !== 38){
+				return;
+			}
+
+			if(code === 40){
+				if(activeLi.length == 0){
+					self.currentActive = -1;
+				}
+				self.currentActive ++;
+			}
+			else{
+				if(!self.currentActive){
+					return;
+				}
+				self.currentActive --;
+			}
+			
+			var target = self.ele.find('.zTreeSelectItem:visible:eq(' + self.currentActive + ')');
+			if(target.length == 0){
+				return;
+			}
+			self.ele.find('.zTreeSelectItem.active').removeClass('active');
+			target.addClass('active');
+			
+			var ul = self.ele.find('>ul');
+			var height = ul.height();
+			var offset = target.offset().top;
+			var scrollTop = ul.scrollTop();
+			if(code === 40){
+				var scroll = offset - height;
+				if(scroll > 0){
+					ul.scrollTop(scroll + scrollTop);
+				}
+			}
+			else{
+				var scroll = offset - scrollTop;
+				if(offset < 100){
+					ul.scrollTop(scrollTop - 32);
+				}
+			}
+			
 		})
 
 		$(document).on('click', function(){

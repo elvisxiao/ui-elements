@@ -1,4 +1,8 @@
-var Tree = function(options){
+var Tree = require('./tree');
+
+var TreeOriganization = Tree;
+
+var TreeOriganization = function(options){
 	this.config = {
 		container: 'body',
 		data: null,
@@ -18,10 +22,9 @@ var Tree = function(options){
 		self.ele = $('<ul class="zTree"></ul>');
 		var li = $('<li class="zTreeItem"><p>' + self.config.data.name + '</p></li>').data(self.config.data);
 		li.appendTo(self.ele);
-		
+
 		self._renderRecusive(self.config.data.items, li, 0);
-		$(this.config.container).find('.zTree').remove();
-		$(this.config.container).append(self.ele);
+		self.ele.appendTo($(this.config.container));
 
 		self._bindEvents();
 	}
