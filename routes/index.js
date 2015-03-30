@@ -15,6 +15,10 @@ router.get('/tree', function(req, res) {
 	res.render('tree');
 });
 
+router.get('/ui', function(req, res) {
+	res.render('ui');
+});
+
 router.get('/treeSelect', function(req, res) {
 	res.render('treeSelect');
 });
@@ -29,6 +33,11 @@ router.get('/multiSelect', function(req, res) {
 
 router.get('/organization', function(req, res) {
 	res.render('organization');
+});
+
+
+router.get('/test', function(req, res) {
+	res.render('test');
 });
 
 router.post('/upload', function(req, res) {

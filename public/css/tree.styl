@@ -181,6 +181,8 @@
         font-family 'icomoon'
         padding-left 30px
         border 1px solid transparent
+        position relative
+        padding-right 10px
         &:before
             border 0
             content "\e601" 
@@ -198,14 +200,22 @@
             color #46b8da
             &:before
                 border 1px solid transparent
-    .zTreeItem.hasMore
+        .icon-plus2
+            display none
+    .zTreeItem.zTreeItemFolder
         >p 
             position relative
             &:before
-                content "\e930"
+                content "\e931"
                 padding-top 0
                 font-size 24px
-                
+            .icon-plus2
+                display inline-block
+    .zTreeItem.hasMore.zTreeItemFolder
+        >p:before
+            content "\e930"
+             
+            
     p.zTreeEdit
         border 1px solid #46b8da
         input[name=name]
@@ -227,6 +237,12 @@
             content "\e930"
             font-size 18px
             padding-left 6px
-        
+
+.formOrganization
+    span
+        display inline-block
+        width 100px
+    .form-control 
+        width 400px !important
     
 

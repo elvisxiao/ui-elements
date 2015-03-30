@@ -1,0 +1,193 @@
+var TREEDATA = {
+    "familyName": null,
+    "parentId": null,
+    "adminUserName": null,
+    "admin2UserName": null,
+    "children": [{
+        "familyName": "ERP",
+        "parentId": null,
+        "adminUserName": 'Test',
+        "admin2UserName": null,
+        "children": [{
+            "familyName": "ERP",
+            "parentId": 136,
+            "adminUserName": null,
+            "admin2UserName": null,
+            "children": [{
+                "familyName": "ERP",
+                "parentId": 137,
+                "adminUserName": null,
+                "admin2UserName": null,
+                "children": [{
+                    "familyName": "ERP",
+                    "parentId": 138,
+                    "adminUserName": 'TTT',
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "elvis",
+                    "level": null,
+                    "id": 45,
+                    "memo": null
+                }],
+                "name": "nodejs front",
+                "level": 3,
+                "id": 138,
+                "memo": null
+            }, {
+                "familyName": "ERP",
+                "parentId": 137,
+                "adminUserName": "",
+                "admin2UserName": null,
+                "children": [{
+                    "familyName": "ERP",
+                    "parentId": 139,
+                    "adminUserName": null,
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "jeffrey",
+                    "level": null,
+                    "id": 46,
+                    "memo": null
+                }, {
+                    "familyName": "ERP",
+                    "parentId": 139,
+                    "adminUserName": null,
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "fuyi",
+                    "level": null,
+                    "id": 47,
+                    "memo": null
+                }],
+                "name": "nodejs end",
+                "level": 3,
+                "id": 139,
+                "memo": null
+            }, {
+                "familyName": "ERP",
+                "parentId": 137,
+                "adminUserName": null,
+                "admin2UserName": null,
+                "children": [],
+                "name": "troy",
+                "level": null,
+                "id": 44,
+                "memo": null
+            }],
+            "name": "Nodejs",
+            "level": 2,
+            "id": 137,
+            "memo": null
+        }, {
+            "familyName": "ERP",
+            "parentId": 136,
+            "adminUserName": null,
+            "admin2UserName": null,
+            "children": [],
+            "name": "Bootstrap",
+            "level": 2,
+            "id": 140,
+            "memo": null
+        }],
+        "name": "ERP",
+        "level": 1,
+        "id": 136,
+        "memo": null
+    },
+    {
+        "familyName": "Branding",
+        "parentId": null,
+        "adminUserName": 'Test',
+        "admin2UserName": null,
+        "children": [{
+            "familyName": "Branding",
+            "parentId": 136,
+            "adminUserName": null,
+            "admin2UserName": null,
+            "children": [{
+                "familyName": "Branding",
+                "parentId": 137,
+                "adminUserName": null,
+                "admin2UserName": null,
+                "children": [{
+                    "familyName": "Branding",
+                    "parentId": 138,
+                    "adminUserName": 'TTT',
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "elvis",
+                    "level": null,
+                    "id": 45,
+                    "memo": null
+                }],
+                "name": "nodejs front",
+                "level": 3,
+                "id": 138,
+                "memo": null
+            }, {
+                "familyName": "Branding",
+                "parentId": 137,
+                "adminUserName": "",
+                "admin2UserName": null,
+                "children": [{
+                    "familyName": "Branding",
+                    "parentId": 139,
+                    "adminUserName": null,
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "jeffrey",
+                    "level": null,
+                    "id": 46,
+                    "memo": null
+                }, {
+                    "familyName": "Branding",
+                    "parentId": 139,
+                    "adminUserName": null,
+                    "admin2UserName": null,
+                    "children": [],
+                    "name": "fuyi",
+                    "level": null,
+                    "id": 47,
+                    "memo": null
+                }],
+                "name": "nodejs end",
+                "level": 3,
+                "id": 139,
+                "memo": null
+            }, {
+                "familyName": "Branding",
+                "parentId": 137,
+                "adminUserName": null,
+                "admin2UserName": null,
+                "children": [],
+                "name": "troy",
+                "level": null,
+                "id": 44,
+                "memo": null
+            }],
+            "name": "Nodejs",
+            "level": 2,
+            "id": 137,
+            "memo": null
+        }, {
+            "familyName": "Branding",
+            "parentId": 136,
+            "adminUserName": null,
+            "admin2UserName": null,
+            "children": [],
+            "name": "Bootstrap",
+            "level": 2,
+            "id": 140,
+            "memo": null
+        }],
+        "name": "Branding",
+        "level": 1,
+        "id": 136,
+        "memo": null
+    }
+    ],
+    "name": null,
+    "level": null,
+    "id": null,
+    "memo": null
+}

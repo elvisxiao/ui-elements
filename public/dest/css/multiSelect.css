@@ -10,14 +10,16 @@ textarea.disable {
 /* line 4 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zCbx {
   position: relative;
+  padding-left: 15px;
+  padding-top: 7px;
 }
 
-/* line 6 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 8 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zCbx input {
   opacity: 0;
 }
 
-/* line 8 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 10 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zCbx:before {
   font-family: 'icomoon';
   content: "\e60d";
@@ -28,13 +30,13 @@ textarea.disable {
   top: 5px;
 }
 
-/* line 16 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 18 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zCbx.active:before {
   content: "\e60c";
   color: #3498db;
 }
 
-/* line 20 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 22 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect {
   display: inline-block;
   position: relative;
@@ -42,7 +44,7 @@ textarea.disable {
   border-radius: 3px;
 }
 
-/* line 25 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 27 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain {
   position: absolute;
   left: 0;
@@ -54,7 +56,7 @@ textarea.disable {
   padding-bottom: 30px;
 }
 
-/* line 34 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 36 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain:before {
   content: "";
   display: block;
@@ -66,7 +68,7 @@ textarea.disable {
   background: #eee;
 }
 
-/* line 43 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 45 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul {
   max-height: 160px;
   overflow-y: auto;
@@ -74,7 +76,7 @@ textarea.disable {
   padding-left: 0;
 }
 
-/* line 48 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 50 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul li {
   list-style: none;
   color: #444;
@@ -82,7 +84,7 @@ textarea.disable {
   font-weight: 400;
 }
 
-/* line 53 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 55 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul label {
   display: block;
   width: 100%;
@@ -90,29 +92,29 @@ textarea.disable {
   padding: 5px 1em 5px 1em;
 }
 
-/* line 58 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 60 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul label:hover {
   background-color: #eee;
 }
 
-/* line 60 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 62 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul label:before {
   left: 0.5em;
 }
 
-/* line 62 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 64 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain ul label input {
   margin-right: 5px;
 }
 
-/* line 64 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 66 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectMain button {
   position: absolute;
   right: 1em;
   bottom: 0.2em;
 }
 
-/* line 68 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 70 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectText {
   padding-left: 0.8em;
   border: 1px solid #d8d8d8;
@@ -124,7 +126,7 @@ textarea.disable {
   border-radius: 3px;
 }
 
-/* line 77 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 79 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelect .zMultiSelectText:before {
   font-family: 'icomoon';
   content: "\f05b";
@@ -140,16 +142,16 @@ textarea.disable {
   color: #666;
 }
 
-/* line 91 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 93 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 
-/* line 92 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 94 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelectDiv.active .zMutiSelectText {
   background-color: #d8d8d8;
   border: 1px dotted #d8d8d8;
   border-radius: 3px;
 }
 
-/* line 96 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
+/* line 98 : /Users/elvis/bitbucket/ocui/public/css/multiSelect.styl */
 .zMultiSelectDiv.active .zMutiSelectText:before {
   background: #d8d8d8;
 }
