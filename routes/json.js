@@ -9,7 +9,7 @@ var readFile = function(req, res){
     var filePath = path.join(path.dirname(__dirname), 'json', fileName);
     console.log(filePath);
     fs.readFile(filePath, 'utf-8', function(err, data){
-        res.send(data);
+        res.send(JSON.stringify(data));
     })
 }
 

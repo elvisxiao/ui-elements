@@ -4,10 +4,9 @@ var Ajax = {}
 
 Ajax._send = function(url, method, data, cbOk, cbError){
     var params = {
-        method   : "GET",
-        // sync     : false,
-        // handleAs : "json",
-        headers  : {
+        url: url,
+        type: "GET",
+        headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -24,19 +23,19 @@ Ajax._send = function(url, method, data, cbOk, cbError){
 
 
 Ajax.get = function(url, cbOk, cbError) {
-	this.send(url, null, null, cbOk, cbError);
+	this._send(url, null, null, cbOk, cbError);
 }
 
 Ajax.post = function(url, data, cbOk, cbError) {
-	this.send(url, null, data, cbOk, cbError);
+	this._send(url, null, data, cbOk, cbError);
 }
 
 Ajax.put = function(url, data, cbOk, cbError) {
-	this.send(url, null, data, cbOk, cbError);
+	this._send(url, null, data, cbOk, cbError);
 }
 
 Ajax.delete = function(url, cbOk, cbError) {
-	this.send(url, null, null, cbOk, cbError);
+	this._send(url, null, null, cbOk, cbError);
 }
 
 
