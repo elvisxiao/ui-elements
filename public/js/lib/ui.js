@@ -91,6 +91,7 @@ UI.autoComplete = function(ele, array, cb){
             if(focusLi.length > 0){
                 ipt.val(focusLi.html());
                 ul.remove();
+                cb && cb(focusLi.html(), ipt);
             }
             return;
         }

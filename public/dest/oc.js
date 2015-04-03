@@ -1,4 +1,49 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+
+var Ajax = {}
+
+Ajax._send = function(url, method, data, cbOk, cbError){
+    var params = {
+        method   : "GET",
+        // sync     : false,
+        // handleAs : "json",
+        headers  : {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }
+    if(method){
+        params.method = method;
+    }
+    if(data){
+        params.data = JSON.stringify(data);
+    }
+   
+    $.ajax(params, cbOk, cbError);
+},
+
+
+Ajax.get = function(url, cbOk, cbError) {
+	this.send(url, null, null, cbOk, cbError);
+}
+
+Ajax.post = function(url, data, cbOk, cbError) {
+	this.send(url, null, data, cbOk, cbError);
+}
+
+Ajax.put = function(url, data, cbOk, cbError) {
+	this.send(url, null, data, cbOk, cbError);
+}
+
+Ajax.delete = function(url, cbOk, cbError) {
+	this.send(url, null, null, cbOk, cbError);
+}
+
+
+module.exports = Ajax;
+
+
+},{}],2:[function(require,module,exports){
 /*!
  * CSV-js: A JavaScript library for parsing CSV-encoded data.
  * Copyright (C) 2009-2013 Christopher Parker <http://www.cparker15.com/>
@@ -253,7 +298,7 @@
         window.CSV = CSV;
     }
 }(typeof window !== 'undefined' ? window : {}));
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var Dialog = {};
 
 Dialog.removeMadal = function(){
@@ -381,7 +426,7 @@ module.exports = Dialog;
 
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 var FileView = function(options){
     this.csv = require('./asset/csv');
@@ -587,7 +632,7 @@ var FileView = function(options){
 module.exports = FileView;
 
 
-},{"./asset/csv":1}],4:[function(require,module,exports){
+},{"./asset/csv":2}],5:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
 	window.oc = {};
@@ -600,7 +645,9 @@ module.exports = FileView;
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
+	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
+	oc.ajax = require('./ajax');
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
@@ -614,7 +661,7 @@ module.exports = FileView;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./dialog":2,"./fileView":3,"./localStorage":5,"./tree":6,"./treeDialogSelect":7,"./treeOrganization":8,"./treeSelect":9,"./ui":10,"./uploader":11}],5:[function(require,module,exports){
+},{"./ajax":1,"./dialog":3,"./fileView":4,"./localStorage":6,"./sidebar":7,"./tree":8,"./treeDialogSelect":9,"./treeOrganization":10,"./treeSelect":11,"./ui":12,"./uploader":13}],6:[function(require,module,exports){
 
 var LocalStorage = {
 	storage : window.localStorage
@@ -653,7 +700,45 @@ LocalStorage.clear = function(){
 module.exports = LocalStorage;
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+var Sidebar = function(dataList, container){
+	this.container = container;
+	this.dataList = dataList;
+	
+	var self = this;
+
+	self._render = function(){
+		var aside = $('<aside class="zSideBar"><ul class="zSideBarUl"></ul></aside>');
+		var ul = aside.find('ul');
+		self.dataList.map(function(model){
+			var li = $('<li><a>' + model.name + '</a></li>');
+			li.appendTo(ul);
+
+			if(model.hash){
+				li.find('>a').attr('href', model.hash);
+			}
+			if(model.children){
+				li.addClass('hasMore').append('<ul></ul>');
+				var subUl = li.find('ul');
+				model.children.map(function(childItem){
+					var subLi = $('<li><a>' + model.name + '</a></li>');
+					subLi.appendTo(subUl);
+					
+					if(childItem.hash){
+						subLi.find('>a').attr('href', childItem.hash);
+					}
+				})
+			}
+		})
+		
+		aside.appendTo($(container));
+	}
+
+	self._render();
+}
+
+module.exports = Sidebar;
+},{}],8:[function(require,module,exports){
 var Tree = function(options){
 	this.config = {
 		container: 'body',
@@ -838,7 +923,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -1148,7 +1233,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -1603,7 +1688,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -1904,7 +1989,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var UI = {};
 
 UI.toggleBtn = function(on, off){
@@ -1998,6 +2083,7 @@ UI.autoComplete = function(ele, array, cb){
             if(focusLi.length > 0){
                 ipt.val(focusLi.html());
                 ul.remove();
+                cb && cb(focusLi.html(), ipt);
             }
             return;
         }
@@ -2164,7 +2250,7 @@ UI.multiSelect = function(){
 }
 
 module.exports = UI;
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var Uploader = function(options) {
 	var self = this;
 
@@ -2496,4 +2582,4 @@ var Uploader = function(options) {
 }
 
 module.exports = Uploader;
-},{}]},{},[4]);
+},{}]},{},[5]);

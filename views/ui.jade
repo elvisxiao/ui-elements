@@ -35,10 +35,53 @@ block content
                 label.zCbx
                     input(type="checkbox")
                     | Show Name
+
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            div#sideBarContainer
             
 
     script.
         oc.ui.toggleBtn();
         oc.ui.multiSelect();
         oc.ui.cbx();
+        var dataList = [
+            {
+                name: 'test1',
+                hash: '#test1',
+                children: [
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    }
+                ]
+            },
+            {
+                name: 'test222',
+                hash: '#test222',
+                children: [
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    }
+                ]
+            }
+        ];
+
+        new oc.Sidebar(dataList, '#sideBarContainer');
        

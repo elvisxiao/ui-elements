@@ -1,0 +1,236 @@
+[
+    {
+        "firstBuyTotalOrderCount": 32104,
+        "firstBuyPerCustomerTransaction": 27.25,
+        "firstBuyTotalSpend": 874763.7,
+        "rebuyTotalOrderCount": 13566,
+        "rebuyPerCustomerTransaction": 36.51,
+        "rebuyTotalSpend": 495341.38,
+        "weekly": "201439"
+    },
+    {
+        "firstBuyTotalOrderCount": 65187,
+        "firstBuyPerCustomerTransaction": 26.99,
+        "firstBuyTotalSpend": 1759514.1,
+        "rebuyTotalOrderCount": 29126,
+        "rebuyPerCustomerTransaction": 38.99,
+        "rebuyTotalSpend": 1135637.6,
+        "weekly": "201440"
+    },
+    {
+        "firstBuyTotalOrderCount": 63651,
+        "firstBuyPerCustomerTransaction": 27.44,
+        "firstBuyTotalSpend": 1746704.6,
+        "rebuyTotalOrderCount": 27583,
+        "rebuyPerCustomerTransaction": 37.66,
+        "rebuyTotalSpend": 1038785.8,
+        "weekly": "201441"
+    },
+    {
+        "firstBuyTotalOrderCount": 61872,
+        "firstBuyPerCustomerTransaction": 26.92,
+        "firstBuyTotalSpend": 1665379.1,
+        "rebuyTotalOrderCount": 27024,
+        "rebuyPerCustomerTransaction": 36.4,
+        "rebuyTotalSpend": 983611.3,
+        "weekly": "201442"
+    },
+    {
+        "firstBuyTotalOrderCount": 62605,
+        "firstBuyPerCustomerTransaction": 27.26,
+        "firstBuyTotalSpend": 1706313.0,
+        "rebuyTotalOrderCount": 28653,
+        "rebuyPerCustomerTransaction": 33.25,
+        "rebuyTotalSpend": 952612.25,
+        "weekly": "201443"
+    },
+    {
+        "firstBuyTotalOrderCount": 64865,
+        "firstBuyPerCustomerTransaction": 28.18,
+        "firstBuyTotalSpend": 1828170.6,
+        "rebuyTotalOrderCount": 28855,
+        "rebuyPerCustomerTransaction": 39.61,
+        "rebuyTotalSpend": 1142852.6,
+        "weekly": "201444"
+    },
+    {
+        "firstBuyTotalOrderCount": 67782,
+        "firstBuyPerCustomerTransaction": 27.98,
+        "firstBuyTotalSpend": 1896623.9,
+        "rebuyTotalOrderCount": 30606,
+        "rebuyPerCustomerTransaction": 55.84,
+        "rebuyTotalSpend": 1709164.4,
+        "weekly": "201445"
+    },
+    {
+        "firstBuyTotalOrderCount": 73339,
+        "firstBuyPerCustomerTransaction": 27.55,
+        "firstBuyTotalSpend": 2020552.0,
+        "rebuyTotalOrderCount": 33032,
+        "rebuyPerCustomerTransaction": 38.72,
+        "rebuyTotalSpend": 1279120.9,
+        "weekly": "201446"
+    },
+    {
+        "firstBuyTotalOrderCount": 116710,
+        "firstBuyPerCustomerTransaction": 28.08,
+        "firstBuyTotalSpend": 3277261.0,
+        "rebuyTotalOrderCount": 52141,
+        "rebuyPerCustomerTransaction": 32.03,
+        "rebuyTotalSpend": 1670119.2,
+        "weekly": "201447"
+    },
+    {
+        "firstBuyTotalOrderCount": 134967,
+        "firstBuyPerCustomerTransaction": 28.01,
+        "firstBuyTotalSpend": 3780350.8,
+        "rebuyTotalOrderCount": 57700,
+        "rebuyPerCustomerTransaction": 31.8,
+        "rebuyTotalSpend": 1834684.8,
+        "weekly": "201448"
+    },
+    {
+        "firstBuyTotalOrderCount": 145771,
+        "firstBuyPerCustomerTransaction": 28.34,
+        "firstBuyTotalSpend": 4131861.2,
+        "rebuyTotalOrderCount": 56407,
+        "rebuyPerCustomerTransaction": 31.88,
+        "rebuyTotalSpend": 1798169.2,
+        "weekly": "201449"
+    },
+    {
+        "firstBuyTotalOrderCount": 168706,
+        "firstBuyPerCustomerTransaction": 29.73,
+        "firstBuyTotalSpend": 5015965.0,
+        "rebuyTotalOrderCount": 71091,
+        "rebuyPerCustomerTransaction": 32.62,
+        "rebuyTotalSpend": 2318931.8,
+        "weekly": "201450"
+    },
+    {
+        "firstBuyTotalOrderCount": 101269,
+        "firstBuyPerCustomerTransaction": 25.47,
+        "firstBuyTotalSpend": 2579476.5,
+        "rebuyTotalOrderCount": 49185,
+        "rebuyPerCustomerTransaction": 34.84,
+        "rebuyTotalSpend": 1713762.9,
+        "weekly": "201451"
+    },
+    {
+        "firstBuyTotalOrderCount": 92932,
+        "firstBuyPerCustomerTransaction": 23.99,
+        "firstBuyTotalSpend": 2229605.5,
+        "rebuyTotalOrderCount": 44171,
+        "rebuyPerCustomerTransaction": 28.45,
+        "rebuyTotalSpend": 1256816.0,
+        "weekly": "201452"
+    },
+    {
+        "firstBuyTotalOrderCount": 96482,
+        "firstBuyPerCustomerTransaction": 24.34,
+        "firstBuyTotalSpend": 2348319.2,
+        "rebuyTotalOrderCount": 48028,
+        "rebuyPerCustomerTransaction": 28.73,
+        "rebuyTotalSpend": 1379874.8,
+        "weekly": "201501"
+    },
+    {
+        "firstBuyTotalOrderCount": 91239,
+        "firstBuyPerCustomerTransaction": 24.64,
+        "firstBuyTotalSpend": 2248316.8,
+        "rebuyTotalOrderCount": 47382,
+        "rebuyPerCustomerTransaction": 32.6,
+        "rebuyTotalSpend": 1544438.0,
+        "weekly": "201502"
+    },
+    {
+        "firstBuyTotalOrderCount": 88281,
+        "firstBuyPerCustomerTransaction": 25.05,
+        "firstBuyTotalSpend": 2211151.0,
+        "rebuyTotalOrderCount": 47190,
+        "rebuyPerCustomerTransaction": 34.27,
+        "rebuyTotalSpend": 1617432.2,
+        "weekly": "201503"
+    },
+    {
+        "firstBuyTotalOrderCount": 85387,
+        "firstBuyPerCustomerTransaction": 24.45,
+        "firstBuyTotalSpend": 2087781.1,
+        "rebuyTotalOrderCount": 45947,
+        "rebuyPerCustomerTransaction": 28.63,
+        "rebuyTotalSpend": 1315465.8,
+        "weekly": "201504"
+    },
+    {
+        "firstBuyTotalOrderCount": 89248,
+        "firstBuyPerCustomerTransaction": 24.45,
+        "firstBuyTotalSpend": 2181727.2,
+        "rebuyTotalOrderCount": 46471,
+        "rebuyPerCustomerTransaction": 30.6,
+        "rebuyTotalSpend": 1422244.4,
+        "weekly": "201505"
+    },
+    {
+        "firstBuyTotalOrderCount": 85909,
+        "firstBuyPerCustomerTransaction": 24.87,
+        "firstBuyTotalSpend": 2136939.0,
+        "rebuyTotalOrderCount": 45216,
+        "rebuyPerCustomerTransaction": 30.44,
+        "rebuyTotalSpend": 1376567.8,
+        "weekly": "201506"
+    },
+    {
+        "firstBuyTotalOrderCount": 78218,
+        "firstBuyPerCustomerTransaction": 24.55,
+        "firstBuyTotalSpend": 1920065.2,
+        "rebuyTotalOrderCount": 41423,
+        "rebuyPerCustomerTransaction": 31.78,
+        "rebuyTotalSpend": 1316310.5,
+        "weekly": "201507"
+    },
+    {
+        "firstBuyTotalOrderCount": 79795,
+        "firstBuyPerCustomerTransaction": 24.77,
+        "firstBuyTotalSpend": 1976755.2,
+        "rebuyTotalOrderCount": 42868,
+        "rebuyPerCustomerTransaction": 29.09,
+        "rebuyTotalSpend": 1246987.5,
+        "weekly": "201508"
+    },
+    {
+        "firstBuyTotalOrderCount": 81067,
+        "firstBuyPerCustomerTransaction": 24.42,
+        "firstBuyTotalSpend": 1980024.1,
+        "rebuyTotalOrderCount": 46448,
+        "rebuyPerCustomerTransaction": 32.0,
+        "rebuyTotalSpend": 1486397.6,
+        "weekly": "201509"
+    },
+    {
+        "firstBuyTotalOrderCount": 79293,
+        "firstBuyPerCustomerTransaction": 24.26,
+        "firstBuyTotalSpend": 1923896.8,
+        "rebuyTotalOrderCount": 45504,
+        "rebuyPerCustomerTransaction": 41.3,
+        "rebuyTotalSpend": 1879337.1,
+        "weekly": "201510"
+    },
+    {
+        "firstBuyTotalOrderCount": 35261,
+        "firstBuyPerCustomerTransaction": 23.68,
+        "firstBuyTotalSpend": 834967.5,
+        "rebuyTotalOrderCount": 21697,
+        "rebuyPerCustomerTransaction": 28.4,
+        "rebuyTotalSpend": 616235.7,
+        "weekly": "201511"
+    },
+    {
+        "firstBuyTotalOrderCount": 1,
+        "firstBuyPerCustomerTransaction": 0.0,
+        "firstBuyTotalSpend": 0.0,
+        "rebuyTotalOrderCount": 0,
+        "rebuyPerCustomerTransaction": 0.0,
+        "rebuyTotalSpend": 0.0,
+        "weekly": "201529"
+    }
+]

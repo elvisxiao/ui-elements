@@ -1,0 +1,86 @@
+[
+    {
+        "firstBuyOrderCount": 32104,
+        "rebuyOrderCount": 13566,
+        "totalOrderCount": 45670,
+        "weekly": 201439
+    },
+    {
+        "firstBuyOrderCount": 65187,
+        "rebuyOrderCount": 29126,
+        "totalOrderCount": 94313,
+        "weekly": 201440
+    },
+    {
+        "firstBuyOrderCount": 63651,
+        "rebuyOrderCount": 27583,
+        "totalOrderCount": 91234,
+        "weekly": 201441
+    },
+    {
+        "firstBuyOrderCount": 61872,
+        "rebuyOrderCount": 27024,
+        "totalOrderCount": 88896,
+        "weekly": 201442
+    },
+    {
+        "firstBuyOrderCount": 62605,
+        "rebuyOrderCount": 28653,
+        "totalOrderCount": 91258,
+        "weekly": 201443
+    },
+    {
+        "firstBuyOrderCount": 64865,
+        "rebuyOrderCount": 28855,
+        "totalOrderCount": 93720,
+        "weekly": 201444
+    },
+    {
+        "firstBuyOrderCount": 67782,
+        "rebuyOrderCount": 30606,
+        "totalOrderCount": 98388,
+        "weekly": 201445
+    },
+    {
+        "firstBuyOrderCount": 73339,
+        "rebuyOrderCount": 33032,
+        "totalOrderCount": 106371,
+        "weekly": 201446
+    },
+    {
+        "firstBuyOrderCount": 116710,
+        "rebuyOrderCount": 52141,
+        "totalOrderCount": 168851,
+        "weekly": 201447
+    },
+    {
+        "firstBuyOrderCount": 134967,
+        "rebuyOrderCount": 57700,
+        "totalOrderCount": 192667,
+        "weekly": 201448
+    },
+    {
+        "firstBuyOrderCount": 145771,
+        "rebuyOrderCount": 56407,
+        "totalOrderCount": 202178,
+        "weekly": 201449
+    },
+    {
+        "firstBuyOrderCount": 168706,
+        "rebuyOrderCount": 71091,
+        "totalOrderCount": 239797,
+        "weekly": 201450
+    },
+    {
+        "firstBuyOrderCount": 101269,
+        "rebuyOrderCount": 49185,
+        "totalOrderCount": 150454,
+        "weekly": 201451
+    },
+    {
+        "firstBuyOrderCount": 55609,
+        "rebuyOrderCount": 27170,
+        "totalOrderCount": 82779,
+        "weekly": 201452
+    }
+]

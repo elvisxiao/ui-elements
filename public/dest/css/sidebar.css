@@ -1,0 +1,137 @@
+
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 1 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar {
+  background-color: #efefef;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-top: 4px solid #3498db;
+  display: inline-block;
+}
+
+/* line 7 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul {
+  padding: 0;
+}
+
+/* line 9 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li.active {
+  background: #3498db;
+}
+
+/* line 11 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li.active a {
+  color: #fff;
+}
+
+/* line 13 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li {
+  list-style-type: none;
+  cursor: pointer;
+  min-width: 130px;
+  line-height: 40px;
+  line-height: 40px;
+  position: relative;
+  white-space: nowrap;
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  border-bottom: 1px solid #fff;
+  list-style-type: none;
+}
+
+/* line 27 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li a {
+  text-decoration: none;
+  color: #666;
+  display: block;
+  width: 120%;
+  height: 100%;
+  padding: 0 10px;
+}
+
+/* line 34 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li:hover {
+  background-color: #3498db;
+}
+
+/* line 36 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar ul li:hover >a {
+  color: #fff;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li:last-child {
+  border-bottom: 1px solid transparent;
+}
+
+/* line 41 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+
+/* line 42 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul {
+  position: absolute;
+  top: -15px;
+  left: 100%;
+  margin-left: 15px;
+  background-color: #eceff1;
+  padding: 10px 20px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-bordder-radius: 10px;
+  -o-user-select: 10px;
+  transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  display: none;
+  box-shadow: 0 0 3px #bbb;
+}
+
+/* line 57 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul:before {
+  content: "";
+  border-right: 10px solid #eceff1;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 25px;
+}
+
+/* line 67 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul li {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  min-width: 150px;
+}
+
+/* line 72 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul li:hover {
+  border-bottom: 1px solid #0072c0 !important;
+  background: #eceff1;
+}
+
+/* line 75 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul li:hover >a {
+  color: #0072c0;
+}
+
+/* line 77 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore ul li:last-child {
+  border-bottom: 0;
+}
+
+/* line 79 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+
+/* line 80 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore:hover ul {
+  display: block;
+}
+
+/* line 82 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
+.zSideBar li.hasMore a:hover +ul {
+  display: block;
+}

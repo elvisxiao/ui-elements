@@ -10,7 +10,9 @@
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
+	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
+	oc.ajax = require('./ajax');
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){

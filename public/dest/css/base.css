@@ -221,528 +221,533 @@ body {
   right: 0;
 }
 
-/* line 99 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 100 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+.fixWidth {
+  font-family: monospace;
+}
+
+/* line 103 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .zoom {
   zoom: 1;
 }
 
-/* line 101 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 105 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .hidden {
   visibility: hidden;
 }
 
-/* line 103 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 107 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .none {
   display: none;
 }
 
-/* line 105 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 109 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .of {
   overflow: hidden;
 }
 
-/* line 108 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 112 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 /*高度长度*/
 
-/* line 109 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 113 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w10 {
   width: 10px;
 }
 
-/* line 111 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 115 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w20 {
   width: 20px;
 }
 
-/* line 113 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 117 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w30 {
   width: 30px;
 }
 
-/* line 115 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 119 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w40 {
   width: 40px;
 }
 
-/* line 117 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 121 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w50 {
   width: 50px;
 }
 
-/* line 119 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 123 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w60 {
   width: 60px;
 }
 
-/* line 121 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 125 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w70 {
   width: 70px;
 }
 
-/* line 123 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 127 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w80 {
   width: 80px;
 }
 
-/* line 125 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 129 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w90 {
   width: 90px;
 }
 
-/* line 127 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 131 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w100 {
   width: 100px;
 }
 
-/* line 129 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 133 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w150 {
   width: 150px;
 }
 
-/* line 131 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 135 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w200 {
   width: 200px;
 }
 
-/* line 133 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 137 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w250 {
   width: 250px;
 }
 
-/* line 135 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 139 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w300 {
   width: 300px;
 }
 
-/* line 137 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 141 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w400 {
   width: 400px;
 }
 
-/* line 139 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 143 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w500 {
   width: 500px;
 }
 
-/* line 141 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 145 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w600 {
   width: 600px;
 }
 
-/* line 143 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 147 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w700 {
   width: 700px;
 }
 
-/* line 145 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 149 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w800 {
   width: 800px;
 }
 
-/* line 147 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 151 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .w {
   width: 100%;
 }
 
-/* line 150 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 154 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h50 {
   height: 50px;
 }
 
-/* line 152 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 156 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h100 {
   height: 100px;
 }
 
-/* line 154 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 158 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h200 {
   height: 200px;
 }
 
-/* line 156 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 160 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h300 {
   height: 300px;
 }
 
-/* line 158 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 162 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h500 {
   height: 500px;
 }
 
-/* line 160 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 164 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .h {
   height: 100%;
 }
 
-/* line 163 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 167 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 /*边距*/
 
-/* line 164 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 168 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .m10 {
   margin: 10px;
 }
 
-/* line 166 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 170 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .m15 {
   margin: 15px;
 }
 
-/* line 168 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 172 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .m20 {
   margin: 20px;
 }
 
-/* line 170 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 174 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .m25 {
   margin: 25px;
 }
 
-/* line 172 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 176 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .m30 {
   margin: 30px;
 }
 
-/* line 175 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 179 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt5 {
   margin-top: 5px;
 }
 
-/* line 177 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 181 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt10 {
   margin-top: 10px;
 }
 
-/* line 179 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 183 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt15 {
   margin-top: 15px;
 }
 
-/* line 181 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 185 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt20 {
   margin-top: 20px;
 }
 
-/* line 183 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 187 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt30 {
   margin-top: 30px;
 }
 
-/* line 185 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 189 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt40 {
   margin-top: 40px;
 }
 
-/* line 187 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 191 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt50 {
   margin-top: 50px;
 }
 
-/* line 189 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 193 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt70 {
   margin-top: 70px;
 }
 
-/* line 191 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 195 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mt100 {
   margin-top: 100px;
 }
 
-/* line 194 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 198 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb5 {
   margin-bottom: 5px;
 }
 
-/* line 196 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 200 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb10 {
   margin-bottom: 10px;
 }
 
-/* line 198 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 202 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb15 {
   margin-bottom: 15px;
 }
 
-/* line 200 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 204 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb20 {
   margin-bottom: 20px;
 }
 
-/* line 202 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 206 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb30 {
   margin-bottom: 30px;
 }
 
-/* line 204 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 208 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb50 {
   margin-bottom: 50px;
 }
 
-/* line 206 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 210 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb70 {
   margin-bottom: 70px;
 }
 
-/* line 208 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 212 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mb100 {
   margin-bottom: 100px;
 }
 
-/* line 211 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 215 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml5 {
   margin-left: 5px;
 }
 
-/* line 213 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 217 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml10 {
   margin-left: 10px;
 }
 
-/* line 215 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 219 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml15 {
   margin-left: 15px;
 }
 
-/* line 217 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 221 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml20 {
   margin-left: 20px;
 }
 
-/* line 219 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 223 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml30 {
   margin-left: 30px;
 }
 
-/* line 221 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 225 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml40 {
   margin-left: 40px;
 }
 
-/* line 223 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 227 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml50 {
   margin-left: 50px;
 }
 
-/* line 225 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 229 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml70 {
   margin-left: 70px;
 }
 
-/* line 227 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 231 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .ml100 {
   margin-left: 100px;
 }
 
-/* line 230 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 234 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr5 {
   margin-right: 5px;
 }
 
-/* line 232 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 236 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr10 {
   margin-right: 10px;
 }
 
-/* line 234 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 238 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr15 {
   margin-right: 15px;
 }
 
-/* line 236 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 240 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr20 {
   margin-right: 20px;
 }
 
-/* line 238 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 242 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr30 {
   margin-right: 30px;
 }
 
-/* line 240 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 244 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr50 {
   margin-right: 50px;
 }
 
-/* line 242 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 246 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr70 {
   margin-right: 50px;
 }
 
-/* line 244 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 248 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .mr100 {
   margin-right: 100px;
 }
 
-/* line 247 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 251 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p5 {
   padding: 5px;
 }
 
-/* line 249 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 253 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p10 {
   padding: 10px;
 }
 
-/* line 251 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 255 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p15 {
   padding: 15px;
 }
 
-/* line 253 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 257 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p20 {
   padding: 20px;
 }
 
-/* line 255 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 259 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p30 {
   padding: 30px;
 }
 
-/* line 257 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 261 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .p50 {
   padding: 50px;
 }
 
-/* line 261 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 265 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt5 {
   padding-top: 5px;
 }
 
-/* line 263 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 267 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt10 {
   padding-top: 10px;
 }
 
-/* line 265 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 269 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt15 {
   padding-top: 15px;
 }
 
-/* line 267 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 271 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt20 {
   padding-top: 20px;
 }
 
-/* line 269 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 273 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt30 {
   padding-top: 30px;
 }
 
-/* line 271 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 275 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt50 {
   padding-top: 50px;
 }
 
-/* line 273 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 277 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pt70 {
   padding-top: 70px;
 }
 
-/* line 276 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 280 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb5 {
   padding-bottom: 5px;
 }
 
-/* line 278 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 282 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb10 {
   padding-bottom: 10px;
 }
 
-/* line 280 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 284 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb15 {
   padding-bottom: 15px;
 }
 
-/* line 282 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 286 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb20 {
   padding-bottom: 20px;
 }
 
-/* line 284 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 288 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb30 {
   padding-bottom: 30px;
 }
 
-/* line 286 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 290 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb50 {
   padding-bottom: 50px;
 }
 
-/* line 288 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 292 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pb70 {
   padding-bottom: 70px;
 }
 
-/* line 291 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 295 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl5 {
   padding-left: 5px;
 }
 
-/* line 293 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 297 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl10 {
   padding-left: 10px;
 }
 
-/* line 295 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 299 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl15 {
   padding-left: 15px;
 }
 
-/* line 297 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 301 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl20 {
   padding-left: 20px;
 }
 
-/* line 299 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 303 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl30 {
   padding-left: 30px;
 }
 
-/* line 301 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 305 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl50 {
   padding-left: 50px;
 }
 
-/* line 303 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 307 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pl70 {
   padding-left: 70px;
 }
 
-/* line 306 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 310 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr5 {
   padding-right: 5px;
 }
 
-/* line 308 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 312 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr10 {
   padding-right: 10px;
 }
 
-/* line 310 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 314 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr15 {
   padding-right: 15px;
 }
 
-/* line 312 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 316 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr20 {
   padding-right: 20px;
 }
 
-/* line 314 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 318 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr30 {
   padding-right: 30px;
 }
 
-/* line 316 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 320 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr50 {
   padding-right: 50px;
 }
 
-/* line 318 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 322 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .pr70 {
   padding-right: 70px;
 }
 
-/* line 321 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
+/* line 325 : /Users/elvis/bitbucket/ocui/public/css/base.styl */
 .last {
   margin-right: 0 !important;
   border-right: 0 !important;
