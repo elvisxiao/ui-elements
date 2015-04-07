@@ -720,7 +720,7 @@ var Sidebar = function(dataList, container){
 				li.addClass('hasMore').append('<ul></ul>');
 				var subUl = li.find('ul');
 				model.children.map(function(childItem){
-					var subLi = $('<li><a>' + model.name + '</a></li>');
+					var subLi = $('<li><a>' + childItem.name + '</a></li>');
 					subLi.appendTo(subUl);
 					
 					if(childItem.hash){

@@ -1,0 +1,30 @@
+[
+	{
+		"title": "测试活动1",
+		"type": "Deals",
+		"products": "001, 002, 004, 007",
+		"startDate": "2013-01-01",
+		"endDate": "2013-01-06"
+	},
+	{
+		"title": "测试活动2",
+		"type": "Deals",
+		"products": "001, 103, 304, 507",
+		"startDate": "2013-01-11",
+		"endDate": "2013-01-16"
+	},
+	{
+		"title": "测试活动3",
+		"type": "Deals",
+		"products": "901, 703, 504, 107",
+		"startDate": "2013-07-01",
+		"endDate": "2013-07-06"
+	},
+	{
+		"title": "测试活动4",
+		"type": "Deals",
+		"products": "001, 003, 004, 007",
+		"startDate": "2013-03-01",
+		"endDate": "2013-03-06"
+	}
+]
