@@ -8,6 +8,13 @@ var multer  = require('multer');
 
 var app = express();
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -16,8 +23,8 @@ app.set('view engine', 'jade');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 
-app.use(multer({ dest: './public/upload/'}))
 
+app.use(multer({ dest: './public/upload/'}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false }));
 app.use(cookieParser());
