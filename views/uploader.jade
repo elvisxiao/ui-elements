@@ -54,10 +54,16 @@ block content
             a(href="/") 前端的CSV预览
 
     script.
-        new oc.Uploader({
+        var uploader = new oc.Uploader({
             container: '.fileContainer',
             postParams: {
                 savePath: 'upload'
+            },
+            callback: function(files){
+                console.log('all file uploaded:', files);
+            },
+            uploadOneCallback: function(file){
+                console.log('uploaded one file:', file);
             }
         })
         

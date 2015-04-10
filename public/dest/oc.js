@@ -2258,8 +2258,11 @@ var Uploader = function(options) {
 		maxSize: 10,
 		uploadAction: '/upload',
 		postParams: {},
-		blobSize: 1000000
+		blobSize: 1000000,
+		callback: null,
+		uploadOneCallback: null
 	};
+
 	this.STATUS = {
 		waiting: 0,
 		process: 1,
@@ -2503,6 +2506,11 @@ var Uploader = function(options) {
 			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
 			cb();
 		}
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){    
+				file.response = xhr.response;
+		    }
+		}
 		xhr.send(data);
 	}
 
@@ -2553,10 +2561,12 @@ var Uploader = function(options) {
 		var uploadQueue = function(){
 			if(i === queueList.length){
 				self._setFootStatics();
+				self.config.callback && self.config.callback(self.files);
 				return;
 			}
 			
 			self._uploadOneFile(queueList[i], function(){
+				self.config.uploadOneCallback && self.config.uploadOneCallback(queueList[i]);
 				uploadQueue(i++);
 			});
 		}
