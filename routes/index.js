@@ -6,6 +6,10 @@ router.get('/', function(req, res) {
 	res.render('index');
 });
 
+router.get('/csvPriview', function(req, res) {
+	res.render('csvPriview');
+});
+
 router.get('/uploaderDemo', function(req, res) {
 	console.log('test');
 	res.render('uploader');
