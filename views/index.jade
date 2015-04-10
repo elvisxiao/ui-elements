@@ -30,7 +30,7 @@ block content
         p.p10(style="background:#333; color:#fff") models.push({id:'owerp/useCase#issueList',name:'Issue Management',separator:true})
 
         div.lh100.pl20(style="color:#428bca;") 说明：
-            p.pl30 owerp开头：将fantasia首页的iframe的地址指向owerp下app.html文件
+            p.pl30 owerp开头：将fantasia首页的iframe的地址指向owerp下app.html文件，由app.html加载入口文件。这样就不需要index.jsp了。
             p.pl30 app.html: 统一的项目文件，作用类似与各个模块下的index.jsp，加载项目入口文件和公用的资源文件（bootstrap、jquery相关的css、js)
             p.pl30 useCase: 新项目的文件夹名
             p.pl30 #issueList: 目标页面的page文件名，点击后会打开页面 owerp/useCase/issueList.js 所render出来的页面。
