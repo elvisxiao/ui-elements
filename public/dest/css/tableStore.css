@@ -1,0 +1,155 @@
+
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 2 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore {
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+/* line 5 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore tr {
+  height: auto;
+}
+
+/* line 7 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore >tbody>tr:nth-child(2n -1) {
+  background: #f9f9f9;
+}
+
+/* line 10 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th,
+.tableStore td {
+  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  height: 35px;
+}
+
+/* line 16 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th {
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+
+/* line 21 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th[data-sort] {
+  padding-right: 18px;
+}
+
+/* line 24 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore:before,
+.tableStore:after {
+  content: "";
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid transparent;
+  border-bottom: 6px solid #ddd;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -10px;
+}
+
+/* line 35 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore:after {
+  border-top: 6px solid #ddd;
+  border-bottom: 4px solid transparent;
+  margin-top: 1px;
+}
+
+/* line 41 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th.sortUp:after {
+  display: none;
+}
+
+/* line 44 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th.sortUp:before {
+  border-bottom: 6px solid #7a80dd;
+}
+
+/* line 47 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th.sortDown:before {
+  display: none;
+}
+
+/* line 49 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore th.sortDown:after {
+  border-top: 6px solid #7a80dd;
+}
+
+/* line 52 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore .searchBox {
+  height: 25px;
+  line-height: 25px;
+  outline: none;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  margin-left: 10px;
+  border-radius: 3px;
+}
+
+/* line 60 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.tableStore .searchBox:focus {
+  border: 1px solid #428bca;
+  box-shadow: 0 0 5px #428bca;
+}
+
+/* line 65 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager {
+  text-align: left;
+  margin: 10px 0;
+  line-height: 30px;
+}
+
+/* line 69 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain {
+  float: right;
+}
+
+/* line 72 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain .pagerItem {
+  font-size: 12px;
+  display: inline-block;
+  min-width: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+  background-color: #abb7b7;
+  border-color: #abb7b7;
+  color: #fff;
+  vertical-align: middle;
+}
+
+/* line 87 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain .pagerItem:hover {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background: #98a3a3;
+}
+
+/* line 93 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain .pagerItem.active {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background: #98a3a3;
+}
+
+/* line 99 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain .pagerSplit {
+  background: transparent;
+  color: #666;
+  line-height: 42px;
+  letter-spacing: 0.1em;
+}
+
+/* line 104 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
+.pager .pagerMain .pagerSplit:hover {
+  background: transparent;
+}

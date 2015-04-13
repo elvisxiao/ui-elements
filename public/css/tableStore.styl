@@ -1,0 +1,106 @@
+
+.tableStore 
+    border 1px solid #ddd
+    width 100%
+    tr 
+        height auto
+    >tbody>tr:nth-child(2n -1) 
+        background #f9f9f9
+
+    th, td 
+        border-bottom 1px solid #ddd
+        border 1px solid #ddd
+        padding 0 10px
+        height 35px
+
+    th 
+        text-align left
+        cursor pointer
+        position relative
+
+    th[data-sort]
+        padding-right 18px
+
+    &:before,&:after 
+        content ""
+        border-left 4px solid transparent
+        border-right 4px solid transparent
+        border-top 4px solid transparent
+        border-bottom 6px solid #ddd
+        position absolute
+        right 5px
+        top 50%
+        margin-top -10px
+
+    &:after 
+        border-top 6px solid #ddd
+        border-bottom 4px solid transparent
+        margin-top 1px
+
+
+    th.sortUp:after 
+        display none
+
+    th.sortUp:before 
+        border-bottom 6px solid #7a80dd
+    
+    th.sortDown:before 
+        display none
+    th.sortDown:after 
+        border-top 6px solid #7a80dd
+
+    .searchBox
+        height 25px
+        line-height 25px
+        outline none
+        border 1px solid #ddd
+        padding 0 10px
+        margin-left 10px
+        border-radius 3px
+        &:focus
+            border 1px solid #428bca
+            box-shadow 0 0 5px #428bca
+
+
+.pager 
+    text-align left
+    margin 10px 0
+    line-height 30px
+    .pagerMain 
+        float right
+        
+        .pagerItem 
+            font-size 12px
+            display inline-block
+            min-width 30px
+            padding-left 5px
+            padding-right 5px
+            height 30px
+            text-align center
+            line-height 30px
+            text-decoration none
+            background-color #abb7b7
+            border-color #abb7b7
+            color #fff
+            vertical-align middle
+
+            &:hover 
+                -webkit-border-radius 2px
+                -moz-border-radius 2px
+                border-radius 2px
+                background #98a3a3
+            
+        .pagerItem.active 
+            -webkit-border-radius 2px
+            -moz-border-radius 2px
+            border-radius 2px
+            background #98a3a3
+        
+        .pagerSplit 
+            background transparent
+            color #666
+            line-height 42px
+            letter-spacing 0.1em
+            &:hover 
+                background transparent
+
