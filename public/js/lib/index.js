@@ -21,7 +21,13 @@
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/icons/style.css'}).appendTo("head");
+		if(location.href.indexOf('/product') > 0){
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
+		}
+		else{
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/icons/style.css'}).appendTo("head");
+		}
 	}
 })()
