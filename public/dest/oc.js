@@ -651,13 +651,12 @@ module.exports = FileView;
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
-		cssPath = cssPath.replace('dest/oc.css', 'icons/style.css');
+		cssPath.replace('oc.css', 'icons/style.css');
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3000/dest/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/icons/style.css'}).appendTo("head");
 	}
 })()
 },{"./ajax":1,"./dialog":3,"./fileView":4,"./localStorage":6,"./sidebar":7,"./tree":8,"./treeDialogSelect":9,"./treeOrganization":10,"./treeSelect":11,"./ui":12,"./uploader":13}],6:[function(require,module,exports){

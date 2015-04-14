@@ -17,12 +17,11 @@
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
-		cssPath = cssPath.replace('dest/oc.css', 'icons/style.css');
+		cssPath.replace('oc.css', 'icons/style.css');
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3000/dest/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/icons/style.css'}).appendTo("head");
 	}
 })()
