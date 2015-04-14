@@ -18,6 +18,9 @@ router.post('/', function(req, res) {
 			console.log(stdout);
 		})
 	}
+	catch(err){
+		console.log('hook error:', err);
+	}
 	
 	res.send('hook called');
 });
