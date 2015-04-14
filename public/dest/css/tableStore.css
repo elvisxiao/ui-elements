@@ -39,8 +39,8 @@
 }
 
 /* line 24 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
-.tableStore:before,
-.tableStore:after {
+.tableStore th[data-sort]:before,
+.tableStore th[data-sort]:after {
   content: "";
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
@@ -53,7 +53,7 @@
 }
 
 /* line 35 : /Users/elvis/bitbucket/ocui/public/css/tableStore.styl */
-.tableStore:after {
+.tableStore th[data-sort]:after {
   border-top: 6px solid #ddd;
   border-bottom: 4px solid transparent;
   margin-top: 1px;
