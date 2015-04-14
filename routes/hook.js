@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+//bitbucket 的hooks
 router.post('/', function(req, res) {
 	console.log('rep name：', JSON.parse(req.body.payload));
 	console.log('rep name：' + req.body.payload.repository.name);
