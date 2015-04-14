@@ -3,13 +3,22 @@ var router = express.Router();
 
 //bitbucket 的hooks
 router.post('/', function(req, res) {
-	console.log('rep name：', JSON.parse(req.body.payload));
-	console.log('rep name：' + req.body.payload.repository.name);
-	var exec = require('child_process').exec;
-	var cmdStr = 'cd ~/bitbucket/ocui && git pull';
-	exec(cmdStr, function(err, stdout, stderr){
-		console.log(stdout);
-	})
+	var pathMap = {
+		OCUI: 'ocui',
+		tinyp2p: 'tinyp2p',
+		DaoYang: 'daoyang'
+	}
+
+	try{
+		var repoName = JSON.parse(req.body.payload).repository.name;
+
+		var exec = require('child_process').exec;
+		var cmdStr = 'cd ~/bitbucket/' + pathMap[repoName] + ' && git pull';
+		exec(cmdStr, function(err, stdout, stderr){
+			console.log(stdout);
+		})
+	}
+	
 	res.send('hook called');
 });
 
