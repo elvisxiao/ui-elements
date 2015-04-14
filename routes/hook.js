@@ -4,7 +4,7 @@ var router = express.Router();
 router.post('/', function(req, res) {
 	// console.log('commit code', req.body);
 	var exec = require('child_process').exec;
-	var cmdStr = 'git pull';
+	var cmdStr = 'cd ~/bitbucket/ocui && git pull';
 	exec(cmdStr, function(err, stdout, stderr){
 		console.log(stdout);
 	})
