@@ -14,6 +14,7 @@ router.post('/', function(req, res) {
 		console.log('repo name:' + repoName);
 		var exec = require('child_process').exec;
 		var cmdStr = 'cd ~/bitbucket/' + pathMap[repoName] + ' && git pull';
+		console.log('cmd:' + cmdStr);
 		exec(cmdStr, function(err, stdout, stderr){
 			console.log(stdout);
 		})
