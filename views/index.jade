@@ -27,15 +27,15 @@ block content
         img.w200(src="/img/tmp/project.png")
         p.mt20 使用步骤如下：
         p.fb.f16 1、在nmenu.jsp中配置新项目主入口，以目前项目中QC/Issue Management 为例，在QC模块下配置：  
-        p.p10(style="background:#333; color:#fff") models.push({id:'owerp/useCase#issueList',name:'Issue Management',separator:true})
+        p.p10(style="background:#333; color:#fff") models.push({id:'usecase#issueList',name:'Issue Management',separator:true, owerp: true})
 
         div.lh100.pl20(style="color:#428bca;") 说明：
-            p.pl30 owerp开头：将fantasia首页的iframe的地址指向owerp下app.html文件，由app.html加载入口文件。这样就不需要index.jsp了。
+            p.pl30 owerp配置项：将fantasia首页的iframe的地址指向owerp下app.html文件，由app.html加载入口文件。这样就不需要index.jsp了。
             p.pl30 app.html: 统一的项目文件，作用类似与各个模块下的index.jsp，加载项目入口文件和公用的资源文件（bootstrap、jquery相关的css、js)
-            p.pl30 useCase: 新项目的文件夹名
-            p.pl30 #issueList: 目标页面的page文件名，点击后会打开页面 owerp/useCase/issueList.js 所render出来的页面。
+            p.pl30 usecase: 新项目的文件夹名
+            p.pl30 #issueList: 目标页面的page文件名，点击后会打开页面 owerp/usecase/issueList.js 所render出来的页面。
 
-        p.fb.f16.mt20 2、在owerp中新建useCase项目文件夹，文件夹下建立项目主入口文件app.js，如下：
+        p.fb.f16.mt20 2、在owerp中新建usecase项目文件夹，文件夹下建立项目主入口文件app.js，如下：
         div.lh100.pl20(style="color:#428bca;") 说明：
             p.pl30 继承appBase.js：appBase主要用于处理hash，加载不同的页面。也可以将url中query的参数JSON化后传入widget中。
             p.pl30 cssResouce: 此项目下需要额外加载的样式集合

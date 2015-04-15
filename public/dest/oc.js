@@ -1603,7 +1603,7 @@ var TreeOriganization = function(options){
 				};
 			}
 			
-			var eleName = dialog.find('[name="name"]');
+			var eleName = dialog.find('[name="name"]:visible');
 			self.model.name = $.trim(eleName.val());
 			if(!self.model.name){
 				oc.dialog.tips('Name is required');
