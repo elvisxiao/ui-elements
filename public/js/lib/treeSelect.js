@@ -33,7 +33,11 @@ var TreeSelect = function(options){
 
 		var top = self.ele.offset().top;
         var windowHeight = $(document).height();
-        self.ele.find('>ul').css('max-height', windowHeight - top - 150);
+        var maxHeight = windowHeight - top - 150;
+        if(maxHeight < 150){
+        	maxHeight = 150;
+        }
+        self.ele.find('>ul').css('max-height', maxHeight);
         
 		self._bindEvents();
 
