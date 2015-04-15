@@ -1,0 +1,54 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 Sidebar
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            p 使用教程请“审查HTML元素”
+
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            div#sideBarContainer
+            
+
+    script.
+        var dataList = [
+            {
+                name: 'test1',
+                hash: '#test1',
+                children: [
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    }
+                ]
+            },
+            {
+                name: 'test222',
+                hash: '#test222',
+                children: [
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    },
+                    {
+                        name: 'test2',
+                        hash: '#test2',
+                    }
+                ]
+            }
+        ];
+
+        new oc.Sidebar(dataList, '#sideBarContainer');
+       
