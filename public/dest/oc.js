@@ -338,7 +338,7 @@ ZDate.format = function(date, format){
         if(val.toString().length < 2){
         	val = '0' + val.toString();
         }
-        format = format.replace(key, model[param]);
+        format = format.replace(key, val);
     }
 
     return format;
