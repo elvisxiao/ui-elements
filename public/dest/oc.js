@@ -340,6 +340,8 @@ ZDate.format = function(date, format){
     return format;
 }
 
+
+module.exports = ZDate;
 },{}],4:[function(require,module,exports){
 var Dialog = {};
 

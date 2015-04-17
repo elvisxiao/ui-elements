@@ -39,3 +39,6 @@ ZDate.format = function(date, format){
 
     return format;
 }
+
+
+module.exports = ZDate;
