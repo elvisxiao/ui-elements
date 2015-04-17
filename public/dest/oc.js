@@ -298,6 +298,49 @@ module.exports = Ajax;
     }
 }(typeof window !== 'undefined' ? window : {}));
 },{}],3:[function(require,module,exports){
+var ZDate = {};
+
+//format: 年 - yy/yyyy，月 - mm，天 - dd, 小时：hh，分钟 - MM，秒 - s, 分秒 - ms
+ZDate.format = function(date, format){
+	if(date.toString().indexOf('-') > 0){
+        date = date.toString().replace(/-/g, '/');
+    }
+
+    var reg = {
+        yyyy: 'year',
+        hh: 'hours',
+        mm: 'month',
+        dd: 'date',
+        hh: 'hours',
+        MM: 'minites',
+        ss: 'seconds',
+        ms: 'millSeconds'
+    }
+
+    var date = new Date(date);
+    var model = {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        date: date.getDate(),
+        hours: date.getHours(),
+        minites: date.getMinutes(),
+        seconds: date.getSeconds(),
+        millSeconds: date.getMilliseconds()
+    }
+
+    if(!format){
+        return model.year + '-' + model.month + '-' + model.date;
+    }
+
+    for(var key in reg){
+        var param = reg[key];
+        format = format.replace(key, model[param]);
+    }
+
+    return format;
+}
+
+},{}],4:[function(require,module,exports){
 var Dialog = {};
 
 Dialog.removeMadal = function(){
@@ -425,7 +468,7 @@ module.exports = Dialog;
 
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 
 var FileView = function(options){
     this.csv = require('./asset/csv');
@@ -631,7 +674,7 @@ var FileView = function(options){
 module.exports = FileView;
 
 
-},{"./asset/csv":2}],5:[function(require,module,exports){
+},{"./asset/csv":2}],6:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
 	window.oc = {};
@@ -647,6 +690,7 @@ module.exports = FileView;
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.ajax = require('./ajax');
+	oc.date = require('./date');
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
@@ -665,7 +709,7 @@ module.exports = FileView;
 		}
 	}
 })()
-},{"./ajax":1,"./dialog":3,"./fileView":4,"./localStorage":6,"./sidebar":7,"./tree":8,"./treeDialogSelect":9,"./treeOrganization":10,"./treeSelect":11,"./ui":12,"./uploader":13}],6:[function(require,module,exports){
+},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./localStorage":7,"./sidebar":8,"./tree":9,"./treeDialogSelect":10,"./treeOrganization":11,"./treeSelect":12,"./ui":13,"./uploader":14}],7:[function(require,module,exports){
 
 var LocalStorage = {
 	storage : window.localStorage
@@ -704,7 +748,7 @@ LocalStorage.clear = function(){
 module.exports = LocalStorage;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var Sidebar = function(dataList, container){
 	this.container = container;
 	this.dataList = dataList;
@@ -742,7 +786,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Tree = function(options){
 	this.config = {
 		container: 'body',
@@ -927,7 +971,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -1237,7 +1281,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -1692,7 +1736,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -1997,7 +2041,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var UI = {};
 
 UI.toggleBtn = function(on, off){
@@ -2258,7 +2302,7 @@ UI.multiSelect = function(){
 }
 
 module.exports = UI;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var Uploader = function(options) {
 	var self = this;
 
@@ -2600,4 +2644,4 @@ var Uploader = function(options) {
 }
 
 module.exports = Uploader;
-},{}]},{},[5]);
+},{}]},{},[6]);
