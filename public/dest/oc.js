@@ -334,6 +334,10 @@ ZDate.format = function(date, format){
 
     for(var key in reg){
         var param = reg[key];
+        var val = model[param];
+        if(val.toString().length < 2){
+        	val = '0' + val.toString();
+        }
         format = format.replace(key, model[param]);
     }
 
