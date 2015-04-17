@@ -1725,7 +1725,7 @@ var TreeSelect = function(options){
 		self._renderRecusive(self.config.dataList, self.ele, 0);
 		
 		self.ele.appendTo($(self.config.container));
-
+		
 		var top = self.ele.offset().top;
         var windowHeight = $(document).height();
         var maxHeight = windowHeight - top - 150;

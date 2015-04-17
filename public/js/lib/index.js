@@ -13,6 +13,7 @@
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.ajax = require('./ajax');
+	oc.date = require('./date');
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
