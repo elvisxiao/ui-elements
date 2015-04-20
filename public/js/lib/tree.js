@@ -219,7 +219,7 @@ var Tree = function(options){
 						ele.find('>ul').prepend(self.dragEle);
 					}
 					else{
-						self.dragEle.after(ele);
+						self.dragEle.insertAfter(ele);
 					}
 				}
 				else{

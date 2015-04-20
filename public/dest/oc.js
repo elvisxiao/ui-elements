@@ -701,7 +701,7 @@ module.exports = FileView;
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
-		cssPath.replace('oc.css', 'icons/style.css');
+		cssPath = cssPath.replace('oc.css', 'icons/style.css');
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
@@ -1014,7 +1014,7 @@ var Tree = function(options){
 						ele.find('>ul').prepend(self.dragEle);
 					}
 					else{
-						self.dragEle.after(ele);
+						self.dragEle.insertAfter(ele);
 					}
 				}
 				else{

@@ -18,7 +18,7 @@
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
-		cssPath.replace('oc.css', 'icons/style.css');
+		cssPath = cssPath.replace('oc.css', 'icons/style.css');
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
