@@ -316,7 +316,7 @@ ZDate.format = function(date, format){
         ss: 'seconds',
         ms: 'millSeconds'
     }
-
+    
     var date = new Date(date);
     var model = {
         year: date.getFullYear(),
@@ -856,7 +856,7 @@ var Tree = function(options){
 		
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			var li = $('<li class="zTreeItem"><p>' + one.name + '</p></li>');
+			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
 			if(one.description){
 				li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
 			}
@@ -957,6 +957,78 @@ var Tree = function(options){
 			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
 		})
+		.on('dragstart', '.zTreeItem[draggable]', function(e){
+			e.stopPropagation();
+			self.dragEle = $(this);
+		})
+		.on('dragenter', '.zTreeItem>p', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			var ele = $(this);
+			var li = ele.parent();
+			var source = self.dragEle.data();
+			var target = li.data();
+			var sourceId = source.id;
+			var targetId = target.id;
+			// //只能在相同级别排序
+			// if(source.level !== target.level){
+			// 	return;
+			// }
+			//不能拖拽到自己---
+			if(targetId == sourceId && source.level == target.level){
+				return;
+			}
+			//相同的元素中
+			// if(targetId == self.dragEle.parents('li:eq(0)').data().id){
+			// 	return;
+			// }
+
+			//不能级别之间------
+			if(li.data().fid != self.dragEle.data().fid && targetId != self.dragEle.data().fid){
+				return;
+			}
+
+			li.addClass('treeTag');
+		})
+		.on('dragleave', '.zTreeItem>p', function(e){
+			self.timer && clearTimeout(self.timer);
+			e.stopPropagation();
+			$(this).parent().removeClass('treeTag');
+		})
+		.on('dragover', '.zTreeItem.treeTag', function(e){
+			e.preventDefault();
+		})
+		.on('drop', '.zTreeItem.treeTag', function(e){
+			var ele = $(this);
+			var source = self.dragEle.data();
+			var target = ele.data();
+			var sourceId = source.id;
+			var targetId = target.id;
+			if(source.fid == targetId){
+				targetId = 0;
+			}
+			self.moveNode(sourceId, targetId, function(isOK, msg){
+				ele.removeClass('treeTag');
+				if(isOK){
+					if(targetId == 0){
+						ele.find('>ul').prepend(self.dragEle);
+					}
+					else{
+						self.dragEle.after(ele);
+					}
+				}
+				else{
+					oc.dialog.tips(msg);
+				}
+			});
+			
+			e.stopPropagation();
+			e.preventDefault();
+		})
+	}
+
+	self.moveNode = function(sourceId, targetId, cb){
+		cb(true);
 	}
 
 	self.deleteNode = function(nodeId, cb){

@@ -16,7 +16,7 @@ ZDate.format = function(date, format){
         ss: 'seconds',
         ms: 'millSeconds'
     }
-
+    
     var date = new Date(date);
     var model = {
         year: date.getFullYear(),
