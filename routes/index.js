@@ -39,6 +39,10 @@ router.get('/multiSelect', function(req, res) {
 	res.render('multiSelect');
 });
 
+router.get('/autoComplete', function(req, res) {
+	res.render('autoComplete');
+});
+
 router.get('/organization', function(req, res) {
 	res.render('organization');
 });

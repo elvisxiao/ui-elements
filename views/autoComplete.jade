@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 Demo - Auto Complete
+        
+        input.ipt.mr50.w300(type="text")
+        span Test1, Test2, Auto, black, content, Complete
+        
+        //- div.uploaderContainer UploaderTitle
+        p.alert.alert-info.mt30 此控件依赖于jQuery，在使用前请先在页面引入jQuery。<br>CSV文件的编码格式须为UTF-8.
+        p 使用步骤说明：
+        ol.pb50
+            li 引入js文件，
+                a(href="/dest/oc.js", target="_blank") oc.js
+                span , 或者
+                a(href="/dest/oc.min.js", target="_blank") 压缩版 oc.min.js
+            li 引入css文件：通过传统在head中添加link标签 或者在script中添加指向css路径的“data-occss”属性 script src="/dest/oc.min.js" data-occss="/dest/oc.css"
+                | a(href="/dest/oc.css", target="_blank") oc.css
+            li new oc.FileView('.fileViewContainer');  fileViewContainer一般为一个div容器。
+            li 本页面的伪代码如下
+                
+
+    script.
+        oc.ui.autoComplete('.ipt', ["Test1", "Test2", "Auto", "black", "content", "Complete"], function(slcVal){}, true)
+
+
+

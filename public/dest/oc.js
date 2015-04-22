@@ -12,7 +12,7 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         }
     }
     if(method){
-        params.method = method;
+        params.type = method;
     }
     if(data){
         params.data = JSON.stringify(data);
@@ -27,15 +27,15 @@ Ajax.get = function(url, cbOk, cbError) {
 }
 
 Ajax.post = function(url, data, cbOk, cbError) {
-	this._send(url, null, data, cbOk, cbError);
+	this._send(url, "post", data, cbOk, cbError);
 }
 
 Ajax.put = function(url, data, cbOk, cbError) {
-	this._send(url, null, data, cbOk, cbError);
+	this._send(url, "put", data, cbOk, cbError);
 }
 
 Ajax.delete = function(url, cbOk, cbError) {
-	this._send(url, null, null, cbOk, cbError);
+	this._send(url, "delete", null, cbOk, cbError);
 }
 
 
@@ -2161,15 +2161,17 @@ UI.toggleOneBtn = function(btn, on, off){
 // ele: 作用的元素 - jquery对象集合
 // array：autoComplete的数据来源，为数组 - 可选
 // cb：选择后的回调函数 - 可选
-UI.autoComplete = function(ele, array, cb){
+UI.autoComplete = function(ele, array, cb, prefix){
+    ele = $(ele);
     if(typeof array === 'function'){
         cb = array;
         array = null;
     }
     ele.off('keyup').off('keydown').off('blur');
     ele.on('keydown', function(e){
-        console.log('keydow');
-        if(e.keyCode === 13){
+        var ipt = $(this);
+        var ul = ipt.next('ul.zAutoComplete');
+        if(e.keyCode === 13 && ul.find('li.active').length > 0){
             event.preventDefault();
             return false;
         }
@@ -2211,9 +2213,17 @@ UI.autoComplete = function(ele, array, cb){
         if(e.keyCode === 13){
             var focusLi = ul.find('li.active');
             if(focusLi.length > 0){
-                ipt.val(focusLi.html());
+                var slcVal = focusLi.html();
+                var text = ipt.val();
+                if(prefix){
+                    ipt.val(text + slcVal);
+                }
+                else{
+                    ipt.val(slcVal);
+                }
+                
                 ul.remove();
-                cb && cb(focusLi.html(), ipt);
+                cb && cb(slcVal, ipt);
             }
             return;
         }
@@ -2234,6 +2244,10 @@ UI.autoComplete = function(ele, array, cb){
 
         $('.zAutoComplete').remove();
         var val = $.trim(this.value);
+        if(prefix){
+            val = val.replace(/.*;|.*,|.*\s/g, '');
+        }
+        console.log(val);
         if(!val){
 
             return;
