@@ -2,6 +2,7 @@
 var Ajax = {}
 
 Ajax._send = function(url, method, data, cbOk, cbError){
+    var self = this;
     var params = {
         url: url,
         type: "GET",
@@ -16,8 +17,12 @@ Ajax._send = function(url, method, data, cbOk, cbError){
     if(data){
         params.data = JSON.stringify(data);
     }
-   
-    $.ajax(params, cbOk, cbError);
+    if(cbError){
+        $.ajax(params, cbOk, cbError);
+    }
+    else{
+        $.ajax(params, cbOk, self.error);
+    }
 },
 
 
@@ -37,6 +42,10 @@ Ajax.delete = function(url, cbOk, cbError) {
 	this._send(url, "delete", null, cbOk, cbError);
 }
 
+Ajax.error = function(res){
+    oc.dialog.tips('Request error: ' + res.responseText);
+    console.log('Request error:', res);
+}
 
 module.exports = Ajax;
 

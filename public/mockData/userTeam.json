@@ -1,0 +1,35 @@
+var USETEAM = [
+	{
+	"name": "ERP",
+	"id": 1,
+	"type": "",
+	"website": null,
+	"email": null,
+	"admin": null,
+	"nameChinese": "",
+	"introduction": null,
+	"logo": null
+	},
+	{
+	"name": "HR",
+	"id": 2,
+	"type": "",
+	"website": null,
+	"email": null,
+	"admin": null,
+	"nameChinese": "",
+	"introduction": null,
+	"logo": null
+	},
+	{
+	"name": "team-c",
+	"id": 3,
+	"type": "",
+	"website": null,
+	"email": null,
+	"admin": null,
+	"nameChinese": "",
+	"introduction": null,
+	"logo": null
+	}
+]

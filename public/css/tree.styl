@@ -17,6 +17,22 @@
     0%   {background:#d43f3a; color: #fff;}
     100% {background:#fff; color: #1b809e;}
 
+@keyframes treeTagSort
+    0%   {background:#f0ad4e; color: #fff;}
+    100% {background:#fff; color: #1b809e;}
+@-webkit-keyframes treeTagSort
+    0%   {background:#f0ad4e; color: #fff;}
+    100% {background:#fff; color: #1b809e;}
+@-moz-keyframes treeTagSort
+    0%   {background:#f0ad4e; color: #fff;}
+    100% {background:#fff; color: #1b809e;}
+@-o-keyframes treeTagSort
+    0%   {background:#f0ad4e; color: #fff;}
+    100% {background:#fff; color: #1b809e;}
+@-ms-keyframes treeTagSort
+    0%   {background:#f0ad4e; color: #fff;}
+    100% {background:#fff; color: #1b809e;}
+
 
 .zTree
     position relative
@@ -93,6 +109,8 @@
             position absolute
             left 0
             margin-top 15px
+        >p.pImg::before
+            display none !important
         >p  
             position relative
             line-height 30px
@@ -108,6 +126,15 @@
             cursor pointer
             margin 0
             overflow visible
+            >img 
+                position absolute
+                height 30px
+                width 30px 
+                left -5px
+                top 3px
+                border-radius 30px
+                border 1px solid #ddd
+                padding 2px
             input
                 border 0
                 height 30px
@@ -173,10 +200,12 @@
         display block
     
 
-    .treeTag>p
+    .treeTag>p, .treeSearch>p
         animation treeTag 2s linear infinite normal
+    .treeTagSort>p
+        animation treeTagSort 2s linear infinite normal
         
-.zTree.zTreeOrganization  
+.zTree.zTreeOrganization 
     .zTreeItem>p 
         font-family 'icomoon'
         padding-left 30px
@@ -211,6 +240,10 @@
                 font-size 24px
             .icon-plus2
                 display inline-block
+    .zTreeItem.zTreeItemReport
+        >p 
+            .icon-plus2
+                display inline-block
     .zTreeItem.hasMore.zTreeItemFolder
         >p:before
             content "\e930"
@@ -238,6 +271,27 @@
             font-size 18px
             padding-left 6px
 
+    >li.zTreeItem>p>.zTreeControl
+        display none !important
+    >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-cog
+        display none !important
+    
+    
+    li.zTreeItem
+        .treeTag, .treeTagSort 
+            >p::after
+                content "\f074"
+                font-family "icomoon"
+                color #d43f3a
+                position absolute
+                top 2px
+                right -80px
+        .treeTagSort 
+            >p::after
+                content "\f0a8"
+                color #f0ad4e
+    
+    
 .formOrganization
     span
         display inline-block

@@ -26,7 +26,6 @@ UI.toggleOneBtn = function(btn, on, off){
     btn.replaceWith(span);
     
     span.off('change', 'input').on('change', 'input', function(){
-        console.log('333');
         if(this.checked){
             $(this).parents('.zToggleBtn:eq(0)').addClass('active');
         }
@@ -93,7 +92,9 @@ UI.autoComplete = function(ele, array, cb, prefix){
             if(focusLi.length > 0){
                 var slcVal = focusLi.html();
                 var text = ipt.val();
+                // val = val.replace(/.*;|.*,|.*\s/g, '');
                 if(prefix){
+                    text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
                     ipt.val(text + slcVal);
                 }
                 else{
@@ -125,7 +126,6 @@ UI.autoComplete = function(ele, array, cb, prefix){
         if(prefix){
             val = val.replace(/.*;|.*,|.*\s/g, '');
         }
-        console.log(val);
         if(!val){
 
             return;
@@ -152,7 +152,15 @@ UI.autoComplete = function(ele, array, cb, prefix){
         var left = ipt.position().left;
         ul.css({top: top, left: left}).on('click', 'li', function(){
             var slc = $(this).html();
-            ipt.val(slc);
+            // ipt.val(slc);
+            var text = ipt.val();
+            if(prefix){
+                text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
+                ipt.val(text + slc);
+            }
+            else{
+                ipt.val(slc);
+            }
             $('.zAutoComplete').remove();
             cb && cb(slc, ipt);
         })

@@ -3,6 +3,7 @@
 var Ajax = {}
 
 Ajax._send = function(url, method, data, cbOk, cbError){
+    var self = this;
     var params = {
         url: url,
         type: "GET",
@@ -17,8 +18,12 @@ Ajax._send = function(url, method, data, cbOk, cbError){
     if(data){
         params.data = JSON.stringify(data);
     }
-   
-    $.ajax(params, cbOk, cbError);
+    if(cbError){
+        $.ajax(params, cbOk, cbError);
+    }
+    else{
+        $.ajax(params, cbOk, self.error);
+    }
 },
 
 
@@ -38,6 +43,10 @@ Ajax.delete = function(url, cbOk, cbError) {
 	this._send(url, "delete", null, cbOk, cbError);
 }
 
+Ajax.error = function(res){
+    oc.dialog.tips('Request error: ' + res.responseText);
+    console.log('Request error:', res);
+}
 
 module.exports = Ajax;
 
@@ -1365,11 +1374,13 @@ var TreeOriganization = function(options){
 	this.config = {
 		container: 'body',
 		data: null,
+		teamData: null,
 		showLevel: 1,
 		family: null,
 		allUser: null,
 		isShowAdmin: false
 	};
+	this.allUserName = null,
 	this.ele = null;
 
 	for(var key in options){
@@ -1378,7 +1389,16 @@ var TreeOriganization = function(options){
 		}
 	}
 
+
 	var self = this;
+
+
+	if(self.config.allUser){
+		self.allUserName = [];
+		self.config.allUser.map(function(model){
+			self.allUserName.push(model.name);
+		})
+	}
 
 	self.render = function(){
 		self.ele = $('<ul class="zTree zTreeOrganization"></ul>');
@@ -1389,6 +1409,27 @@ var TreeOriganization = function(options){
 		self.ele.find('>li>ul>li').removeAttr('draggable');
 		self.ele.appendTo($(this.config.container));
 
+		self.ele.find('li.zTreeItem>p').each(function(){
+			var p = $(this);
+			var li = p.parent();
+			var model = li.data();
+			if(!model || !model.nodeType){
+				return true;
+			}
+
+			var nodeType = model.nodeType;
+			if(nodeType != 21 && nodeType != 11){
+				return true;
+			}			
+			var name = li.data().name;
+			var findUsers = self.config.allUser.filter(function(model){
+				return model.name == name;
+			})
+			if(findUsers.length > 0){
+				var img = findUsers[0].img;
+				img && p.append('<img src="' + img + '" />').addClass('pImg');
+			}
+		})
 		self._bindEvents();
 	}
 
@@ -1403,13 +1444,13 @@ var TreeOriganization = function(options){
             var name = item.find('>p').html().toUpperCase();
             if(name.indexOf(keyword) === 0){
                 item.parents('.zTreeItem').addClass('active');
-                item.addClass('treeTag');
+                item.addClass('treeSearch');
             }
         })
 	}
 
 	self.removeFilterTag = function(){
-		self.ele.find('.treeTag').removeClass('treeTag');
+		self.ele.find('.treeSearch').removeClass('treeSearch');
 	}
 
 	self._renderRecusive = function(dataList, ele, level){
@@ -1428,9 +1469,28 @@ var TreeOriganization = function(options){
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
 			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
-			if(one.level !== null){
+			if(one.nodeType == 10 || one.nodeType == 1 || one.nodeType == 2){
 				li.addClass('zTreeItemFolder');
+				if(one.nodeType == 10){
+					var departmentId = one.name;
+					var departmentModel = self.config.teamData.filter(function(model){
+						return model.id == departmentId;
+					});
+
+					if(departmentModel.length == 0){
+						li.html('<p>未知部门</p>');
+					}
+					else{
+						departmentModel = departmentModel[0];
+						one.department = departmentModel;
+						li.html('<p>' + departmentModel.name + '</p>');
+					}
+				}
 			}
+			else if(one.nodeType == 21){ //汇报关系
+				li.addClass('zTreeItemReport');
+			}
+
 			li.appendTo(ul).data(one);
 			// self._setToolTip(li);
 			if(one.children && one.children.length > 0){
@@ -1442,81 +1502,10 @@ var TreeOriganization = function(options){
 		}
 	}
 
-	self._setToolTip = function(li){
-		var model = li.data();
-		var adminName = model.adminUserName || '';
-		if(!adminName){
-			adminName = model.admin2UserName || '';
-		}
-		else{
-			var name2 = model.admin2UserName? ', ' + model.admin2UserName : '';
-			adminName += name2;
-		}
-		if(adminName){
-			var p = li.find('p');
-			li.find('p').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'admin: ' + adminName);
-			p.tooltip && p.tooltip('destroy') && p.tooltip();
-		}
-	}
-
-	self.toggleAdmin = function(){
-		if(self.config.isShowAdmin){
-			self.config.isShowAdmin = false;
-			self.ele.find('.zTreeItemFolder>p>.spanAdmin').remove();
-		}
-		else{
-			self.config.isShowAdmin = true;
-			self.ele.find('.zTreeItemFolder>p').each(function(){
-				var p = $(this);
-				var li = p.parent();
-				var adminName = self.getAdminString(li);
-				if(adminName){
-					p.append('<span class="spanAdmin"> (' + adminName + ')');
-				}
-			})
-		}
-	}
-
-	self.getAdminString = function(li){
-		var model = li.data();
-		var adminName = model.adminUserName || '';
-		if(!adminName){
-			adminName = model.admin2UserName || '';
-		}
-		else{
-			var name2 = model.admin2UserName? ', ' + model.admin2UserName : '';
-			adminName += name2;
-		}
-
-		return adminName;
-	}
-
-	self._setAdmin = function(li){
-		if(!self.config.isShowAdmin){
-			return;
-		}
-		if(!li.hasClass('zTreeItemFolder')){
-			return;
-		}
-		var model = li.data();
-		var adminName = model.adminUserName || '';
-		if(!adminName){
-			adminName = model.admin2UserName || '';
-		}
-		else{
-			var name2 = model.admin2UserName? ', ' + model.admin2UserName : '';
-			adminName += name2;
-		}
-		if(adminName){
-			var p = li.find('>p');
-			p.find('.spanAdmin').remove();
-			p.append('<span class="spanAdmin"> (' + adminName + ')');
-		}
-	}
-
 	self._bindEvents = function(){
 		self.ele.on('click', '.zTreeItem p', function(){
-			$(this).parent().toggleClass('active');
+			var li = $(this).parent();
+			li.toggleClass('active');
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
 			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2"></i></span>').hide().appendTo(this).fadeIn(1000);
@@ -1548,19 +1537,7 @@ var TreeOriganization = function(options){
 			var li = p.parent();
 			var model = li.data();
 			self.model = model;
-			self.dialog(li);
-			var dialog = $('.zDialog');
-			dialog.find('.btnSub').html('Save');
-			dialog.find('.zDialogTitle').html('<span class="close">×</span>Edit');
-			$('.pType').remove();
-			dialog.find('.form-control').each(function(){
-				var ele = $(this);
-				var name = ele.attr('name');
-				ele.val(model[name]);
-			})
-			if(model.level !== null){
-				$('.divGroup').show();
-			}
+			self.dialogEdit(li);
 		})
 		.on('click', '.zTreeEdit input, .zTreeEdit i, .zTreeControl', function(e){
 			e.stopPropagation();
@@ -1571,40 +1548,34 @@ var TreeOriganization = function(options){
 			self.model = null;
 			self.parentModel = li.data();
 			self.dialog(li);
-			if(li.parent().hasClass('zTreeOrganization')){
-				var addType = $('[name="addType"]');
-				addType.get(1).checked = true;
-				$('.pType, .divPerson').hide();
-				$('.divGroup').show();
-				var familySlc = self.getFamilyString();
-				if(!familySlc){
-					oc.dialog.close();
-					oc.dialog.tips('No family to add.', 3000);
-				}
-				else{
-					$('.pType').after('<span>Family:</span>' + familySlc[0].outerHTML);
-				}
-			}
 		})
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();
 			self.dragEle = $(this);
 		})
-		.on('dragenter', '.zTreeItemFolder>p', function(e){
+		.on('dragenter', 'ul', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+		})
+		.on('dragenter', '.zTreeItemFolder>p, .zTreeItemReport>p', function(e){  //move in
 			e.stopPropagation();
 			e.preventDefault();
 			var ele = $(this);
 			var li = ele.parent();
+			
 			var source = self.dragEle.data();
 			var target = li.data();
+
 			var sourceId = source.id;
 			var targetId = target.id;
-			//人员不允许直接添加到海翼
-			if(li.parent().hasClass('zTree')){
+			if(target.nodeType != 21 && target.nodeType != 10){
 				return;
 			}
-			//不能拖拽到自己---
-			if(targetId == sourceId && source.level == target.level){
+			if(sourceId == targetId){
+				return;
+			}
+			//人员不允许直接添加到海翼
+			if(li.hasClass('zTree')){
 				return;
 			}
 			//相同的元素中
@@ -1613,7 +1584,7 @@ var TreeOriganization = function(options){
 			}
 
 			//不能的family之间不能拖拽------
-			if(li.data().familyName != self.dragEle.data().familyName){
+			if(target.familyName != source.familyName){
 				return;
 			}
 
@@ -1629,28 +1600,58 @@ var TreeOriganization = function(options){
 			if(!ok){
 				return;
 			}
-
 			li.addClass('treeTag');
 			self.timer = setTimeout(function(){
 				li.addClass('active');
-			}, 1000);
+			}, 1500);
 		})
-		.on('dragleave', '.zTreeItemFolder>p', function(e){
-			self.timer && clearTimeout(self.timer);
+		.on('dragenter', '.zTreeItem', function(e){  //move sort
 			e.stopPropagation();
-			$(this).parent().removeClass('treeTag');
+			e.preventDefault();
+			var li = $(this);
+			
+			var source = self.dragEle.data();
+			var target = li.data();
+
+			var sourceId = source.id;
+			var targetId = target.id;
+			if(sourceId == targetId){
+				return;
+			}
+			// 不能的family之间不能排序------
+			if(target.familyName != source.familyName){
+				return;
+			}
+			var dragParentId = self.dragEle.parents('li:eq(0)').data().id;
+			if(dragParentId !== li.parents('li:eq(0)').data().id && dragParentId != targetId){
+				return;
+			}
+			li.addClass('treeTagSort');
 		})
-		.on('dragover', '.zTreeItemFolder.treeTag', function(e){
+		.on('dragleave', '.zTreeItem', function(e){
+			e.stopPropagation();
+			var ele = $(this);
+			ele.removeClass('treeTagSort');
+		})
+		.on('dragleave', '.zTreeItemFolder>p, .zTreeItemReport>p', function(e){
+			e.stopPropagation();
+			self.timer && clearTimeout(self.timer);
+			var ele = $(this).parent();
+			if(ele.hasClass('treeTag')){
+				ele.removeClass('treeTag');
+			}
+		})
+		.on('dragover', '.zTreeItem', function(e){
 			e.preventDefault();
 		})
-		.on('drop', '.zTreeItemFolder.treeTag', function(e){
+		.on('drop', '.zTreeItemFolder.treeTag, .zTreeItemReport.treeTag', function(e){
 			var ele = $(this);
 			var source = self.dragEle.data();
 			var target = ele.data();
 			var sourceId = source.id;
 			var targetId = target.id;
 			
-			self.moveNode(sourceId, targetId, self.dragEle.data().level, function(isOK, msg){
+			self.moveNode(sourceId, targetId, function(isOK, msg){
 				ele.removeClass('treeTag');
 				if(isOK){
 					var ul = ele.find('>ul');
@@ -1670,6 +1671,33 @@ var TreeOriganization = function(options){
 				else{
 					oc.dialog.tips(msg);
 				}
+			});
+			
+			e.stopPropagation();
+			e.preventDefault();
+		})
+		.on('drop', '.zTreeItem.treeTagSort', function(e){
+			var ele = $(this);
+			var source = self.dragEle.data();
+			var target = ele.data();
+			var sourceId = source.id;
+			var targetId = target.id;
+			if(self.dragEle.parents('li:eq(0)').data().id == targetId){
+				targetId = null;
+			}
+			self.sortNode(sourceId, targetId, function(isOK, msg){
+				ele.removeClass('treeTagSort');
+				if(isOK){
+					if(targetId == null){
+						ele.find('>ul').prepend(self.dragEle);
+					}
+					else{
+						self.dragEle.insertAfter(ele);
+					}
+				}
+				else{
+					oc.dialog.tips(msg);
+				}
 				
 			});
 			
@@ -1678,32 +1706,102 @@ var TreeOriganization = function(options){
 		})
 	}
 
-	self.getFamilyString = function(){
-		var slc = $('<select class="form-control input-sm" name="family"></select>');
-		var len = self.config.family.length;
-		if(len === 0){
-			return null;
+	self.dialogEdit = function(li){
+		var form = '<div class="formOrganization w600 form-inline p10 pl30 pr30">' + 
+				'<p class="mt10 divPerson"><span>Name: </span><input type="text" class="form-control input-sm" name="name" autocomplete="off" value="' + self.model.name + '"></p>' + 
+				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Save</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
+				'</div>';
+		if(self.model.nodeType === 10){
+			form = '<div class="formOrganization w600 form-inline p10 pl30 pr30">' + 
+				'<p class="mt10 divGroup"><span>Name: </span><select class="slcDepartment form-control input-sm" name="name"></select></p>' + 
+				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Add</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
+				'</div>';
+		}
+		
+		oc.dialog.open('Edit', form);
+
+		var dialog = $('.zDialog');
+		if(self.model.nodeType === 10){
+			var slcTeam = dialog.find('[name="name"]');
+			self.config.teamData.map(function(model){
+				slcTeam.append('<option value="' + model.id + '">' + model.name + '</option>');
+			});
+			slcTeam.find('option[value="' + self.model.name + '"]').attr('selected', true);
+		}
+		else{
+			oc.ui.autoComplete(dialog.find('[name="name"]'), self.allUserName);
 		}
 
-		for(var i = 0; i < len; i ++){
-			slc.append('<option>' + self.config.family[i] + '</option>');
-		}
+		dialog.on('click', '.btnSub', function(){
+			var btn = $(this);
 
-		return slc;
+			var eleName = dialog.find('[name="name"]:visible');
+			self.model.name = $.trim(eleName.val());
+			if(!self.model.name){
+				oc.dialog.tips('Name is required');
+				eleName.focus();
+				return ;
+			}
+
+			btn.html('<i class="zLoadingIcon mr5"></i>').attr('disabled', true);
+			
+			self.updateNode(self.model, function(isOk, msg){
+				if(isOk){
+					oc.dialog.close();
+					var p = li.find('p').html(self.model.name);
+					if(self.model.nodeType === 10){
+						var departmentModel = self.config.teamData.filter(function(model){
+							return model.id == self.model.name;
+						});
+
+						departmentModel = departmentModel[0];
+						self.model.department = departmentModel;
+					}
+					else{
+						var name = self.model.name;
+						var findUsers = self.config.allUser.filter(function(model){
+							return model.name == name;
+						})
+						if(findUsers.length > 0){
+							var img = findUsers[0].img;
+							img && (p.addClass('pImg').append('<img src="' + img + '" />'));
+						}
+					}
+					li.data(self.model);
+				}
+				else{
+					btn.removeAttr('disabled').html("Save");
+					oc.dialog.tips('Add node fail:' + msg);
+				}
+			})
+		})
+
 	}
 
 	self.dialog = function(li){
-		var form = '<div class="formOrganization w600 form-inline p10 pl30 pr30"><div class="p15"><p class="pType"><span>Type: </span><label class="mr30"><input type="radio" name="addType" value="person" checked style="margin-right:5px">人员</label><label><input name="addType" style="margin-right:5px" type="radio" value="group">部门</label></p>' + 
+		var form = '<div class="formOrganization w600 form-inline p10 pl30 pr30"><div class="p15"><p class="pType"><span>Type: </span><label class="mr30"><input type="radio" name="addType" value="person" checked style="margin-right:5px">人员</label><label><input name="addType" style="margin-right:5px" type="radio" value="group">团队</label></p>' + 
 				'<p class="mt10 divPerson"><span>Name: </span><input type="text" class="form-control input-sm" name="name" autocomplete="off"></p>' + 
-				'<div class="divGroup none"><p class="mt10"><span>Group name: </span><input type="text" class="form-control input-sm" name="name"></p>' + 
-				'<p class="mt10"><span>Admin1 name: </span><input type="text" class="form-control input-sm" name="adminUserName" autocomplete="off"></p>' + 
-				'<p class="mt10"><span>Admin2 name: </span><input type="text" class="form-control input-sm" name="admin2UserName" autocomplete="off"></p></div>' + 
-				'<p class="divGroup none"><span class="vt">Memo: </span><textarea class="form-control" name="memo"></textarea></p></div>' + 
+				'<p class="mt10 divGroup none"><span>Name: </span><select class="slcDepartment form-control input-sm" name="name"></select></p>' + 
 				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Add</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
 				'</div>';
 		oc.dialog.open('Add', form);
 		var dialog = $('.zDialog');
-		oc.ui.autoComplete(dialog.find('.divPerson [name="name"], [name="adminUserName"], [name="admin2UserName"]'), self.config.allUser);
+		var nodeData = li.data();
+		self.model = {
+			parentId: self.parentModel.id,
+			familyName: self.parentModel.familyName
+		};
+
+		if(nodeData.nodeType == 2 || nodeData.nodeType == 21){
+			self.model.nodeType = 21;
+			dialog.find('.pType, .divGroup').remove();
+		}
+
+		oc.ui.autoComplete(dialog.find('.divPerson [name="name"]'), self.allUserName);
+		var slcTeam = dialog.find('.divGroup [name="name"]');
+		self.config.teamData.map(function(model){
+			slcTeam.append('<option value="' + model.id + '">' + model.name + '</option>');
+		});
 		dialog.on('change', '[name="addType"]', function(){
 			if(this.value === 'group'){
 				$('.divGroup').fadeIn();
@@ -1716,15 +1814,7 @@ var TreeOriganization = function(options){
 		})
 		.on('click', '.btnSub', function(){
 			var btn = $(this);
-			var isAdd = false;
-			if(!self.model){
-				isAdd = true;
-				self.model = {
-					familyName: self.parentModel.familyName,
-					parentId: self.parentModel.id
-				};
-			}
-			
+
 			var eleName = dialog.find('[name="name"]:visible');
 			self.model.name = $.trim(eleName.val());
 			if(!self.model.name){
@@ -1732,62 +1822,58 @@ var TreeOriganization = function(options){
 				eleName.focus();
 				return ;
 			}
-			var eleFamily = $('[name="family"]');
-			if(eleFamily.length > 0){
-				self.model.familyName = eleFamily.val();
+
+			if(self.model.nodeType != 2 && self.model.nodeType != 21){
+				var checkedType = $('[name="addType"]:checked').val();
+				checkedType == "person"? self.model.nodeType = 11 : self.model.nodeType = 10;
 			}
-			self.model.memo = $.trim(dialog.find('[name="memo"]').val());
-			if(isAdd){
-				var addType = $('[name="addType"]:checked').val();
-				self.model.level = null;
-				if(addType == 'group'){
-					self.model.level = self.parentModel.level + 1;
-				}
-			}
-			self.model.adminUserName = $.trim(dialog.find('[name="adminUserName"]').val());
-			self.model.admin2UserName = $.trim(dialog.find('[name="admin2UserName"]').val());
 
 			var btnText = btn.html();
 			btn.html('<i class="zLoadingIcon mr5"></i>' + btnText + '...').attr('disabled', true);
 			
-			var method = isAdd? 'addNode' : 'updateNode';
-			self[method](self.model, function(isOk, msg){
+			self.addNode(self.model, function(isOk, msg){
 				if(isOk){
-					if(eleFamily.length > 0){
-						self.config.family = self.config.family.filter(function(key){
-							return key != self.model.familyName;
-						})
-					}
 					oc.dialog.close();
-					if(!isAdd){ //更新树节点
-						li.data(self.model).find('>p').html(self.model.name);
-						// self._setToolTip(li);
-						self._setAdmin(li);
+					
+					var ul = li.find('>ul');
+					if(ul.length === 0){
+						ul = $('<ul></ul>').appendTo(li);
 					}
-					else{
-						var ul = li.find('>ul');
-						if(ul.length === 0){
-							ul = $('<ul></ul>').appendTo(li);
-						}
-						self.model.id = msg;
-						var newLi = $('<li class="zTreeItem"><p>' + self.model.name + '</p></li>').data(self.model);
-						if(self.model.level !== null){
-							newLi.addClass('zTreeItemFolder');
-						}
-						if(eleFamily.length === 0){
-							newLi.attr('draggable', 'true');
-						}
-						newLi.appendTo(ul);
-						// self._setToolTip(newLi);
-						self._setAdmin(li);
+					self.model.id = msg;
+					var newLi = $('<li class="zTreeItem"><p>' + self.model.name + '</p></li>');
+					if(self.model.nodeType == 10){
+						newLi.addClass('zTreeItemFolder');
+						var departmentModel = self.config.teamData.filter(function(model){
+							return model.id == self.model.name;
+						});
+
+						departmentModel = departmentModel[0];
+						self.model.department = departmentModel;
+						newLi.html('<p>' + departmentModel.name + '</p>');
 					}
+					else if(self.model.nodeType == 21){
+						newLi.addClass('zTreeItemReport');
+					}
+
+					if(self.model.nodeType == 11 || self.model.nodeType == 21){
+						var name = self.model.name;
+						var findUsers = self.config.allUser.filter(function(model){
+							return model.name == name;
+						})
+						if(findUsers.length > 0){
+							var img = findUsers[0].img;
+							img && newLi.find('>p').addClass('pImg').append('<img src="' + img + '" />'); 
+						}
+					}
+					newLi.data(self.model);
+
+					newLi.appendTo(ul);
 				}
 				else{
 					btn.removeAttr('disabled').html(btnText);
-					oc.dialog.tips(method + ' fail:' + msg);
+					oc.dialog.tips('Add node fail:' + msg);
 				}
 			})
-
 		})
 	}
 
@@ -1801,10 +1887,17 @@ var TreeOriganization = function(options){
 	}
 
 	self.addNode = function(model, cb){
+		console.log(model);
 		setTimeout(cb, 2000);
 	}
 
-	self.moveNode = function(sourceId, targetId, level, cb){
+	self.moveNode = function(sourceId, targetId, cb){
+		setTimeout(function(){
+			cb(true);
+		}, 2000);
+	}
+
+	self.sortNode = function(sourceId, targetId, cb){
 		setTimeout(function(){
 			cb(true);
 		}, 2000);
@@ -2148,7 +2241,6 @@ UI.toggleOneBtn = function(btn, on, off){
     btn.replaceWith(span);
     
     span.off('change', 'input').on('change', 'input', function(){
-        console.log('333');
         if(this.checked){
             $(this).parents('.zToggleBtn:eq(0)').addClass('active');
         }
@@ -2215,7 +2307,9 @@ UI.autoComplete = function(ele, array, cb, prefix){
             if(focusLi.length > 0){
                 var slcVal = focusLi.html();
                 var text = ipt.val();
+                // val = val.replace(/.*;|.*,|.*\s/g, '');
                 if(prefix){
+                    text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
                     ipt.val(text + slcVal);
                 }
                 else{
@@ -2247,7 +2341,6 @@ UI.autoComplete = function(ele, array, cb, prefix){
         if(prefix){
             val = val.replace(/.*;|.*,|.*\s/g, '');
         }
-        console.log(val);
         if(!val){
 
             return;
@@ -2274,7 +2367,15 @@ UI.autoComplete = function(ele, array, cb, prefix){
         var left = ipt.position().left;
         ul.css({top: top, left: left}).on('click', 'li', function(){
             var slc = $(this).html();
-            ipt.val(slc);
+            // ipt.val(slc);
+            var text = ipt.val();
+            if(prefix){
+                text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
+                ipt.val(text + slc);
+            }
+            else{
+                ipt.val(slc);
+            }
             $('.zAutoComplete').remove();
             cb && cb(slc, ipt);
         })

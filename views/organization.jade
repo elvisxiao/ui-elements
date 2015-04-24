@@ -9,11 +9,13 @@ block content
         button#btnToggle(type="button") Show Admin
 
     script(src="/mockData/user_groups.json")
+    script(src="/mockData/userTeam.json")
     script.
         var dataList = TREEDATA;
         
         var tree = new oc.TreeOrganization({
-            data: dataList
+            data: dataList,
+            teamData: USETEAM
         });
 
         $("#btnToggle").click(function(){
