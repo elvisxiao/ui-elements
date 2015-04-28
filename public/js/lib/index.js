@@ -12,6 +12,7 @@
 	oc.Tree = require('./tree');
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
+	oc.TreePIS = require('./treePIS');
 	oc.ajax = require('./ajax');
 	oc.date = require('./date');
 	

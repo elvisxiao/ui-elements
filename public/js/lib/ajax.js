@@ -17,12 +17,22 @@ Ajax._send = function(url, method, data, cbOk, cbError){
     if(data){
         params.data = JSON.stringify(data);
     }
+
+    params.success = function(res){
+        cbOk(res);
+    }
     if(cbError){
-        $.ajax(params, cbOk, cbError);
+        params.error = function(res){
+            cbError(res);
+        }
+        // $.ajax(params, cbOk, cbError).done(cbOK).fail(cbError);
     }
     else{
-        $.ajax(params, cbOk, self.error);
+        params.error = self.error;
+        // $.ajax(params, cbOk, cbError).done(cbOk).fail(self.error);
     }
+
+    $.ajax(params);
 },
 
 

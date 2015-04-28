@@ -33,7 +33,9 @@
     0%   {background:#f0ad4e; color: #fff;}
     100% {background:#fff; color: #1b809e;}
 
-
+.zTree.zTreeNoEdit .zTreeItem>p>.zTreeControl
+    display none !important
+    
 .zTree
     position relative
     list-style-type none
@@ -212,6 +214,7 @@
         border 1px solid transparent
         position relative
         padding-right 10px
+        text-transform Capitalize
         &:before
             border 0
             content "\e601" 
@@ -232,10 +235,11 @@
         .icon-plus2
             display none
     .zTreeItem.zTreeItemFolder
-        >p 
+        >p
             position relative
+            text-transform none
             &:before
-                content "\e931"
+                content "\e92f"
                 padding-top 0
                 font-size 24px
             .icon-plus2
@@ -275,7 +279,8 @@
         display none !important
     >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-cog
         display none !important
-    
+    >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-minus2
+        display none !important
     
     li.zTreeItem
         .treeTag, .treeTagSort 
@@ -298,5 +303,6 @@
         width 100px
     .form-control 
         width 400px !important
-    
+.lineThrough
+     text-decoration line-through
 

@@ -1,5 +1,5 @@
 
-var TreeOriganization = function(options){
+var TreePIS = function(options){
 	this.config = {
 		container: 'body',
 		data: null,
@@ -18,8 +18,9 @@ var TreeOriganization = function(options){
 		}
 	}
 
+
 	var self = this;
-	
+
 
 	if(self.config.allUser){
 		self.allUserName = [];
@@ -29,35 +30,56 @@ var TreeOriganization = function(options){
 	}
 
 	self.render = function(){
-		self.ele = $('<ul class="zTree zTreeOrganization"></ul>');
-		var li = $('<li class="zTreeItem zTreeItemFolder"><p>海翼电商</p></li>').data(self.config.data);
-		li.appendTo(self.ele);
+		self.ele = $('<ul class="zTree"></ul>');
+		// var li = $('<li class="zTreeItem" data-id="' + self.config.data[0].categoryId + '"><p>' + self.config.data[0].categoryName + '</p></li>').data(self.config.data[0]);
+		// li.appendTo(self.ele);
 
-		self._renderRecusive(self.config.data.children, li, 0);
-		self.ele.find('>li>ul>li').removeAttr('draggable');
+		self.config.data.map(function(one){
+			var ul = self.ele;
+			if(one.depth > 0){
+				ul = self.ele.find('ul:eq(' + (one.depth - 1) + ')');
+				if(ul.length === 0){
+					if(one.depth > 1){
+						ul = self.ele.find('ul:eq(' + (one.depth - 2) + ')');
+					}
+					else{
+						ul = self.ele;
+					}
+					var parentLi = ul.find('>li[data-id="' + one.descendant + '"]').addClass('hasMore');
+					ul = $('<ul></ul>').appendTo(parentLi);
+				}
+
+			}
+
+			var newLi = $('<li class="zTreeItem" data-id="' + one.categoryId + '"><p>' + one.categoryName + '</p></li>').data(one);
+			newLi.appendTo(ul);
+		})
+
+		// self._renderRecusive(self.config.data.children, li, 0);
+		// self.ele.find('>li>ul>li').removeAttr('draggable');
 		self.ele.appendTo($(this.config.container));
 
-		self.ele.find('li.zTreeItem>p').each(function(){
-			var p = $(this);
-			var li = p.parent();
-			var model = li.data();
-			if(!model || !model.nodeType){
-				return true;
-			}
+		// self.ele.find('li.zTreeItem>p').each(function(){
+		// 	var p = $(this);
+		// 	var li = p.parent();
+		// 	var model = li.data();
+		// 	if(!model || !model.nodeType){
+		// 		return true;
+		// 	}
 
-			var nodeType = model.nodeType;
-			if(nodeType != 21 && nodeType != 11){
-				return true;
-			}			
-			var name = li.data().name;
-			var findUsers = self.config.allUser.filter(function(model){
-				return model.name == name;
-			})
-			if(findUsers.length > 0){
-				var img = findUsers[0].img;
-				img && p.append('<img src="' + img + '" />').addClass('pImg');
-			}
-		})
+		// 	var nodeType = model.nodeType;
+		// 	if(nodeType != 21 && nodeType != 11){
+		// 		return true;
+		// 	}			
+		// 	var name = li.data().name;
+		// 	var findUsers = self.config.allUser.filter(function(model){
+		// 		return model.name == name;
+		// 	})
+		// 	if(findUsers.length > 0){
+		// 		var img = findUsers[0].img;
+		// 		img && p.append('<img src="' + img + '" />').addClass('pImg');
+		// 	}
+		// })
 		self._bindEvents();
 	}
 
@@ -96,11 +118,10 @@ var TreeOriganization = function(options){
 		
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			var showName = one.name;
 			if(one.nodeType == 11 || one.nodeType == 21){
-				showName = one.name.replace('.', ' ');
+				one.name = one.name.replace('.', ' ');
 			}
-			var li = $('<li class="zTreeItem" draggable="true"><p>' + showName + '</p></li>');
+			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
 
 			if(one.nodeType == 10 || one.nodeType == 1 || one.nodeType == 2){
 				li.addClass('zTreeItemFolder');
@@ -415,9 +436,8 @@ var TreeOriganization = function(options){
 		})
 		.on('click', '.jsAddTeam', function(e){
 			e.preventDefault();
-			self.showTeamPanel(function(teamModel){
+			self.showTeamPanel(function(){
 				self.dialogEdit(li);
-				$('.zDialogCover .slcDepartment').val(teamModel.id);
 			});
 		})
 	}
@@ -523,12 +543,11 @@ var TreeOriganization = function(options){
 		})
 		.on('click', '.jsAddTeam', function(e){
 			e.preventDefault();
-			self.showTeamPanel(function(teamModel){
+			self.showTeamPanel(function(){
 				self.dialog(li);
 				$('.zDialog [name="addType"]').get(1).checked = true;
 				$('.zDialog .divGroup').fadeIn();
 				$('.zDialog .divPerson').fadeOut();
-				$('.zDialogCover .slcDepartment').val(teamModel.id);
 			});
 		})
 	}
@@ -566,4 +585,4 @@ var TreeOriganization = function(options){
 	self.render();
 }
 
-module.exports = TreeOriganization;
+module.exports = TreePIS;

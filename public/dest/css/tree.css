@@ -107,28 +107,33 @@
   }
 }
 
-/* line 37 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 36 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.zTree.zTreeNoEdit .zTreeItem>p>.zTreeControl {
+  display: none !important;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree {
   position: relative;
   list-style-type: none;
 }
 
-/* line 40 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
-/* line 41 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
 /* line 42 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 43 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 44 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree >.zTreeItem >p .icon-minus2,
 .zTree >.zTreeItem >p .icon-cog {
   display: none;
 }
 
-/* line 44 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 46 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree >.zTreeItem:before {
   border-top: 0 !important;
 }
 
-/* line 46 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 48 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree ul {
   position: relative;
   margin-left: 20px;
@@ -137,7 +142,7 @@
   padding: 0;
 }
 
-/* line 52 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 54 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree ul:before {
   content: '';
   display: block;
@@ -149,7 +154,7 @@
   border-left: 1px solid #46b8da;
 }
 
-/* line 61 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 63 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree ul:after {
   content: '';
   display: block;
@@ -161,11 +166,11 @@
   border-bottom: 1px solid #46b8da;
 }
 
-/* line 71 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
-/* line 72 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
 /* line 73 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 74 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 75 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem.hasMore >p:before {
   display: block;
   width: 0;
@@ -181,9 +186,9 @@
   left: 5px;
 }
 
-/* line 87 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 89 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 88 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 90 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem.zTreeItemDes>p:after {
   content: "";
   width: 0;
@@ -197,14 +202,14 @@
   right: 0;
 }
 
-/* line 100 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 102 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem {
   position: relative;
   padding-left: 40px;
   padding-top: 10px;
 }
 
-/* line 104 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 106 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem:before {
   content: "";
   display: block;
@@ -215,12 +220,12 @@
   margin-top: 15px;
 }
 
-/* line 112 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 114 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.pImg::before {
   display: none !important;
 }
 
-/* line 114 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 116 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p {
   position: relative;
   line-height: 30px;
@@ -241,7 +246,7 @@
   overflow: visible;
 }
 
-/* line 129 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 131 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p >img {
   position: absolute;
   height: 30px;
@@ -256,7 +261,7 @@
   padding: 2px;
 }
 
-/* line 138 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 140 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p input {
   border: 0;
   height: 30px;
@@ -270,17 +275,17 @@
   padding-left: 5px;
 }
 
-/* line 146 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 148 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p input:focus {
   outline: none;
 }
 
-/* line 148 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 150 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p input[name="description"] {
   width: 300px;
 }
 
-/* line 150 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 152 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p .iconRight {
   position: absolute;
   right: 0px;
@@ -292,34 +297,34 @@
   text-align: center;
 }
 
-/* line 159 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 161 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p .zLoadingIcon {
   right: 2px;
   top: 3px;
 }
 
-/* line 162 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 164 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p:hover {
   background: #46b8da;
   color: #fff;
 }
 
-/* line 165 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 167 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p:hover:before {
   border-top: 6px solid #fff;
 }
 
-/* line 167 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 169 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p:hover:after {
   border-top: 12px solid #fff;
 }
 
-/* line 169 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 171 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p:hover .zTreeControl {
   color: #1b809e;
 }
 
-/* line 171 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 173 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p .zTreeControl {
   position: absolute;
   left: 100%;
@@ -332,51 +337,51 @@
   line-height: 32px;
 }
 
-/* line 181 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 183 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p .zTreeControl i {
   margin: 0 5px;
   font-size: 16px;
 }
 
-/* line 185 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 187 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeEdit {
   background: #46b8da;
 }
 
-/* line 187 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 189 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeEdit:hover {
   color: #444;
 }
 
-/* line 189 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 191 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeEdit:before {
   border-top: 6px solid #fff;
 }
 
-/* line 191 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 193 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeEdit:after {
   display: none;
 }
 
-/* line 193 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 195 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeEdit .icon-plus2,
 .zTree .zTreeItem >p.zTreeEdit .icon-cog {
   display: none;
 }
 
-/* line 195 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 197 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 196 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 198 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem >p.zTreeAdd .icon-minus2 {
   display: block !important;
 }
 
-/* line 199 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 201 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .zTreeItem.active>ul {
   display: block;
 }
 
-/* line 203 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 205 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .treeTag>p,
 .zTree .treeSearch>p {
   -webkit-animation: treeTag 2s linear infinite normal;
@@ -385,7 +390,7 @@
   animation: treeTag 2s linear infinite normal;
 }
 
-/* line 205 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 207 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree .treeTagSort>p {
   -webkit-animation: treeTagSort 2s linear infinite normal;
   -moz-animation: treeTagSort 2s linear infinite normal;
@@ -393,18 +398,19 @@
   animation: treeTagSort 2s linear infinite normal;
 }
 
-/* line 208 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 210 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 209 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 211 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p {
   font-family: 'icomoon';
   padding-left: 30px;
   border: 1px solid transparent;
   position: relative;
   padding-right: 10px;
+  text-transform: Capitalize;
 }
 
-/* line 215 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 218 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p:before {
   border: 0;
   content: "\e601";
@@ -422,73 +428,74 @@
   transition: font 0.3s;
 }
 
-/* line 227 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 230 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p:hover {
   background: #fff;
   color: #46b8da;
 }
 
-/* line 230 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 233 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p:hover:before {
   border: 1px solid transparent;
 }
 
-/* line 232 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 235 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p .icon-plus2 {
   display: none;
 }
 
-/* line 234 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 237 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 235 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 238 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem.zTreeItemFolder >p {
   position: relative;
+  text-transform: none;
 }
 
-/* line 237 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 241 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem.zTreeItemFolder >p:before {
-  content: "\e931";
+  content: "\e92f";
   padding-top: 0;
   font-size: 24px;
 }
 
-/* line 241 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-.zTree.zTreeOrganization .zTreeItem.zTreeItemFolder >p .icon-plus2 {
-  display: inline-block;
-}
-
-/* line 243 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
-/* line 244 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
 /* line 245 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-.zTree.zTreeOrganization .zTreeItem.zTreeItemReport >p .icon-plus2 {
+.zTree.zTreeOrganization .zTreeItem.zTreeItemFolder >p .icon-plus2 {
   display: inline-block;
 }
 
 /* line 247 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
 /* line 248 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 249 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.zTree.zTreeOrganization .zTreeItem.zTreeItemReport >p .icon-plus2 {
+  display: inline-block;
+}
+
+/* line 251 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 252 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem.hasMore.zTreeItemFolder >p:before {
   content: "\e930";
 }
 
-/* line 252 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 256 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeEdit {
   border: 1px solid #46b8da;
 }
 
-/* line 254 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 258 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeEdit input[name=name] {
   width: 200px;
 }
 
-/* line 256 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 260 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeEdit input[name=description] {
   display: none;
 }
 
-/* line 258 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 262 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeEdit:before {
   color: #fff;
   padding-top: 0;
@@ -498,35 +505,40 @@
   width: 30px;
 }
 
-/* line 265 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 269 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeEdit:hover {
   background: #46b8da !important;
 }
 
-/* line 268 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 272 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 269 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 273 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization p.zTreeFolder:before {
   content: "\e930";
   font-size: 18px;
   padding-left: 6px;
 }
 
-/* line 274 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 278 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization >li.zTreeItem>p>.zTreeControl {
   display: none !important;
 }
 
-/* line 276 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 280 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-cog {
   display: none !important;
 }
 
-/* line 280 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
-/* line 281 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-
 /* line 282 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.zTree.zTreeOrganization >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-minus2 {
+  display: none !important;
+}
+
+/* line 285 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 286 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+
+/* line 287 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization li.zTreeItem .treeTag >p::after,
 .zTree.zTreeOrganization li.zTreeItem .treeTagSort >p::after {
   content: "\f074";
@@ -537,25 +549,30 @@
   right: -80px;
 }
 
-/* line 289 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 294 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 290 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 295 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization li.zTreeItem .treeTagSort >p::after {
   content: "\f0a8";
   color: #f0ad4e;
 }
 
-/* line 295 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 300 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
-/* line 296 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 301 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .formOrganization span {
   display: inline-block;
   width: 100px;
 }
 
-/* line 299 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+/* line 304 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .formOrganization .form-control {
   width: 400px !important;
+}
+
+/* line 306 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.lineThrough {
+  text-decoration: line-through;
 }
 
 /* line 4 : /Users/elvis/bitbucket/ocui/public/css/params.styl */
