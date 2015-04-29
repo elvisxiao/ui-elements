@@ -17,10 +17,8 @@ var TreePIS = function(options){
 			this.config[key] = options[key];
 		}
 	}
-
-
+	
 	var self = this;
-
 
 	if(self.config.allUser){
 		self.allUserName = [];
@@ -31,55 +29,13 @@ var TreePIS = function(options){
 
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');
-		// var li = $('<li class="zTreeItem" data-id="' + self.config.data[0].categoryId + '"><p>' + self.config.data[0].categoryName + '</p></li>').data(self.config.data[0]);
-		// li.appendTo(self.ele);
+		var li = $('<li class="zTreeItem"><p>' + self.config.data.name + '</p></li>').data(self.config.data);
+		li.appendTo(self.ele);
+		
+		self._renderRecusive(self.config.data.items, li, 0);
+		$(this.config.container).find('.zTree').remove();
+		$(this.config.container).append(self.ele);
 
-		self.config.data.map(function(one){
-			var ul = self.ele;
-			if(one.depth > 0){
-				ul = self.ele.find('ul:eq(' + (one.depth - 1) + ')');
-				if(ul.length === 0){
-					if(one.depth > 1){
-						ul = self.ele.find('ul:eq(' + (one.depth - 2) + ')');
-					}
-					else{
-						ul = self.ele;
-					}
-					var parentLi = ul.find('>li[data-id="' + one.descendant + '"]').addClass('hasMore');
-					ul = $('<ul></ul>').appendTo(parentLi);
-				}
-
-			}
-
-			var newLi = $('<li class="zTreeItem" data-id="' + one.categoryId + '"><p>' + one.categoryName + '</p></li>').data(one);
-			newLi.appendTo(ul);
-		})
-
-		// self._renderRecusive(self.config.data.children, li, 0);
-		// self.ele.find('>li>ul>li').removeAttr('draggable');
-		self.ele.appendTo($(this.config.container));
-
-		// self.ele.find('li.zTreeItem>p').each(function(){
-		// 	var p = $(this);
-		// 	var li = p.parent();
-		// 	var model = li.data();
-		// 	if(!model || !model.nodeType){
-		// 		return true;
-		// 	}
-
-		// 	var nodeType = model.nodeType;
-		// 	if(nodeType != 21 && nodeType != 11){
-		// 		return true;
-		// 	}			
-		// 	var name = li.data().name;
-		// 	var findUsers = self.config.allUser.filter(function(model){
-		// 		return model.name == name;
-		// 	})
-		// 	if(findUsers.length > 0){
-		// 		var img = findUsers[0].img;
-		// 		img && p.append('<img src="' + img + '" />').addClass('pImg');
-		// 	}
-		// })
 		self._bindEvents();
 	}
 
@@ -118,40 +74,13 @@ var TreePIS = function(options){
 		
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			if(one.nodeType == 11 || one.nodeType == 21){
-				one.name = one.name.replace('.', ' ');
-			}
 			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
-
-			if(one.nodeType == 10 || one.nodeType == 1 || one.nodeType == 2){
-				li.addClass('zTreeItemFolder');
-				if(one.nodeType == 10){
-					var departmentId = one.name;
-					var departmentModel = self.config.teamData.filter(function(model){
-						return model.id == departmentId;
-					});
-
-					if(departmentModel.length == 0){
-						li.html('<p>未知部门</p>');
-					}
-					else{
-						departmentModel = departmentModel[0];
-						one.department = departmentModel;
-						li.html('<p>' + departmentModel.name + '</p>');
-					}
-				}
-			}
-			else if(one.nodeType == 21){ //汇报关系
-				li.addClass('zTreeItemReport');
-			}
-
-			if(one.status !== 0){
-				li.find('p').addClass('lineThrough');
+			if(one.description){
+				li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
 			}
 			li.appendTo(ul).data(one);
-			// self._setToolTip(li);
-			if(one.children && one.children.length > 0){
-				self._renderRecusive(one.children, li, level + 1);
+			if(one.items && one.items.length > 0){
+				self._renderRecusive(one.items, li, level + 1);
 			}
 		}
 		if(len > 0){
@@ -190,365 +119,218 @@ var TreePIS = function(options){
 		})
 		.on('click', '.icon-cog', function(e){
 			e.stopPropagation();
+			$('.treeRightContainer').removeClass('active');
 			var p = $(this).parent().parent();
 			var li = p.parent();
 			var model = li.data();
-			self.model = model;
-			self.dialogEdit(li);
+
+			if(model.level < 4){
+				p.addClass('zTreeEdit');
+				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
+				p.find('[name="name"]').val(model.name);
+				p.find('[name="description"]').val(model.description);
+			}
+			else{
+				if(model.level === 4){
+					$.get("/product/rest/v1/pis/categories/" + model.id + "/singularities", function(res){
+						console.log(res);
+						self.parentLi = null;
+						self.currentLi = li;
+						var rightContaner = $('#treeRightContainer').addClass('active');
+						rightContaner.find('[name="name"]').val(model.name);
+						rightContaner.find('[name="itemDescription"]').val(model.description);
+
+						rightContaner.find('[name="singularityName"]').each(function(i, ele){
+							if(res.length <= i){
+								return false;
+							}
+							var item = res[i];
+							var nextIpt = $(ele).parent().next('td').find('input');
+							ele.value = item.singularityName;
+							ele.setAttribute('data-id', item.id);
+							nextIpt.val(item.description);
+						})
+					})
+				}
+				else{
+					var rightContaner = $('#treeRightContainer2').addClass('active');
+				}
+			}
 		})
 		.on('click', '.zTreeEdit input, .zTreeEdit i, .zTreeControl', function(e){
 			e.stopPropagation();
 		})
+		.on('click', '.icon-checkmark', function(e){
+			e.stopPropagation();
+			var i = $(this);
+
+			var li = i.parents('.zTreeItem:eq(0)');
+			var model = li.data();
+			if(!model || !model.id){
+				model = {};
+				var parentModel = li.parents('.zTreeItem:eq(0)').data()
+				model.descendant = parentModel.id;
+				// model.level = parseInt(parentModel.level) + 1;
+			}
+			model.categoryName = li.find('[name="name"]').val();
+			model.description = li.find('[name="description"]').val();
+			if(!model.categoryName){
+				oc.dialog.tips('Name is required');
+				li.find('[name="name"]').focus();
+				return;
+			}
+
+			i.removeClass('icon-checkmark').addClass('zLoadingIcon');
+			li.removeClass('zTreeItemDes');
+			
+			var clearEditStatus = function(isOK){
+				if(isOK === false){
+					i.removeClass('zLoadingIcon').addClass('icon-checkmark');
+					return;
+				}
+				li.parents('.zTreeItem').addClass('hasMore');
+				li.data(model).find('>p').html(model.categoryName).removeClass('zTreeEdit zTreeAdd');
+				if(model.description){
+					li.addClass('zTreeItemDes').find('p').attr('title', model.description);
+				}
+			}
+			model.id? self.updateNode(model, clearEditStatus) : self.addNode(model, clearEditStatus)
+			
+		})
 		.on('click', '.icon-plus2', function(e){
 			e.stopPropagation();
+			$('.treeRightContainer').removeClass('active');
 			var li = $(this).parents('.zTreeItem:eq(0)').addClass('active');
-			self.model = null;
-			self.parentModel = li.data();
-			self.dialog(li);
-		})
-		.on('dragstart', '.zTreeItem[draggable]', function(e){
-			e.stopPropagation();
-			self.dragEle = $(this);
-		})
-		.on('dragenter', 'ul', function(e){
-			e.stopPropagation();
-			e.preventDefault();
-		})
-		.on('dragenter', '.zTreeItemFolder>p, .zTreeItemReport>p', function(e){  //move in
-			e.stopPropagation();
-			e.preventDefault();
-			var ele = $(this);
-			var li = ele.parent();
-			
-			var source = self.dragEle.data();
-			var target = li.data();
 
-			var sourceId = source.id;
-			var targetId = target.id;
-			// if(target.nodeType != 21 && target.nodeType != 10){
-			// 	return;
-			// }
-			if(sourceId == targetId){
-				return;
-			}
-			//人员不允许直接添加到海翼
-			if(li.hasClass('zTree')){
-				return;
-			}
-			//相同的元素中
-			if(targetId == self.dragEle.parents('li:eq(0)').data().id){
-				return;
-			}
-
-			//不能的family之间不能拖拽------
-			if(target.familyName != source.familyName){
-				return;
-			}
-
-			//不能拖拽到子元素中 -----
-			var parentsLis = li.parents('li');
-			var ok = true;
-			parentsLis.each(function(){
-				var parentId = $(this).data().id;
-				if(parentId == sourceId){
-					ok = false;
+			var data = li.data();
+			if(data.level < 3){
+				var ul = li.find('>ul');
+				if(ul.length === 0){
+					ul = $('<ul></ul>').appendTo(li);
 				}
-			})
-			if(!ok){
-				return;
-			}
-			li.addClass('treeTag');
-			self.timer = setTimeout(function(){
-				li.addClass('active');
-			}, 1500);
-		})
-		.on('dragenter', '.zTreeItem', function(e){  //move sort
-			e.stopPropagation();
-			e.preventDefault();
-			var li = $(this);
-			
-			var source = self.dragEle.data();
-			var target = li.data();
-
-			var sourceId = source.id;
-			var targetId = target.id;
-			if(sourceId == targetId){
-				return;
-			}
-			// 不能的family之间不能排序------
-			if(target.familyName != source.familyName){
-				return;
-			}
-			var dragParentId = self.dragEle.parents('li:eq(0)').data().id;
-			if(dragParentId !== li.parents('li:eq(0)').data().id && dragParentId != targetId){
-				return;
-			}
-			li.addClass('treeTagSort');
-		})
-		.on('dragleave', '.zTreeItem', function(e){
-			e.stopPropagation();
-			var ele = $(this);
-			ele.removeClass('treeTagSort');
-		})
-		.on('dragleave', '.zTreeItemFolder>p, .zTreeItemReport>p', function(e){
-			e.stopPropagation();
-			self.timer && clearTimeout(self.timer);
-			var ele = $(this).parent();
-			if(ele.hasClass('treeTag')){
-				ele.removeClass('treeTag');
-			}
-		})
-		.on('dragover', '.zTreeItem', function(e){
-			e.preventDefault();
-		})
-		.on('drop', '.zTreeItemFolder.treeTag, .zTreeItemReport.treeTag', function(e){
-			var ele = $(this);
-			var source = self.dragEle.data();
-			var target = ele.data();
-			var sourceId = source.id;
-			var targetId = target.id;
-			
-			self.moveNode(sourceId, targetId, function(isOK, msg){
-				ele.removeClass('treeTag');
-				if(isOK){
-					var ul = ele.find('>ul');
-					if(ul.length == 0){
-						ul = $('<ul></ul>').appendTo(ele);
-					}
-					ele.addClass('hasMore');
-					var dragParent = self.dragEle.parents('ul:eq(0)');
-					source.parentId = targetId;
-					self.dragEle.data(source);
-					self.dragEle.appendTo(ul);
-					if(dragParent.find('li').length === 0){
-						dragParent.parent().removeClass('hasMore');
-						dragParent.remove();
-					}
-				}
-				else{
-					oc.dialog.tips(msg);
-				}
-			});
-			
-			e.stopPropagation();
-			e.preventDefault();
-		})
-		.on('drop', '.zTreeItem.treeTagSort', function(e){
-			var ele = $(this);
-			var source = self.dragEle.data();
-			var target = ele.data();
-			var sourceId = source.id;
-			var targetId = target.id;
-			if(self.dragEle.parents('li:eq(0)').data().id == targetId){
-				targetId = null;
-			}
-			self.sortNode(sourceId, targetId, function(isOK, msg){
-				ele.removeClass('treeTagSort');
-				if(isOK){
-					if(targetId == null){
-						ele.find('>ul').prepend(self.dragEle);
-					}
-					else{
-						self.dragEle.insertAfter(ele);
-					}
-				}
-				else{
-					oc.dialog.tips(msg);
-				}
-				
-			});
-			
-			e.stopPropagation();
-			e.preventDefault();
-		})
-	}
-
-	self.dialogEdit = function(li){
-		var form = '<div class="formOrganization w600 form-inline p10 pl30 pr30">' + 
-				'<p class="mt10 divPerson"><span>Name: </span><input type="text" class="form-control input-sm" name="name" autocomplete="off" value="' + self.model.name + '"></p>' + 
-				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Save</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
-				'</div>';
-		if(self.model.nodeType === 10){
-			form = '<div class="formOrganization w600 form-inline p10 pl30 pr30">' + 
-				'<p class="tr"><a class="jsAddTeam" href="#">Add a team</a></p>' + 
-				'<p class="mt10 divGroup"><span>Name: </span><select class="slcDepartment form-control input-sm" name="name"></select></p>' + 
-				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Save</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
-				'</div>';
-		}
-		
-		oc.dialog.open('Edit', form);
-
-		var dialog = $('.zDialog');
-		if(self.model.nodeType === 10){
-			var slcTeam = dialog.find('[name="name"]');
-			self.config.teamData.map(function(model){
-				slcTeam.append('<option value="' + model.id + '">' + model.name + '</option>');
-			});
-			slcTeam.find('option[value="' + self.model.name + '"]').attr('selected', true);
-		}
-		else{
-			oc.ui.autoComplete(dialog.find('[name="name"]'), self.allUserName);
-		}
-
-		dialog.on('click', '.btnSub', function(){
-			var btn = $(this);
-
-			var eleName = dialog.find('[name="name"]:visible');
-			self.model.name = $.trim(eleName.val());
-			if(!self.model.name){
-				oc.dialog.tips('Name is required');
-				eleName.focus();
-				return ;
-			}
-
-			btn.html('<i class="zLoadingIcon mr5"></i>').attr('disabled', true);
-			
-			self.updateNode(self.model, function(isOk, msg){
-				if(isOk){
-					oc.dialog.close();
-					var p = li.find('p').html(self.model.name.replace('.', ' '));
-					if(self.model.nodeType === 10){
-						var departmentModel = self.config.teamData.filter(function(model){
-							return model.id == self.model.name;
-						});
-
-						departmentModel = departmentModel[0];
-						p.html(departmentModel.name);
-						self.model.department = departmentModel;
-					}
-					else{
-						var name = self.model.name;
-						var findUsers = self.config.allUser.filter(function(model){
-							return model.name == name;
-						})
-						if(findUsers.length > 0){
-							var img = findUsers[0].img;
-							img && (p.addClass('pImg').append('<img src="' + img + '" />'));
-						}
-					}
-					li.data(self.model);
-				}
-				else{
-					btn.removeAttr('disabled').html("Save");
-					oc.dialog.tips('Add node fail:' + msg);
-				}
-			})
-		})
-		.on('click', '.jsAddTeam', function(e){
-			e.preventDefault();
-			self.showTeamPanel(function(){
-				self.dialogEdit(li);
-			});
-		})
-	}
-
-	self.dialog = function(li){
-		var form = '<div class="formOrganization w600 form-inline p10 pl30 pr30">' + 
-				'<p class="fr"><a class="jsAddTeam" href="#">Add a team</a></p>' + 
-				'<div class="p15"><p class="pType"><span>Type: </span><label class="mr30"><input type="radio" name="addType" value="person" checked style="margin-right:5px">人员</label><label><input name="addType" style="margin-right:5px" type="radio" value="group">团队</label></p>' + 
-				'<p class="mt10 divPerson"><span>Name: </span><input type="text" class="form-control input-sm" name="name" autocomplete="off"></p>' + 
-				'<p class="mt10 divGroup none"><span>Name: </span><select class="slcDepartment form-control input-sm" name="name"></select></p>' + 
-				'<div class="tc pt20" style="border-top:1px solid #ddd;"><button class="btn btn-primary w100 mr20 btnSub">Add</button><button class="btn btn-default w100 ml20" onclick="oc.dialog.close();">Cancel</button></div>'
-				'</div>';
-		oc.dialog.open('Add', form);
-		var dialog = $('.zDialog');
-		var nodeData = li.data();
-		self.model = {
-			parentId: self.parentModel.id,
-			familyName: self.parentModel.familyName
-		};
-
-		if(nodeData.nodeType == 2 || nodeData.nodeType == 21){
-			self.model.nodeType = 21;
-			dialog.find('.pType, .divGroup').remove();
-		}
-
-		oc.ui.autoComplete(dialog.find('.divPerson [name="name"]'), self.allUserName);
-		var slcTeam = dialog.find('.divGroup [name="name"]');
-		self.config.teamData.map(function(model){
-			slcTeam.append('<option value="' + model.id + '">' + model.name + '</option>');
-		});
-		dialog.on('change', '[name="addType"]', function(){
-			if(this.value === 'group'){
-				$('.divGroup').fadeIn();
-				$('.divPerson').fadeOut();
+				var newLi = $('<li class="zTreeItem"></li>');
+				newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="description"><i class="iconRight icon-checkmark"></i></p>');
+				newLi.appendTo(ul);
 			}
 			else{
-				$('.divPerson').fadeIn();
-				$('.divGroup').fadeOut();
-			} 
-		})
-		.on('click', '.btnSub', function(){
-			var btn = $(this);
-
-			var eleName = dialog.find('[name="name"]:visible');
-			self.model.name = $.trim(eleName.val());
-			if(!self.model.name){
-				oc.dialog.tips('Name is required');
-				eleName.focus();
-				return ;
-			}
-
-			if(self.model.nodeType != 2 && self.model.nodeType != 21){
-				var checkedType = $('[name="addType"]:checked').val();
-				checkedType == "person"? self.model.nodeType = 11 : self.model.nodeType = 10;
-			}
-
-			var btnText = btn.html();
-			btn.html('<i class="zLoadingIcon mr5"></i>' + btnText + '...').attr('disabled', true);
-			
-			self.addNode(self.model, function(isOk, msg){
-				if(isOk){
-					oc.dialog.close();
-					
-					var ul = li.find('>ul');
-					if(ul.length === 0){
-						ul = $('<ul></ul>').appendTo(li);
-					}
-					self.model.id = msg;
-					var newLi = $('<li class="zTreeItem"><p>' + self.model.name.replace('.', ' ') + '</p></li>');
-					if(self.model.nodeType == 10){
-						newLi.addClass('zTreeItemFolder');
-						var departmentModel = self.config.teamData.filter(function(model){
-							return model.id == self.model.name;
-						});
-
-						departmentModel = departmentModel[0];
-						self.model.department = departmentModel;
-						newLi.html('<p>' + departmentModel.name + '</p>');
-					}
-					else if(self.model.nodeType == 21){
-						newLi.addClass('zTreeItemReport');
-					}
-
-					if(self.model.nodeType == 11 || self.model.nodeType == 21){
-						var name = self.model.name;
-						var findUsers = self.config.allUser.filter(function(model){
-							return model.name == name;
-						})
-						if(findUsers.length > 0){
-							var img = findUsers[0].img;
-							img && newLi.find('>p').addClass('pImg').append('<img src="' + img + '" />'); 
-						}
-					}
-					newLi.data(self.model);
-
-					newLi.appendTo(ul);
+				self.currentLi = null;
+				self.parentLi = li;
+				if(data.level === 3){
+					$('#treeRightContainer').addClass('active').find('input').val('');
 				}
 				else{
-					btn.removeAttr('disabled').html(btnText);
-					oc.dialog.tips('Add node fail:' + msg);
+					var rightContaner = $('#treeRightContainer2').addClass('active');
+					rightContaner.find('input').val('');
+					$.get('/product/rest/v1/pis/categories/' + data.id + '/segments', function(segments){
+						var slcSigment = $('[name="sigment"]');
+						segments.map(function(item){
+							slcSigment.append('<option value="' + item.id + '">' + item.segmentDescription + '</option>')
+						})
+						$.get("/product/rest/v1/pis/categories/" + data.id + "/singularities", function(res){
+							console.log(data)
+							rightContaner.find('#categoryName').html(data.name).attr('data-id', data.id);
+							var slcSingularity = rightContaner.find('[name="singularity"]').html('');
+							res.map(function(item){
+								slcSingularity.append('<option value="' + item.segmentId + '">' + item.singularityCode + '-'+ item.singularityName + '</option>');
+							})
+						})
+					})
+					
+				}		
+			}
+		});
+		
+		self.initRightForm();
+	}
+
+	self.initRightForm = function(){
+		var addSubForm = $('#treeRightContainer form');
+		addSubForm.submit(function(){
+			var model = {
+				category: {
+					categoryName: $('[name="name"]').val(),
+					description: $('[name="itemDescription"]').val()
+				},
+				singularities: []
+			};
+			
+			addSubForm.find('[name="singularityName"]').each(function(){
+				var nextIpt = $(this).parent().next('td').find('input');
+				var one = {
+					singularityName : this.value,
+					description     : nextIpt.val(),
+					singularityCode : model.singularities.length
 				}
+
+				if(!self.parentLi){
+					one.id = this.getAttribute('data-id');
+				}
+
+				model.singularities.push(one);
 			})
+
+			if(self.parentLi){ //add new
+				model.category.descendant = self.parentLi.data().id;
+				oc.ajax.post('/product/rest/v1/pis/categories/subcategory', model, function(res){
+					var nodeModel = {
+						id: res,
+						fid: model.category.descendant,
+						name: model.category.categoryName,
+						description: model.category.description
+					}
+
+					var ul = self.parentLi.find('ul:eq(0)');
+					if(ul.length === 0){
+						ul = $('<ul></ul>').appendTo(self.parentLi);
+					}
+					var newLi = $('<li class="zTreeItem zTreeItemDes"><p title="' + nodeModel.description + '">' + nodeModel.name + '</p></li>').appendTo(ul);
+					newLi.data(nodeModel);
+					self.parentLi.addClass('hasMore');
+				})
+			}
+			else{ //update
+				oc.ajax.put('/product/rest/v1/pis/categories/subcategory/' + self.currentLi.data().id, model, function(res){
+					oc.dialog.tips('Update success.');
+					$('.treeRightContainer').removeClass('active').find('input').val('');
+					var nodeModel = self.currentLi.data();
+					nodeModel.name = model.category.categoryName;
+					nodeModel.description = model.category.description;
+
+					self.currentLi.find('>p').html(nodeModel.name).attr('title', nodeModel.description);
+					self.currentLi.data(nodeModel);
+				})
+			}
+			
+			return false;
 		})
-		.on('click', '.jsAddTeam', function(e){
-			e.preventDefault();
-			self.showTeamPanel(function(){
-				self.dialog(li);
-				$('.zDialog [name="addType"]').get(1).checked = true;
-				$('.zDialog .divGroup').fadeIn();
-				$('.zDialog .divPerson').fadeOut();
-			});
+		
+		var addSubForm2 = $('#treeRightContainer2 form');
+		addSubForm2.submit(function(){
+			var model = {};
+			model.categoryId = addSubForm2.find('#categoryName').attr('data-id');
+			// model.segmentText = addSubForm2.find('#categoryName').html();
+			
+			model.singularityId = addSubForm2.find('select[name="singularity"]').val();
+			model.singularityText = addSubForm2.find('select[name="singularity"]').find(':selected').text().slice(2);
+			
+			model.countryCodeId = addSubForm2.find('select[name="country"]').val();
+			model.countryCodeText = addSubForm2.find('select[name="country"]').find(':selected').text();
+			
+			model.colorCodeId = addSubForm2.find('select[name="color"]').val();
+			model.colorCodeText = addSubForm2.find('select[name="color"]').find(':selected').text();
+			
+			oc.ajax.post('/product/rest/v1/pis/structure', model, function(res){
+				console.log(res);
+				self.parentLi.addClass('hasMore active');
+				var ul = self.parentLi.find('>ul');
+				if(ul.length === 0){
+					ul = $('<ul></ul>').appendTo(self.parentLi);
+				}
+				var newLi = $('<li><p>' + res + '</p></li>').appendTo(ul);
+				newLi.data(res);
+			})
+
+			return false;
 		})
 	}
 
@@ -564,22 +346,6 @@ var TreePIS = function(options){
 	self.addNode = function(model, cb){
 		console.log(model);
 		setTimeout(cb, 2000);
-	}
-
-	self.moveNode = function(sourceId, targetId, cb){
-		setTimeout(function(){
-			cb(true);
-		}, 2000);
-	}
-
-	self.sortNode = function(sourceId, targetId, cb){
-		setTimeout(function(){
-			cb(true);
-		}, 2000);
-	}
-
-	self.showTeamPanel = function(){
-
 	}
 
 	self.render();

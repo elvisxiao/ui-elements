@@ -121,9 +121,9 @@ var TreeSelect = function(options){
 			self.filterParams.name = this.value;
 			self.filter();
 		})
-		.on('mouseenter', 'li.zTreeSelectItem', function(){
+		.on('mouseenter', 'li.zTreeSelectItem p', function(){
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');
-			$(this).addClass('active');
+			$(this).parent().addClass('active');
 			self._setActive();
 		})
 		.find('input').on('keyup', function(e){
