@@ -44,5 +44,20 @@ ZDate.format = function(date, format){
     return format;
 }
 
+//date format: yyyy-MM-dd
+ZDate.compare = function(date1, date2){
+    if(typeof date1 == "string"){
+        date1 = date1.replace(/-/g, '/');
+    }
+    if(typeof date2 == "string"){
+        date2 = date2.replace(/-/g, '/');
+    }
+
+    var date1 = new Date(date1).getTime();
+    var date2 = new Date(date2).getTime();
+
+    return date1 - date2;
+}   
+
 
 module.exports = ZDate;

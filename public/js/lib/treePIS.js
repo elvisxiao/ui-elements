@@ -94,28 +94,10 @@ var TreePIS = function(options){
 			li.toggleClass('active');
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
-			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-minus2"></i></span>').hide().appendTo(this).fadeIn(1000);
+			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-align-justify" title="show sku list"></i></span>').hide().appendTo(this).fadeIn(1000);
 		})
 		.on('mouseleave', '.zTreeItem p', function(){
 			$(this).find('.zTreeControl').remove();
-		})
-		.on('click', '.icon-minus2', function(e){
-			e.stopPropagation();
-			var treeItem = $(this).parents('.zTreeItem:eq(0)');
-			var ul = treeItem.parent();
-			var model = treeItem.data();
-
-			self.deleteNode(model, function(){
-				treeItem.fadeOut(500, function(){
-					treeItem.remove();
-					if(model.familyName){
-						self.config.family.push(model.familyName);
-					}
-					if(ul.find('.zTreeItem').length === 0){
-						ul.remove();
-					}
-				});
-			});
 		})
 		.on('click', '.icon-cog', function(e){
 			e.stopPropagation();
@@ -218,25 +200,6 @@ var TreePIS = function(options){
 				if(data.level === 3){
 					$('#treeRightContainer').addClass('active').find('input').val('');
 				}
-				else{
-					var rightContaner = $('#treeRightContainer2').addClass('active');
-					rightContaner.find('input').val('');
-					$.get('/product/rest/v1/pis/categories/' + data.id + '/segments', function(segments){
-						var slcSigment = $('[name="sigment"]');
-						segments.map(function(item){
-							slcSigment.append('<option value="' + item.id + '">' + item.segmentDescription + '</option>')
-						})
-						$.get("/product/rest/v1/pis/categories/" + data.id + "/singularities", function(res){
-							console.log(data)
-							rightContaner.find('#categoryName').html(data.name).attr('data-id', data.id);
-							var slcSingularity = rightContaner.find('[name="singularity"]').html('');
-							res.map(function(item){
-								slcSingularity.append('<option value="' + item.segmentId + '">' + item.singularityCode + '-'+ item.singularityName + '</option>');
-							})
-						})
-					})
-					
-				}		
 			}
 		});
 		
@@ -307,27 +270,25 @@ var TreePIS = function(options){
 		var addSubForm2 = $('#treeRightContainer2 form');
 		addSubForm2.submit(function(){
 			var model = {};
-			model.categoryId = addSubForm2.find('#categoryName').attr('data-id');
-			// model.segmentText = addSubForm2.find('#categoryName').html();
+			model.subCategoryId = addSubForm2.find('#categoryName').attr('data-id');
+			model.segmentId = addSubForm2.find('select[name="sigment"]').val();
+			model.segmentText = addSubForm2.find('select[name="sigment"]').find(':selected').text();
 			
 			model.singularityId = addSubForm2.find('select[name="singularity"]').val();
-			model.singularityText = addSubForm2.find('select[name="singularity"]').find(':selected').text().slice(2);
+			model.singularityText = addSubForm2.find('select[name="singularity"]').find(':selected').attr('data-id');
 			
 			model.countryCodeId = addSubForm2.find('select[name="country"]').val();
-			model.countryCodeText = addSubForm2.find('select[name="country"]').find(':selected').text();
+			model.countryCodeText = addSubForm2.find('select[name="country"]').find(':selected').attr('data-code');
 			
 			model.colorCodeId = addSubForm2.find('select[name="color"]').val();
-			model.colorCodeText = addSubForm2.find('select[name="color"]').find(':selected').text();
+			model.colorCodeText = addSubForm2.find('select[name="color"]').find(':selected').attr('data-code');
 			
 			oc.ajax.post('/product/rest/v1/pis/structure', model, function(res){
 				console.log(res);
-				self.parentLi.addClass('hasMore active');
-				var ul = self.parentLi.find('>ul');
-				if(ul.length === 0){
-					ul = $('<ul></ul>').appendTo(self.parentLi);
-				}
-				var newLi = $('<li><p>' + res + '</p></li>').appendTo(ul);
-				newLi.data(res);
+				oc.dialog.tips('Add success, MN is:<b>' + res.text + '</b>', 3000);
+				$('#treeRightContainer2').removeClass('active');
+				window.open('/product/index.htm?mo=good&sku_add=' + res.text);
+				// window.open('http://pre-launch.oceanwing.com/product/index.htm?mo=good&sku_add=A1109009');
 			})
 
 			return false;

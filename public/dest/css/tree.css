@@ -124,7 +124,8 @@
 
 /* line 44 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree >.zTreeItem >p .icon-minus2,
-.zTree >.zTreeItem >p .icon-cog {
+.zTree >.zTreeItem >p .icon-cog,
+.zTree >.zTreeItem >p .icon-align-justify {
   display: none;
 }
 

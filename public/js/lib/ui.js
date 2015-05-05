@@ -94,7 +94,11 @@ UI.autoComplete = function(ele, array, cb, prefix){
                 var text = ipt.val();
                 // val = val.replace(/.*;|.*,|.*\s/g, '');
                 if(prefix){
-                    text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
+                    var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
+                    text = '';
+                    if(mathedArray && mathedArray.length > 0){
+                        text = mathedArray[0];
+                    }
                     ipt.val(text + slcVal);
                 }
                 else{
@@ -155,7 +159,12 @@ UI.autoComplete = function(ele, array, cb, prefix){
             // ipt.val(slc);
             var text = ipt.val();
             if(prefix){
-                text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
+                var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
+                text = '';
+                if(mathedArray && mathedArray.length > 0){
+                    text = mathedArray[0];
+                }
+                // text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
                 ipt.val(text + slc);
             }
             else{
