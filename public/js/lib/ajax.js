@@ -8,7 +8,7 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         type: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            // "Accept": "application/json"
         }
     }
     if(method){

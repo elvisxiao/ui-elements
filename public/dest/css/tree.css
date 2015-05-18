@@ -239,7 +239,7 @@
   -o-border-radius: 3px;
   border-radius: 3px;
   white-space: nowrap;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-right: 30px;
   display: inline-block;
   cursor: pointer;
@@ -252,8 +252,8 @@
   position: absolute;
   height: 30px;
   width: 30px;
-  left: -5px;
-  top: 3px;
+  left: 5px;
+  top: 1px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -o-border-radius: 30px;
@@ -404,7 +404,7 @@
 /* line 211 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .zTree.zTreeOrganization .zTreeItem>p {
   font-family: 'icomoon';
-  padding-left: 30px;
+  padding-left: 38px;
   border: 1px solid transparent;
   position: relative;
   padding-right: 10px;
@@ -416,8 +416,8 @@
   border: 0;
   content: "\e601";
   position: absolute;
-  top: 0;
-  left: 0px;
+  top: 4px;
+  left: 4px;
   height: 100%;
   width: 28px;
   line-height: 28px;
@@ -520,21 +520,6 @@
   padding-left: 6px;
 }
 
-/* line 278 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-.zTree.zTreeOrganization >li.zTreeItem>p>.zTreeControl {
-  display: none !important;
-}
-
-/* line 280 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-.zTree.zTreeOrganization >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-cog {
-  display: none !important;
-}
-
-/* line 282 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
-.zTree.zTreeOrganization >li.zTreeItem>ul>li.zTreeItem>p>.zTreeControl .icon-minus2 {
-  display: none !important;
-}
-
 /* line 285 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 
 /* line 286 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
@@ -574,6 +559,31 @@
 /* line 306 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
 .lineThrough {
   text-decoration: line-through;
+}
+
+/* line 309 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.treeCount,
+.treeCountMember {
+  display: inline-block;
+  background: #46b8da;
+  color: #fff;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  height: 18px;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  position: absolute;
+  top: 4px;
+  left: 100%;
+}
+
+/* line 322 : /Users/elvis/bitbucket/ocui/public/css/tree.styl */
+.treeCountMember {
+  background: #5cb85c;
 }
 
 /* line 4 : /Users/elvis/bitbucket/ocui/public/css/params.styl */

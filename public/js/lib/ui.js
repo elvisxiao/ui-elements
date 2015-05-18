@@ -19,12 +19,15 @@ UI.toggleOneBtn = function(btn, on, off){
         btn.removeClass('zToggleBtnSm');
         btnClass += ' zToggleBtnSm';
     }
-    if(btn[0].checked){
+
+    var isChecked = btn[0].checked;
+    if(isChecked){
         btnClass += ' active';
     }
     var span = $('<span class="' + btnClass + '"><i class="zToggleBtnON">' + on + '</i><i class="zToggleBtnOFF">' + off + '</i>' +  btn[0].outerHTML + '</span>');
     btn.replaceWith(span);
-    
+    span.find('input').prop('checked', isChecked);
+
     span.off('change', 'input').on('change', 'input', function(){
         if(this.checked){
             $(this).parents('.zToggleBtn:eq(0)').addClass('active');

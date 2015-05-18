@@ -74,7 +74,7 @@ var TreePIS = function(options){
 		
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
-			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
+			var li = $('<li class="zTreeItem" draggable="true" data-level="' + one.level + '"><p>' + one.name + '</p></li>');
 			if(one.description){
 				li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
 			}
@@ -94,7 +94,11 @@ var TreePIS = function(options){
 			li.toggleClass('active');
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
+			var p = $(this);
 			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-align-justify" title="show sku list"></i></span>').hide().appendTo(this).fadeIn(1000);
+			if(p.hasClass('zTreeAdd')){
+				p.find('.icon-align-justify').removeClass('icon-align-justify').addClass('icon-minus2');
+			}
 		})
 		.on('mouseleave', '.zTreeItem p', function(){
 			$(this).find('.zTreeControl').remove();
@@ -105,7 +109,7 @@ var TreePIS = function(options){
 			var p = $(this).parent().parent();
 			var li = p.parent();
 			var model = li.data();
-
+			
 			if(model.level < 4){
 				p.addClass('zTreeEdit');
 				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
@@ -121,17 +125,24 @@ var TreePIS = function(options){
 						var rightContaner = $('#treeRightContainer').addClass('active');
 						rightContaner.find('[name="name"]').val(model.name);
 						rightContaner.find('[name="itemDescription"]').val(model.description);
+						rightContaner.find('#aEditSubCategory').show();
+						rightContaner.find('.trBtns').hide();
 
 						rightContaner.find('[name="singularityName"]').each(function(i, ele){
-							if(res.length <= i){
-								return false;
-							}
-							var item = res[i];
 							var nextIpt = $(ele).parent().next('td').find('input');
-							ele.value = item.singularityName;
-							ele.setAttribute('data-id', item.id);
-							nextIpt.val(item.description);
+                            if(res.length <= i){
+                            	ele.value = "";
+                                ele.removeAttribute('data-id');
+                                nextIpt.val("");
+                            }else{
+                            	var item = res[i];
+                                ele.value = item.singularityName;
+                                ele.setAttribute('data-id', item.id);
+                                nextIpt.val(item.description);
+                            }
 						})
+
+						rightContaner.find('.form-control').attr('disabled', true);
 					})
 				}
 				else{
@@ -152,7 +163,6 @@ var TreePIS = function(options){
 				model = {};
 				var parentModel = li.parents('.zTreeItem:eq(0)').data()
 				model.descendant = parentModel.id;
-				// model.level = parseInt(parentModel.level) + 1;
 			}
 			model.categoryName = li.find('[name="name"]').val();
 			model.description = li.find('[name="description"]').val();
@@ -171,6 +181,8 @@ var TreePIS = function(options){
 					return;
 				}
 				li.parents('.zTreeItem').addClass('hasMore');
+				
+				model.level = parseInt(parentModel.level) + 1;
 				li.data(model).find('>p').html(model.categoryName).removeClass('zTreeEdit zTreeAdd');
 				if(model.description){
 					li.addClass('zTreeItemDes').find('p').attr('title', model.description);
@@ -198,7 +210,10 @@ var TreePIS = function(options){
 				self.currentLi = null;
 				self.parentLi = li;
 				if(data.level === 3){
-					$('#treeRightContainer').addClass('active').find('input').val('');
+					var rightContaner = $('#treeRightContainer');
+					rightContaner.addClass('active').find('input').removeAttr('disabled').val('');
+					rightContaner.find('#aEditSubCategory').hide();
+					rightContaner.find('.trBtns').show();
 				}
 			}
 		});

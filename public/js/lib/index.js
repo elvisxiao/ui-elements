@@ -28,8 +28,8 @@
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
 		}
 		else{
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//ui.tinyp2p.com/icons/style.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/icons/style.css'}).appendTo("head");
 		}
 	}
 })()
