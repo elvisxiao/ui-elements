@@ -481,6 +481,11 @@ Dialog.open = function(title, content, cb){
     if(height > bodyHeight){
         top = '5%';
     }
+
+    top = $(document).scrollTop() + 50 + 'px';
+    if(height > 500){
+        dialog.css({'position': 'absolute'});
+    }
     dialog.animate({
         top: top,
         opacity: 1
@@ -1211,7 +1216,6 @@ var TreeDialogSelect = function(ipt, dataList){
 
 			self.keyword = null;
 			oc.dialog.open('', self.dialogPanel, function(){
-				$('.zDialog').css('top', '5%');
         		self._setSelected();
 			});
 			self.dialogClickHanlder();

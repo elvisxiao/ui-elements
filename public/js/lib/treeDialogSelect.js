@@ -124,7 +124,6 @@ var TreeDialogSelect = function(ipt, dataList){
 
 			self.keyword = null;
 			oc.dialog.open('', self.dialogPanel, function(){
-				$('.zDialog').css('top', '5%');
         		self._setSelected();
 			});
 			self.dialogClickHanlder();
