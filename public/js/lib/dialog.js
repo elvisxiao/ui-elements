@@ -99,9 +99,9 @@ Dialog.open = function(title, content, cb){
         top = '5%';
     }
 
-    top = $(document).scrollTop() + 50 + 'px';
     if(height > 500){
         dialog.css({'position': 'absolute'});
+        top = $(document).scrollTop() + 50 + 'px';
     }
     dialog.animate({
         top: top,
