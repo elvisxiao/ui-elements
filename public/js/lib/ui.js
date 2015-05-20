@@ -292,6 +292,8 @@ UI.multiSelect = function(){
 }
 
 UI.popOver = function(btn, title, content){
+    btn = $(btn);
+    
     if(btn.next('.zPopOver').length > 0){
         btn.next('.zPopOver').remove();
         return;
