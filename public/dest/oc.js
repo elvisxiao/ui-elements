@@ -745,14 +745,8 @@ module.exports = FileView;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else{
-		if(location.href.indexOf('/product') > 0){
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '/product/js/oc/icons/style.css'}).appendTo("head");
-		}
-		else{
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/icons/style.css'}).appendTo("head");
-		}
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
+		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
 },{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./localStorage":7,"./sidebar":8,"./tree":9,"./treeDialogSelect":10,"./treeOrganization":11,"./treePIS":12,"./treeSelect":13,"./ui":14,"./uploader":15}],7:[function(require,module,exports){
@@ -3046,6 +3040,21 @@ UI.multiSelect = function(){
         });
     } ;
     bindEvent();
+}
+
+UI.popOver = function(btn, title, content){
+    var ele = $('<div class="zPopOver"></div>');
+    ele.append('<div class="zPopOverTitle">' + title + '</div>');
+    ele.append('<div class="zPopOverContent">' + content + '</div>');
+    btn = $(btn);
+    var position = btn.position();
+    btn.after(ele);
+
+    ele.css({
+        left: position.left + btn.outerWidth() + 10,
+        top: position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2
+    })
+
 }
 
 module.exports = UI;

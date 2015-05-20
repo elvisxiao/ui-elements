@@ -1,0 +1,61 @@
+
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 1 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  max-width: 276px;
+  padding: 1px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: left;
+  white-space: normal;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+
+/* line 21 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverTitle {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 5px 5px 0 0;
+}
+
+/* line 28 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverContent {
+  padding: 10px 20px;
+  position: relative;
+}
+
+/* line 31 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverContent:before,
+.zPopOver .zPopOverContent:after {
+  display: block;
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  margin-top: -25px;
+  content: '';
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #bbb;
+  border-bottom: 10px solid transparent;
+}
+
+/* line 42 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverContent:after {
+  border-right: 10px solid #fff;
+  left: -20px;
+}

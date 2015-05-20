@@ -36,13 +36,16 @@ block content
                     input(type="checkbox")
                     | Show Name
 
-        div.mt50.pb20(style="border-bottom:1px solid #ddd")
-            div#sideBarContainer
+        div.mt50.pb20.pr(style="border-bottom:1px solid #ddd")
+            button#btnPopOver.btn.btn-default.w100.mr50(type="button") PopOver
+
             
 
     script.
         oc.ui.toggleBtn();
         oc.ui.multiSelect();
         oc.ui.cbx();
-        
-       
+        $('#btnPopOver').click(function(){
+            console.log('222')
+            oc.ui.popOver(this, 'Test', 'Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.');
+        })

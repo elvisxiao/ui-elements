@@ -291,4 +291,19 @@ UI.multiSelect = function(){
     bindEvent();
 }
 
+UI.popOver = function(btn, title, content){
+    var ele = $('<div class="zPopOver"></div>');
+    ele.append('<div class="zPopOverTitle">' + title + '</div>');
+    ele.append('<div class="zPopOverContent">' + content + '</div>');
+    btn = $(btn);
+    var position = btn.position();
+    btn.after(ele);
+
+    ele.css({
+        left: position.left + btn.outerWidth() + 10,
+        top: position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2
+    })
+
+}
+
 module.exports = UI;
