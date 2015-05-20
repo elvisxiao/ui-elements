@@ -3043,6 +3043,11 @@ UI.multiSelect = function(){
 }
 
 UI.popOver = function(btn, title, content){
+    if(btn.next('.zPopOver').length > 0){
+        btn.next('.zPopOver').remove();
+        return;
+    }
+
     var ele = $('<div class="zPopOver"></div>');
     ele.append('<div class="zPopOverTitle">' + title + '</div>');
     ele.append('<div class="zPopOverContent">' + content + '</div>');
@@ -3054,7 +3059,12 @@ UI.popOver = function(btn, title, content){
         left: position.left + btn.outerWidth() + 10,
         top: position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2
     })
+}
 
+UI.popOverRemove = function(btn){
+    var btn = $(btn);
+    btn.remove();
+    btn.next('.zPopOver').remove();
 }
 
 module.exports = UI;
