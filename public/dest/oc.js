@@ -2210,7 +2210,7 @@ var TreePIS = function(options){
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
 			var p = $(this);
-			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-align-justify" title="show sku list"></i></span>').hide().appendTo(this).fadeIn(1000);
+			$('<span class="zTreeControl"><i class="icon-plus2" title="Add"></i><i class="icon-cog" title="Setting"></i><i class="icon-align-justify" title="Show MN list"></i></span>').hide().appendTo(this).fadeIn(1000);
 			if(p.hasClass('zTreeAdd')){
 				p.find('.icon-align-justify').removeClass('icon-align-justify').addClass('icon-minus2');
 			}
@@ -2227,7 +2227,7 @@ var TreePIS = function(options){
 			
 			if(model.level < 4){
 				p.addClass('zTreeEdit');
-				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
+				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark" title="Save"></i>');
 				p.find('[name="name"]').val(model.name);
 				p.find('[name="description"]').val(model.description);
 			}
@@ -2318,7 +2318,7 @@ var TreePIS = function(options){
 					ul = $('<ul></ul>').appendTo(li);
 				}
 				var newLi = $('<li class="zTreeItem"></li>');
-				newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="description"><i class="iconRight icon-checkmark"></i></p>');
+				newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="description"><i class="iconRight icon-checkmark" title="Save"></i></p>');
 				newLi.appendTo(ul);
 			}
 			else{
@@ -3042,7 +3042,9 @@ UI.multiSelect = function(){
     bindEvent();
 }
 
-UI.popOver = function(btn, title, content){
+//btn: jqeury选择器或对象，一般为按钮，点击触发
+//position: 值为 left、right、top、bottom，默认值为right
+UI.popOver = function(btn, title, content, popPosition){
     btn = $(btn);
     
     if(btn.next('.zPopOver').length > 0){
@@ -3050,23 +3052,48 @@ UI.popOver = function(btn, title, content){
         return;
     }
 
-    var ele = $('<div class="zPopOver"></div>');
-    ele.append('<div class="zPopOverTitle">' + title + '</div>');
+    var ele = $('<div class="zPopOver zPopOver' + popPosition + '"></div>');
+    ele.append('<div class="zPopOverTitle">' + title + '<i class="icon-close"></i></div>');
     ele.append('<div class="zPopOverContent">' + content + '</div>');
     btn = $(btn);
     var position = btn.position();
     btn.after(ele);
 
+    //右边
+    var left = position.left + btn.outerWidth() + 20;
+    var top = position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2 - 5;
+
+    //左边
+    if(popPosition === 'left'){
+        left = position.left - ele.outerWidth() - 20;
+    }
+    else if(popPosition === 'top'){
+        left = position.left - ele.outerWidth() / 2 + btn.outerWidth() / 2;
+        top = position.top - ele.outerHeight() - 20;
+    }
+    else if(popPosition === 'bottom'){
+        left = position.left - ele.outerWidth() / 2 + btn.outerWidth() / 2;
+        top = position.top + btn.outerHeight() + 20;
+    }
+
     ele.css({
-        left: position.left + btn.outerWidth() + 10,
-        top: position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2
+        left: left,
+        top: top
+    })
+    ele.on('click', '.zPopOverTitle i.icon-close', function(){
+        ele.remove();
     })
 }
 
+//关闭popOver，btn为popOver或者触发元素
 UI.popOverRemove = function(btn){
     var btn = $(btn);
-    btn.remove();
-    btn.next('.zPopOver').remove();
+    if(btn.hasClass('.zPopOver')){
+        btn.remove();
+    }
+    else{
+        btn.next('.zPopOver').remove();
+    }
 }
 
 module.exports = UI;

@@ -291,7 +291,9 @@ UI.multiSelect = function(){
     bindEvent();
 }
 
-UI.popOver = function(btn, title, content){
+//btn: jqeury选择器或对象，一般为按钮，点击触发
+//position: 值为 left、right、top、bottom，默认值为right
+UI.popOver = function(btn, title, content, popPosition){
     btn = $(btn);
     
     if(btn.next('.zPopOver').length > 0){
@@ -299,23 +301,48 @@ UI.popOver = function(btn, title, content){
         return;
     }
 
-    var ele = $('<div class="zPopOver"></div>');
-    ele.append('<div class="zPopOverTitle">' + title + '</div>');
+    var ele = $('<div class="zPopOver zPopOver' + popPosition + '"></div>');
+    ele.append('<div class="zPopOverTitle">' + title + '<i class="icon-close"></i></div>');
     ele.append('<div class="zPopOverContent">' + content + '</div>');
     btn = $(btn);
     var position = btn.position();
     btn.after(ele);
 
+    //右边
+    var left = position.left + btn.outerWidth() + 20;
+    var top = position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2 - 5;
+
+    //左边
+    if(popPosition === 'left'){
+        left = position.left - ele.outerWidth() - 20;
+    }
+    else if(popPosition === 'top'){
+        left = position.left - ele.outerWidth() / 2 + btn.outerWidth() / 2;
+        top = position.top - ele.outerHeight() - 20;
+    }
+    else if(popPosition === 'bottom'){
+        left = position.left - ele.outerWidth() / 2 + btn.outerWidth() / 2;
+        top = position.top + btn.outerHeight() + 20;
+    }
+
     ele.css({
-        left: position.left + btn.outerWidth() + 10,
-        top: position.top + btn.outerHeight() / 2 - ele.outerHeight() / 2
+        left: left,
+        top: top
+    })
+    ele.on('click', '.zPopOverTitle i.icon-close', function(){
+        ele.remove();
     })
 }
 
+//关闭popOver，btn为popOver或者触发元素
 UI.popOverRemove = function(btn){
     var btn = $(btn);
-    btn.remove();
-    btn.next('.zPopOver').remove();
+    if(btn.hasClass('.zPopOver')){
+        btn.remove();
+    }
+    else{
+        btn.next('.zPopOver').remove();
+    }
 }
 
 module.exports = UI;

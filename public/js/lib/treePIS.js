@@ -95,7 +95,7 @@ var TreePIS = function(options){
 		})
 		.on('mouseenter', '.zTreeItem p', function(){
 			var p = $(this);
-			$('<span class="zTreeControl"><i class="icon-plus2"></i><i class="icon-cog"></i><i class="icon-align-justify" title="show sku list"></i></span>').hide().appendTo(this).fadeIn(1000);
+			$('<span class="zTreeControl"><i class="icon-plus2" title="Add"></i><i class="icon-cog" title="Setting"></i><i class="icon-align-justify" title="Show MN list"></i></span>').hide().appendTo(this).fadeIn(1000);
 			if(p.hasClass('zTreeAdd')){
 				p.find('.icon-align-justify').removeClass('icon-align-justify').addClass('icon-minus2');
 			}
@@ -112,7 +112,7 @@ var TreePIS = function(options){
 			
 			if(model.level < 4){
 				p.addClass('zTreeEdit');
-				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
+				p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark" title="Save"></i>');
 				p.find('[name="name"]').val(model.name);
 				p.find('[name="description"]').val(model.description);
 			}
@@ -203,7 +203,7 @@ var TreePIS = function(options){
 					ul = $('<ul></ul>').appendTo(li);
 				}
 				var newLi = $('<li class="zTreeItem"></li>');
-				newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="description"><i class="iconRight icon-checkmark"></i></p>');
+				newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="description"><i class="iconRight icon-checkmark" title="Save"></i></p>');
 				newLi.appendTo(ul);
 			}
 			else{

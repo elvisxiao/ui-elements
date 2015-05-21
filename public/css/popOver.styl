@@ -25,6 +25,17 @@
         background-color #f7f7f7
         border-bottom 1px solid #ebebeb
         border-radius 5px 5px 0 0
+        position relative
+        .icon-close
+            position absolute
+            top 0
+            right 0
+            font-size 10px
+            color #aaa 
+            padding 12px 10px
+            cursor pointer
+            &:hover
+                color #333
     .zPopOverContent
         padding 10px 20px
         position relative
@@ -42,3 +53,37 @@
         &:after
             border-right 10px solid #fff
             left -20px
+            
+.zPopOverleft
+    .zPopOverContent
+        &:before, &:after
+            left auto
+            right -22px
+            border-left 10px solid #bbb
+            border-right 10px solid transparent
+        &:after
+            border-left 10px solid #fff
+            right -20px
+.zPopOvertop
+    .zPopOverContent
+        &:before, &:after
+            left 50%
+            margin-left -11px
+            top auto
+            bottom -22px
+            border-right 10px solid transparent
+            border-top 10px solid #bbb
+        &:after
+            border-top 10px solid #fff
+            bottom -20px
+.zPopOverbottom
+    .zPopOverContent
+        &:before, &:after
+            left 50%
+            margin-left -11px
+            top -33px
+            border-right 10px solid transparent
+            border-bottom 10px solid #bbb
+        &:after
+            border-bottom 10px solid #fff
+            top -32px

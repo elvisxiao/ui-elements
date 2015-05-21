@@ -31,15 +31,32 @@
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-radius: 5px 5px 0 0;
+  position: relative;
 }
 
-/* line 28 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+/* line 29 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverTitle .icon-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 10px;
+  color: #aaa;
+  padding: 12px 10px;
+  cursor: pointer;
+}
+
+/* line 37 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOver .zPopOverTitle .icon-close:hover {
+  color: #333;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
 .zPopOver .zPopOverContent {
   padding: 10px 20px;
   position: relative;
 }
 
-/* line 31 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+/* line 42 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
 .zPopOver .zPopOverContent:before,
 .zPopOver .zPopOverContent:after {
   display: block;
@@ -54,8 +71,68 @@
   border-bottom: 10px solid transparent;
 }
 
-/* line 42 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+/* line 53 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
 .zPopOver .zPopOverContent:after {
   border-right: 10px solid #fff;
   left: -20px;
+}
+
+/* line 57 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 58 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 59 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOverleft .zPopOverContent:before,
+.zPopOverleft .zPopOverContent:after {
+  left: auto;
+  right: -22px;
+  border-left: 10px solid #bbb;
+  border-right: 10px solid transparent;
+}
+
+/* line 64 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOverleft .zPopOverContent:after {
+  border-left: 10px solid #fff;
+  right: -20px;
+}
+
+/* line 67 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 68 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 69 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOvertop .zPopOverContent:before,
+.zPopOvertop .zPopOverContent:after {
+  left: 50%;
+  margin-left: -11px;
+  top: auto;
+  bottom: -22px;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #bbb;
+}
+
+/* line 76 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOvertop .zPopOverContent:after {
+  border-top: 10px solid #fff;
+  bottom: -20px;
+}
+
+/* line 79 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 80 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+
+/* line 81 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOverbottom .zPopOverContent:before,
+.zPopOverbottom .zPopOverContent:after {
+  left: 50%;
+  margin-left: -11px;
+  top: -33px;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #bbb;
+}
+
+/* line 87 : /Users/elvis/bitbucket/ocui/public/css/popOver.styl */
+.zPopOverbottom .zPopOverContent:after {
+  border-bottom: 10px solid #fff;
+  top: -32px;
 }
