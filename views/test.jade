@@ -1,176 +1,202 @@
 extends layout
 
 block content
-    style.
-        #filter i{
-            position: absolute;
-            font-size: 10px;
-            cursor: ns-resize;
-            display: block;
-            width: 14px;
-            height: 14px;
-        }
-        #filter i.zCutDown{
-            left: 50%;
-            margin-left: -7px;
-            bottom: -3px;
-            border-bottom: 4px dashed #1751CC;
-        }
-        #filter i.zCutUp{
-            left: 50%;
-            margin-left: -7px;
-            top: -3px;
-            border-top: 4px dashed #1751CC;
-        }
-        #filter i.zCutLeft{
-            top: 50%;
-            margin-top: -7px;
-            left: -3px;
-            border-left: 4px dashed #1751CC;
-        }
-        #filter i.zCutRight{
-            top: 50%;
-            margin-top: -7px;
-            right: -3px;
-            border-right: 4px dashed #1751CC;
-        }
+
     .wrap
         input#iptFile(type="file")
         button#btnTurn(type="button") 旋转
-        canvas#container(style="width: 1500px; height: 900px; border: 1px solid #ddd; position:relative; margin: 50px auto")
-            //- img#img(src="", style="max-width:100%; max-height: 100%; width: 100%")
-        span#filter(style="border: 1px solid #1751CC; position: absolute; display: block; width: 200px; height:200px; top: 20px; left: 20px; cursor:move")
-            i.zCutDown
-            i.zCutLeft
-            i.zCutRight
-            i.zCutUp
+        button#btnCut(type="button") 开始裁剪
+        button#btnOK.none(type="button") 裁剪
+        div#container
 
     script.
-        var canvas = document.getElementById('container');
-        var ctx = canvas.getContext('2d');
+        var upload = new oc.ImgUploader({
+            container: '#container'
+        });
+    
+    //- script.
+    //-     var canvas = document.getElementById('container');
+    //-     var ctx = canvas.getContext('2d');
+    //-     var filter = $('#filter');
 
-        var turnRotate = 0;
-        $('#btnTurn').on('click', function(){
-            turnRotate += Math.PI / 2;
-            ctx.rotate(Math.PI / 2);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);  
-            ctx.drawImage(img, 0, 0, 500, 500);
-        })
+    //-     $('#btnTurn').on('click', function(){
+    //-         turnRotate += Math.PI / 2;
+    //-         ctx.rotate(turnRotate);
+    //-         ctx.clearRect(-1 * canvas.width/2, -1 * canvas.height/2, canvas.width, canvas.height);  
+    //-         ctx.drawImage(img, -1 * canvas.width/2, -1 * canvas.height/2, 100, 100);
+    //-     })
+    //-     $('#btnCut').on('click', function(){
+    //-         $('#btnOK, #filter').show();
+    //-         $(this).hide();
+    //-     })
+    //-     $('#btnOK').on('click', function(){
+    //-         drawImage(true);
+    //-     })
 
-        var reader = new FileReader();
-        var img = new Image();
+    //-     var reader = new FileReader();
+    //-     var img = new Image();
+       
+    //-     var scaleRate = 1.1;
+    //-     var currentScale = 1;
 
-        $('#iptFile').on('change', function(){
-            var file = this.files[0];
-            if(!/image\/.*/.test(file.type)){
-                oc.dialog.tips('Only image file is accept');
-                return;
-            }
+    //-     var drawImage = function(isCut, scale){
+    //-         canvas.width = img.width;
+    //-         canvas.height = img.height;
+    //-         if(isCut){
+    //-             canvas.width = filter.width();
+    //-             canvas.height = filter.height();
+    //-         }
+
+    //-         if(scale){
+    //-             canvas.width = canvas.width * scale;
+    //-             canvas.height = canvas.height * scale;
+    //-             img.width = canvas.width;
+    //-             img.height = canvas.height;
+    //-         }
             
-            img.onload = function(){
-                //- ctx.scale(1.5, 0.5);
-                ctx.clearRect(0, 0, canvas.width, canvas.height); 
-                //- ctx.rotate(20 * Math.PI / 180); 
-                ctx.drawImage(img, 0, 0, 400, 266);
-            }
+    //-         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            reader.onload = function(e){
-                console.log(this.result);
-                img.src = this.result;
-            }
+    //-         if(isCut){
+    //-             canvas.width = canvas.width / currentScale;
+    //-             canvas.height = canvas.height / currentScale;
+        
+    //-             ctx.drawImage(img, filter.position().left / currentScale, filter.position().top / currentScale, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
 
-            reader.readAsDataURL(file);
-        })
+    //-             var image = canvas.toDataURL("image/png");  
+    //-             img.src = image;
+    //-             img.width = canvas.width;
+    //-             img.height = canvas.height;
 
-        var downPosition = {};
-        var move = function(e){
-            var currentPosition = e.originalEvent;
-            var ele = $('#filter');
-            var left = downLeft + currentPosition.clientX - downPosition.clientX;
-            var top = downTop + currentPosition.clientY - downPosition.clientY;
-            if(left < 0){
-                left = 0;
-            }
-            if(top < 0){
-                top = 0;
-            }
-            ele.css({
-                left: left,
-                top: top,
-            })
-        }
+    //-             filter.css({
+    //-                 left: 0,
+    //-                 top: 0
+    //-             })
 
-        var downWidth = $('#filter').width();
-        var downHeight = $('#filter').height();
-        var downLeft = $('#filter').position().left;
-        var downTop = $('#filter').position().top;
-        var moveI = function(e, i){
-            e.stopPropagation();
-            var currentPosition = e.originalEvent;
-            var ele = $(i);
-            var parent = ele.parent();
+    //-             $('#btnCut').show();
+    //-             $('#btnOK, #filter').hide();
+    //-         }
+    //-         else{
+    //-             ctx.drawImage(img, 0, 0, img.width, img.height);
+    //-         }
+    //-     }
+
+    //-     filter[0].onmousewheel = filter[0].onwheel = canvas.onmousewheel = canvas.onwheel = function(event){//chrome firefox浏览器兼容
+    //-         event.preventDefault();
+    //-         event.wheelDelta = event.wheelDelta? event.wheelDelta : (event.deltaY * (-40));
+    //-         if(event.wheelDelta > 0){
+    //-             currentScale = currentScale * scaleRate;
+    //-             drawImage(false, scaleRate);
+    //-         }
+    //-         else{
+    //-             currentScale = currentScale * 1.0 / scaleRate;
+    //-             drawImage(false, 1.0 / scaleRate);
+    //-         }
+    //-     }
+
+    //-     $('#iptFile').on('change', function(){
+    //-         var file = this.files[0];
+    //-         if(!/image\/.*/.test(file.type)){
+    //-             oc.dialog.tips('Only image file is accept');
+    //-             return;
+    //-         }
+
+    //-         reader.onload = function(e){
+    //-             img.src = this.result;
+    //-             drawImage();
+    //-         }
+
+    //-         reader.readAsDataURL(file);
+    //-     })
+
+    //-     var downPosition = {};
+    //-     var move = function(e){
+    //-         var currentPosition = e.originalEvent;
+    //-         var ele = $('#filter');
+    //-         var left = downLeft + currentPosition.clientX - downPosition.clientX;
+    //-         var top = downTop + currentPosition.clientY - downPosition.clientY;
+    //-         if(left < 0){
+    //-             left = 0;
+    //-         }
+    //-         if(top < 0){
+    //-             top = 0;
+    //-         }
+    //-         ele.css({
+    //-             left: left,
+    //-             top: top,
+    //-         })
+    //-     }
+
+    //-     var downWidth = $('#filter').width();
+    //-     var downHeight = $('#filter').height();
+    //-     var downLeft = $('#filter').position().left;
+    //-     var downTop = $('#filter').position().top;
+    //-     var moveI = function(e, i){
+    //-         e.stopPropagation();
+    //-         var currentPosition = e.originalEvent;
+    //-         var ele = $(i);
+    //-         var parent = ele.parent();
             
-            var addWidth = currentPosition.clientX - downPosition.clientX;
-            var addHeight = currentPosition.clientY - downPosition.clientY;
+    //-         var addWidth = currentPosition.clientX - downPosition.clientX;
+    //-         var addHeight = currentPosition.clientY - downPosition.clientY;
 
-            var width = downWidth + addWidth;
-            var height = downHeight + addHeight;
+    //-         var width = downWidth + addWidth;
+    //-         var height = downHeight + addHeight;
 
-            if(i.hasClass('zCutRight')){
-                parent.css({
-                    width: width
-                })
-            }
-            else if(i.hasClass('zCutLeft')){
-                parent.css({
-                    left: downLeft + addWidth,
-                    width: downWidth - addWidth
-                })
-            }
-            else if(i.hasClass('zCutUp')){
-                parent.css({
-                    top: downTop + addHeight,
-                    height: downHeight - addHeight
-                })
-            }
-            else if(i.hasClass('zCutDown')){
-                parent.css({
-                    height: height
-                })
-            }
-        }
-        $('#filter').on('mousedown', function(e){
-            if(e.which === 1){
-                downPosition = e.originalEvent;
-                downLeft = $('#filter').position().left;
-                downTop = $('#filter').position().top;
-                $(document).off('mousemove');
-                $(document).on('mousemove', move);
-            }
-            else{
-                $(document).off('mousemove');
-            }
-        })
-        $('#filter i').on('mousedown', function(e){
-            e.stopPropagation();
-            downWidth = $('#filter').width();
-            downHeight = $('#filter').height();
-            downLeft = $('#filter').position().left;
-            downTop = $('#filter').position().top;
+    //-         if(i.hasClass('zCutRight')){
+    //-             parent.css({
+    //-                 width: width
+    //-             })
+    //-         }
+    //-         else if(i.hasClass('zCutLeft')){
+    //-             parent.css({
+    //-                 left: downLeft + addWidth,
+    //-                 width: downWidth - addWidth
+    //-             })
+    //-         }
+    //-         else if(i.hasClass('zCutUp')){
+    //-             parent.css({
+    //-                 top: downTop + addHeight,
+    //-                 height: downHeight - addHeight
+    //-             })
+    //-         }
+    //-         else if(i.hasClass('zCutDown')){
+    //-             parent.css({
+    //-                 height: height
+    //-             })
+    //-         }
+    //-     }
+    //-     $('#filter').on('mousedown', function(e){
+    //-         if(e.which === 1){
+    //-             downPosition = e.originalEvent;
+    //-             downLeft = $('#filter').position().left;
+    //-             downTop = $('#filter').position().top;
+    //-             $(document).off('mousemove');
+    //-             $(document).on('mousemove', move);
+    //-         }
+    //-         else{
+    //-             $(document).off('mousemove');
+    //-         }
+    //-     })
+    //-     $('#filter i').on('mousedown', function(e){
+    //-         e.stopPropagation();
+    //-         downWidth = $('#filter').width();
+    //-         downHeight = $('#filter').height();
+    //-         downLeft = $('#filter').position().left;
+    //-         downTop = $('#filter').position().top;
 
-            var ele = $(this);
-            if(e.which === 1){
-                downPosition = e.originalEvent;
-                $(document).off('mousemove');
-                $(document).on('mousemove', function(e){
-                    moveI(e, ele);
-                });
-            }
-            else{
-                $(document).off('mousemove');
-            }
-        })
-        $(document).on('mouseup', function(){
-            $(document).off('mousemove');
-        })
+    //-         var ele = $(this);
+    //-         if(e.which === 1){
+    //-             downPosition = e.originalEvent;
+    //-             $(document).off('mousemove');
+    //-             $(document).on('mousemove', function(e){
+    //-                 moveI(e, ele);
+    //-             });
+    //-         }
+    //-         else{
+    //-             $(document).off('mousemove');
+    //-         }
+    //-     })
+    //-     $(document).on('mouseup', function(){
+    //-         $(document).off('mousemove');
+    //-     })
 

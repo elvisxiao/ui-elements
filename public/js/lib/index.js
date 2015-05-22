@@ -10,11 +10,13 @@
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
+	oc.ImgUploader = require('./imgUploader');
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.TreePIS = require('./treePIS');
 	oc.ajax = require('./ajax');
 	oc.date = require('./date');
+
 	
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath){
