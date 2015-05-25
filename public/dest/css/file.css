@@ -1,14 +1,14 @@
 
-/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : E:\bitbucket\ocui\node_modules\grunt-contrib-stylus\node_modules\stylus\lib\functions\index.styl */
 
-/* line 1 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 1 : E:\bitbucket\ocui\public\css\file.styl */
 .zFile {
   position: relative;
   overflow: hidden;
   display: inline-block;
 }
 
-/* line 5 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 5 : E:\bitbucket\ocui\public\css\file.styl */
 .zFile input {
   position: absolute;
   top: 0;
@@ -20,12 +20,12 @@
   cursor: pointer;
 }
 
-/* line 14 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 14 : E:\bitbucket\ocui\public\css\file.styl */
 .zFile input:hover ~ .zFileText {
   background: #eee;
 }
 
-/* line 16 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 16 : E:\bitbucket\ocui\public\css\file.styl */
 .zFile .zFileText {
   display: block;
   padding: 3px 10px;
@@ -36,33 +36,33 @@
   border: 1px solid #ccc;
 }
 
-/* line 25 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 25 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable {
   min-width: 500px;
 }
 
-/* line 27 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 27 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tr {
   height: 35px;
 }
 
-/* line 29 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 29 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tr td {
   padding-left: 20px;
 }
 
-/* line 31 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 31 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tbody tr:nth-child(odd) {
   background: #eee;
 }
 
-/* line 33 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 33 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable thead {
   background: #999;
   color: #fff;
 }
 
-/* line 36 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 36 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable thead th {
   height: 35px;
   padding-left: 20px;
@@ -70,12 +70,12 @@
   text-align: left;
 }
 
-/* line 41 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 41 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tfoot {
   background: #666;
 }
 
-/* line 43 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 43 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tfoot button {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -84,13 +84,13 @@
   outline: none;
 }
 
-/* line 49 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 49 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable tfoot button:focus {
   background: #eee;
   border: 1px solid #aaa;
 }
 
-/* line 52 : /Users/elvis/bitbucket/ocui/public/css/file.styl */
+/* line 52 : E:\bitbucket\ocui\public\css\file.styl */
 .zFileTable .zFile {
   vertical-align: middle;
   margin-right: 20px;

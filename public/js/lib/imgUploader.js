@@ -7,8 +7,8 @@ var ImgUploader = function(options){
 	this.ctx = null;   //canvas.getContext();
 	this.img = null;   //当前的图片
 	this.filter = null;    //Jquery对象，裁剪框
-	this.currentScale = 1;  //当前放大倍数
-	this.scaleRate = 1.1;  //放大系数
+	this.scaleHeight = 0;  //未放大或者缩小的初始高度
+	this.scaleWidth = 0;  //未放大或者缩小的初始宽度
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -60,6 +60,9 @@ var ImgUploader = function(options){
             reader.onload = function(e){
                 self.img.src = this.result;
                 self.drawImage();
+                self.scaleWidth = self.img.width;
+                self.scaleHeight = self.img.height;
+
                 self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
                 self.ele.find('.zCutRange input').val(100);
                 self.ele.find('.zRangePercent').html('100%');
@@ -69,6 +72,7 @@ var ImgUploader = function(options){
 		})
         .on('input', '.zImgUploaderControl input[type="range"]', function(){
             self.ele.find('.zImgUploaderControl .zRangePercent').html(this.value + '%');
+            self.range();
         })
         .on('click', '.zImgUploaderControl b', function(){
             var range = parseInt(self.ele.find('.zImgUploaderControl .zRangePercent').html());
@@ -82,19 +86,17 @@ var ImgUploader = function(options){
             }
             self.ele.find('.zImgUploaderControl .zRangePercent').html(range + '%');
             self.ele.find('.zImgUploaderControl input[type="range"]').val(range);
+            self.range();
         })
-        .on('click', '.btnCut', function(){
-            self.drawImage(true);
-        })
+        .on('click', '.btnCut', self.cutImage)
 		.on('mousedown', '.zImgUploaderFilter', function(e){
 			if(e.which === 1){
                 self.downPosition = e.originalEvent;
                 downLeft = self.filter.position().left;
                 downTop = self.filter.position().top;
-                console.log('begin move');
+       
                 $(document).off('mousemove');
                 $(document).on('mousemove', function(e){
-                	console.log('222');
                 	self.moveFilter(e);
                 });
             }
@@ -128,23 +130,23 @@ var ImgUploader = function(options){
             $(document).off('mousemove');
         })
 
-		var eleFilter = self.filter[0];
-		eleFilter.onmousewheel = eleFilter.onwheel = self.canvas.onmousewheel = self.canvas.onwheel = function(event){//chrome firefox浏览器兼容
-            event.preventDefault();
-            event.wheelDelta = event.wheelDelta? event.wheelDelta : (event.deltaY * (-40));
-            if(event.wheelDelta > 0 && self.currentScale * self.scaleRate < 5){
-                self.currentScale = self.currentScale * self.scaleRate;
+		// var eleFilter = self.filter[0];
+		// eleFilter.onmousewheel = eleFilter.onwheel = self.canvas.onmousewheel = self.canvas.onwheel = function(event){//chrome firefox浏览器兼容
+  //           event.preventDefault();
+  //           event.wheelDelta = event.wheelDelta? event.wheelDelta : (event.deltaY * (-40));
+  //           if(event.wheelDelta > 0 && self.currentScale * self.scaleRate < 5){
+  //               self.currentScale = self.currentScale * self.scaleRate;
 
-                self.drawImage(false, self.scaleRate);
-            }
-            else if(self.currentScale * 1.0 / self.scaleRate > 0.5){
-                self.currentScale = self.currentScale * 1.0 / self.scaleRate;
-                self.drawImage(false, 1.0 / self.scaleRate);
-            }
-        }
+  //               self.drawImage(false, self.scaleRate);
+  //           }
+  //           else if(self.currentScale * 1.0 / self.scaleRate > 0.5){
+  //               self.currentScale = self.currentScale * 1.0 / self.scaleRate;
+  //               self.drawImage(false, 1.0 / self.scaleRate);
+  //           }
+  //       }
 	}
 
-	self.drawImage = function(isCut, scale){
+	self.drawImage = function(isCut, range){
         if(!self.img.src){
             return;
         }
@@ -155,23 +157,21 @@ var ImgUploader = function(options){
             self.canvas.height = self.filter.height();
         }
 
-        if(scale){
-            self.canvas.width = self.canvas.width * scale;
-            self.canvas.height = self.canvas.height * scale;
+        if(range){
+            self.canvas.width = self.scaleWidth * range / 100.0;
+            self.canvas.height = self.scaleHeight * range / 100.0;
             self.img.width = self.canvas.width;
             self.img.height = self.canvas.height;
-
-            self.ele.find('.zCutRange input').val((self.currentScale * 100).toFixed(0));
-            self.ele.find('.zRangePercent').html((self.currentScale * 100).toFixed(0) + '%');
         }
         
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
         if(isCut){
-            self.canvas.width = self.canvas.width / self.currentScale;
-            self.canvas.height = self.canvas.height / self.currentScale;
-    	
-            self.ctx.drawImage(self.img, self.filter.position().left / self.currentScale, self.filter.position().top / self.currentScale, self.canvas.width, self.canvas.height, 0, 0, self.canvas.width, self.canvas.height);
+            var currRange = self.ele.find('.zImgUploaderControl input[type="range"]').val() / 100;
+            self.canvas.width = self.filter.width() / currRange;
+            self.canvas.height = self.filter.height() / currRange;
+    	    
+            self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, self.canvas.width, self.canvas.height, 0, 0, self.canvas.width, self.canvas.height);
 
             var image = self.canvas.toDataURL("image/png");  
             self.img.src = image;
@@ -188,12 +188,55 @@ var ImgUploader = function(options){
                 width: 0,
                 height: 0
             })
+
+            self.resetControl();
         }
         else{
             self.ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height);
         }
 
         self.resetCover();
+    }
+
+    self.range = function(){
+        var rangeVal = self.ele.find('.zImgUploaderControl input[type="range"]').val();
+        self.canvas.width = self.scaleWidth * rangeVal / 100.0;
+        self.canvas.height = self.scaleHeight * rangeVal / 100.0;
+        self.ctx.drawImage(self.img, 0, 0, self.canvas.width, self.canvas.height);
+
+        self.resetCover();
+    }
+
+    self.cutImage = function(){
+        if(!self.img.src){
+            return;
+        }
+
+        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
+        var currRange = self.ele.find('.zImgUploaderControl input[type="range"]').val() / 100;
+        var width = self.filter.width();
+        var height = self.filter.height();
+        var realWidth = self.canvas.width;
+        var realHeight = self.canvas.height;
+        self.canvas.width = width;
+        self.canvas.height = height;
+
+        self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, 
+           width / currRange, height / currRange, 0, 0, width, height);
+
+        self.resetCover();
+        
+        self.filter.css({
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%'
+        })
+        self.ele.find('.zImgUploaderCover').css({
+            width: 0,
+            height: 0
+        })
+        
     }
 
     self.moveFilter = function(e){
