@@ -1,7 +1,7 @@
 
-/* line 1 : E:\bitbucket\ocui\node_modules\grunt-contrib-stylus\node_modules\stylus\lib\functions\index.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 1 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zLoading {
   position: fixed;
   top: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-/* line 12 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 12 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips,
 .zDialog {
   border: 6px solid #ddd;
@@ -31,12 +31,12 @@
   box-sizing: border-box;
 }
 
-/* line 27 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 27 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips {
   left: 50%;
 }
 
-/* line 30 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 30 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips:after,
 .zDialog .zDialogTitle {
   box-sizing: border-box;
@@ -55,7 +55,7 @@
   font-size: 16px;
 }
 
-/* line 45 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 45 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips:before {
   content: "!";
   font-size: 24px;
@@ -72,13 +72,13 @@
   margin-right: 15px;
 }
 
-/* line 59 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 59 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog:before,
 .zDialog:after {
   display: none;
 }
 
-/* line 61 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 61 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog .zDialogTitle>.close {
   position: absolute;
   display: block;
@@ -90,7 +90,7 @@
   top: 0;
 }
 
-/* line 70 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 70 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialogCover:after {
   content: "";
   position: fixed;
@@ -104,18 +104,18 @@
   z-index: 999;
 }
 
-/* line 81 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 81 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog {
   top: 0;
   opacity: 0;
 }
 
-/* line 84 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 84 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:before {
   display: none;
 }
 
-/* line 86 : E:\bitbucket\ocui\public\css\dialog.styl */
+/* line 86 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:after {
   content: "Message";
 }

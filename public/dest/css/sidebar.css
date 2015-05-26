@@ -1,7 +1,7 @@
 
-/* line 1 : E:\bitbucket\ocui\node_modules\grunt-contrib-stylus\node_modules\stylus\lib\functions\index.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 1 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 1 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar {
   background-color: #efefef;
   padding: 0;
@@ -10,27 +10,27 @@
   display: inline-block;
 }
 
-/* line 7 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 7 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul {
   padding: 0;
 }
 
-/* line 9 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 9 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li.active {
   background: #3498db;
 }
 
-/* line 11 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 11 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li.active a {
   color: #fff;
 }
 
-/* line 13 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 13 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li.active ul li a {
   color: #444;
 }
 
-/* line 15 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 15 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li {
   list-style-type: none;
   cursor: pointer;
@@ -47,7 +47,7 @@
   list-style-type: none;
 }
 
-/* line 29 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 29 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li a {
   text-decoration: none;
   color: #666;
@@ -57,24 +57,24 @@
   padding: 0 10px;
 }
 
-/* line 36 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 36 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li:hover {
   background-color: #3498db;
 }
 
-/* line 38 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 38 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar ul li:hover >a {
   color: #fff;
 }
 
-/* line 41 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 41 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li:last-child {
   border-bottom: 1px solid transparent;
 }
 
-/* line 43 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 43 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 
-/* line 44 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 44 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul {
   position: absolute;
   top: -15px;
@@ -92,7 +92,7 @@
   box-shadow: 0 0 3px #bbb;
 }
 
-/* line 59 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 59 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul:before {
   content: "";
   border-right: 10px solid #eceff1;
@@ -105,7 +105,7 @@
   top: 25px;
 }
 
-/* line 69 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 69 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul li {
   font-size: 12px;
   height: 30px;
@@ -113,30 +113,30 @@
   min-width: 150px;
 }
 
-/* line 74 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 74 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul li:hover {
   border-bottom: 1px solid #0072c0 !important;
   background: #eceff1;
 }
 
-/* line 77 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 77 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul li:hover >a {
   color: #0072c0;
 }
 
-/* line 79 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 79 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore ul li:last-child {
   border-bottom: 0;
 }
 
-/* line 81 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 81 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 
-/* line 82 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 82 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore:hover ul {
   display: block;
 }
 
-/* line 84 : E:\bitbucket\ocui\public\css\sidebar.styl */
+/* line 84 : /Users/elvis/bitbucket/ocui/public/css/sidebar.styl */
 .zSideBar li.hasMore a:hover +ul {
   display: block;
 }

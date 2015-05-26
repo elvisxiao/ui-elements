@@ -78,7 +78,7 @@ var ImgUploader = function(options){
             var range = parseInt(self.ele.find('.zImgUploaderControl .zRangePercent').html());
             if(this.innerHTML === '－'){
                 range -= 10;
-                (range < 10) && (range = 10);
+                (range < 50) && (range = 50);
             }
             else{
                 range += 10;
@@ -129,71 +129,21 @@ var ImgUploader = function(options){
 		$(document).on('mouseup', function(){
             $(document).off('mousemove');
         })
-
-		// var eleFilter = self.filter[0];
-		// eleFilter.onmousewheel = eleFilter.onwheel = self.canvas.onmousewheel = self.canvas.onwheel = function(event){//chrome firefox浏览器兼容
-  //           event.preventDefault();
-  //           event.wheelDelta = event.wheelDelta? event.wheelDelta : (event.deltaY * (-40));
-  //           if(event.wheelDelta > 0 && self.currentScale * self.scaleRate < 5){
-  //               self.currentScale = self.currentScale * self.scaleRate;
-
-  //               self.drawImage(false, self.scaleRate);
-  //           }
-  //           else if(self.currentScale * 1.0 / self.scaleRate > 0.5){
-  //               self.currentScale = self.currentScale * 1.0 / self.scaleRate;
-  //               self.drawImage(false, 1.0 / self.scaleRate);
-  //           }
-  //       }
 	}
 
-	self.drawImage = function(isCut, range){
+	self.drawImage = function(){
         if(!self.img.src){
             return;
         }
         self.canvas.width = self.img.width;
         self.canvas.height = self.img.height;
-        if(isCut){
-            self.canvas.width = self.filter.width();
-            self.canvas.height = self.filter.height();
-        }
-
-        if(range){
-            self.canvas.width = self.scaleWidth * range / 100.0;
-            self.canvas.height = self.scaleHeight * range / 100.0;
-            self.img.width = self.canvas.width;
-            self.img.height = self.canvas.height;
-        }
-        
+        $(self.canvas).parent().css({
+            'margin-left': self.canvas.width / -2.0,
+            'margin-top': self.canvas.height / -2.0,
+        });
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
-        if(isCut){
-            var currRange = self.ele.find('.zImgUploaderControl input[type="range"]').val() / 100;
-            self.canvas.width = self.filter.width() / currRange;
-            self.canvas.height = self.filter.height() / currRange;
-    	    
-            self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, self.canvas.width, self.canvas.height, 0, 0, self.canvas.width, self.canvas.height);
-
-            var image = self.canvas.toDataURL("image/png");  
-            self.img.src = image;
-            self.img.width = self.canvas.width;
-            self.img.height = self.canvas.height;
-
-            self.filter.css({
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%'
-            })
-            self.ele.find('.zImgUploaderCover').css({
-                width: 0,
-                height: 0
-            })
-
-            self.resetControl();
-        }
-        else{
-            self.ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height);
-        }
+        self.ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height);
 
         self.resetCover();
     }
@@ -202,8 +152,13 @@ var ImgUploader = function(options){
         var rangeVal = self.ele.find('.zImgUploaderControl input[type="range"]').val();
         self.canvas.width = self.scaleWidth * rangeVal / 100.0;
         self.canvas.height = self.scaleHeight * rangeVal / 100.0;
-        self.ctx.drawImage(self.img, 0, 0, self.canvas.width, self.canvas.height);
 
+        $(self.canvas).parent().css({
+            'margin-left': self.canvas.width / -2.0,
+            'margin-top': self.canvas.height / -2.0,
+        });
+        self.ctx.drawImage(self.img, 0, 0, self.canvas.width, self.canvas.height);
+        self.resetFilter();
         self.resetCover();
     }
 
@@ -216,27 +171,30 @@ var ImgUploader = function(options){
         var currRange = self.ele.find('.zImgUploaderControl input[type="range"]').val() / 100;
         var width = self.filter.width();
         var height = self.filter.height();
-        var realWidth = self.canvas.width;
-        var realHeight = self.canvas.height;
         self.canvas.width = width;
         self.canvas.height = height;
+
+        $(self.canvas).parent().css({
+            'margin-left': self.canvas.width / -2.0,
+            'margin-top': self.canvas.height / -2.0,
+        });
 
         self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, 
            width / currRange, height / currRange, 0, 0, width, height);
 
+        self.resetFilter();
         self.resetCover();
         
-        self.filter.css({
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%'
-        })
         self.ele.find('.zImgUploaderCover').css({
             width: 0,
             height: 0
         })
-        
+        self.ele.find('.zImgUploaderControl input[type="range"]').val(100);
+        self.ele.find('.zImgUploaderControl .zRangePercent').html('100%');
+        self.ele.find('.zImgUploaderControl .zCutImageSize').html(width + ' × ' + height);
+        self.scaleWidth = width / currRange;
+        self.scaleHeight = height / currRange;
+        self.img.src = self.canvas.toDataURL("image/png"); 
     }
 
     self.moveFilter = function(e){
@@ -250,12 +208,31 @@ var ImgUploader = function(options){
         if(top < 0){
             top = 0;
         }
-        self.filter.css({
-            left: left,
-            top: top,
-        })
+        self.resetFilter();
 
         self.resetCover();
+    }
+
+    self.resetFilter = function(){
+        var parent = $(self.canvas).parent();
+        var left = parseInt(parent.css('margin-left')) + self.ele.width() / 2;
+        var right = self.ele.width() - self.canvas.width - left;
+        var top = parseInt(parent.css('margin-top')) + self.ele.height() / 2;
+        var bottom = self.ele.height() - self.canvas.height - top;
+
+        left < 0? (left *= -1) : (left = 0);
+        right < 0? (right *= -1) : (right = 0);
+        bottom < 0? (bottom *= -1) : (bottom = 0);
+        top < 0? (top *= -1) : (top = 0);
+
+        self.filter.css({
+            width: 'auto',
+            height: 'auto',
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+        })
     }
 
     self.resetCover = function(){
@@ -294,35 +271,76 @@ var ImgUploader = function(options){
         var currentPosition = e.originalEvent;
         var ele = $(i);
         var parent = ele.parent();
-        
+        // console.log(currentPosition.clientX - self.downPosition.clientX);
         var addWidth = currentPosition.clientX - self.downPosition.clientX;
         var addHeight = currentPosition.clientY - self.downPosition.clientY;
 
         var width = self.downWidth + addWidth;
         var height = self.downHeight + addHeight;
 
+        var canvasParent = $(self.canvas).parent();
+        var left = parseInt(canvasParent.css('margin-left')) + self.ele.width() / 2;
+        var right = self.ele.width() - self.canvas.width - left;
+        var top = parseInt(canvasParent.css('margin-top')) + self.ele.height() / 2;
+        var bottom = self.ele.height() - self.canvas.height - top;
+
         if(i.hasClass('zCutRight')){
+            var max = self.canvas.width + right - self.downLeft;
+            if(right < 0 && max < width){
+                width = max;
+            }
+            else if(right > 0){
+                max = self.canvas.width - self.downLeft;
+                if(max < width){
+                    width = max;
+                }
+            }
+            
             parent.css({
                 width: width
             })
         }
-        else if(i.hasClass('zCutLeft')){
-            parent.css({
-                left: self.downLeft + addWidth,
-                width: self.downWidth - addWidth
-            })
-        }
-        else if(i.hasClass('zCutUp')){
-            parent.css({
-                top: self.downTop + addHeight,
-                height: self.downHeight - addHeight
-            })
-        }
         else if(i.hasClass('zCutDown')){
+            var max = self.canvas.height + bottom - self.downTop;
+            if(bottom < 0 && max < height){
+                height = max;
+            }
+            else if(bottom > 0){
+                max = self.canvas.height - self.downTop;
+                if(max < height){
+                    height = max;
+                }
+            }
+            
             parent.css({
                 height: height
             })
         }
+        else if(i.hasClass('zCutLeft')){
+            if(left < 0 && self.downLeft + left <= -1 * addWidth){
+                addWidth = (self.downLeft + left) * -1;
+            }
+            else if(left > 0 && self.downLeft <= -1 * addWidth){
+                addWidth = -1 * self.downLeft;
+            }
+            parent.css({
+                left: self.downLeft + addWidth,
+                width: self.downWidth - addWidth + 2
+            })
+        }
+        else if(i.hasClass('zCutUp')){
+            if(top < 0 && self.downTop + top <= -1 * addHeight){
+                addHeight = (self.downTop + top) * -1;
+            }
+            else if(top > 0 && self.downTop <= -1 * addHeight){
+                addHeight = -1 * self.downTop;
+            }
+            parent.css({
+                top: self.downTop + addHeight,
+                height: self.downHeight - addHeight + 2
+            })
+        }
+        
 
         self.resetCover();
     }
