@@ -720,7 +720,7 @@ module.exports = FileView;
 
 
 },{"./asset/csv":2}],6:[function(require,module,exports){
-var ImgUploader = function(options){
+var ImageCropping = function(options){
 	this.config = {
 		container: 'body'
 	};
@@ -750,7 +750,7 @@ var ImgUploader = function(options){
         wrap.append('<span class="zImgUploaderCover zImgUploaderCoverBottom"></span>');
 		wrap.append('<span class="zImgUploaderFilter"><i class="zCutDown"></i><i class="zCutLeft"></i><i class="zCutRight"></i><i class="zCutUp"></i></span>');
 		self.ele.append('<div class="zImgUploaderControl"><span class="iptFile"><input type="file" accept="image/*">Open</span><span class="zCutRange"><b>－</b><input type="range" min="50" max="500" step="1"><b>＋</b><span class="zRangePercent">0%</span></span><span class="zCutImageSize">0 × 0</span><button class="btnCut">Cut</button></div>');
-
+        self.ele.append('<h3 class="zImgUploaderDropInfo mt50">Drop image here</h3>');
 		self.canvas = self.ele.find('canvas')[0];
 		self.ctx = self.canvas.getContext('2d');
 		self.img = new Image();
@@ -761,37 +761,74 @@ var ImgUploader = function(options){
 		self.bindEvents();
 	}
 
+    self.supportDrop = function(){
+        self.ele.on('dragover', function(e){
+            e.stopPropagation();    
+            e.preventDefault();
+        })
+        .on('dragenter', function(e){
+            e.stopPropagation();    
+            e.preventDefault();
+            self.ele.addClass('zImgUploaderDrag');
+        })
+        .on('dragleave', function(e){
+            e.stopPropagation();    
+            e.preventDefault();
+            self.ele.removeClass('zImgUploaderDrag');
+        })
+
+        self.ele.on('drop', function(e){
+            e.stopPropagation();    
+            e.preventDefault();
+            self.ele.removeClass('zImgUploaderDrag');
+            var file = e.originalEvent.dataTransfer.files;
+            self.readFile(file[0]);
+        })
+    }
+
+    self.readFile = function(file){
+        var reader = new FileReader();
+
+        if(!/image\/.*/.test(file.type)){
+            if(window.oc){
+                oc.dialog.tips('Only image file is accept');
+            }
+            else{
+                alert('Only image file is accept');
+            }
+            return;
+        }
+
+        self.ele.find('.zImgUploaderDropInfo').hide();
+        self.ele.find('.zImgUploaderFilter').css('display', 'block');
+        
+        reader.onload = function(e){
+            self.img.src = this.result;
+            self.drawImage();
+            self.scaleWidth = self.img.width;
+            self.scaleHeight = self.img.height;
+
+            self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
+            self.ele.find('.zCutRange input').val(100);
+            self.ele.find('.zRangePercent').html('100%');
+        }
+
+        reader.readAsDataURL(file);
+    }
+
 	self.bindEvents = function(){
 		self.downWidth = self.filter.width();
         self.downHeight = self.filter.height();
         self.downLeft = self.filter.position().left;
         self.downTop = self.filter.position().top;
         self.downPosition = {};
-
+        
         var reader = new FileReader();
-
+        
+        self.supportDrop();
 		self.ele.on('change', 'input[type="file"]', function(){
-			var file = this.files[0];
-            if(!/image\/.*/.test(file.type)){
-                oc.dialog.tips('Only image file is accept');
-                return;
-            }
-
-            self.ele.find('.zImgUploaderFilter').css('display', 'block');
-
-            reader.onload = function(e){
-                self.img.src = this.result;
-                self.drawImage();
-                self.scaleWidth = self.img.width;
-                self.scaleHeight = self.img.height;
-
-                self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
-                self.ele.find('.zCutRange input').val(100);
-                self.ele.find('.zRangePercent').html('100%');
-            }
-
-            reader.readAsDataURL(file);
-		})
+            self.readFile(this.files[0]);
+        })
         .on('input', '.zImgUploaderControl input[type="range"]', function(){
             self.ele.find('.zImgUploaderControl .zRangePercent').html(this.value + '%');
             self.range();
@@ -1070,7 +1107,7 @@ var ImgUploader = function(options){
     self.render();
 }
 
-module.exports = ImgUploader;
+window.module && window.module.exports && (module.exports = ImageCropping);
 },{}],7:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
@@ -1084,7 +1121,7 @@ module.exports = ImgUploader;
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
-	oc.ImgUploader = require('./imgUploader');
+	oc.ImageCropping = require('./imageCropping');
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.TreePIS = require('./treePIS');
@@ -1103,7 +1140,7 @@ module.exports = ImgUploader;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imgUploader":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
+},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imageCropping":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
 
 var LocalStorage = {
 	storage : window.localStorage

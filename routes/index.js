@@ -48,8 +48,8 @@ router.get('/organization', function(req, res) {
 });
 
 
-router.get('/test', function(req, res) {
-	res.render('test');
+router.get('/crop', function(req, res) {
+	res.render('crop');
 });
 
 router.post('/upload', function(req, res) {

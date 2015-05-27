@@ -10,7 +10,7 @@
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
-	oc.ImgUploader = require('./imgUploader');
+	oc.ImageCropping = require('./imageCropping');
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.TreePIS = require('./treePIS');
