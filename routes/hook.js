@@ -10,6 +10,8 @@ router.post('/', function(req, res) {
 	}
 
 	try{
+		console.log(req.body);
+		
 		var repoName = JSON.parse(req.body.payload).repository.name;
 		console.log('repo name:' + repoName);
 		var exec = require('child_process').exec;
