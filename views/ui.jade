@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 细小UI demo
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            p 使用教程请“审查HTML元素”
+            button.btn.btn-default.w100.mr50(type="button", onclick="oc.dialog.tips('Test message')") Tips
+            button.btn.btn-primary.w100.mr50(type="button", onclick="oc.dialog.confirm('Test message')") Confirm
+            button.btn.btn-info.w100(type="button", onclick="oc.dialog.open('Test message')") Dialog
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            p 在普通HTML的input:checkbox元素上加上class ”zToggleBtnSm“ 或者 “zToggleBtn”后，调用oc.ui.toggleBtn()即可
+            span.mr50
+                input.zToggleBtnSm(type="checkbox")
+            input.zToggleBtnSm(type="checkbox", checked)
+            div.mt30
+                span.mr20
+                    input.zToggleBtn(type="checkbox")
+                input.zToggleBtn(type="checkbox", checked)
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            p 在普通HTML的Select上加上class “zMultiSelect”后，调用oc.ui.multiSelect()即可
+            select.zMultiSelect.w200(style="height:35px;")
+                option Test option1
+                option Test option2
+                option Test option3
+                option Test option4
+                option Test option5
+
+        div.mt50.pb20(style="border-bottom:1px solid #ddd")
+            p 使用教程请“审查HTML元素”
+            i.zLoadingIcon.mr10
+            | Loading ...
+
+            div.mt10
+                label.zCbx
+                    input(type="checkbox")
+                    | Show Name
+
+        div.mt50.pb20.pr(style="border-bottom:1px solid #ddd")
+            button#btnPopOver.btn.btn-default.w100.mr50(type="button") PopOver
+
+            
+
+    script.
+        oc.ui.toggleBtn();
+        oc.ui.multiSelect();
+        oc.ui.cbx();
+        $('#btnPopOver').click(function(){
+            oc.ui.popOver(this, 'Test', 'Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.', 'bottom');
+        })

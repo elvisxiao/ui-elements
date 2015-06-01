@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 Demo - 树形结构 Tree
+        div(style="position: absolute; top:100px; right:20px; width: 400px;")
+            img.w(src="/img/tmp/tree1.png")
+            br
+            img.w.mt10(src="/img/tmp/tree2.png")
+    script(src="/mockData/tree.json")
+    script.
+        var dataList = TREEDATA;
+    
+        var tree = new oc.Tree({
+            data: dataList
+        });
+        
+    
+        

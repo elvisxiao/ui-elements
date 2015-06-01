@@ -1,0 +1,87 @@
+.zLoading
+    position fixed
+    top 0
+    bottom 0
+    left 0
+    right 0
+    background rgba(0, 0, 0, 0.4)
+    z-index 1000
+
+
+
+.tips, .zDialog
+    border 6px solid #ddd
+    position fixed
+    top 20%
+    background #fff
+    min-width 350px
+    display block
+    padding 45px 15px 15px 15px
+    color #222
+    border-radius 5px
+    box-shadow 0 0 20px #aaa
+    padding-right 20px
+    z-index 1001
+    max-width 90%
+    box-sizing border-box
+.tips
+    left 50%
+
+.tips:after, .zDialog .zDialogTitle
+    box-sizing border-box
+    content "Tips"
+    position absolute
+    top 0
+    left 0
+    display block
+    height 28px
+    line-height 28px
+    width 100%
+    padding-left 15px
+    border-bottom 1px solid #dedede
+    background #efefef
+    color #222
+    font-size 16px
+.tips:before
+    content "!"
+    font-size 24px
+    color #fff
+    background #00aedf
+    display inline-block
+    height 30px
+    width 30px
+    line-height 30px
+    text-align center
+    border-radius 20px
+    vertical-align middle
+    position relative
+    margin-right 15px
+.zDialog:before, .zDialog:after
+    display none
+.zDialog .zDialogTitle>.close
+    position absolute
+    display block
+    width 30px
+    height 30px
+    line-height 22px
+    text-align center
+    right 0
+    top 0
+.zDialogCover:after
+    content ""
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background #000
+    opacity .5
+    display block
+    z-index 999
+.zDialog
+    top 0
+    opacity 0
+.tips.confirm:before
+    display none
+.tips.confirm:after
+    content "Message"

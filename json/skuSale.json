@@ -1,0 +1,602 @@
+[
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 400000,
+        "sku": "DXLG2600-01",
+        "totalBuyProductCount": 400000
+    },
+    {
+        "firstBuyProductCount": 160441,
+        "rebuyProductCount": 63302,
+        "sku": "79AN7913S-B2A",
+        "totalBuyProductCount": 223743
+    },
+    {
+        "firstBuyProductCount": 81527,
+        "rebuyProductCount": 43582,
+        "sku": "63ANMFILTN-3WA",
+        "totalBuyProductCount": 125109
+    },
+    {
+        "firstBuyProductCount": 80617,
+        "rebuyProductCount": 43792,
+        "sku": "79AN13K2-BA",
+        "totalBuyProductCount": 124409
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 80000,
+        "sku": "DXLG3200-01",
+        "totalBuyProductCount": 80000
+    },
+    {
+        "firstBuyProductCount": 38737,
+        "rebuyProductCount": 38327,
+        "sku": "71AN7105SS-BA",
+        "totalBuyProductCount": 77064
+    },
+    {
+        "firstBuyProductCount": 41846,
+        "rebuyProductCount": 34546,
+        "sku": "79AN7913S-S2A",
+        "totalBuyProductCount": 76392
+    },
+    {
+        "firstBuyProductCount": 38764,
+        "rebuyProductCount": 35293,
+        "sku": "79AN7913S-PK2A",
+        "totalBuyProductCount": 74057
+    },
+    {
+        "firstBuyProductCount": 36414,
+        "rebuyProductCount": 37607,
+        "sku": "71AN2452CSS-BA",
+        "totalBuyProductCount": 74021
+    },
+    {
+        "firstBuyProductCount": 48320,
+        "rebuyProductCount": 23069,
+        "sku": "79AN7913S-U2A",
+        "totalBuyProductCount": 71389
+    },
+    {
+        "firstBuyProductCount": 42979,
+        "rebuyProductCount": 25844,
+        "sku": "79AN7917-BA",
+        "totalBuyProductCount": 68823
+    },
+    {
+        "firstBuyProductCount": 38540,
+        "rebuyProductCount": 28855,
+        "sku": "A1208011",
+        "totalBuyProductCount": 67395
+    },
+    {
+        "firstBuyProductCount": 20836,
+        "rebuyProductCount": 35561,
+        "sku": "79AN7913S-G2A",
+        "totalBuyProductCount": 56397
+    },
+    {
+        "firstBuyProductCount": 29524,
+        "rebuyProductCount": 17732,
+        "sku": "77ANSTAND-SA",
+        "totalBuyProductCount": 47256
+    },
+    {
+        "firstBuyProductCount": 25167,
+        "rebuyProductCount": 17488,
+        "sku": "71AN2452CSS-BMA",
+        "totalBuyProductCount": 42655
+    },
+    {
+        "firstBuyProductCount": 20259,
+        "rebuyProductCount": 21663,
+        "sku": "71AN7109-W2A",
+        "totalBuyProductCount": 41922
+    },
+    {
+        "firstBuyProductCount": 19698,
+        "rebuyProductCount": 21547,
+        "sku": "B7103012",
+        "totalBuyProductCount": 41245
+    },
+    {
+        "firstBuyProductCount": 27408,
+        "rebuyProductCount": 11759,
+        "sku": "A7908012",
+        "totalBuyProductCount": 39167
+    },
+    {
+        "firstBuyProductCount": 15589,
+        "rebuyProductCount": 22365,
+        "sku": "79AN7902-B2A",
+        "totalBuyProductCount": 37954
+    },
+    {
+        "firstBuyProductCount": 21369,
+        "rebuyProductCount": 16332,
+        "sku": "63ANMFILTN-3BA",
+        "totalBuyProductCount": 37701
+    },
+    {
+        "firstBuyProductCount": 4263,
+        "rebuyProductCount": 28016,
+        "sku": "71AN7105SS-WA",
+        "totalBuyProductCount": 32279
+    },
+    {
+        "firstBuyProductCount": 27145,
+        "rebuyProductCount": 4745,
+        "sku": "79ANM3-WB1A1JA",
+        "totalBuyProductCount": 31890
+    },
+    {
+        "firstBuyProductCount": 18177,
+        "rebuyProductCount": 12151,
+        "sku": "A7104011",
+        "totalBuyProductCount": 30328
+    },
+    {
+        "firstBuyProductCount": 19677,
+        "rebuyProductCount": 8039,
+        "sku": "70SMI9300-S1W22NA",
+        "totalBuyProductCount": 27716
+    },
+    {
+        "firstBuyProductCount": 16081,
+        "rebuyProductCount": 9743,
+        "sku": "79AN13K2-BCA",
+        "totalBuyProductCount": 25824
+    },
+    {
+        "firstBuyProductCount": 19420,
+        "rebuyProductCount": 5103,
+        "sku": "77APIPAD5-2CA",
+        "totalBuyProductCount": 24523
+    },
+    {
+        "firstBuyProductCount": 12255,
+        "rebuyProductCount": 9349,
+        "sku": "A7105011",
+        "totalBuyProductCount": 21604
+    },
+    {
+        "firstBuyProductCount": 2425,
+        "rebuyProductCount": 17840,
+        "sku": "71AN2452CSS-WA",
+        "totalBuyProductCount": 20265
+    },
+    {
+        "firstBuyProductCount": 10000,
+        "rebuyProductCount": 10251,
+        "sku": "71AN3654WS-WA",
+        "totalBuyProductCount": 20251
+    },
+    {
+        "firstBuyProductCount": 15023,
+        "rebuyProductCount": 3987,
+        "sku": "98ANSLM78-WBTA",
+        "totalBuyProductCount": 19010
+    },
+    {
+        "firstBuyProductCount": 9838,
+        "rebuyProductCount": 8328,
+        "sku": "71AN7105SS-WJA",
+        "totalBuyProductCount": 18166
+    },
+    {
+        "firstBuyProductCount": 11604,
+        "rebuyProductCount": 6433,
+        "sku": "77APIPH5-1T1A",
+        "totalBuyProductCount": 18037
+    },
+    {
+        "firstBuyProductCount": 11358,
+        "rebuyProductCount": 5800,
+        "sku": "79AN15K-BA",
+        "totalBuyProductCount": 17158
+    },
+    {
+        "firstBuyProductCount": 7008,
+        "rebuyProductCount": 9412,
+        "sku": "71AN7105-W5A",
+        "totalBuyProductCount": 16420
+    },
+    {
+        "firstBuyProductCount": 10497,
+        "rebuyProductCount": 5878,
+        "sku": "A7908022",
+        "totalBuyProductCount": 16375
+    },
+    {
+        "firstBuyProductCount": 9076,
+        "rebuyProductCount": 7180,
+        "sku": "71AN7105SS-BJA",
+        "totalBuyProductCount": 16256
+    },
+    {
+        "firstBuyProductCount": 11147,
+        "rebuyProductCount": 4771,
+        "sku": "79ANM1-WA",
+        "totalBuyProductCount": 15918
+    },
+    {
+        "firstBuyProductCount": 8895,
+        "rebuyProductCount": 7012,
+        "sku": "71AN7105SS-BEA",
+        "totalBuyProductCount": 15907
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 15421,
+        "sku": "70SMI9300-S31P2PA",
+        "totalBuyProductCount": 15421
+    },
+    {
+        "firstBuyProductCount": 6844,
+        "rebuyProductCount": 8454,
+        "sku": "71AN7105SS-BKA",
+        "totalBuyProductCount": 15298
+    },
+    {
+        "firstBuyProductCount": 8505,
+        "rebuyProductCount": 6431,
+        "sku": "98ANWVM-UBA",
+        "totalBuyProductCount": 14936
+    },
+    {
+        "firstBuyProductCount": 9086,
+        "rebuyProductCount": 5489,
+        "sku": "79UN53V1-B8P56A",
+        "totalBuyProductCount": 14575
+    },
+    {
+        "firstBuyProductCount": 10836,
+        "rebuyProductCount": 3663,
+        "sku": "98ANSLM78-BTA",
+        "totalBuyProductCount": 14499
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 14495,
+        "sku": "70SMNOTE2-S21P2PA",
+        "totalBuyProductCount": 14495
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 14396,
+        "sku": "70MIBM41-S1W21PA",
+        "totalBuyProductCount": 14396
+    },
+    {
+        "firstBuyProductCount": 7742,
+        "rebuyProductCount": 6393,
+        "sku": "77ANSTAND-BA",
+        "totalBuyProductCount": 14135
+    },
+    {
+        "firstBuyProductCount": 10396,
+        "rebuyProductCount": 3073,
+        "sku": "98ANDS2368-BA",
+        "totalBuyProductCount": 13469
+    },
+    {
+        "firstBuyProductCount": 8859,
+        "rebuyProductCount": 4550,
+        "sku": "79ANM2-WA",
+        "totalBuyProductCount": 13409
+    },
+    {
+        "firstBuyProductCount": 5116,
+        "rebuyProductCount": 8116,
+        "sku": "71AN3654WS-BA",
+        "totalBuyProductCount": 13232
+    },
+    {
+        "firstBuyProductCount": 7064,
+        "rebuyProductCount": 6136,
+        "sku": "68ANHUB-02S4A",
+        "totalBuyProductCount": 13200
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 13101,
+        "sku": "70SMI9260-S1W21PA",
+        "totalBuyProductCount": 13101
+    },
+    {
+        "firstBuyProductCount": 7115,
+        "rebuyProductCount": 5408,
+        "sku": "71AN7105SS-WEA",
+        "totalBuyProductCount": 12523
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 12473,
+        "sku": "70SMI9100-S1W16PA",
+        "totalBuyProductCount": 12473
+    },
+    {
+        "firstBuyProductCount": 7958,
+        "rebuyProductCount": 4459,
+        "sku": "70SMGLXS4-S3W26NA",
+        "totalBuyProductCount": 12417
+    },
+    {
+        "firstBuyProductCount": 1,
+        "rebuyProductCount": 12371,
+        "sku": "70SMGLXS4-S4W26PA",
+        "totalBuyProductCount": 12372
+    },
+    {
+        "firstBuyProductCount": 5119,
+        "rebuyProductCount": 7195,
+        "sku": "71AN2452CSS-BLA",
+        "totalBuyProductCount": 12314
+    },
+    {
+        "firstBuyProductCount": 2124,
+        "rebuyProductCount": 9964,
+        "sku": "79AN7902-U2A",
+        "totalBuyProductCount": 12088
+    },
+    {
+        "firstBuyProductCount": 1,
+        "rebuyProductCount": 11817,
+        "sku": "70SMGLXS4-S42P2PA",
+        "totalBuyProductCount": 11818
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 11670,
+        "sku": "70SMNOTE3-S02P2PA",
+        "totalBuyProductCount": 11670
+    },
+    {
+        "firstBuyProductCount": 5495,
+        "rebuyProductCount": 5958,
+        "sku": "71AN7111-B5A",
+        "totalBuyProductCount": 11453
+    },
+    {
+        "firstBuyProductCount": 6399,
+        "rebuyProductCount": 5024,
+        "sku": "71ANSCPS-B145A",
+        "totalBuyProductCount": 11423
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 11397,
+        "sku": "70SMNOTE3-S0W32PA",
+        "totalBuyProductCount": 11397
+    },
+    {
+        "firstBuyProductCount": 4424,
+        "rebuyProductCount": 6843,
+        "sku": "71AN7105SS-WKA",
+        "totalBuyProductCount": 11267
+    },
+    {
+        "firstBuyProductCount": 6237,
+        "rebuyProductCount": 5014,
+        "sku": "71AN7111-W5A",
+        "totalBuyProductCount": 11251
+    },
+    {
+        "firstBuyProductCount": 8357,
+        "rebuyProductCount": 2836,
+        "sku": "77APIPH5-3CM",
+        "totalBuyProductCount": 11193
+    },
+    {
+        "firstBuyProductCount": 70,
+        "rebuyProductCount": 10870,
+        "sku": "71AN7105SS-WPA",
+        "totalBuyProductCount": 10940
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 10916,
+        "sku": "70SMI8190-S2W15PA",
+        "totalBuyProductCount": 10916
+    },
+    {
+        "firstBuyProductCount": 3376,
+        "rebuyProductCount": 7426,
+        "sku": "B7102012",
+        "totalBuyProductCount": 10802
+    },
+    {
+        "firstBuyProductCount": 7547,
+        "rebuyProductCount": 3154,
+        "sku": "A7224011",
+        "totalBuyProductCount": 10701
+    },
+    {
+        "firstBuyProductCount": 5965,
+        "rebuyProductCount": 4236,
+        "sku": "98ANWVM-BA",
+        "totalBuyProductCount": 10201
+    },
+    {
+        "firstBuyProductCount": 7680,
+        "rebuyProductCount": 2412,
+        "sku": "77APIPADMNI-2CA",
+        "totalBuyProductCount": 10092
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 10091,
+        "sku": "70SMI9300-S3W21PA",
+        "totalBuyProductCount": 10091
+    },
+    {
+        "firstBuyProductCount": 4780,
+        "rebuyProductCount": 4991,
+        "sku": "71AN7105SS-BMA",
+        "totalBuyProductCount": 9771
+    },
+    {
+        "firstBuyProductCount": 5399,
+        "rebuyProductCount": 4158,
+        "sku": "79AN7902-E2A",
+        "totalBuyProductCount": 9557
+    },
+    {
+        "firstBuyProductCount": 4609,
+        "rebuyProductCount": 4877,
+        "sku": "71AN7109-B2A",
+        "totalBuyProductCount": 9486
+    },
+    {
+        "firstBuyProductCount": 4556,
+        "rebuyProductCount": 4823,
+        "sku": "B7103011",
+        "totalBuyProductCount": 9379
+    },
+    {
+        "firstBuyProductCount": 2513,
+        "rebuyProductCount": 6637,
+        "sku": "79AN7903S-BA",
+        "totalBuyProductCount": 9150
+    },
+    {
+        "firstBuyProductCount": 6513,
+        "rebuyProductCount": 2588,
+        "sku": "98ANWSM-02BA",
+        "totalBuyProductCount": 9101
+    },
+    {
+        "firstBuyProductCount": 4478,
+        "rebuyProductCount": 4618,
+        "sku": "68ANHUB-02B4A",
+        "totalBuyProductCount": 9096
+    },
+    {
+        "firstBuyProductCount": 4883,
+        "rebuyProductCount": 4139,
+        "sku": "79AN7904S-B2A",
+        "totalBuyProductCount": 9022
+    },
+    {
+        "firstBuyProductCount": 5127,
+        "rebuyProductCount": 3724,
+        "sku": "79AN7904S-BA",
+        "totalBuyProductCount": 8851
+    },
+    {
+        "firstBuyProductCount": 3394,
+        "rebuyProductCount": 5429,
+        "sku": "79AN7902-W2A",
+        "totalBuyProductCount": 8823
+    },
+    {
+        "firstBuyProductCount": 7579,
+        "rebuyProductCount": 1233,
+        "sku": "98APIPAD-03WTA",
+        "totalBuyProductCount": 8812
+    },
+    {
+        "firstBuyProductCount": 6465,
+        "rebuyProductCount": 2344,
+        "sku": "98AP9804A-BTA",
+        "totalBuyProductCount": 8809
+    },
+    {
+        "firstBuyProductCount": 6481,
+        "rebuyProductCount": 2191,
+        "sku": "98ANMP-BA",
+        "totalBuyProductCount": 8672
+    },
+    {
+        "firstBuyProductCount": 4035,
+        "rebuyProductCount": 4539,
+        "sku": "79ANM3-WA",
+        "totalBuyProductCount": 8574
+    },
+    {
+        "firstBuyProductCount": 5063,
+        "rebuyProductCount": 3186,
+        "sku": "68ANREADER-B2A",
+        "totalBuyProductCount": 8249
+    },
+    {
+        "firstBuyProductCount": 6180,
+        "rebuyProductCount": 2049,
+        "sku": "70SMI9100-W19A",
+        "totalBuyProductCount": 8229
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 8138,
+        "sku": "71AN3654W-BPA",
+        "totalBuyProductCount": 8138
+    },
+    {
+        "firstBuyProductCount": 5284,
+        "rebuyProductCount": 2820,
+        "sku": "A7908032",
+        "totalBuyProductCount": 8104
+    },
+    {
+        "firstBuyProductCount": 3405,
+        "rebuyProductCount": 4693,
+        "sku": "79AN7906-BA",
+        "totalBuyProductCount": 8098
+    },
+    {
+        "firstBuyProductCount": 5964,
+        "rebuyProductCount": 2132,
+        "sku": "77GGNEXUS5-3C1A",
+        "totalBuyProductCount": 8096
+    },
+    {
+        "firstBuyProductCount": 6117,
+        "rebuyProductCount": 1932,
+        "sku": "98AN2000-BA",
+        "totalBuyProductCount": 8049
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 8020,
+        "sku": "70XMM1-P19A",
+        "totalBuyProductCount": 8020
+    },
+    {
+        "firstBuyProductCount": 4441,
+        "rebuyProductCount": 3542,
+        "sku": "79AN7917-WA",
+        "totalBuyProductCount": 7983
+    },
+    {
+        "firstBuyProductCount": 5723,
+        "rebuyProductCount": 2141,
+        "sku": "98APIPAD-02BTA",
+        "totalBuyProductCount": 7864
+    },
+    {
+        "firstBuyProductCount": 4174,
+        "rebuyProductCount": 3602,
+        "sku": "70SMI9300-B1B72A",
+        "totalBuyProductCount": 7776
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 7706,
+        "sku": "70SMS5830-P13A",
+        "totalBuyProductCount": 7706
+    },
+    {
+        "firstBuyProductCount": 0,
+        "rebuyProductCount": 7619,
+        "sku": "70MIM2-S1W20PA",
+        "totalBuyProductCount": 7619
+    },
+    {
+        "firstBuyProductCount": 5906,
+        "rebuyProductCount": 1644,
+        "sku": "77APIPAD5-2MA",
+        "totalBuyProductCount": 7550
+    }
+]

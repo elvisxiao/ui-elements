@@ -1,0 +1,64 @@
+extends layout
+
+block content
+    style.
+
+
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 Demo - 树形结构 Tree
+        button#btnToggle(type="button") Show Admin
+
+    script(src="/mockData/user_groups.json")
+    script(src="/mockData/userTeam.json")
+    script.
+        var dataList = TREEDATA;
+        
+        var tree = new oc.TreeOrganization({
+            data: dataList,
+            teamData: USETEAM
+        });
+
+        $("#btnToggle").click(function(){
+            tree.toggleAdmin();
+        })
+        
+        //- tree._renderRecusive = function(dataList, ele, level){
+        //-     if(!dataList){
+        //-         return;
+        //-     }
+        //-     var len = dataList.length;
+        //-     if(len > 0){
+        //-         ele.addClass('hasMore');
+        //-     }
+        //-     if(level < this.config.showLevel){
+        //-         ele.addClass('active');
+        //-     }
+        //-     var ul = $('<ul></ul>');
+            
+        //-     for(var i = 0; i < len; i++){
+        //-         var one = dataList[i];
+        //-         var li = $('<li class="zTreeItem"><p>' + one.name + '</p></li>');
+        //-         if(one.description){
+        //-             li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
+        //-         }
+        //-         li.appendTo(ul).data(one);
+        //-         if(one.items && one.items.length > 0){
+        //-             this._renderRecusive(one.items, li, level + 1);
+        //-         }
+        //-     }
+        //-     if(len > 0){
+        //-         ul.appendTo(ele);
+        //-     }
+        //- }
+
+        //- tree.render();
+        //- tree.ele.addClass('zTreeOrganization');
+        //- tree.ele.on('click', '.zTreeAdd', function(){
+        //-     $(this).toggleClass('zTreeFolder');
+        //- })
+        //- .off('click', '.icon-plus2')
+        //- .on('click', '.icon-plus2', function(){
+        //-     oc.dialog.open('test');
+        //- })
+    
+        

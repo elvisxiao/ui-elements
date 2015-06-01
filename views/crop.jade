@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .wrap
+        div#container
+
+        div.tc
+            button#btnOpen.btn(type="button") 新窗口打开当前图片
+    script.
+        var imgCroppint = new oc.ImageCropping({
+            container: '#container'
+        });
+        
+        $('#btnOpen').click(function(){
+            if(imgCroppint.img){
+                window.open(imgCroppint.img.src);
+            }
+        })

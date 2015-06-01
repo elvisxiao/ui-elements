@@ -1,0 +1,3081 @@
+var TREEDATA = {
+    "id": "1",
+    "name": "Root category",
+    "fid": "0",
+    "level": 1,
+    "description": "",
+    "num": 0,
+    "items": [{
+        "id": "2",
+        "name": "ERP's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "3",
+            "name": "email sent related",
+            "fid": "2",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "4",
+            "name": "ERP's others",
+            "fid": "2",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "5",
+        "name": "B2B's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "7",
+            "name": "refund discount",
+            "fid": "5",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "8",
+            "name": "wholesale related",
+            "fid": "5",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "208",
+            "name": "B2B‘s others",
+            "fid": "5",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "9",
+        "name": "PM's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "10",
+            "name": "accessory related",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "11",
+            "name": "accessory related-no pouch",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "13",
+            "name": "customer's expectation related",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "14",
+            "name": "suggestion",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "15",
+            "name": "faulty design",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "209",
+            "name": "PM's others",
+            "fid": "9",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "16",
+        "name": "Procure's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "17",
+            "name": "procure related",
+            "fid": "16",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "18",
+            "name": "procure's others",
+            "fid": "16",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "19",
+        "name": "QE's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "20",
+            "name": "late response",
+            "fid": "19",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "21",
+            "name": "misleading info provided",
+            "fid": "19",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "22",
+            "name": "QE's others",
+            "fid": "19",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "23",
+        "name": "Warehouse's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "25",
+            "name": "RMA processing delayed",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "26",
+            "name": "shipping wrong items",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "27",
+            "name": "sent less items",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "28",
+            "name": "lost the package",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "29",
+            "name": "dispatch is too slow",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "210",
+            "name": "warehouse's others",
+            "fid": "23",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "59",
+        "name": "Amazon's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "60",
+            "name": "shipping related",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "61",
+            "name": "invoice related",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "62",
+            "name": "insufficient accessory",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "63",
+            "name": "wrong item packed",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "65",
+            "name": "extra item included in shipment",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "213",
+            "name": "order related",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "214",
+            "name": "listing related",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "215",
+            "name": "Amazon's others",
+            "fid": "59",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "66",
+        "name": "Branding's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "68",
+            "name": "website related",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "69",
+            "name": "manual related",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "70",
+            "name": "package related",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "71",
+            "name": "customer's expectation related",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "72",
+            "name": "PU related",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "216",
+            "name": "Branding's others",
+            "fid": "66",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "73",
+        "name": "Carrier's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "75",
+            "name": "lost package",
+            "fid": "73",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "76",
+            "name": "package damaged",
+            "fid": "73",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "77",
+            "name": "product damaged",
+            "fid": "73",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "79",
+            "name": "delivery delay",
+            "fid": "73",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "217",
+            "name": "Carrier's others",
+            "fid": "73",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "80",
+        "name": "Channel's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "82",
+            "name": "listing related",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "83",
+            "name": "promotion related",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "84",
+            "name": "overselling",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "85",
+            "name": "stock related",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "219",
+            "name": "shipping related",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "220",
+            "name": "Channel's others",
+            "fid": "80",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "86",
+        "name": "CS's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "87",
+            "name": "CS's others",
+            "fid": "86",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "88",
+            "name": "service related",
+            "fid": "86",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "89",
+            "name": "email sent related",
+            "fid": "86",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "90",
+        "name": "Customer's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "91",
+            "name": "ordered wrong item",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "92",
+            "name": "customer's expectation related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "93",
+            "name": "not used yet",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "94",
+            "name": "say \"good\"",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "95",
+            "name": "shipping related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "96",
+            "name": "invoice related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "97",
+            "name": "technical support",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "98",
+            "name": "order related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "102",
+            "name": "price related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "103",
+            "name": "no longer need the product",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "221",
+            "name": "accessory related",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "223",
+            "name": "product inquiry",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "224",
+            "name": "customer's others",
+            "fid": "90",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }]
+    }, {
+        "id": "211",
+        "name": "Supplier's",
+        "fid": "1",
+        "level": 2,
+        "description": "",
+        "num": 0,
+        "items": [{
+            "id": "225",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": [{
+                "id": "226",
+                "name": "cable broken",
+                "fid": "225",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "227",
+                "name": "defective AC adapter",
+                "fid": "225",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "228",
+                "name": "swollen/deformed AC charger",
+                "fid": "225",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "229",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "230",
+                "name": "battery slot issue",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "231",
+                "name": "defective backcover",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "232",
+                "name": "weights issue",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "233",
+                "name": "cable broken",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "234",
+                "name": "dongle issue",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "235",
+                "name": "magnet issue",
+                "fid": "229",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "236",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": [{
+                "id": "237",
+                "name": "button issue",
+                "fid": "236",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "238",
+                "name": "cable broken",
+                "fid": "236",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "239",
+                "name": "indicator issue",
+                "fid": "236",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "240",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "241",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": [{
+                "id": "242",
+                "name": "cable exterior issue",
+                "fid": "241",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "243",
+                "name": "cable electrical issue",
+                "fid": "241",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "244",
+                "name": "defective backcover",
+                "fid": "241",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "245",
+                "name": "backcover not fit with",
+                "fid": "241",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "246",
+                "name": "defective tip/connector",
+                "fid": "241",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "247",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "248",
+                "name": "cable exterior issue",
+                "fid": "247",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "249",
+                "name": "cable electrical issue",
+                "fid": "247",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "250",
+                "name": "defective power cord",
+                "fid": "247",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "251",
+                "name": "defective AC adapter",
+                "fid": "247",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "252",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "253",
+                "name": "cable exterior issue",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "254",
+                "name": "cable electrical issue",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "255",
+                "name": "defective AC adapter",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "256",
+                "name": "defective pouch",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "257",
+                "name": "defective backcover",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "258",
+                "name": "defective tip/connector",
+                "fid": "252",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "278",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "279",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "280",
+            "name": "accessory related",
+            "fid": "211",
+            "level": 3,
+            "description": "63",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "281",
+            "name": "button issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "282",
+                "name": "button issue",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "283",
+                "name": "keys fall off",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "284",
+                "name": "wheel issue",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "285",
+                "name": "cursor issue",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "286",
+                "name": "slow reactive speed",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "287",
+                "name": "key paint fades away",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "288",
+                "name": "wrong printing on the key",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "289",
+                "name": "buttons too stiff",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "290",
+                "name": "noise issue",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "291",
+                "name": "wrong letters displayed",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "292",
+                "name": "mouse button cannot work",
+                "fid": "281",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "293",
+            "name": "button issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "294",
+            "name": "bubble issue",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "295",
+            "name": "battery not fit with",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "296",
+            "name": "battery not fit with",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "297",
+            "name": "charging issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "298",
+                "name": "discharge quickly",
+                "fid": "297",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "299",
+                "name": "cannot be recharged",
+                "fid": "297",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "300",
+                "name": "long recharging time",
+                "fid": "297",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "301",
+            "name": "charging issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": [{
+                "id": "302",
+                "name": "discharge quickly",
+                "fid": "301",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "303",
+                "name": "long recharging time",
+                "fid": "301",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "304",
+                "name": "cannot be recharged",
+                "fid": "301",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "314",
+            "name": "defective",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "315",
+            "name": "driver issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "316",
+            "name": "driver issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "317",
+                "name": "can not be installed",
+                "fid": "316",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "318",
+                "name": "setup related",
+                "fid": "316",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "319",
+            "name": "dust",
+            "fid": "211",
+            "level": 3,
+            "description": "77,78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "320",
+            "name": "efficiency issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "321",
+                "name": "low efficiency",
+                "fid": "320",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "322",
+                "name": "high consumption",
+                "fid": "320",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "323",
+                "name": "discharge quickly",
+                "fid": "320",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "324",
+            "name": "faulty design",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "334",
+            "name": "faulty manufacturing",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "344",
+            "name": "fingerprint issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "345",
+            "name": "fingerprint issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "346",
+            "name": "fingerprint issue",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "347",
+            "name": "fingerprint issue",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "348",
+            "name": "fingerprint issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "349",
+            "name": "fitting issue ",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "350",
+            "name": "fitting issue ",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "351",
+            "name": "fitting issue ",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "352",
+            "name": "flashlight issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "353",
+            "name": "hard to operate",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "354",
+            "name": "hard to operate",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "355",
+            "name": "hot issue",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "356",
+                "name": "got hot when charging itself",
+                "fid": "355",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "357",
+                "name": "got hot when charging other device",
+                "fid": "355",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "358",
+            "name": "hot issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "360",
+                "name": "got hot when recharging itself",
+                "fid": "358",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "361",
+                "name": "got hot when charging other device",
+                "fid": "358",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "362",
+            "name": "hot issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "363",
+            "name": "incompatibility issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "364",
+            "name": "incompatibility issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "365",
+            "name": "incompatibility issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "366",
+            "name": "incompatibility issue",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "367",
+            "name": "incompatibility issue",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "368",
+            "name": "indicator issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "369",
+            "name": "indicator issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "370",
+            "name": "indicator issue",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "372",
+                "name": "indicator not turn off",
+                "fid": "370",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "373",
+                "name": "certain indicator not on",
+                "fid": "370",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "374",
+                "name": "indicator uneven",
+                "fid": "370",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "375",
+                "name": "indicator confusion",
+                "fid": "370",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "376",
+                "name": "other indicator issue",
+                "fid": "370",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "371",
+            "name": "indicator issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "377",
+                "name": "indicator not turn off",
+                "fid": "371",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "378",
+                "name": "certain indicator not on",
+                "fid": "371",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "379",
+                "name": "indicator uneven",
+                "fid": "371",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "380",
+                "name": "indicator confusion",
+                "fid": "371",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "381",
+            "name": "input issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "382",
+                "name": "can not be recharged",
+                "fid": "381",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "383",
+                "name": "long recharging time",
+                "fid": "381",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "384",
+                "name": "not recharge continuously",
+                "fid": "381",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "385",
+                "name": "can not be fully recharged",
+                "fid": "381",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "386",
+                "name": "input port broken",
+                "fid": "381",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "387",
+            "name": "input issue",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": [{
+                "id": "388",
+                "name": "can not be fully recharged",
+                "fid": "387",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "389",
+                "name": "long recharging time",
+                "fid": "387",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "390",
+                "name": "can not be recharged",
+                "fid": "387",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "391",
+                "name": "got hot when recharging itself",
+                "fid": "387",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "392",
+            "name": "input issue",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": [{
+                "id": "393",
+                "name": "got hot when recharging itself",
+                "fid": "392",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "394",
+                "name": "can not be fully recharged",
+                "fid": "392",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "395",
+                "name": "long recharging time",
+                "fid": "392",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "396",
+                "name": "can not be recharged",
+                "fid": "392",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "397",
+            "name": "insufficient sensitivity",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "398",
+            "name": "insufficient sensitivity",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "399",
+            "name": "loose clip",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "400",
+            "name": "leakage",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "401",
+            "name": "leakage",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "402",
+            "name": "microphone issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "403",
+            "name": "magnet issue",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "404",
+            "name": "noise issue",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "405",
+                "name": "noise with devices connected",
+                "fid": "404",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "406",
+                "name": "noise without devices connected",
+                "fid": "404",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "407",
+            "name": "noise issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "408",
+            "name": "noise issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "409",
+                "name": "noise when charging other device",
+                "fid": "408",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "410",
+                "name": " noise when recharging itself",
+                "fid": "408",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "411",
+            "name": "not matte",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "412",
+            "name": "not anti-glare",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "413",
+            "name": "no clear reason",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "423",
+            "name": "output issue",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": [{
+                "id": "424",
+                "name": "discharge quickly",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "425",
+                "name": "noise issue",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "426",
+                "name": "shut down suddenly",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "427",
+                "name": "got hot when charging other device",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "428",
+                "name": "not recognized",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "429",
+                "name": "incompatibility issue",
+                "fid": "423",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "430",
+            "name": "output issue",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": [{
+                "id": "431",
+                "name": "discharge quickly",
+                "fid": "430",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "432",
+                "name": "noise issue",
+                "fid": "430",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "433",
+                "name": "shut down suddenly",
+                "fid": "430",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "434",
+                "name": "got hot when charging other device",
+                "fid": "430",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "435",
+                "name": "incompatibility issue",
+                "fid": "430",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "436",
+            "name": "output issue",
+            "fid": "211",
+            "level": 3,
+            "description": "63",
+            "num": 0,
+            "items": [{
+                "id": "437",
+                "name": "not recognized ",
+                "fid": "436",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "438",
+                "name": "cannot sync data",
+                "fid": "436",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "439",
+                "name": "slow charging speed",
+                "fid": "436",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "440",
+            "name": "output issue",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "442",
+                "name": "certain port/ports defective",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "443",
+                "name": "not charge battery ",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "444",
+                "name": "not charge other device",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "445",
+                "name": "not charge other device fully",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "446",
+                "name": "not charge other device continuously",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "447",
+                "name": "slow charging speed",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "448",
+                "name": "incompatibility issue",
+                "fid": "440",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "441",
+            "name": "output issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "449",
+                "name": "output port broken",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "450",
+                "name": "incompatibility issue",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "451",
+                "name": "USB port too tight",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "452",
+                "name": "slow charging speed",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "453",
+                "name": "not charge other device fully",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "454",
+                "name": "not charge other device",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "455",
+                "name": "not start a car",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "456",
+                "name": "not charge other device continuously",
+                "fid": "441",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "457",
+            "name": "packaging",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": [{
+                "id": "458",
+                "name": "packaging broken",
+                "fid": "457",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "459",
+                "name": "wrong item packed",
+                "fid": "457",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "460",
+                "name": "insufficient accessory",
+                "fid": "457",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "461",
+                "name": "wrong packaging",
+                "fid": "457",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "462",
+                "name": "missing parts",
+                "fid": "457",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "463",
+            "name": "ports issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": [{
+                "id": "464",
+                "name": "input port broken",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "465",
+                "name": "loose connection",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "466",
+                "name": "USB port too tight",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "467",
+                "name": "certain port/ports defective",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "468",
+                "name": "slow charging speed",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "469",
+                "name": "not charge other device",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "470",
+                "name": "not usb 3.0 speed",
+                "fid": "463",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "471",
+            "name": "ports issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "472",
+                "name": "input port broken",
+                "fid": "471",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "473",
+                "name": "audio port broken",
+                "fid": "471",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "474",
+            "name": "ports issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": [{
+                "id": "475",
+                "name": "input port broken",
+                "fid": "474",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "476",
+                "name": "audio port broken",
+                "fid": "474",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "477",
+                "name": "card slot broken",
+                "fid": "474",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "478",
+                "name": "card slot gets stuck ",
+                "fid": "474",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "479",
+            "name": "power saving issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "480",
+                "name": "sleep too fast when not used",
+                "fid": "479",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "481",
+                "name": "can not wake up",
+                "fid": "479",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "482",
+                "name": "does not sleep",
+                "fid": "479",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "483",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "484",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "485",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "486",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "487",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "488",
+            "name": "physically broken",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "489",
+            "name": "pairing issue",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": [{
+                "id": "490",
+                "name": "disconnecting",
+                "fid": "489",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "491",
+                "name": "can not be paired",
+                "fid": "489",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "492",
+                "name": "can not be detected",
+                "fid": "489",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "493",
+                "name": "will not turn on",
+                "fid": "489",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "494",
+                "name": "range issue",
+                "fid": "489",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "495",
+            "name": "pairing issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": [{
+                "id": "496",
+                "name": "will not turn on",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "497",
+                "name": "can not be detected",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "498",
+                "name": "can not be paired",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "499",
+                "name": "can not multi-pair ",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "500",
+                "name": "disconnecting",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "501",
+                "name": "range issue",
+                "fid": "495",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "502",
+            "name": "poor adhesive",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "503",
+            "name": "poor adhesive",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "504",
+            "name": "poor partition",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "505",
+            "name": "pin issue",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "506",
+                "name": "cannot fit at all",
+                "fid": "505",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "507",
+                "name": "too tight",
+                "fid": "505",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "508",
+                "name": "too loose",
+                "fid": "505",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "509",
+                "name": "pin broken",
+                "fid": "505",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "510",
+            "name": "recognition issue",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": [{
+                "id": "511",
+                "name": "can not be detected",
+                "fid": "510",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "512",
+                "name": "recognized as 2.0",
+                "fid": "510",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "513",
+                "name": "USB2.0/3.0 chipsets issue ",
+                "fid": "510",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "514",
+            "name": "rainbow effect",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "515",
+            "name": "rainbow effect",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "516",
+            "name": "stability",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": [{
+                "id": "517",
+                "name": "disconnecting",
+                "fid": "516",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "518",
+                "name": "pc can not shut down",
+                "fid": "516",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "519",
+                "name": "pc can not start",
+                "fid": "516",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "520",
+                "name": "interference issue",
+                "fid": "516",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "521",
+                "name": "can not wake up",
+                "fid": "516",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "522",
+            "name": "scratches",
+            "fid": "211",
+            "level": 3,
+            "description": "",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "527",
+            "name": "sound",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": [{
+                "id": "528",
+                "name": "no sound",
+                "fid": "527",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "529",
+                "name": "no bass",
+                "fid": "527",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "530",
+                "name": "low volume",
+                "fid": "527",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "531",
+                "name": "poor sound quality",
+                "fid": "527",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "532",
+                "name": "noise issue",
+                "fid": "527",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "533",
+            "name": "swollen/deformation",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "534",
+            "name": "swollen/deformation",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "535",
+            "name": "swollen/deformation",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "536",
+            "name": "swollen/deformation",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "537",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "68",
+            "num": 0,
+            "items": [{
+                "id": "538",
+                "name": "explosion/burnt/smoke",
+                "fid": "537",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "539",
+                "name": "damaged other device",
+                "fid": "537",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "540",
+                "name": "data lost",
+                "fid": "537",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "541",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "98",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "542",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "543",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "90",
+            "num": 0,
+            "items": [{
+                "id": "544",
+                "name": "explosion/burnt/smoked",
+                "fid": "543",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "545",
+                "name": "damage other devices",
+                "fid": "543",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "546",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "77",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "547",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "548",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": [{
+                "id": "549",
+                "name": "explosion/burnt/smoked",
+                "fid": "548",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "550",
+                "name": "damage other devices",
+                "fid": "548",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "551",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "63",
+            "num": 0,
+            "items": [{
+                "id": "552",
+                "name": "melted itself",
+                "fid": "551",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "553",
+                "name": "damaged other device",
+                "fid": "551",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "554",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "71",
+            "num": 0,
+            "items": [{
+                "id": "555",
+                "name": "explosion/burnt/smoked",
+                "fid": "554",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "556",
+                "name": "cable fried",
+                "fid": "554",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "557",
+                "name": "damaged other device",
+                "fid": "554",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "558",
+                "name": "melted itself",
+                "fid": "554",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "559",
+            "name": "serious cases",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": [{
+                "id": "560",
+                "name": "explosion/burnt/smoked",
+                "fid": "559",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "561",
+                "name": "cable fried",
+                "fid": "559",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "562",
+                "name": "damaged other device",
+                "fid": "559",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "563",
+                "name": "melted itself",
+                "fid": "559",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "564",
+            "name": "waterproof issue",
+            "fid": "211",
+            "level": 3,
+            "description": "99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "565",
+            "name": "wear issue",
+            "fid": "211",
+            "level": 3,
+            "description": "78",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "566",
+            "name": "NFC issue",
+            "fid": "211",
+            "level": 3,
+            "description": "70",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "567",
+            "name": "exterior issue ",
+            "fid": "211",
+            "level": 3,
+            "description": "63",
+            "num": 0,
+            "items": [{
+                "id": "568",
+                "name": "tip end bent",
+                "fid": "567",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "569",
+                "name": "tip end broken",
+                "fid": "567",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "570",
+                "name": "USB end issue",
+                "fid": "567",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "571",
+                "name": " loose connection",
+                "fid": "567",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "572",
+                "name": "cable itself broken",
+                "fid": "567",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }, {
+            "id": "573",
+            "name": "discoloration issue",
+            "fid": "211",
+            "level": 3,
+            "description": "79",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "579",
+            "name": "zolo related",
+            "fid": "211",
+            "level": 3,
+            "description": "63,70,90,77,78,71,79,68,98,99",
+            "num": 0,
+            "items": null
+        }, {
+            "id": "581",
+            "name": "Other Product Line",
+            "fid": "211",
+            "level": 3,
+            "description": "93,55,00,01,02,50,55,56,60,65,66,67,69,75,76,80,83,84,85,88",
+            "num": 0,
+            "items": [{
+                "id": "582",
+                "name": "serious cases",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "583",
+                "name": "hot issue",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "584",
+                "name": "scratches",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "585",
+                "name": "faulty manufacturing",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "586",
+                "name": "no clear reason",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "587",
+                "name": "fault design",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "588",
+                "name": "packaging",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": [{
+                    "id": "593",
+                    "name": "missing parts",
+                    "fid": "588",
+                    "level": 10,
+                    "description": "",
+                    "num": 0,
+                    "items": null
+                }, {
+                    "id": "594",
+                    "name": "packaging broken",
+                    "fid": "588",
+                    "level": 10,
+                    "description": "",
+                    "num": 0,
+                    "items": null
+                }, {
+                    "id": "595",
+                    "name": "insufficient accessary",
+                    "fid": "588",
+                    "level": 10,
+                    "description": "",
+                    "num": 0,
+                    "items": null
+                }, {
+                    "id": "596",
+                    "name": "wrong packaging",
+                    "fid": "588",
+                    "level": 10,
+                    "description": "",
+                    "num": 0,
+                    "items": null
+                }, {
+                    "id": "597",
+                    "name": "wrong item packed",
+                    "fid": "588",
+                    "level": 10,
+                    "description": "",
+                    "num": 0,
+                    "items": null
+                }]
+            }, {
+                "id": "589",
+                "name": "indicator issue",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "590",
+                "name": "interference issue",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "591",
+                "name": "defective",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "592",
+                "name": "accessory related",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }, {
+                "id": "598",
+                "name": "charging issue",
+                "fid": "581",
+                "level": 4,
+                "description": "",
+                "num": 0,
+                "items": null
+            }]
+        }]
+    }]
+}

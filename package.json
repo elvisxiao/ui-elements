@@ -1,0 +1,51 @@
+{
+  "name": "Tinyp2p",
+  "version": "1.0.0",
+  "description": "p2p loan news",
+  "keywords": [
+    "p2p",
+    "loan",
+    "internet finance",
+    "news"
+  ],
+  "author": {
+    "name": "ivesxiao",
+    "email": "ivesxiao@msn.com",
+    "url": "http://www.tinyp2p.com/"
+  },
+  "homepage": "http://www.tinyp2p.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openshift/origin-server"
+  },
+
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+
+  "dependencies": {
+    "express": "*",
+    "body-parser": "~1.8.1",
+    "multer":"*",
+    "cookie-parser": "~1.3.3",
+    "morgan": "~1.3.0",
+    "serve-favicon": "~2.1.3",
+    "debug": "~2.0.0",
+    "jade": "*"
+  },
+  "devDependencies": {
+    "grunt": "0.x.x",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-contrib-concat": "~0.1.1",
+    "grunt-contrib-cssmin": "0.6.x",
+    "grunt-contrib-stylus": "0.8.x",
+    "grunt-contrib-uglify": "0.2.x",
+    "grunt-contrib-watch": "0.6.x",
+    "grunt-contrib-jade": "x",
+    "grunt-browserify": "x"
+  },
+  "bundleDependencies": [],
+  "private": true,
+  "main": "server.js"
+}

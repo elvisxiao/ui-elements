@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    div(style="width: 1000px; margin: 0 auto;")
+        h2 OWERP中统一的项目结构
+        p.alert.alert-info 主要代码存在于owerp下appBase.js中，欢迎大家推荐更好的解决办法。
+        div.mt30(style="border-bottom: 1px solid #ddd;")
+            h4 目前在owerp中新建项目时，存在以下的问题：
+            p 1、由于项目主页的iframe限制，每个项目需要在对应的模块下建立Index.jsp文件。而且文件类容基本是一样的，如果一个系统在导航上需要配置不同模块下的入口（如报价系统，在System和Sale模块两个入口），则需要添加两份Index.jsp。<span class="f16 fb">重复代码太多，也不利于迁移。</span>如下图：
+            
+            ul
+                li(style="width:30%; display:inline-block; height:200px;overflow:hidden;vertical-align:top; margin-right:3%")
+                    p.tc 包材 Procure/material/index.jsp 
+                    img.w(src="/img/tmp/包材.png")
+                
+                li(style="width:30%; display:inline-block; height:200px;overflow:hidden;vertical-align:top; margin-right:3%")
+                    p.tc 品质提升 Procure/material/index.jsp 
+                    img.w(src="/img/tmp/品质提升.png")
+                
+                li(style="width:30%; display:inline-block; height:200px;overflow:hidden;vertical-align:top")
+                    p.tc 报价系统 System、Sale /quote/index.jsp 
+                    img.w(src="/img/tmp/报价系统.png")
+        
+            p.f16.fb 2、没有统一的规范，不同的人写出的项目结构均不一致，难以维护。
+
+        h4.mt30 为了解决上面两个问题，我在做品质提升项目时，对fantasia首页的iframe加载方式做了细微调整。形成了一套比较简便的项目结构，希望能推荐给大家一起使用.
+        img.w200(src="/img/tmp/project.png")
+        p.mt20 使用步骤如下：
+        p.fb.f16 1、在nmenu.jsp中配置新项目主入口，以目前项目中QC/Issue Management 为例，在QC模块下配置：  
+        p.p10(style="background:#333; color:#fff") models.push({id:'usecase#issueList',name:'Issue Management',separator:true, owerp: true})
+
+        div.lh100.pl20(style="color:#428bca;") 说明：
+            p.pl30 owerp配置项：将fantasia首页的iframe的地址指向owerp下app.html文件，由app.html加载入口文件。这样就不需要index.jsp了。
+            p.pl30 app.html: 统一的项目文件，作用类似与各个模块下的index.jsp，加载项目入口文件和公用的资源文件（bootstrap、jquery相关的css、js)
+            p.pl30 usecase: 新项目的文件夹名
+            p.pl30 #issueList: 目标页面的page文件名，点击后会打开页面 owerp/usecase/issueList.js 所render出来的页面。
+
+        p.fb.f16.mt20 2、在owerp中新建usecase项目文件夹，文件夹下建立项目主入口文件app.js，如下：
+        div.lh100.pl20(style="color:#428bca;") 说明：
+            p.pl30 继承appBase.js：appBase主要用于处理hash，加载不同的页面。也可以将url中query的参数JSON化后传入widget中。
+            p.pl30 cssResouce: 此项目下需要额外加载的样式集合
+            p.pl30 jsResource: 此项目下有依赖关系的JS集合
+
+        img(src="/img/tmp/app.png")
+    
+    script.
+        console.log('test hook');

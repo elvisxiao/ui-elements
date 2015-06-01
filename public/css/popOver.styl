@@ -1,0 +1,89 @@
+.zPopOver
+    box-shadow 0 5px 10px rgba(0,0,0,.2)
+    position absolute
+    top 0
+    left 0
+    z-index 1060
+    max-width 276px
+    padding 1px
+    font-size 14px
+    font-weight 400
+    line-height 1.42857143
+    text-align left
+    white-space normal
+    background-color #fff
+    -webkit-background-clip padding-box
+    background-clip padding-box
+    border 1px solid #ccc
+    border 1px solid rgba(0,0,0,.2)
+    border-radius 6px
+
+    .zPopOverTitle
+        padding 8px 14px
+        margin 0
+        font-size 14px
+        background-color #f7f7f7
+        border-bottom 1px solid #ebebeb
+        border-radius 5px 5px 0 0
+        position relative
+        .icon-close
+            position absolute
+            top 0
+            right 0
+            font-size 10px
+            color #aaa 
+            padding 12px 10px
+            cursor pointer
+            &:hover
+                color #333
+    .zPopOverContent
+        padding 10px 20px
+        position relative
+        &:before, &:after
+            display block
+            position absolute
+            left -22px
+            top 50%
+            margin-top -25px
+            content ''
+            border-top 10px solid transparent
+            border-left 10px solid transparent
+            border-right 10px solid #bbb
+            border-bottom 10px solid transparent
+        &:after
+            border-right 10px solid #fff
+            left -20px
+            
+.zPopOverleft
+    .zPopOverContent
+        &:before, &:after
+            left auto
+            right -22px
+            border-left 10px solid #bbb
+            border-right 10px solid transparent
+        &:after
+            border-left 10px solid #fff
+            right -20px
+.zPopOvertop
+    .zPopOverContent
+        &:before, &:after
+            left 50%
+            margin-left -11px
+            top auto
+            bottom -22px
+            border-right 10px solid transparent
+            border-top 10px solid #bbb
+        &:after
+            border-top 10px solid #fff
+            bottom -20px
+.zPopOverbottom
+    .zPopOverContent
+        &:before, &:after
+            left 50%
+            margin-left -11px
+            top -33px
+            border-right 10px solid transparent
+            border-bottom 10px solid #bbb
+        &:after
+            border-bottom 10px solid #fff
+            top -32px

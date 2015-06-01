@@ -1,0 +1,77 @@
+.treeDialogSelect
+	width 1100px
+	max-width 1100px
+	min-width 1100px
+	position relative
+	.borderBottom
+		border-bottom 1px solid #ccc
+	ul
+		border-bottom 1px solid #ccc
+		max-height 250px
+		overflow auto
+		position relative
+		padding-left 100px
+		li
+			display inline-block
+			margin 0 5px
+			line-height 25px
+			cursor pointer
+			transition all .3s
+			&:hover
+				font-weight 600
+		li.liTitle
+			width 100px !important
+			position absolute
+			top 0
+			left 0
+			padding 0 !important
+			color #666
+			&:before
+				content ''
+				display none
+			&:hover
+				font-weight 400
+				cursor default
+	ul:last-child
+		border-bottom 0
+	ul.ulProductLine
+		background #fcf8e3 !important
+		color #8a6d3b
+		height 32px
+		li 
+			margin 0px 8px
+			height 30px
+			line-height 30px
+		li.active
+			font-weight 700
+			font-size 16px
+	ul.ulData
+		li
+			width 150px
+			white-space nowrap
+			overflow hidden
+			font-family 'icomoon'
+			speak none
+			color #666
+			padding 1px 5px
+			border 1px solid transparent
+			&:before
+				content "\e930"
+				margin-right 3px
+				vertical-align top
+				color #41D1F6
+		li.active
+			background #fcf8e3
+			border 1px solid #faebcc
+			border-radius 3px
+			color #8a6d3b
+		li.liData
+			&:before
+				content ""
+				margin-right 3px
+				vertical-align middle
+			&:hover
+				color #a94442
+	ul.ulResposible 
+		li 
+			width 120px

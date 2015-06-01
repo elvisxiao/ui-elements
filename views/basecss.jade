@@ -1,0 +1,238 @@
+extends layout
+
+block content
+    style.
+        body{
+            font-family: Arial,sans-serif;
+        }
+        .vTable{
+            width: 100%;
+        }
+        .vTable td{
+            border: 1px solid #aaa;
+            height: 70px;
+            padding: 0 20px;
+        }
+        pre{
+            background: #272822;
+            color: #eee;
+        }
+        #ol{
+            color: #337ab7;
+            position: fixed;
+            right: 20px;
+            top: 60px;
+        }
+    div.pr.pt20(style="width: 1200px; margin: 0 auto;")
+        ol#ol 
+            li 
+                a(href="#a1") CSS权重
+            li 
+                a(href="#a2") 字体相关
+            li 
+                a(href="#a3") 宽度高度
+            li 
+                a(href="#a4") 边距相关
+            li 
+                a(href="#a5") 位置相关
+            li 
+                a(href="#a6") 元素浮动
+            li 
+                a(href="#a7") 定位相关
+
+        a#a1(name="a1") 
+        h1 CSS原子类
+        p.f22.fb.mt30 CSS权重 - 覆盖以此为准则
+        div.pl30
+            p 
+                span.fb elemen：1，
+                |直接加载html上的样式: p{font-size:12px;}  
+            p 
+                span.fb class:10  
+                |加载Class上的样式，.f12{font-size: 12px;}
+            p 
+                span.fb id: 100 
+                |加载ID上的样式， #btnSave{font-size: 12px;}   
+            p 
+                span.fb style:1000  
+                |直接写在html元素style属性中的样式： p(style="font-size:12px;") 
+            p 
+                span.fb !important 
+                |强制优先
+
+        a#a2(name="a2") 
+        p.f22.fb 一、字体相关
+        p.f18.mb15 大部分浏览器默认字体大小为14px
+        pre
+            |/*CSS reset*/
+            |.f12   设置字体大小
+            |    font-size 12px
+            |.f14
+            |   font-size 14px
+            |.f16  .f18  .f20  .f22  .f22  .f24  .f26  .f28  .f30  .f40
+            | 
+            |.fb   加粗字体
+            |   font-weight bold
+            |.fn   正常字体
+            |   font-weight normal
+            |.t2  段落第一个字缩进两个字符的宽度
+            |   text-indent 2em
+            | 
+            |.lh100  行高
+            |    line-height 1em
+            |.lh150
+            |   line-height 1.5em
+            |.lh200
+            |   line-height 2em
+            |.lh250
+            |   line-height 2.5em
+            |.lh300
+            |   line-height 3em
+
+        .lh200.borderBottom.pb10
+            p class="fb" 这个字体加粗了
+                span.fb(style="color:#111") 你看出差别来了吗
+            h3 我是再h3中的
+                span.fn(style="color:#111") 正常字体，
+                |是不是很瘦呢
+            p.lh200 行高300%(另外有lh150、lh200、lh250、lh100可选)
+            p .unl: text-decoration: underline; 文本加上下划线
+            p .no-unl: text-decoration: none; 文本无任何标记
+                span.ml50.unl 下划线unline
+
+            p.t2 class=“t2":首行缩进两个em，一般在段落上引用，p class="t2">......,这个p就会自动首行进行缩进了。一般在段落上引用，p class="t2">......,这个p就会自动首行进行缩进了
+
+        a#a3(name="a3") 
+        p.f22.fb 二、宽度高度
+        pre
+            |/*宽度*/
+            |.w  
+            |    width 100%
+            |.w10
+            |    width 10px
+            | 
+            |w15, w20, w30, w40, w50, w60, w70, w80, w90, w100, w150, w200, w250, w300, w400, w500, w600, w700, w800, w1000
+           
+            |/*高度*/
+            |.h  
+            |    height 100%
+            |.h50
+            |    height 50px
+            | 
+            |h50, h100, h200, h300, h500
+
+        a#a4(name="a4") 
+        p.f22.fb 三、边距相关
+        pre
+            |/*边距*/
+            |.m10  
+            |    margin 10px
+            |.m15
+            |    margin 15px
+            |    20px 25px 30px
+
+            |/*margin-top:外上边距----------*/
+            |.mt5 
+            |    margin-top 5px
+            |.mt10
+            |    margin-top 10px
+            |    15px, 20px, 30px, 40px, 50px, 70px, 100px
+           
+            |/*margin-bottom:外下边距----------*/
+            |.mb5
+            |    margin-bottom 5px
+            |.mb10
+            |    margin-bottom 10px
+            |    15px, 20px, 30px, 40px, 50px, 70px, 100px
+
+            |/*margin-left:外左边距----------*/
+            |.ml5
+            |    margin-left 5px
+            |.ml10
+            |    margin-left 10px
+            |    15px, 20px, 30px, 40px, 50px, 70px, 100px
+
+            |/*margin-left:外右边距----------*/
+            |.mr5
+            |    margin-right 5px
+            |.mr10
+            |    margin-right 10px
+            |    15px, 20px, 30px, 40px, 50px, 70px, 100px
+
+
+
+            /*padding:内边距----------------------*/
+            |.p5
+            |    padding 5px
+            |.p10
+            |    padding 10px
+            |.p15
+            |    padding 15px
+            |.p20
+            |    padding 20px
+            |.p30
+            |    padding 30px
+            |.p50
+            |    padding 50px
+
+            |/*padding-top:内上边距----------------------*/
+            |.pt5
+            |    padding-top 5px
+            |.pt10
+            |    padding-top 10px
+            |    15px, 20px, 30px, 50px, 70px
+
+            |/*padding-bottom:内下边距----------------------*/
+            |.pb5
+            |    padding-bottom 5px
+            |.pb10
+            |    padding-bottom 10px
+            |    15px, 20px, 30px, 50px, 70px
+
+            /*padding-left:内左边距----------------------*/
+            |.pl5
+            |    padding-left 5px
+            |.pl10
+            |    padding-left 10px
+            |    15px, 20px, 30px, 50px, 70px
+
+            |/*padding-right:内右边距----------------------*/
+            |.pr5
+            |    padding-right 5px
+            |.pr10
+            |   padding-right 10px
+
+
+        
+        .cb.mt20
+        .lh200.borderBottom.pb10
+            a#a5(name="a5") 
+            p.f22.fb 四、位置相关
+            p.mt15 tl(text-align:left):文本居左， tr(text-align:right):文本右边对齐， tc(text-align:center): 文本居中对齐
+            div.tl
+                p 我是左边对齐的文本
+                p 我是左边对齐的文本
+                p 我是左边对齐的文本
+            div.tc
+                p 我是居中对齐的文本
+                p 我是居中对齐的文本
+                p 我是居中对齐的文本
+            div.tr
+                p 我是右边对齐的文本
+                p 我是右边对齐的文本
+                p 我是右边对齐的文本
+            p.mt15 vt(vertical-align: top;):内容顶部， vm(vertical-align: middle;):内容在中间 vb(vertical-align: bottom;): 内容在底部
+            table.vTable
+                tr.h50
+                    td.vt 我在顶部，vt：vertical-align: top;
+                    td.vm 我在中间，我是vm：vertical-align: middle;
+                    td.vb 我在底部，我是vb：vertical-align: bottom;
+
+        a#a6(name="a6") 
+        p.f22.fb 五、元素浮动 
+        p fl、fr   float: right;  float: left;  
+        p cb、cl、cl  clear: both; clear: left; clear: right
+
+        a#a7(name="a7") 
+        p.f22.fb 六、定位相关 
+        p pr: position:relative   pa: position:absolute;

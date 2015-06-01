@@ -1,0 +1,59 @@
+.zFile
+    position relative
+    overflow hidden
+    display inline-block
+    input
+        position absolute
+        top 0
+        left 0
+        opacity 0
+        z-index 2
+        width 100%
+        height 100%
+        cursor pointer
+        &:hover ~ .zFileText
+            background #eee
+    .zFileText
+        display block
+        padding 3px 10px
+        transition all .3s
+        background #fff
+        color #555
+        border-radius 4px
+        border 1px solid #ccc
+        
+.zFileTable
+    min-width 500px
+    tr
+        height 35px
+        td 
+            padding-left 20px
+    tbody tr:nth-child(odd)
+        background #eee
+    thead 
+        background #999
+        color #fff 
+        th
+            height 35px
+            padding-left 20px
+            padding-right 20px
+            text-align left
+    tfoot 
+        background #666
+        button 
+            border 1px solid #ccc
+            border-radius 4px
+            background #fff 
+            color #555
+            outline none
+            &:focus
+                background #eee
+                border 1px solid #aaa
+    .zFile
+        vertical-align middle
+        margin-right 20px
+    
+
+        
+        
+        
