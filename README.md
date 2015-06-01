@@ -32,3 +32,5 @@ http://ui.tinyp2p.com/siderbar
 ## 10、基于Canvas的图片预览、裁剪、上传组件 - Crop
 http://ui.tinyp2p.com/crop
 
+
+
