@@ -26,9 +26,9 @@ http://ui.tinyp2p.com/ui
 ## 8、加载的动画Icon
 http://ui.tinyp2p.com/ui
 
-9、Siderbar - 侧边栏
+## 9、Siderbar - 侧边栏
 http://ui.tinyp2p.com/siderbar
 
-10、基于Canvas的图片预览、裁剪、上传组件 - Crop
+## 10、基于Canvas的图片预览、裁剪、上传组件 - Crop
 http://ui.tinyp2p.com/crop
 
