@@ -10,12 +10,12 @@ router.post('/', function(req, res) {
 	}
 
 	try{
-		console.log(req.body);
 		var repoName = '';
 		if(req.body.repository && req.body.repository.name){
 			repoName = req.body.repository.name
 		}
 		else{
+			console.log(JSON.parse(req.body.payload));
 			repoName = JSON.parse(req.body.payload).repository.name;
 		}
 		
