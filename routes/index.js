@@ -6,8 +6,8 @@ router.get('/', function(req, res) {
 	res.render('index');
 });
 
-router.get('/csvPriview', function(req, res) {
-	res.render('csvPriview');
+router.get('/csvPreview', function(req, res) {
+	res.render('csvPreview');
 });
 
 router.get('/uploaderDemo', function(req, res) {
