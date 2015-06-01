@@ -11,9 +11,8 @@ router.post('/', function(req, res) {
 
 	try{
 		console.log(req.body);
-		
-		var repoName = JSON.parse(req.body.payload).repository.name;
-		if(req.body.repository.name){
+		var repoName = '';
+		if(req.body.repository && req.body.repository.name){
 			repoName = req.body.repository.name
 		}
 		else{
