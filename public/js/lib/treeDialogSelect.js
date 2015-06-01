@@ -139,12 +139,28 @@ var TreeDialogSelect = function(ipt, dataList){
 			if(li.hasClass('liTitle')){
 				return true;
 			}
-
+			
 			var model = li.data();
-			//品线过滤---------------------------------------
-			if(model.description && self.productLine && model.description.indexOf(self.productLine) === -1){
-				li.hide();
-				return true;
+			//品线过滤支持分号分割的多个品线混合搜索---------------------------------------
+			if(model.description){
+				var array = self.productLine.split(';');
+				if(array.length > 1){
+					var check = false;
+					array.map(function(productLine){
+						productLine = $.trim(productLine);
+						if(productLine && model.description.indexOf(productLine) !== -1){
+							check = true;
+						}
+					})
+					if(check === false){
+						li.hide();
+						return true;
+					}
+				}
+				else if(self.productLine && model.description.indexOf(self.productLine) === -1){
+					li.hide();
+					return true;
+				}
 			}
 
 			//搜索过滤---------------------------------------

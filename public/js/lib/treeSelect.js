@@ -127,6 +127,7 @@ var TreeSelect = function(options){
 			self._setActive();
 		})
 		.find('input').on('keyup', function(e){
+			e.preventDefault();
 			var code = e.keyCode;
 			var activeLi = self.ele.find('.zTreeSelectItem.active');
 			if(code === 13){

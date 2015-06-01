@@ -52,6 +52,10 @@ router.get('/crop', function(req, res) {
 	res.render('crop');
 });
 
+router.get('/css', function(req, res) {
+	res.render('basecss');
+});
+
 router.post('/upload', function(req, res) {
 	try{
 	// 	console.log(req);

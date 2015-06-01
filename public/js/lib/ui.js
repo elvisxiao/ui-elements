@@ -219,7 +219,7 @@ UI.cbx = function(){
     };
 };
 
-UI.multiSelect = function(){
+UI.multiSelect = function(cb){
     $("select.zMultiSelect").each(function(){
         var ele = $(this);
         var width = ele.outerWidth();
@@ -280,6 +280,8 @@ UI.multiSelect = function(){
             select.removeClass('active').find('.zMultiSelectText').html(values);
             main.hide();
             e.stopPropagation();
+            
+            cb && cb(select);
         }).click(function(e){
             e.stopPropagation();
         });
