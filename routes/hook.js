@@ -10,9 +10,16 @@ router.post('/', function(req, res) {
 	}
 
 	try{
-		console.log('receive hook', req.body.repository);
+		console.log(req.body);
 		
 		var repoName = JSON.parse(req.body.payload).repository.name;
+		if(req.body.repository.name){
+			repoName = req.body.repository.name
+		}
+		else{
+			repoName = JSON.parse(req.body.payload).repository.name;
+		}
+		
 		console.log('repo name:' + repoName);
 		var exec = require('child_process').exec;
 		var cmdStr = 'cd ~/bitbucket/' + pathMap[repoName] + ' && git pull';
