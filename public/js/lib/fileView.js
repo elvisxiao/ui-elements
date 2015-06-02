@@ -2,31 +2,35 @@
 @author Elvis
 @class FileView
 @classdesc CSV文件预览与标记
+@param {object} options 配置变量对象：<br /> container为容器对象<br />canEdit：csv是否允许编辑状态<br />maxHeight：最大高度<br />heads：指定头部列
 @example
 * var fileView = new FileView({
     container: '#container',
     maxHeight: 400
 })
-
-*/
-
-/**
-@constructs FileView
-@param {object} options 配置变量对象 - container为容器对象、canEdit：csv是否允许编辑状态、maxHeight：最大高度、heads：指定头部列
 */
 var FileView = function(options){
+    /**读取csv文件的第三方库文件*/
     this.csv = require('./asset/csv');
-    /**最外层Jquery对象*/
+    /**
+    @property ele
+    最外层Jquery对象*/
     this.ele = null;
-    /**数据集合 */
+    /**根据CSV内容，格式化后的Model集合 */
     this._dataList = [];
 
-    /**是否能编辑 */
+    /**生成后的表格是否允许编辑 */
     this.canEdit = true;
 
     /**容器最大高度，超过此高度后将出现滚动条 */
     this.maxHeight = 800;
 
+    /**初始化配置文件
+    *container: 容器选择器
+    *canEdit: csv是否可编辑
+    *maxHeight: 最大允许的高度，超出后会出现滚动条
+    *heads：指定头部列名
+    */
     this.config = {
         container: 'body',
         canEdit: true,
@@ -42,6 +46,11 @@ var FileView = function(options){
 
     var self = this;
 
+    /**
+    @memberof FileView
+    @method _render 
+    *初始化界面
+    */
     self._render = function(){
         self.ele = $('<div class="zUploader"></div>');
         var uploadList = $('<div class="zUploaderList"></div>');
@@ -50,6 +59,11 @@ var FileView = function(options){
         self.ele.appendTo(self.config.container);
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *没有文件时，显示的界面
+    */
     self._renderNoFile = function(){
         var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
         div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
@@ -58,6 +72,11 @@ var FileView = function(options){
         return div;
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *绑定容器中的相关事件
+    */
     self._bindEvent = function(){
         self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
             self._readFilesToTable(this.files[0]);
@@ -95,7 +114,13 @@ var FileView = function(options){
         })
     }
 
-    //返回值：model数组
+    /**
+    @memberof FileView
+    @method _render 
+    *读取CSV文件内容
+    @param {object} file - 需要读取的文件对象
+    @param {function} cb - 文件读取完成后的回调函数
+    */
     self.readCsv = function(file, cb){
         var reader = new FileReader();
         reader.onload = function(e){
@@ -108,6 +133,12 @@ var FileView = function(options){
         reader.readAsText(file);
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中
+    @param {string} content - 需要读取的文件内容
+    */
     self._formatFileContent = function(content){
         var models = self.csv.parse(content);
         var firstItem = models[0];
@@ -127,7 +158,12 @@ var FileView = function(options){
         }
     }
 
-    //返回值：$table
+    /**
+    @memberof FileView
+    @method _render 
+    *根据文件内容生成用Table展示出来
+    @param {object} file - 需要读取的文件对象
+    */
     self._readFilesToTable = function(file){
         self.readCsv(file, function(){
             $('.zFileTableContainer').remove();
@@ -165,6 +201,12 @@ var FileView = function(options){
         })
     }
     
+    /**
+    @memberof FileView
+    @method _render 
+    *将Table设置为编辑状态
+    @param {object} table - Jquery对象
+    */
     self.setEditTable = function(table){
         if(self.config.canEdit === true){
             table.find('tbody td[data-val]').each(function(){
@@ -175,6 +217,12 @@ var FileView = function(options){
         }
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *获取格式化后的数据
+    @return {object} models - 对象数组
+    */
     self.getDataList = function(){
         var models = [];
         if (!self._dataList || self._dataList.length === 0){
@@ -202,6 +250,12 @@ var FileView = function(options){
         return models;
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *标记表格中某些格
+    @param {object} msgList - 对象数组：{row: 1, col: 1} 
+    */
     self.mark = function(msgList){
         var length = msgList.length;
         for(var i = 0; i < length; i++){
@@ -212,6 +266,11 @@ var FileView = function(options){
         }
     }
 
+    /**
+    @memberof FileView
+    @method _render 
+    *清除表格中某些格
+    */
     self.clearMark = function(){
         self.ele.find('tbody .zFileTableMark').removeAttr('title').removeClass('zFileTableMark');
     }

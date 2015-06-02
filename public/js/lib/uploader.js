@@ -10,7 +10,7 @@ var Uploader = function(options) {
 		callback: null,
 		uploadOneCallback: null
 	};
-	
+
 	this.deleteFile = null;
 
 	this.STATUS = {
@@ -211,6 +211,8 @@ var Uploader = function(options) {
 			self._sendFileByFormData(file, cb);
 			return;
 		}
+
+		console.log('Not support window.FormData');
 		var fileName = new Date().getTime() + '_' + file.name;
 
 		var reader = new FileReader();
