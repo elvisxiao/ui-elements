@@ -1,7 +1,31 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+用于Rest结构的Ajax交互，提交的数据均为application/json类型
+@author Elvis
+@exports oc.ajax
 
+* @example
+* oc.ajax.get('/list', function(res){
+    console.log(res);
+}, function(res){
+    console.log(res.responseText);
+})
+
+* @example
+* oc.ajax.post('/add', {id: 1, date: '2015-01-01'}, function(res){
+    console.log(res);
+})
+
+*/
 var Ajax = {}
 
+/**
+@inner 内部方法
+@param {string} url - ajax的url地址
+@param {string} method - post、get、put、delete
+@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入
+*/
 Ajax._send = function(url, method, data, cbOk, cbError){
     var self = this;
     var params = {
@@ -36,23 +60,52 @@ Ajax._send = function(url, method, data, cbOk, cbError){
     $.ajax(params);
 },
 
-
+/**
+Get方法
+@param {string} url - ajax的url地址
+@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+**/
 Ajax.get = function(url, cbOk, cbError) {
 	this._send(url, null, null, cbOk, cbError);
 }
 
+/**
+Post方法
+@param {string} url - ajax的url地址
+@param {object} data - ajax的主题内容
+@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+**/
 Ajax.post = function(url, data, cbOk, cbError) {
 	this._send(url, "post", data, cbOk, cbError);
 }
 
+/**
+*Put方法
+@param {string} url - ajax的url地址
+@param {object} data - ajax的主题内容
+@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+**/
 Ajax.put = function(url, data, cbOk, cbError) {
 	this._send(url, "put", data, cbOk, cbError);
 }
 
+/**
+*Delete方法
+@param {string} url - ajax的url地址
+@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+**/
 Ajax.delete = function(url, cbOk, cbError) {
 	this._send(url, "delete", null, cbOk, cbError);
 }
 
+/**
+*Ajax出错时，通用处理方法
+@param {object} res - HTTP Response,Ajax是服务器端返回的响应
+**/
 Ajax.error = function(res){
     oc.dialog.tips('Request error: ' + res.responseText);
     console.log('Request error:', res);
@@ -317,9 +370,26 @@ module.exports = Ajax;
     }
 }(typeof window !== 'undefined' ? window : {}));
 },{}],3:[function(require,module,exports){
+/**
+用于Javascript Date类型的扩展
+@author Elvis
+@exports oc.date
+
+* @example
+* // returns 2015年01月01日
+* oc.date.format('2015-01-01', 'yyyy年mm月dd日')
+* @example
+* // returns 一天的毫秒数（24 * 60 * 60000）
+* oc.date.compare('2015-01-02', '2015-01-01')
+*/
 var ZDate = {};
 
-//format: 年 - yy/yyyy，月 - mm，天 - dd, 小时：hh，分钟 - MM，秒 - s, 分秒 - ms
+/**
+根据传入格式，格式化输出时间字符串
+@param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+@param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+@returns {string} 格式化后的字符串
+**/
 ZDate.format = function(date, format){
 	if(date.toString().indexOf('-') > 0){
         date = date.toString().replace(/-/g, '/');
@@ -363,7 +433,12 @@ ZDate.format = function(date, format){
     return format;
 }
 
-//date format: yyyy-MM-dd
+/**
+比较时间大小，返回date1 - date2得到的timespane
+@param {date} date1 - 时间被减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+@param {date}  date2 - 时间减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+@returns {number} date1 - date2得到的timespane
+**/
 ZDate.compare = function(date1, date2){
     if(typeof date1 == "string"){
         date1 = date1.replace(/-/g, '/');
@@ -381,17 +456,43 @@ ZDate.compare = function(date1, date2){
 
 module.exports = ZDate;
 },{}],4:[function(require,module,exports){
+/**
+以遮盖形式弹出错误提示，对话框等
+@author Elvis
+@exports oc.dialog
+
+* @example
+* oc.dialog.tips('服务器端报错了', 2000)
+* @example
+* oc.dialog.confirm('确定要删除？', function(){
+    console.log('well，真的删掉了');
+}, function(){
+    console.log('原来你只是逗我玩的');
+})
+*/
 var Dialog = {};
 
+/**
+移除所有由oc.dialog生成的对话框
+*/
 Dialog.removeMadal = function(){
     this.removeAllTips();
     this.close();
 },
 
+/**
+移除所有由dialog.open以外的对话框
+*/
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
 },
 
+/**
+展示一个过了指定时间即消失的提示信息，一般内容简短
+@param {string} msg - 需要弹出的信息
+@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+@param {function} callback - 时间到了之后回调的方法
+*/
 Dialog.tips = function(msg, time, cb){
     if(time === undefined){
         time = 1500;
@@ -410,6 +511,12 @@ Dialog.tips = function(msg, time, cb){
     }, time);
 }
 
+/**
+展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
+@param {string} msg - 需要弹出的信息
+@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+@param {function} callback - 时间到了之后回调的方法
+*/
 Dialog.loading = function(msg){
     this.removeMadal();
     var loading = $('<div class="zLoading"></div><div class="tips">' + msg + '</div>');
@@ -514,12 +621,33 @@ module.exports = Dialog;
 
 
 },{}],5:[function(require,module,exports){
+/**
+@author Elvis
+@class FileView
+@classdesc CSV文件预览与标记
+@example
+* var fileView = new FileView({
+    container: '#container',
+    maxHeight: 400
+})
 
+*/
+
+/**
+@constructs FileView
+@param {object} options 配置变量对象 - container为容器对象、canEdit：csv是否允许编辑状态、maxHeight：最大高度、heads：指定头部列
+*/
 var FileView = function(options){
     this.csv = require('./asset/csv');
+    /**最外层Jquery对象*/
     this.ele = null;
+    /**数据集合 */
     this._dataList = [];
+
+    /**是否能编辑 */
     this.canEdit = true;
+
+    /**容器最大高度，超过此高度后将出现滚动条 */
     this.maxHeight = 800;
 
     this.config = {
@@ -3520,6 +3648,8 @@ var Uploader = function(options) {
 		callback: null,
 		uploadOneCallback: null
 	};
+	
+	this.deleteFile = null;
 
 	this.STATUS = {
 		waiting: 0,
@@ -3533,7 +3663,7 @@ var Uploader = function(options) {
 	this.queueSize = 0;
 	this.uploadedSize = 0;
 	this.slice = Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice;
-	
+
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -3568,7 +3698,7 @@ var Uploader = function(options) {
 		self.ele.appendTo(self.config.container);
 	}
 
-	self._reloadList = function(){
+	self.reloadList = function(){
 		self.ele.find('.zUploaderItem').remove();
 		var len = self.files.length;
 		
@@ -3582,15 +3712,19 @@ var Uploader = function(options) {
 		self.ele.find('.zUploaderFoot').show();
 		var zUploaderList = self.ele.find('.zUploaderList');
 		var size = 0;
+		var waitingCount = 0;
 		for(var i = 0; i < len; i++){
 			var file = self.files[i];
-			size += file.size;
+			if(file.status == self.STATUS.waiting){
+				size += file.size;
+				waitingCount ++;
+			}
 			var zUploaderItem = self._renderOneFile(file);
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
 
-		self.ele.find('.zUploaderStatic').html('选中' + len + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
 	self._pushFiles = function(files){
@@ -3605,23 +3739,33 @@ var Uploader = function(options) {
 				self.files.push(files[i]);
 			}
 		}
-		self._reloadList();
+		self.reloadList();
 	}
 
 	self._deleteFile = function(index){
-		if(self.files[index].status !== self.STATUS.waiting){
+		if(self.files[index].status === self.STATUS.process){
 			return alert('改文件当前不允许删除');
 		}
-		self.files.splice(index, 1);
-		self._reloadList();
+		var file = self.files[index];
+		if(file.status === self.STATUS.success){
+			self.deleteFile && self.deleteFile(file, function(){
+				self.files.splice(index, 1);
+				self.reloadList();
+			});
+		}
+		else{
+			self.files.splice(index, 1);
+			self.reloadList();
+		}
 	}
 
 	self._bindEvent = function(){
 		self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
 			self._pushFiles(this.files);
 		}).on('click', '.zUploaderBtn', self._upload).on('click', '.zUploaderItemHd i', function(){
-			var index = $(this).index();
-			self._deleteFile(index);
+			var fileItem = $(this).parents('.zUploaderItem');
+			var index = fileItem.index();
+			self._deleteFile(index - 1);
 		}).on('click', '.zUploaderReset', function(e){
 			self.files.map(function(model){
 				model.status = self.STATUS.waiting;
@@ -3664,7 +3808,9 @@ var Uploader = function(options) {
 		item.append('<p class="zUploaderName">'+ fileName + '</p>');
 		if (file.status === self.STATUS.success){
 			item.find('.zUploaderMsg').addClass('ok').html('upload success');
-			item.find('.zUploaderItemHd').remove();
+			if(!self.deleteFile){
+				item.find('.zUploaderItemHd').remove();
+			}
 		}
 		else if (file.status === self.STATUS.failed){
 			item.find('.zUploaderMsg').addClass('error').html('upload failed').attr('title', file.msg);

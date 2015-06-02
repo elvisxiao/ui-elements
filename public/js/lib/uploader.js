@@ -10,6 +10,8 @@ var Uploader = function(options) {
 		callback: null,
 		uploadOneCallback: null
 	};
+	
+	this.deleteFile = null;
 
 	this.STATUS = {
 		waiting: 0,
@@ -23,7 +25,7 @@ var Uploader = function(options) {
 	this.queueSize = 0;
 	this.uploadedSize = 0;
 	this.slice = Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice;
-	
+
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -58,7 +60,7 @@ var Uploader = function(options) {
 		self.ele.appendTo(self.config.container);
 	}
 
-	self._reloadList = function(){
+	self.reloadList = function(){
 		self.ele.find('.zUploaderItem').remove();
 		var len = self.files.length;
 		
@@ -72,15 +74,19 @@ var Uploader = function(options) {
 		self.ele.find('.zUploaderFoot').show();
 		var zUploaderList = self.ele.find('.zUploaderList');
 		var size = 0;
+		var waitingCount = 0;
 		for(var i = 0; i < len; i++){
 			var file = self.files[i];
-			size += file.size;
+			if(file.status == self.STATUS.waiting){
+				size += file.size;
+				waitingCount ++;
+			}
 			var zUploaderItem = self._renderOneFile(file);
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
 
-		self.ele.find('.zUploaderStatic').html('选中' + len + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
 	self._pushFiles = function(files){
@@ -95,23 +101,33 @@ var Uploader = function(options) {
 				self.files.push(files[i]);
 			}
 		}
-		self._reloadList();
+		self.reloadList();
 	}
 
 	self._deleteFile = function(index){
-		if(self.files[index].status !== self.STATUS.waiting){
+		if(self.files[index].status === self.STATUS.process){
 			return alert('改文件当前不允许删除');
 		}
-		self.files.splice(index, 1);
-		self._reloadList();
+		var file = self.files[index];
+		if(file.status === self.STATUS.success){
+			self.deleteFile && self.deleteFile(file, function(){
+				self.files.splice(index, 1);
+				self.reloadList();
+			});
+		}
+		else{
+			self.files.splice(index, 1);
+			self.reloadList();
+		}
 	}
 
 	self._bindEvent = function(){
 		self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
 			self._pushFiles(this.files);
 		}).on('click', '.zUploaderBtn', self._upload).on('click', '.zUploaderItemHd i', function(){
-			var index = $(this).index();
-			self._deleteFile(index);
+			var fileItem = $(this).parents('.zUploaderItem');
+			var index = fileItem.index();
+			self._deleteFile(index - 1);
 		}).on('click', '.zUploaderReset', function(e){
 			self.files.map(function(model){
 				model.status = self.STATUS.waiting;
@@ -154,7 +170,9 @@ var Uploader = function(options) {
 		item.append('<p class="zUploaderName">'+ fileName + '</p>');
 		if (file.status === self.STATUS.success){
 			item.find('.zUploaderMsg').addClass('ok').html('upload success');
-			item.find('.zUploaderItemHd').remove();
+			if(!self.deleteFile){
+				item.find('.zUploaderItemHd').remove();
+			}
 		}
 		else if (file.status === self.STATUS.failed){
 			item.find('.zUploaderMsg').addClass('error').html('upload failed').attr('title', file.msg);

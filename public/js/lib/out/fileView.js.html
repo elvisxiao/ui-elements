@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fileView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fileView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
 @author Elvis
 @class FileView
 @classdesc CSV文件预览与标记
@@ -43,17 +71,17 @@ var FileView = function(options){
     var self = this;
 
     self._render = function(){
-        self.ele = $('<div class="zUploader"></div>');
-        var uploadList = $('<div class="zUploaderList"></div>');
+        self.ele = $('&lt;div class="zUploader">&lt;/div>');
+        var uploadList = $('&lt;div class="zUploaderList">&lt;/div>');
         uploadList.append(self._renderNoFile());
         self.ele.append(uploadList);
         self.ele.appendTo(self.config.container);
     }
 
     self._renderNoFile = function(){
-        var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
-        div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
-        div.append('<p>或将文件拖到这里, 暂仅支持CSV格式</p>');
+        var div = $('&lt;div class="zUploaderNoFile" style="padding:15px 0 0 0;">&lt;/div>');
+        div.append('&lt;span class="zUploaderFileBtn ">&lt;input type="file" accept=".csv" />&lt;span class="zUploaderBtnText">点击选择文件&lt;/span>&lt;/div>');
+        div.append('&lt;p>或将文件拖到这里, 暂仅支持CSV格式&lt;/p>');
 
         return div;
     }
@@ -99,7 +127,7 @@ var FileView = function(options){
     self.readCsv = function(file, cb){
         var reader = new FileReader();
         reader.onload = function(e){
-            $('input[type="file"]').replaceWith($('<input type="file" accept=".csv">'));
+            $('input[type="file"]').replaceWith($('&lt;input type="file" accept=".csv">'));
             var content = reader.result;
             self._formatFileContent(content);
             cb();
@@ -117,7 +145,7 @@ var FileView = function(options){
         }
         self._dataList = [];
         self._dataList.push(keys);
-        for(var i = 0; i < models.length; i++){
+        for(var i = 0; i &lt; models.length; i++){
             var item = models[i];
             var datas = [];
             for(var key in item){
@@ -131,26 +159,26 @@ var FileView = function(options){
     self._readFilesToTable = function(file){
         self.readCsv(file, function(){
             $('.zFileTableContainer').remove();
-            var tableContainer = $('<div class="zFileTableContainer"><table class="zFileTable"></table></div>');
+            var tableContainer = $('&lt;div class="zFileTableContainer">&lt;table class="zFileTable">&lt;/table>&lt;/div>');
             if(self.config.maxHeight){
                 tableContainer.css('max-height', self.config.maxHeight + 'px');
             }
             var ret = tableContainer.find('.zFileTable');
-            if(self._dataList && self._dataList.length > 0){
+            if(self._dataList &amp;&amp; self._dataList.length > 0){
                 var keys = self._dataList[0];
                 var keysLen = keys.length;
-                var thead = $('<thead></thead>');
-                var tbody = $('<tbody></tbody>');
-                var theadTr = $('<tr><th></th></tr>').appendTo(thead);
-                for(var i = 0; i < keysLen; i++){
-                    theadTr.append('<th>' + keys[i] + '</th>');
+                var thead = $('&lt;thead>&lt;/thead>');
+                var tbody = $('&lt;tbody>&lt;/tbody>');
+                var theadTr = $('&lt;tr>&lt;th>&lt;/th>&lt;/tr>').appendTo(thead);
+                for(var i = 0; i &lt; keysLen; i++){
+                    theadTr.append('&lt;th>' + keys[i] + '&lt;/th>');
                 }
 
-                for(var i = 1; i < self._dataList.length; i++){
+                for(var i = 1; i &lt; self._dataList.length; i++){
                     var item = self._dataList[i];
-                    var tr = $('<tr><td>' + i + '</td></tr>');
-                    for(var j = 0; j < keysLen; j++){
-                        tr.append('<td data-val="true", data-index="' + i + ',' + j + '">' + $.trim(item[j]) + '</td>');
+                    var tr = $('&lt;tr>&lt;td>' + i + '&lt;/td>&lt;/tr>');
+                    for(var j = 0; j &lt; keysLen; j++){
+                        tr.append('&lt;td data-val="true", data-index="' + i + ',' + j + '">' + $.trim(item[j]) + '&lt;/td>');
                     }
                     tbody.append(tr);
                 }
@@ -170,7 +198,7 @@ var FileView = function(options){
             table.find('tbody td[data-val]').each(function(){
                 var td = $(this);
                 var text = td.html();
-                td.html('<span class="tdSpan">' + text + '</span><input class="tdIpt" type="text" value="' + text + '" />');
+                td.html('&lt;span class="tdSpan">' + text + '&lt;/span>&lt;input class="tdIpt" type="text" value="' + text + '" />');
             });           
         }
     }
@@ -182,7 +210,7 @@ var FileView = function(options){
         }
 
         var keys = self._dataList[0];
-        if(self.config.heads && self.config.heads.length > 0){
+        if(self.config.heads &amp;&amp; self.config.heads.length > 0){
             if(self.config.heads.length > keys.length){
                 self.config.heads = self.config.heads.slice(0, keys.length);
             }
@@ -190,10 +218,10 @@ var FileView = function(options){
             keys = self.config.heads.concat(keys);
         }
         var keyLength = keys.length;
-        for (var i = 1; i < self._dataList.length; i++){
+        for (var i = 1; i &lt; self._dataList.length; i++){
             var line = self._dataList[i];
             var one = {};
-            for (var j = 0; j < keyLength; j++){
+            for (var j = 0; j &lt; keyLength; j++){
                 one[keys[j]] = $.trim(line[j]);
             }
             models.push(one);
@@ -204,7 +232,7 @@ var FileView = function(options){
 
     self.mark = function(msgList){
         var length = msgList.length;
-        for(var i = 0; i < length; i++){
+        for(var i = 0; i &lt; length; i++){
             var msgItem = msgList[i];
             var dataIndex = msgItem.row + ',' + msgItem.col;
             var td = self.ele.find('tbody td[data-index="' + dataIndex + '"]');
@@ -223,3 +251,26 @@ var FileView = function(options){
 
 module.exports = FileView;
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="oc.module_ajax.html">ajax</a></li><li><a href="oc.module_date.html">date</a></li><li><a href="oc.module_dialog.html">dialog</a></li></ul><h3>Classes</h3><ul><li><a href="FileView.html">FileView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue Jun 02 2015 14:05:37 GMT+0800 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
