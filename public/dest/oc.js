@@ -3958,9 +3958,7 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-			self._process(file.size);
-			self.setStatus(file, self.STATUS.success);	
-			cb();
+			
 		}
 		xhr.upload.onprogress = function(e){
 			self._process(e.loaded, true);
@@ -3972,8 +3970,11 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
-			if(xhr.readyState == 4 && xhr.status == 200){    
+			if(xhr.readyState == 4 && xhr.status == 200){  
+				self._process(file.size);  
 				file.response = xhr.response;
+				self.setStatus(file, self.STATUS.success);	
+				cb();
 		    }
 		}
 		xhr.send(data);
