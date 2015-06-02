@@ -6,7 +6,7 @@ var Uploader = function(options) {
 		maxSize: 10,
 		uploadAction: '/upload',
 		postParams: {},
-		blobSize: 1000000,
+		oneFileLimit: 10 * 1024 * 1024,
 		callback: null,
 		uploadOneCallback: null
 	};
@@ -92,14 +92,21 @@ var Uploader = function(options) {
 	self._pushFiles = function(files){
 		for(var i = 0; i < files.length; i++){
 			var file = files[i];
-			if($.inArray(file, self.files) === -1){
-				if(self.files.length === self.config.maxSize){
-					alert('超出了最大文件数量');
-					return false;
-				}
-				files[i].status = self.STATUS.waiting;
-				self.files.push(files[i]);
+			if($.inArray(file, self.files) > -1){
+				oc.dialog.tips(file.name + '文件已经存在');
+				continue; 
 			}
+			if(file.size > self.config.oneFileLimit){
+				oc.dialog.tips('文件' + file.name + '超出了最大限制');
+				continue; 
+			}
+			
+			if(self.files.length === self.config.maxSize){
+				alert('超出了最大文件数量');
+				return false;
+			}
+			files[i].status = self.STATUS.waiting;
+			self.files.push(files[i]);
 		}
 		self.reloadList();
 	}
@@ -212,47 +219,47 @@ var Uploader = function(options) {
 			return;
 		}
 
-		console.log('Not support window.FormData');
-		var fileName = new Date().getTime() + '_' + file.name;
+		// console.log('Not support window.FormData');
+		// var fileName = new Date().getTime() + '_' + file.name;
 
-		var reader = new FileReader();
-		reader.onerror = function(err){
-			self._process(file.size);
-	        self.setStatus(file, self.STATUS.failed, '文件读取失败:' + err);
-	        cb();
-	    }
-	    reader.onload = function(){
-			var params = self.config.postParams;
-			params.fileName = fileName;
-			var fileData = reader.result;
+		// var reader = new FileReader();
+		// reader.onerror = function(err){
+		// 	self._process(file.size);
+	 //        self.setStatus(file, self.STATUS.failed, '文件读取失败:' + err);
+	 //        cb();
+	 //    }
+	 //    reader.onload = function(){
+		// 	var params = self.config.postParams;
+		// 	params.fileName = fileName;
+		// 	var fileData = reader.result;
 			
-			var sendPice = function(){
-				params.fileData = fileData.slice(0, self.config.blobSize);
-				fileData = fileData.slice(self.config.blobSize);
-				if(params.fileData.length === 0){
-					self.setStatus(file, self.STATUS.success);
-					cb();
-			    	return;
-				}
-				self._process(params.fileData.length);
-				$.ajax({
-		    		type: "post",
-		    		url: self.config.uploadAction,
-		    		data: params,
-		    		success: function(){
-		    			self._process(params.fileData.length);
-		    			sendPice();
-		    		},
-		    		error: function(res){
-		    			self._process(file.size - fileData.length);
-		    			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
-		    			cb();
-		    		}
-		    	})
-			}
-			sendPice();
-	    }
-	    reader.readAsBinaryString(file);
+		// 	var sendPice = function(){
+		// 		params.fileData = fileData.slice(0, self.config.blobSize);
+		// 		fileData = fileData.slice(self.config.blobSize);
+		// 		if(params.fileData.length === 0){
+		// 			self.setStatus(file, self.STATUS.success);
+		// 			cb();
+		// 	    	return;
+		// 		}
+		// 		self._process(params.fileData.length);
+		// 		$.ajax({
+		//     		type: "post",
+		//     		url: self.config.uploadAction,
+		//     		data: params,
+		//     		success: function(){
+		//     			self._process(params.fileData.length);
+		//     			sendPice();
+		//     		},
+		//     		error: function(res){
+		//     			self._process(file.size - fileData.length);
+		//     			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
+		//     			cb();
+		//     		}
+		//     	})
+		// 	}
+		// 	sendPice();
+	 //    }
+	 //    reader.readAsBinaryString(file);
 	}
 
 	self._sendFileByFormData = function(file, cb){
@@ -322,9 +329,9 @@ var Uploader = function(options) {
 			return false;
 		});
 
-		if(self.queueSize > 10000000){
-			self.config.blobSize = 4000000;
-		}
+		// if(self.queueSize > 10000000){
+		// 	self.config.blobSize = 4000000;
+		// }
 		self._process(0);
 		var i = 0;
 		var uploadQueue = function(){
