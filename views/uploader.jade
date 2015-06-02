@@ -70,12 +70,12 @@ block content
         uploader.files = [{
             name: 'test.jpg',
             src: '/upload/0205a6ed9961820bbce3a399ec9a334e.jpg',
-            status: 2
+            status: uploader.STATUS.success
         },
         {
             name: 'test2.jpg',
             src: '402ffe00ba49249369469f5be8a71232.odt',
-            status: 2
+            status: uploader.STATUS.success
         }]
         uploader.deleteFile = function(file){
             console.log(file);
