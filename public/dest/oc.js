@@ -3979,9 +3979,15 @@ var Uploader = function(options) {
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4 && xhr.status == 200){  
 				self._process(file.size);  
-				file.response = xhr.response;
-				self.setStatus(file, self.STATUS.success);	
+				file.response = JSON.parse(xhr.response);
+				if(file.response.flag === true){
+					self.setStatus(file, self.STATUS.success);	
+				}
+				else{
+					self.setStatus(file, self.STATUS.failed);	
+				}
 				cb();
+				
 		    }
 		}
 		xhr.send(data);
