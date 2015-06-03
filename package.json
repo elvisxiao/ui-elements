@@ -42,8 +42,9 @@
     "grunt-contrib-stylus": "0.8.x",
     "grunt-contrib-uglify": "0.2.x",
     "grunt-contrib-watch": "0.6.x",
-    "grunt-contrib-jade": "x",
-    "grunt-browserify": "x"
+    "grunt-contrib-jade": "*",
+    "grunt-browserify": "*",
+    "grunt-jsdoc": "*"
   },
   "bundleDependencies": [],
   "private": true,

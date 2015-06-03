@@ -621,37 +621,46 @@ module.exports = Dialog;
 
 
 },{}],5:[function(require,module,exports){
+/** 
+* @file CSV文件预览与标记 
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
 /**
-@author Elvis
-@class FileView
-@classdesc CSV文件预览与标记
-@param {object} options 配置变量对象：<br /> container为容器对象<br />canEdit：csv是否允许编辑状态<br />maxHeight：最大高度<br />heads：指定头部列
-@example
+* CSV文件预览与标记
+* @class FileView
+* @constructor
+* @param {object} options 配置变量对象：<br /> container为容器对象<br />canEdit：csv是否允许编辑状态<br />maxHeight：最大高度<br />heads：指定头部列
+* @example
 * var fileView = new FileView({
     container: '#container',
     maxHeight: 400
 })
 */
 var FileView = function(options){
-    /**读取csv文件的第三方库文件*/
+    /** @memberof FileView */
+
+    /**@property {function} csv 读取csv文件的第三方库文件*/
     this.csv = require('./asset/csv');
-    /**
-    @property ele
-    最外层Jquery对象*/
+
+    /**@property {object} ele - 最外层Jquery对象*/
     this.ele = null;
-    /**根据CSV内容，格式化后的Model集合 */
+
+    /**@property {object} _dataList - 根据CSV内容，格式化后的Model集合 */
     this._dataList = [];
 
-    /**生成后的表格是否允许编辑 */
+    /**@property {boolean} canEdit - 生成后的表格是否允许编辑 */
     this.canEdit = true;
 
-    /**容器最大高度，超过此高度后将出现滚动条 */
+    /**@property {number} maxHeight - 容器最大高度，超过此高度后将出现滚动条 */
     this.maxHeight = 800;
 
-    /**初始化配置文件
-    *container: 容器选择器
-    *canEdit: csv是否可编辑
-    *maxHeight: 最大允许的高度，超出后会出现滚动条
+    /**@property {object} config - 初始化配置文件<br>
+    *container: 容器选择器<br>
+    *canEdit: csv是否可编辑<br>
+    *maxHeight: 最大允许的高度，超出后会出现滚动条<br>
     *heads：指定头部列名
     */
     this.config = {
@@ -669,10 +678,10 @@ var FileView = function(options){
 
     var self = this;
 
-    /**
-    @memberof FileView
-    @method _render 
-    *初始化界面
+    /** 
+    * @method _render 初始化界面
+    * @memberof FileView 
+    * @instance
     */
     self._render = function(){
         self.ele = $('<div class="zUploader"></div>');
@@ -682,11 +691,10 @@ var FileView = function(options){
         self.ele.appendTo(self.config.container);
     }
 
-    /**
-    @memberof FileView
-    @method _render 
-    *没有文件时，显示的界面
-    */
+    /** 
+    * @method _renderNoFile 没有文件时，显示的界面
+    * @memberof FileView 
+    * @instance */
     self._renderNoFile = function(){
         var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
         div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
@@ -696,9 +704,10 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *绑定容器中的相关事件
+    * 绑定容器中的相关事件
+    * @method _bindEvent
+    * @memberof FileView 
+    * @instance 
     */
     self._bindEvent = function(){
         self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
@@ -738,11 +747,12 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *读取CSV文件内容
-    @param {object} file - 需要读取的文件对象
-    @param {function} cb - 文件读取完成后的回调函数
+    * 读取CSV文件内容
+    * @method readCsv
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView 
+    * @instance
     */
     self.readCsv = function(file, cb){
         var reader = new FileReader();
@@ -752,15 +762,16 @@ var FileView = function(options){
             self._formatFileContent(content);
             cb();
         }
-
+        
         reader.readAsText(file);
     }
-
+    
     /**
-    @memberof FileView
-    @method _render 
-    *将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中
-    @param {string} content - 需要读取的文件内容
+    * 将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中 
+    * @method _formatFileContent 
+    * @param {string} content - 需要读取的文件内容
+    * @memberof FileView
+    * @instance
     */
     self._formatFileContent = function(content){
         var models = self.csv.parse(content);
@@ -782,10 +793,11 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *根据文件内容生成用Table展示出来
-    @param {object} file - 需要读取的文件对象
+    * 根据文件内容生成用Table展示出来
+    * @method _readFilesToTable
+    * @param {object} file - 需要读取的文件对象
+    * @memberof FileView
+    * @instance
     */
     self._readFilesToTable = function(file){
         self.readCsv(file, function(){
@@ -825,10 +837,14 @@ var FileView = function(options){
     }
     
     /**
-    @memberof FileView
-    @method _render 
-    *将Table设置为编辑状态
-    @param {object} table - Jquery对象
+    * 将Table设置为编辑状态
+    * @method setEditTable 
+    * @param {object} table - Jquery对象
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.config.canEdit = true;
+    * fileView.setEditTable(fileView.ele.find('table'))
     */
     self.setEditTable = function(table){
         if(self.config.canEdit === true){
@@ -841,10 +857,13 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *获取格式化后的数据
-    @return {object} models - 对象数组
+    * 获取格式化后的数据
+    * @method getDataList 
+    * @return {object} models - 对象数组
+    * @memberof FileView
+    * @instance
+    * @example
+    * var dataList = fileView.getDataList()
     */
     self.getDataList = function(){
         var models = [];
@@ -874,10 +893,14 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *标记表格中某些格
-    @param {object} msgList - 对象数组：{row: 1, col: 1} 
+    * 标记表格中某些格
+    * @method mark 
+    * @param {object} msgList - 对象数组：{row: 1, col: 1} 
+    * @memberof FileView
+    * @instance
+    * @example
+    //标记坐标为（0，0），（3，2）的格子
+    *fileView.mark([{row:0, col:0}, {row:3, col:2}]);
     */
     self.mark = function(msgList){
         var length = msgList.length;
@@ -890,9 +913,12 @@ var FileView = function(options){
     }
 
     /**
-    @memberof FileView
-    @method _render 
-    *清除表格中某些格
+    * 清除表格中某些格
+    * @method clearMark 
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.clearMark();
     */
     self.clearMark = function(){
         self.ele.find('tbody .zFileTableMark').removeAttr('title').removeClass('zFileTableMark');
@@ -907,17 +933,51 @@ module.exports = FileView;
 
 
 },{"./asset/csv":2}],6:[function(require,module,exports){
-var ImageCropping = function(options){
-	this.config = {
+/** 
+* @file 前端图片裁剪预览
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 前端图片裁剪预览
+* @class ImageCrop
+* @constructor
+* @param {object} options 配置变量对象：<br /> container为容器对象
+* @example
+* var imageCrop = new ImageCrop({
+    container: '#container'
+})
+*/
+var ImageCrop = function(options){
+	/** @memberof ImageCrop */
+
+    /** @property {object} options 配置变量对象：<br /> container为容器对象 */
+    this.config = {
 		container: 'body'
 	};
-	this.ele = null;     //jquery对象，最外层
-	this.canvas = null;  //canvas元素
-	this.ctx = null;   //canvas.getContext();
-	this.img = null;   //当前的图片
-	this.filter = null;    //Jquery对象，裁剪框
-	this.scaleHeight = 0;  //未放大或者缩小的初始高度
-	this.scaleWidth = 0;  //未放大或者缩小的初始宽度
+
+    /** @property {object} ele - 最外层Jquery对象 */
+	this.ele = null;  
+
+    /** @property {object} canvas - canvas元素 */
+	this.canvas = null;
+
+    /** @property {object} ctx - canvas.getContext()的返回值 */
+	this.ctx = null;   
+
+    /** @property {object} img - 当前的图片 */
+	this.img = null;   
+
+    /** @property {object} filter - Jquery对象，裁剪框 */
+	this.filter = null;   
+
+    /** @property {number} scaleHeight - 未放大或者缩小的初始高度 */
+	this.scaleHeight = 0; 
+
+    /** @property {number} scaleWidth - 未放大或者缩小的初始宽度 */
+	this.scaleWidth = 0; 
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -927,27 +987,37 @@ var ImageCropping = function(options){
 
 	var self = this;
 
+    /** @method _render 初始化界面
+    *@memberof ImageCrop 
+    *@instance
+    */
 	self.render = function(){
-		self.ele = $('<div class="zImgUploader"></div>');
-		var wrap = $('<div class="zImgUploaderWrap"></div>').appendTo(self.ele);
-		wrap.append('<canvas class="zImgUploaderCanvas"></canvas>');
-        wrap.append('<span class="zImgUploaderCover zImgUploaderCoverTop"></span>');
-        wrap.append('<span class="zImgUploaderCover zImgUploaderCoverRight"></span>');
-        wrap.append('<span class="zImgUploaderCover zImgUploaderCoverLeft"></span>');
-        wrap.append('<span class="zImgUploaderCover zImgUploaderCoverBottom"></span>');
-		wrap.append('<span class="zImgUploaderFilter"><i class="zCutDown"></i><i class="zCutLeft"></i><i class="zCutRight"></i><i class="zCutUp"></i></span>');
-		self.ele.append('<div class="zImgUploaderControl"><span class="iptFile"><input type="file" accept="image/*">Open</span><span class="zCutRange"><b>－</b><input type="range" min="50" max="500" step="1"><b>＋</b><span class="zRangePercent">0%</span></span><span class="zCutImageSize">0 × 0</span><button class="btnCut">Cut</button></div>');
-        self.ele.append('<h3 class="zImgUploaderDropInfo mt50">Drop image here</h3>');
+		self.ele = $('<div class="zImageCrop"></div>');
+		var wrap = $('<div class="zImageCropWrap"></div>').appendTo(self.ele);
+		wrap.append('<canvas class="zImageCropCanvas"></canvas>');
+        wrap.append('<span class="zImageCropCover zImageCropCoverTop"></span>');
+        wrap.append('<span class="zImageCropCover zImageCropCoverRight"></span>');
+        wrap.append('<span class="zImageCropCover zImageCropCoverLeft"></span>');
+        wrap.append('<span class="zImageCropCover zImageCropCoverBottom"></span>');
+		wrap.append('<span class="zImageCropFilter"><i class="zCutDown"></i><i class="zCutLeft"></i><i class="zCutRight"></i><i class="zCutUp"></i></span>');
+		self.ele.append('<div class="zImageCropControl"><span class="iptFile"><input type="file" accept="image/*">Open</span><span class="zCutRange"><b>－</b><input type="range" min="50" max="500" step="1"><b>＋</b><span class="zRangePercent">0%</span></span><span class="zCutImageSize">0 × 0</span><button class="btnCut">Cut</button></div>');
+        self.ele.append('<h3 class="zImageCropDropInfo mt50">Drop image here</h3>');
 		self.canvas = self.ele.find('canvas')[0];
 		self.ctx = self.canvas.getContext('2d');
 		self.img = new Image();
-		self.filter = self.ele.find('.zImgUploaderFilter');
+		self.filter = self.ele.find('.zImageCropFilter');
 
 		self.ele.appendTo(self.config.container);
 
 		self.bindEvents();
 	}
 
+    /** 
+    * 支持拖拽更换图片
+    * @method supportDrop 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.supportDrop = function(){
         self.ele.on('dragover', function(e){
             e.stopPropagation();    
@@ -956,23 +1026,30 @@ var ImageCropping = function(options){
         .on('dragenter', function(e){
             e.stopPropagation();    
             e.preventDefault();
-            self.ele.addClass('zImgUploaderDrag');
+            self.ele.addClass('zImageCropDrag');
         })
         .on('dragleave', function(e){
             e.stopPropagation();    
             e.preventDefault();
-            self.ele.removeClass('zImgUploaderDrag');
+            self.ele.removeClass('zImageCropDrag');
         })
 
         self.ele.on('drop', function(e){
             e.stopPropagation();    
             e.preventDefault();
-            self.ele.removeClass('zImgUploaderDrag');
+            self.ele.removeClass('zImageCropDrag');
             var file = e.originalEvent.dataTransfer.files;
             self.readFile(file[0]);
         })
     }
 
+    /** 
+    * 通过FileReader读取文件内容
+    * @method readFile 
+    * @param {object} file - 需要读取的文件对象
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.readFile = function(file){
         var reader = new FileReader();
 
@@ -986,8 +1063,8 @@ var ImageCropping = function(options){
             return;
         }
 
-        self.ele.find('.zImgUploaderDropInfo').hide();
-        self.ele.find('.zImgUploaderFilter').css('display', 'block');
+        self.ele.find('.zImageCropDropInfo').hide();
+        self.ele.find('.zImageCropFilter').css('display', 'block');
         
         reader.onload = function(e){
             self.img.src = this.result;
@@ -1003,6 +1080,12 @@ var ImageCropping = function(options){
         reader.readAsDataURL(file);
     }
 
+    /**
+    * 事件绑定相关
+    * @method bindEvents 
+    * @memberof ImageCrop 
+    * @instance
+    */
 	self.bindEvents = function(){
 		self.downWidth = self.filter.width();
         self.downHeight = self.filter.height();
@@ -1016,12 +1099,12 @@ var ImageCropping = function(options){
 		self.ele.on('change', 'input[type="file"]', function(){
             self.readFile(this.files[0]);
         })
-        .on('input', '.zImgUploaderControl input[type="range"]', function(){
-            self.ele.find('.zImgUploaderControl .zRangePercent').html(this.value + '%');
+        .on('input', '.zImageCropControl input[type="range"]', function(){
+            self.ele.find('.zImageCropControl .zRangePercent').html(this.value + '%');
             self.range();
         })
-        .on('click', '.zImgUploaderControl b', function(){
-            var range = parseInt(self.ele.find('.zImgUploaderControl .zRangePercent').html());
+        .on('click', '.zImageCropControl b', function(){
+            var range = parseInt(self.ele.find('.zImageCropControl .zRangePercent').html());
             if(this.innerHTML === '－'){
                 range -= 10;
                 (range < 50) && (range = 50);
@@ -1030,12 +1113,12 @@ var ImageCropping = function(options){
                 range += 10;
                 (range > 500) && (range = 500);
             }
-            self.ele.find('.zImgUploaderControl .zRangePercent').html(range + '%');
-            self.ele.find('.zImgUploaderControl input[type="range"]').val(range);
+            self.ele.find('.zImageCropControl .zRangePercent').html(range + '%');
+            self.ele.find('.zImageCropControl input[type="range"]').val(range);
             self.range();
         })
         .on('click', '.btnCut', self.cutImage)
-		.on('mousedown', '.zImgUploaderFilter', function(e){
+		.on('mousedown', '.zImageCropFilter', function(e){
 			if(e.which === 1){
                 self.downPosition = e.originalEvent;
                 downLeft = self.filter.position().left;
@@ -1051,7 +1134,7 @@ var ImageCropping = function(options){
                 $(document).off('mousemove');
             }
 		})
-		.on('mousedown', '.zImgUploaderFilter i', function(e){
+		.on('mousedown', '.zImageCropFilter i', function(e){
 			e.stopPropagation();
             self.downWidth = self.filter.width();
             self.downHeight = self.filter.height();
@@ -1077,6 +1160,11 @@ var ImageCropping = function(options){
         })
 	}
 
+    /** 使用Canvas绘制图片
+    * @method drawImage 
+    * @memberof ImageCrop 
+    * @instance
+    */
 	self.drawImage = function(){
         if(!self.img.src){
             return;
@@ -1094,8 +1182,13 @@ var ImageCropping = function(options){
         self.resetCover();
     }
 
+    /** 放大或者缩小图片
+    * @method range 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.range = function(){
-        var rangeVal = self.ele.find('.zImgUploaderControl input[type="range"]').val();
+        var rangeVal = self.ele.find('.zImageCropControl input[type="range"]').val();
         self.canvas.width = self.scaleWidth * rangeVal / 100.0;
         self.canvas.height = self.scaleHeight * rangeVal / 100.0;
 
@@ -1108,13 +1201,18 @@ var ImageCropping = function(options){
         self.resetCover();
     }
 
+    /** 根据选择框进行图片裁剪
+    * @method cutImage 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.cutImage = function(){
         if(!self.img.src){
             return;
         }
 
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
-        var currRange = self.ele.find('.zImgUploaderControl input[type="range"]').val() / 100;
+        var currRange = self.ele.find('.zImageCropControl input[type="range"]').val() / 100;
         var width = self.filter.width();
         var height = self.filter.height();
         self.canvas.width = width;
@@ -1131,18 +1229,23 @@ var ImageCropping = function(options){
         self.resetFilter();
         self.resetCover();
         
-        self.ele.find('.zImgUploaderCover').css({
+        self.ele.find('.zImageCropCover').css({
             width: 0,
             height: 0
         })
-        self.ele.find('.zImgUploaderControl input[type="range"]').val(100);
-        self.ele.find('.zImgUploaderControl .zRangePercent').html('100%');
-        self.ele.find('.zImgUploaderControl .zCutImageSize').html(width + ' × ' + height);
+        self.ele.find('.zImageCropControl input[type="range"]').val(100);
+        self.ele.find('.zImageCropControl .zRangePercent').html('100%');
+        self.ele.find('.zImageCropControl .zCutImageSize').html(width + ' × ' + height);
         self.scaleWidth = width / currRange;
         self.scaleHeight = height / currRange;
         self.img.src = self.canvas.toDataURL("image/png"); 
     }
 
+    /** 移动选择框时的处理函数
+    * @method moveFilter 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.moveFilter = function(e){
     	var currentPosition = e.originalEvent;
    		
@@ -1159,6 +1262,12 @@ var ImageCropping = function(options){
         self.resetCover();
     }
 
+    /** 
+    * 裁剪图片后，重置选择框的位置到初始状态
+    * @method resetFilter 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.resetFilter = function(){
         var parent = $(self.canvas).parent();
         var left = parseInt(parent.css('margin-left')) + self.ele.width() / 2;
@@ -1181,28 +1290,34 @@ var ImageCropping = function(options){
         })
     }
 
+    /**
+    * 裁剪图片后，重置遮罩框的位置到初始状态
+    * @method resetCover 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.resetCover = function(){
         var position = self.filter.position();
 
-        self.ele.find('.zImgUploaderCoverTop').css({
+        self.ele.find('.zImageCropCoverTop').css({
             height: position.top,
             width: '100%',
             left: 0,
             top: 0
         });
-        self.ele.find('.zImgUploaderCoverBottom').css({
+        self.ele.find('.zImageCropCoverBottom').css({
             height: self.canvas.height - position.top - self.filter.height() - 2,
             width: '100%',
             bottom: '2px',
             left: 0
         });
-        self.ele.find('.zImgUploaderCoverRight').css({
+        self.ele.find('.zImageCropCoverRight').css({
             width: self.canvas.width - self.filter.width() - position.left,
             height: self.filter.height() + 2,
             top: position.top,
             right: 0
         });
-        self.ele.find('.zImgUploaderCoverLeft').css({
+        self.ele.find('.zImageCropCoverLeft').css({
             width: position.left,
             height: self.filter.height() + 2,
             top: position.top,
@@ -1210,6 +1325,12 @@ var ImageCropping = function(options){
         });
     }
 
+    /** 
+    * 拖动改变裁剪框大小
+    * @method moveFilterIcon 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.moveFilterIcon = function(e, i){
     	
     	e.stopPropagation();
@@ -1294,7 +1415,7 @@ var ImageCropping = function(options){
     self.render();
 }
 
-window.module && window.module.exports && (module.exports = ImageCropping);
+window.module && window.module.exports && (module.exports = ImageCrop);
 },{}],7:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
@@ -1308,7 +1429,7 @@ window.module && window.module.exports && (module.exports = ImageCropping);
 	oc.TreeSelect = require('./treeSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
-	oc.ImageCropping = require('./imageCropping');
+	oc.ImageCrop = require('./imageCrop');
 	oc.Sidebar = require('./sidebar');
 	oc.TreeOrganization = require('./treeOrganization');
 	oc.TreePIS = require('./treePIS');
@@ -1327,12 +1448,36 @@ window.module && window.module.exports && (module.exports = ImageCropping);
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imageCropping":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
+},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imageCrop":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
+/**
+用于操作浏览器的本地存储 - LocalStorage
+@author Elvis
+@exports oc.localStorage
 
+* @example
+
+//设置一个键值对到本地存储中
+* oc.localStorage.set('user', {name: 'elvis xiao', email: 'ivesxiao@gmail.com'});
+
+//根据主键获取存储的值
+* oc.localStorage.get('user');
+
+//删除指定key
+* oc.localStorage.remove('user');
+
+//清除所有该域下本地存储
+* oc.localStorage.clear();
+*/
 var LocalStorage = {
+	/** @property {object} storage - 浏览器本身的localStorage对象 */
 	storage : window.localStorage
 }
 
+/**
+* 存储一个键值对到本地存储中
+* @param {string} key - 存储的key值
+* @param {object} value - 存储的对象，内部会转化为JSON字符串存储
+*/
 LocalStorage.set = function(key, value){
 	if(typeof(key) !== 'string'){
 		console.error("key mast to be a string");
@@ -1343,6 +1488,11 @@ LocalStorage.set = function(key, value){
 	this.storage.key = strVal;
 }
 
+/**
+根据key从已经存储的数据中取出对应的值
+* @param {string} key - 存储的key值
+* @return {object} value - 根据key值获取到的对象，如果没有则为null
+*/
 LocalStorage.get = function(key){
 	if(typeof(key) !== 'string'){
 		console.error("key mast to be a string");
@@ -1355,10 +1505,17 @@ LocalStorage.get = function(key){
 	return jsonVal;
 }
 
+/**
+* 根据key移除已经存储的对应值
+* @param {string} key - 有则移除，无则不做任何操作
+*/
 LocalStorage.remove = function(key){
 	this.storage.removeItem(key);
 }
 
+/**
+* 清除当前域名下所有的本地存储信息
+*/
 LocalStorage.clear = function(){
 	this.storage.clear();
 }
@@ -1367,12 +1524,76 @@ module.exports = LocalStorage;
 
 
 },{}],9:[function(require,module,exports){
+
+/** 
+* @file 侧边栏
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 侧边栏
+* @class Sidebar
+* @constructor
+* @param {object} dataList - 配置数据文件
+* @param {object} container - 容器Jquery选择器或Jquery对象
+
+* @example
+* var dataList = [
+    {
+        name: 'test1',
+        hash: '#test1',
+        children: [
+            {
+                name: 'test2',
+                hash: '#test2',
+            },
+            {
+                name: 'test2',
+                hash: '#test2',
+            },
+            {
+                name: 'test2',
+                hash: '#test2',
+            }
+        ]
+    },
+    {
+        name: 'test222',
+        hash: '#test222',
+        children: [
+            {
+                name: 'test2',
+                hash: '#test2',
+            },
+            {
+                name: 'test2',
+                hash: '#test2',
+            },
+            {
+                name: 'test2',
+                hash: '#test2',
+            }
+        ]
+    }
+];
+
+new oc.Sidebar(dataList, '#sideBarContainer');
+*/
+
 var Sidebar = function(dataList, container){
 	this.container = container;
 	this.dataList = dataList;
 	
 	var self = this;
-
+	
+	/**
+    * 生成Siderbar结构
+    * @method _render 
+    * @memberof Sidebar
+    * @instance
+    */
 	self._render = function(){
 		var aside = $('<aside class="zSideBar"><ul class="zSideBarUl"></ul></aside>');
 		var ul = aside.find('ul');
@@ -1405,6 +1626,44 @@ var Sidebar = function(dataList, container){
 
 module.exports = Sidebar;
 },{}],10:[function(require,module,exports){
+/** 
+* @file 生成无限级的树形结构
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 生成无限级的树形结构
+* @class Tree
+* @constructor
+* @param {object} options 配置变量对象：<br /> container：容器对象，默认为document.body<br />data：初始树形结构的数据<br />showLevel：初始展开的级别，默认为1
+* @example
+var tree = new oc.Tree({
+    data: {
+	    "id": "1",
+	    "name": "Root category",
+	    "description": "",
+	    "items": [{
+	        "id": "2",
+	        "name": "ERP's",
+	        "description": "",
+	        "items": [{
+	            "id": "3",
+	            "name": "email sent related",
+	            "description": "",
+	            "items": null
+	        }, {
+	            "id": "4",
+	            "name": "ERP's others",
+	            "description": "",
+	            "items": null
+	        }]
+	    }]
+	}
+});
+*/
+
 var Tree = function(options){
 	this.config = {
 		container: 'body',
@@ -1421,6 +1680,12 @@ var Tree = function(options){
 
 	var self = this;
 
+	/** 
+	* 初始化界面
+	* @method render
+    * @memberof Tree 
+    * @instance
+    */
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');
 		var li = $('<li class="zTreeItem"><p>' + self.config.data.name + '</p></li>').data(self.config.data);
@@ -1433,6 +1698,13 @@ var Tree = function(options){
 		self._bindEvents();
 	}
 
+	/** 
+	* 查询节点，采用开头匹配的模式进行搜索
+	* @method filter 
+	* @param {string} keyword - 关键字
+    * @memberof Tree 
+    * @instance
+    */
 	self.filter = function(keyword){
 		self.removeFilterTag();
 		if(!keyword){
@@ -1449,10 +1721,25 @@ var Tree = function(options){
         })
 	}
 
+	/** 
+	* 搜索标记后，移除标记用
+	* @method removeFilterTag 
+    * @memberof Tree 
+    * @instance
+    */
 	self.removeFilterTag = function(){
 		self.ele.find('.treeTag').removeClass('treeTag');
 	}
 
+	/** 
+	* 递归生成树节点
+	* @method _renderRecusive 
+	* @param {object} dataList - 树节点的数组对象
+	* @param {object} ele - 父节点
+	* @param {number} level - 父节点的级别
+    * @memberof Tree 
+    * @instance
+    */
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
 			return;
@@ -1482,6 +1769,12 @@ var Tree = function(options){
 		}
 	}
 
+	/** 
+	* 绑定内部事件
+	* @method _bindEvents 
+    * @memberof Tree 
+    * @instance
+    */
 	self._bindEvents = function(){
 		self.ele.on('click', '.zTreeItem p', function(){
 			$(this).parent().toggleClass('active');
@@ -1639,19 +1932,113 @@ var Tree = function(options){
 		})
 	}
 
+	/** 
+	* 移动节点
+	* @method moveNode 
+	* @param {string} sourceId - 被拖动的节点id
+	* @param {string} targetId - 被放下（drop）的节点id
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.moveNode = function(sourceId, targetId, cb){
+		$.ajax({
+			url: '/moveNode',
+			type: 'post',
+			data: {sourceId: sourceId, targetId: targetId},
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				cb(false, res.responseText);
+			}
+		})
+    }
+    */
 	self.moveNode = function(sourceId, targetId, cb){
 		cb(true);
 	}
 
+	/** 
+	* 删除节点，需要额外根据业务实现该方法
+	* @method deleteNode 
+	* @param {string} nodeId - 节点id
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.deleteNode = function(nodeId, cb){
+		$.ajax({
+			url: '/delete/' + nodeId,
+			type: 'delete',
+			success: function(){
+				cb();
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+			}
+		})
+    }
+    */
 	self.deleteNode = function(nodeId, cb){
 		// $.get('/tree/delete/' + nodeId, cb);
 		cb();
 	}
 
+	/** 
+	* 更新节点，需要额外根据业务实现该方法
+	* @method updateNode 
+	* @param {object} model - 节点对象
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.updateNode = function(model, cb){
+		$.ajax({
+			url: '/update/' + model.id,
+			type: 'post',
+			data: model,
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+				cb(false);
+			}
+		})
+    }
+    */
 	self.updateNode = function(model, cb){
 		setTimeout(cb, 2000);
 	}
 
+	/** 
+	* 添加节点，需要额外根据业务实现该方法
+	* @method addNode 
+	* @param {object} model - 节点对象
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.addNode = function(model, cb){
+		$.ajax({
+			url: '/add',
+			type: 'put',
+			data: model,
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+				cb(false);
+			}
+		})
+    }
+    */
 	self.addNode = function(model, cb){
 		setTimeout(cb, 2000);
 	}
@@ -2712,15 +3099,10 @@ var TreePIS = function(options){
 	this.config = {
 		container: 'body',
 		data: null,
-		teamData: null,
-		showLevel: 1,
-		family: null,
-		allUser: null,
-		isShowAdmin: false
+		showLevel: 1
 	};
-	this.allUserName = null,
 	this.ele = null;
-
+	
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -2729,12 +3111,6 @@ var TreePIS = function(options){
 	
 	var self = this;
 
-	if(self.config.allUser){
-		self.allUserName = [];
-		self.config.allUser.map(function(model){
-			self.allUserName.push(model.name);
-		})
-	}
 
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');
@@ -3344,8 +3720,18 @@ var TreeSelect = function(options){
 
 module.exports = TreeSelect;
 },{}],15:[function(require,module,exports){
+/**
+基本的、单个UI元素
+@author Elvis
+@exports oc.ui
+*/
 var UI = {};
 
+/**
+* 开关Toggle button, 此方法会影响页面中所有.zToggleBtn, .zToggleBtnSm元素
+* @param {string} on - 开关打开时显示的文字，默认值为“ON”
+* @param {string} off - 开关关闭时显示的文字，默认值为“OFF”
+**/
 UI.toggleBtn = function(on, off){
     if(on === undefined){
         on = 'ON';
@@ -3358,6 +3744,12 @@ UI.toggleBtn = function(on, off){
     })
 },
 
+/**
+* 开关Toggle button，此方法只影响传入的Jquery对象
+* @param {object} btn - 需要设置的Jquery对象，为一个checkbox
+* @param {string} on - 开关打开时显示的文字，默认值为“ON”
+* @param {string} off - 开关关闭时显示的文字，默认值为“OFF”
+**/
 UI.toggleOneBtn = function(btn, on, off){
     var btnClass = 'zToggleBtn';
     btn.removeClass('zToggleBtn');
@@ -3384,9 +3776,17 @@ UI.toggleOneBtn = function(btn, on, off){
     })
 },
 
-// ele: 作用的元素 - jquery对象集合
-// array：autoComplete的数据来源，为数组 - 可选
-// cb：选择后的回调函数 - 可选
+/**
+* 根据输入信息自动补全的控件
+* @param {object} ele - 作用的元素，为jquery对象或集合
+* @param {object} array - 提示用的字符串数组
+* @param {function} cb - 选择后的回调函数，会传入选择的值，与选择的li元素作为参数
+* @param {boolean} prefix - 是否支持输入多个
+* @example
+* oc.ui.autoComplete('#ipt', ['A99999', 'A11111', 'B22222'], function(val, li){
+    console.log(val);
+}, true)
+*/
 UI.autoComplete = function(ele, array, cb, prefix){
     ele = $(ele);
     if(typeof array === 'function'){
@@ -3536,6 +3936,9 @@ UI.autoComplete = function(ele, array, cb, prefix){
     });
 }
 
+/**
+* Checkbox控件
+*/
 UI.cbx = function(){
     $('.zCbx').off('change', 'input').on('change', 'input', function(){
         if(this.checked){
@@ -3565,6 +3968,11 @@ UI.cbx = function(){
     };
 };
 
+
+/**
+* 将select变成多选框
+* @param {function} cb - 点击确定之后的回调函数
+*/
 UI.multiSelect = function(cb){
     $("select.zMultiSelect").each(function(){
         var ele = $(this);
@@ -3639,8 +4047,13 @@ UI.multiSelect = function(cb){
     bindEvent();
 }
 
-//btn: jqeury选择器或对象，一般为按钮，点击触发
-//position: 值为 left、right、top、bottom，默认值为right
+/**
+* PopOver提示框，支持上下左右自定义
+* @param {object} btn - 作用对象，一般为btn，Jquery或者Jquery选择器
+* @param {string} title - 标题
+* @param {string} content - 内容
+* @param {string} popPosition - 位置，默认为right，可选值为：right、left、top、bottom
+*/
 UI.popOver = function(btn, title, content, popPosition){
     btn = $(btn);
     
@@ -3682,7 +4095,10 @@ UI.popOver = function(btn, title, content, popPosition){
     })
 }
 
-//关闭popOver，btn为popOver或者触发元素
+/**
+* 关闭PopOver提示框
+* @param {object} btn - 作用对象或者popOver本身
+*/
 UI.popOverRemove = function(btn){
     var btn = $(btn);
     if(btn.hasClass('.zPopOver')){
@@ -3695,7 +4111,56 @@ UI.popOverRemove = function(btn){
 
 module.exports = UI;
 },{}],16:[function(require,module,exports){
+/** 
+* @file 基于FormData和FileReader的文件预览、上传组件 
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 基于FormData和FileReader的文件预览、上传组件
+* @class Uploader
+* @constructor
+* @param {object} options 配置变量对象：<br /> 
+	container：容器对象，默认为document.body<br />
+	maxSize：单次最大允许添加的文件数量，默认为10<br />
+	uploadAction：接收文件的接口地址（post方法） <br />
+	postParams：其他需要与文件一起post过去的数据 <br />
+	oneFileLimit：单个文件限制大小，默认为10M <br />
+	callback：单次所有文件上传完成后的执行的回调接口 <br />
+	uploadOneCallback：单个文件上传完成后的执行的回调接口 <br />
+* @example
+* var uploader = new oc.Uploader({
+        container: '.fileContainer',
+        postParams: {
+            savePath: 'upload'
+        },
+        callback: function(files){
+            console.log('all file uploaded:', files);
+        },
+        uploadOneCallback: function(file){
+            console.log('uploaded one file:', file);
+        },
+        blobSize: 100
+    })
+
+    uploader.files = [{
+        name: 'test.jpg',
+        status: uploader.STATUS.success
+    },
+    {
+        name: 'test2.jpg',
+        status: uploader.STATUS.success
+    }]
+    uploader.deleteFile = function(file){
+        console.log(file);
+    }
+    uploader.reloadList();
+*/
 var Uploader = function(options) {
+	/** @memberof ImageCrop */
+
 	var self = this;
 
 	this.config = {
@@ -3708,19 +4173,33 @@ var Uploader = function(options) {
 		uploadOneCallback: null
 	};
 
+	/** @property {function} deleteFile 对于已经上传完成的文件提供删除接口，如提供了，则文件可以被删除 */
 	this.deleteFile = null;
 
+	/** @property {function} STATUS 文件状态枚举值 */
 	this.STATUS = {
 		waiting: 0,
 		process: 1,
 		success: 2,
 		failed: 3
 	};
+
+	/** @property {object} files 当前在显示的文件集合 */
 	this.files = [];
+
+	/** @property {object} ele 最外层的jquery对象 */
 	this.ele = null;
+
+	/** @property {string} msg 标记文件的错误信息 */
 	this.msg = '';
+
+	/** @property {number} queueSize 当前还未上传的文件总大小 */
 	this.queueSize = 0;
+
+	/** @property {number} uploadedSize 当前已经上传的文件总大小 */
 	this.uploadedSize = 0;
+
+	/** @property {object} slice Blob对象，暂未使用，留作以后分段上传 */
 	this.slice = Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice;
 
 	for(var key in options){
@@ -3729,6 +4208,13 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 更新统计信息
+    * @method _renderFoot 
+    * @return {object} div - jquery对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderFoot = function(){
 		var div = $('<div class="zUploaderFoot"></div>');
 		div.append('<p class="zUploaderStatic">选中0个文件，共0K</p>');
@@ -3738,6 +4224,13 @@ var Uploader = function(options) {
 		return div;
 	}
 
+	/** 
+	* 当没有文件时，界面显示为请选择或拖拽文件
+    * @method _renderNoFile 
+    * @return {object} div - jquery对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderNoFile = function(){
 	    var div = $('<div class="zUploaderNoFile"></div>');
 	    div.append('<div class="icon"><i class="icon-images"></i></div>');
@@ -3747,6 +4240,12 @@ var Uploader = function(options) {
 	    return div;
 	}
 
+	/** 
+	* 生成整个Uploader结构
+    * @method _render 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._render = function(){
 		self.ele = $('<div class="zUploader"></div>');
 		var uploadList = $('<div class="zUploaderList"></div>');
@@ -3757,6 +4256,12 @@ var Uploader = function(options) {
 		self.ele.appendTo(self.config.container);
 	}
 
+	/** 
+	* 根据当前文件，重新生成整个Uploader结构
+    * @method reloadList 
+    * @memberof FileView 
+    * @instance 
+    */
 	self.reloadList = function(){
 		self.ele.find('.zUploaderItem').remove();
 		var len = self.files.length;
@@ -3786,6 +4291,13 @@ var Uploader = function(options) {
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
+	/** 
+	* 选择文件后，添加到files中，并重新绘制
+    * @method _pushFiles 
+    * @param {objec} files - 被添加的文件集合
+    * @memberof FileView 
+    * @instance 
+    */
 	self._pushFiles = function(files){
 		for(var i = 0; i < files.length; i++){
 			var file = files[i];
@@ -3808,6 +4320,13 @@ var Uploader = function(options) {
 		self.reloadList();
 	}
 
+	/** 
+	* 删除文件，未上传的直接删除，已经上传的取决与deleteFile方法是否设置
+    * @method _deleteFile 
+    * @param {number} index - 需要删除的文件位置
+    * @memberof FileView 
+    * @instance 
+    */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
 			return alert('改文件当前不允许删除');
@@ -3825,6 +4344,12 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 内部事件绑定
+    * @method _bindEvent 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._bindEvent = function(){
 		self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
 			self._pushFiles(this.files);
@@ -3862,6 +4387,14 @@ var Uploader = function(options) {
 	    });
 	}
 
+	/** 
+	* 生成单个文件的HTML结构
+    * @method _renderOneFile 
+    * @param {object} file - 文件对象
+    * @return {object} item - Juery 对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderOneFile = function(file){
 		var item = $('<div class="zUploaderItem"></div>');
 		item.append('<div class="icon"><i class="icon-images"></i></div>');
@@ -3894,6 +4427,15 @@ var Uploader = function(options) {
 		return item;
 	}
 
+	/** 
+	* 设置文件的状态和错误信息
+    * @method setStatus 
+    * @param {object} file - 文件对象
+    * @param {number} status - 状态枚举
+    * @param {string} msg - 错误信息
+    * @memberof FileView 
+    * @instance 
+    */
 	self.setStatus = function(file, status, msg){
 		file.status = status;
 		if(status === self.STATUS.success){
@@ -3908,6 +4450,14 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 上传单个文件
+    * @method _uploadOneFile 
+    * @param {object} file - 文件对象
+    * @param {function} cb - 上传完成后的回调方法
+    * @memberof FileView 
+    * @instance 
+    */
 	self._uploadOneFile = function(file, cb){
 		self.setStatus(file, self.STATUS.process);
 
@@ -3959,6 +4509,14 @@ var Uploader = function(options) {
 	 //    reader.readAsBinaryString(file);
 	}
 
+	/** 
+	* 使用FormData的方式Post文件到服务器
+    * @method _sendFileByFormData 
+    * @param {object} file - 文件对象
+    * @param {function} cb - 上传完成后的回调方法
+    * @memberof FileView 
+    * @instance 
+    */
 	self._sendFileByFormData = function(file, cb){
 	    var xhr = new XMLHttpRequest();
 	    xhr.open('POST', self.config.uploadAction, true);
@@ -3993,6 +4551,14 @@ var Uploader = function(options) {
 		xhr.send(data);
 	}
 
+	/** 
+	* 文件上传过程中，更新统计信息
+    * @method _process 
+    * @param {number} addSize - 本次发送的文件块大小
+    * @param {boolean} isNotAppend - 文件大小是否追加到uploadedSize中
+    * @memberof FileView 
+    * @instance 
+    */
 	self._process = function(addSize, isNotAppend){
 		var eleStatic = self.ele.find('.zUploaderStatic');
 		var eleProcess = eleStatic.find('.zUploaderProcess');
@@ -4011,7 +4577,12 @@ var Uploader = function(options) {
 		}
 	}
 
-
+	/** 
+	* 执行文件上传操作，采用回调方式，一个一个上传
+    * @method _upload 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._upload = function(){
 		var processList = self.files.filter(function(model){
 			return model.status === self.STATUS.process;
@@ -4052,6 +4623,12 @@ var Uploader = function(options) {
 		uploadQueue();
 	}
 
+	/** 
+	* 上传后生成统计信息
+    * @method _setFootStatics 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._setFootStatics = function(){
 		var successList = self.files.filter(function(model){
 			return model.status == self.STATUS.success;

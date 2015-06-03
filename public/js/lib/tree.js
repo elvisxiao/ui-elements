@@ -1,3 +1,41 @@
+/** 
+* @file 生成无限级的树形结构
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 生成无限级的树形结构
+* @class Tree
+* @constructor
+* @param {object} options 配置变量对象：<br /> container：容器对象，默认为document.body<br />data：初始树形结构的数据<br />showLevel：初始展开的级别，默认为1
+* @example
+var tree = new oc.Tree({
+    data: {
+	    "id": "1",
+	    "name": "Root category",
+	    "description": "",
+	    "items": [{
+	        "id": "2",
+	        "name": "ERP's",
+	        "description": "",
+	        "items": [{
+	            "id": "3",
+	            "name": "email sent related",
+	            "description": "",
+	            "items": null
+	        }, {
+	            "id": "4",
+	            "name": "ERP's others",
+	            "description": "",
+	            "items": null
+	        }]
+	    }]
+	}
+});
+*/
+
 var Tree = function(options){
 	this.config = {
 		container: 'body',
@@ -14,6 +52,12 @@ var Tree = function(options){
 
 	var self = this;
 
+	/** 
+	* 初始化界面
+	* @method render
+    * @memberof Tree 
+    * @instance
+    */
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');
 		var li = $('<li class="zTreeItem"><p>' + self.config.data.name + '</p></li>').data(self.config.data);
@@ -26,6 +70,13 @@ var Tree = function(options){
 		self._bindEvents();
 	}
 
+	/** 
+	* 查询节点，采用开头匹配的模式进行搜索
+	* @method filter 
+	* @param {string} keyword - 关键字
+    * @memberof Tree 
+    * @instance
+    */
 	self.filter = function(keyword){
 		self.removeFilterTag();
 		if(!keyword){
@@ -42,10 +93,25 @@ var Tree = function(options){
         })
 	}
 
+	/** 
+	* 搜索标记后，移除标记用
+	* @method removeFilterTag 
+    * @memberof Tree 
+    * @instance
+    */
 	self.removeFilterTag = function(){
 		self.ele.find('.treeTag').removeClass('treeTag');
 	}
 
+	/** 
+	* 递归生成树节点
+	* @method _renderRecusive 
+	* @param {object} dataList - 树节点的数组对象
+	* @param {object} ele - 父节点
+	* @param {number} level - 父节点的级别
+    * @memberof Tree 
+    * @instance
+    */
 	self._renderRecusive = function(dataList, ele, level){
 		if(!dataList){
 			return;
@@ -75,6 +141,12 @@ var Tree = function(options){
 		}
 	}
 
+	/** 
+	* 绑定内部事件
+	* @method _bindEvents 
+    * @memberof Tree 
+    * @instance
+    */
 	self._bindEvents = function(){
 		self.ele.on('click', '.zTreeItem p', function(){
 			$(this).parent().toggleClass('active');
@@ -232,19 +304,113 @@ var Tree = function(options){
 		})
 	}
 
+	/** 
+	* 移动节点
+	* @method moveNode 
+	* @param {string} sourceId - 被拖动的节点id
+	* @param {string} targetId - 被放下（drop）的节点id
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.moveNode = function(sourceId, targetId, cb){
+		$.ajax({
+			url: '/moveNode',
+			type: 'post',
+			data: {sourceId: sourceId, targetId: targetId},
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				cb(false, res.responseText);
+			}
+		})
+    }
+    */
 	self.moveNode = function(sourceId, targetId, cb){
 		cb(true);
 	}
 
+	/** 
+	* 删除节点，需要额外根据业务实现该方法
+	* @method deleteNode 
+	* @param {string} nodeId - 节点id
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.deleteNode = function(nodeId, cb){
+		$.ajax({
+			url: '/delete/' + nodeId,
+			type: 'delete',
+			success: function(){
+				cb();
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+			}
+		})
+    }
+    */
 	self.deleteNode = function(nodeId, cb){
 		// $.get('/tree/delete/' + nodeId, cb);
 		cb();
 	}
 
+	/** 
+	* 更新节点，需要额外根据业务实现该方法
+	* @method updateNode 
+	* @param {object} model - 节点对象
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.updateNode = function(model, cb){
+		$.ajax({
+			url: '/update/' + model.id,
+			type: 'post',
+			data: model,
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+				cb(false);
+			}
+		})
+    }
+    */
 	self.updateNode = function(model, cb){
 		setTimeout(cb, 2000);
 	}
 
+	/** 
+	* 添加节点，需要额外根据业务实现该方法
+	* @method addNode 
+	* @param {object} model - 节点对象
+	* @param {function} cb - 动作完成后执行回调，设置数结构
+    * @memberof Tree 
+    * @instance
+    * @example
+    * var tree = new Tree({...})
+    * tree.addNode = function(model, cb){
+		$.ajax({
+			url: '/add',
+			type: 'put',
+			data: model,
+			success: function(){
+				cb(true);
+			},
+			error: function(res){
+				oc.dialog.tips(res.responseText);
+				cb(false);
+			}
+		})
+    }
+    */
 	self.addNode = function(model, cb){
 		setTimeout(cb, 2000);
 	}

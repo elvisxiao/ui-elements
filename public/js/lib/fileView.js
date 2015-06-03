@@ -55,9 +55,10 @@ var FileView = function(options){
 
     var self = this;
 
-    /** @method _render 初始化界面
-    *@memberof FileView 
-    *@instance
+    /** 
+    * @method _render 初始化界面
+    * @memberof FileView 
+    * @instance
     */
     self._render = function(){
         self.ele = $('<div class="zUploader"></div>');
@@ -67,9 +68,10 @@ var FileView = function(options){
         self.ele.appendTo(self.config.container);
     }
 
-    /** @method _renderNoFile 没有文件时，显示的界面
-    *@memberof FileView 
-    *@instance */
+    /** 
+    * @method _renderNoFile 没有文件时，显示的界面
+    * @memberof FileView 
+    * @instance */
     self._renderNoFile = function(){
         var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
         div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
@@ -79,9 +81,11 @@ var FileView = function(options){
     }
 
     /**
-    @method _bindEvent - 绑定容器中的相关事件
-    *@memberof FileView 
-    *@instance */
+    * 绑定容器中的相关事件
+    * @method _bindEvent
+    * @memberof FileView 
+    * @instance 
+    */
     self._bindEvent = function(){
         self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
             self._readFilesToTable(this.files[0]);
@@ -120,11 +124,12 @@ var FileView = function(options){
     }
 
     /**
-    *@method readCsv - 读取CSV文件内容
-    *@memberof FileView
-    *@instance
-    *@param {object} file - 需要读取的文件对象
-    *@param {function} cb - 文件读取完成后的回调函数
+    * 读取CSV文件内容
+    * @method readCsv
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView 
+    * @instance
     */
     self.readCsv = function(file, cb){
         var reader = new FileReader();
@@ -134,14 +139,16 @@ var FileView = function(options){
             self._formatFileContent(content);
             cb();
         }
-
+        
         reader.readAsText(file);
     }
-
-    /** @method _formatFileContent *将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中
-    *@memberof FileView
-    *@instance
-    @param {string} content - 需要读取的文件内容
+    
+    /**
+    * 将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中 
+    * @method _formatFileContent 
+    * @param {string} content - 需要读取的文件内容
+    * @memberof FileView
+    * @instance
     */
     self._formatFileContent = function(content){
         var models = self.csv.parse(content);
@@ -163,10 +170,11 @@ var FileView = function(options){
     }
 
     /**
-    @method _readFilesToTable - 根据文件内容生成用Table展示出来
-    *@memberof FileView
-    *@instance
-    @param {object} file - 需要读取的文件对象
+    * 根据文件内容生成用Table展示出来
+    * @method _readFilesToTable
+    * @param {object} file - 需要读取的文件对象
+    * @memberof FileView
+    * @instance
     */
     self._readFilesToTable = function(file){
         self.readCsv(file, function(){
@@ -206,13 +214,14 @@ var FileView = function(options){
     }
     
     /**
-    @method setEditTable - 将Table设置为编辑状态
-    *@memberof FileView
-    *@instance
-    @param {object} table - Jquery对象
-    @example
-    *fileView.config.canEdit = true;
-    *fileView.setEditTable(fileView.ele.find('table'))
+    * 将Table设置为编辑状态
+    * @method setEditTable 
+    * @param {object} table - Jquery对象
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.config.canEdit = true;
+    * fileView.setEditTable(fileView.ele.find('table'))
     */
     self.setEditTable = function(table){
         if(self.config.canEdit === true){
@@ -225,12 +234,13 @@ var FileView = function(options){
     }
 
     /**
-    @method getDataList - 获取格式化后的数据
-    *@memberof FileView
-    *@instance
-    @return {object} models - 对象数组
-    @example
-    *var dataList = fileView.getDataList()
+    * 获取格式化后的数据
+    * @method getDataList 
+    * @return {object} models - 对象数组
+    * @memberof FileView
+    * @instance
+    * @example
+    * var dataList = fileView.getDataList()
     */
     self.getDataList = function(){
         var models = [];
@@ -260,11 +270,12 @@ var FileView = function(options){
     }
 
     /**
-    @method mark - 标记表格中某些格
-    *@memberof FileView
-    *@instance
-    @param {object} msgList - 对象数组：{row: 1, col: 1} 
-    @example
+    * 标记表格中某些格
+    * @method mark 
+    * @param {object} msgList - 对象数组：{row: 1, col: 1} 
+    * @memberof FileView
+    * @instance
+    * @example
     //标记坐标为（0，0），（3，2）的格子
     *fileView.mark([{row:0, col:0}, {row:3, col:2}]);
     */
@@ -279,10 +290,12 @@ var FileView = function(options){
     }
 
     /**
-    @method clearMark - 清除表格中某些格
-    *@memberof FileView
-    *@instance
-    *fileView.clearMark();
+    * 清除表格中某些格
+    * @method clearMark 
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.clearMark();
     */
     self.clearMark = function(){
         self.ele.find('tbody .zFileTableMark').removeAttr('title').removeClass('zFileTableMark');

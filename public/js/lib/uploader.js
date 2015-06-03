@@ -1,4 +1,53 @@
+/** 
+* @file 基于FormData和FileReader的文件预览、上传组件 
+* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @version 0.1 
+*/ 
+
+
+/**
+* 基于FormData和FileReader的文件预览、上传组件
+* @class Uploader
+* @constructor
+* @param {object} options 配置变量对象：<br /> 
+	container：容器对象，默认为document.body<br />
+	maxSize：单次最大允许添加的文件数量，默认为10<br />
+	uploadAction：接收文件的接口地址（post方法） <br />
+	postParams：其他需要与文件一起post过去的数据 <br />
+	oneFileLimit：单个文件限制大小，默认为10M <br />
+	callback：单次所有文件上传完成后的执行的回调接口 <br />
+	uploadOneCallback：单个文件上传完成后的执行的回调接口 <br />
+* @example
+* var uploader = new oc.Uploader({
+        container: '.fileContainer',
+        postParams: {
+            savePath: 'upload'
+        },
+        callback: function(files){
+            console.log('all file uploaded:', files);
+        },
+        uploadOneCallback: function(file){
+            console.log('uploaded one file:', file);
+        },
+        blobSize: 100
+    })
+
+    uploader.files = [{
+        name: 'test.jpg',
+        status: uploader.STATUS.success
+    },
+    {
+        name: 'test2.jpg',
+        status: uploader.STATUS.success
+    }]
+    uploader.deleteFile = function(file){
+        console.log(file);
+    }
+    uploader.reloadList();
+*/
 var Uploader = function(options) {
+	/** @memberof ImageCrop */
+
 	var self = this;
 
 	this.config = {
@@ -11,19 +60,33 @@ var Uploader = function(options) {
 		uploadOneCallback: null
 	};
 
+	/** @property {function} deleteFile 对于已经上传完成的文件提供删除接口，如提供了，则文件可以被删除 */
 	this.deleteFile = null;
 
+	/** @property {function} STATUS 文件状态枚举值 */
 	this.STATUS = {
 		waiting: 0,
 		process: 1,
 		success: 2,
 		failed: 3
 	};
+
+	/** @property {object} files 当前在显示的文件集合 */
 	this.files = [];
+
+	/** @property {object} ele 最外层的jquery对象 */
 	this.ele = null;
+
+	/** @property {string} msg 标记文件的错误信息 */
 	this.msg = '';
+
+	/** @property {number} queueSize 当前还未上传的文件总大小 */
 	this.queueSize = 0;
+
+	/** @property {number} uploadedSize 当前已经上传的文件总大小 */
 	this.uploadedSize = 0;
+
+	/** @property {object} slice Blob对象，暂未使用，留作以后分段上传 */
 	this.slice = Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice;
 
 	for(var key in options){
@@ -32,6 +95,13 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 更新统计信息
+    * @method _renderFoot 
+    * @return {object} div - jquery对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderFoot = function(){
 		var div = $('<div class="zUploaderFoot"></div>');
 		div.append('<p class="zUploaderStatic">选中0个文件，共0K</p>');
@@ -41,6 +111,13 @@ var Uploader = function(options) {
 		return div;
 	}
 
+	/** 
+	* 当没有文件时，界面显示为请选择或拖拽文件
+    * @method _renderNoFile 
+    * @return {object} div - jquery对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderNoFile = function(){
 	    var div = $('<div class="zUploaderNoFile"></div>');
 	    div.append('<div class="icon"><i class="icon-images"></i></div>');
@@ -50,6 +127,12 @@ var Uploader = function(options) {
 	    return div;
 	}
 
+	/** 
+	* 生成整个Uploader结构
+    * @method _render 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._render = function(){
 		self.ele = $('<div class="zUploader"></div>');
 		var uploadList = $('<div class="zUploaderList"></div>');
@@ -60,6 +143,12 @@ var Uploader = function(options) {
 		self.ele.appendTo(self.config.container);
 	}
 
+	/** 
+	* 根据当前文件，重新生成整个Uploader结构
+    * @method reloadList 
+    * @memberof FileView 
+    * @instance 
+    */
 	self.reloadList = function(){
 		self.ele.find('.zUploaderItem').remove();
 		var len = self.files.length;
@@ -89,6 +178,13 @@ var Uploader = function(options) {
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
+	/** 
+	* 选择文件后，添加到files中，并重新绘制
+    * @method _pushFiles 
+    * @param {objec} files - 被添加的文件集合
+    * @memberof FileView 
+    * @instance 
+    */
 	self._pushFiles = function(files){
 		for(var i = 0; i < files.length; i++){
 			var file = files[i];
@@ -111,6 +207,13 @@ var Uploader = function(options) {
 		self.reloadList();
 	}
 
+	/** 
+	* 删除文件，未上传的直接删除，已经上传的取决与deleteFile方法是否设置
+    * @method _deleteFile 
+    * @param {number} index - 需要删除的文件位置
+    * @memberof FileView 
+    * @instance 
+    */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
 			return alert('改文件当前不允许删除');
@@ -128,6 +231,12 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 内部事件绑定
+    * @method _bindEvent 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._bindEvent = function(){
 		self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
 			self._pushFiles(this.files);
@@ -165,6 +274,14 @@ var Uploader = function(options) {
 	    });
 	}
 
+	/** 
+	* 生成单个文件的HTML结构
+    * @method _renderOneFile 
+    * @param {object} file - 文件对象
+    * @return {object} item - Juery 对象
+    * @memberof FileView 
+    * @instance 
+    */
 	self._renderOneFile = function(file){
 		var item = $('<div class="zUploaderItem"></div>');
 		item.append('<div class="icon"><i class="icon-images"></i></div>');
@@ -197,6 +314,15 @@ var Uploader = function(options) {
 		return item;
 	}
 
+	/** 
+	* 设置文件的状态和错误信息
+    * @method setStatus 
+    * @param {object} file - 文件对象
+    * @param {number} status - 状态枚举
+    * @param {string} msg - 错误信息
+    * @memberof FileView 
+    * @instance 
+    */
 	self.setStatus = function(file, status, msg){
 		file.status = status;
 		if(status === self.STATUS.success){
@@ -211,6 +337,14 @@ var Uploader = function(options) {
 		}
 	}
 
+	/** 
+	* 上传单个文件
+    * @method _uploadOneFile 
+    * @param {object} file - 文件对象
+    * @param {function} cb - 上传完成后的回调方法
+    * @memberof FileView 
+    * @instance 
+    */
 	self._uploadOneFile = function(file, cb){
 		self.setStatus(file, self.STATUS.process);
 
@@ -262,6 +396,14 @@ var Uploader = function(options) {
 	 //    reader.readAsBinaryString(file);
 	}
 
+	/** 
+	* 使用FormData的方式Post文件到服务器
+    * @method _sendFileByFormData 
+    * @param {object} file - 文件对象
+    * @param {function} cb - 上传完成后的回调方法
+    * @memberof FileView 
+    * @instance 
+    */
 	self._sendFileByFormData = function(file, cb){
 	    var xhr = new XMLHttpRequest();
 	    xhr.open('POST', self.config.uploadAction, true);
@@ -296,6 +438,14 @@ var Uploader = function(options) {
 		xhr.send(data);
 	}
 
+	/** 
+	* 文件上传过程中，更新统计信息
+    * @method _process 
+    * @param {number} addSize - 本次发送的文件块大小
+    * @param {boolean} isNotAppend - 文件大小是否追加到uploadedSize中
+    * @memberof FileView 
+    * @instance 
+    */
 	self._process = function(addSize, isNotAppend){
 		var eleStatic = self.ele.find('.zUploaderStatic');
 		var eleProcess = eleStatic.find('.zUploaderProcess');
@@ -314,7 +464,12 @@ var Uploader = function(options) {
 		}
 	}
 
-
+	/** 
+	* 执行文件上传操作，采用回调方式，一个一个上传
+    * @method _upload 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._upload = function(){
 		var processList = self.files.filter(function(model){
 			return model.status === self.STATUS.process;
@@ -355,6 +510,12 @@ var Uploader = function(options) {
 		uploadQueue();
 	}
 
+	/** 
+	* 上传后生成统计信息
+    * @method _setFootStatics 
+    * @memberof FileView 
+    * @instance 
+    */
 	self._setFootStatics = function(){
 		var successList = self.files.filter(function(model){
 			return model.status == self.STATUS.success;

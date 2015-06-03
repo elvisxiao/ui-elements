@@ -1,5 +1,15 @@
+/**
+基本的、单个UI元素
+@author Elvis
+@exports oc.ui
+*/
 var UI = {};
 
+/**
+* 开关Toggle button, 此方法会影响页面中所有.zToggleBtn, .zToggleBtnSm元素
+* @param {string} on - 开关打开时显示的文字，默认值为“ON”
+* @param {string} off - 开关关闭时显示的文字，默认值为“OFF”
+**/
 UI.toggleBtn = function(on, off){
     if(on === undefined){
         on = 'ON';
@@ -12,6 +22,12 @@ UI.toggleBtn = function(on, off){
     })
 },
 
+/**
+* 开关Toggle button，此方法只影响传入的Jquery对象
+* @param {object} btn - 需要设置的Jquery对象，为一个checkbox
+* @param {string} on - 开关打开时显示的文字，默认值为“ON”
+* @param {string} off - 开关关闭时显示的文字，默认值为“OFF”
+**/
 UI.toggleOneBtn = function(btn, on, off){
     var btnClass = 'zToggleBtn';
     btn.removeClass('zToggleBtn');
@@ -38,9 +54,17 @@ UI.toggleOneBtn = function(btn, on, off){
     })
 },
 
-// ele: 作用的元素 - jquery对象集合
-// array：autoComplete的数据来源，为数组 - 可选
-// cb：选择后的回调函数 - 可选
+/**
+* 根据输入信息自动补全的控件
+* @param {object} ele - 作用的元素，为jquery对象或集合
+* @param {object} array - 提示用的字符串数组
+* @param {function} cb - 选择后的回调函数，会传入选择的值，与选择的li元素作为参数
+* @param {boolean} prefix - 是否支持输入多个
+* @example
+* oc.ui.autoComplete('#ipt', ['A99999', 'A11111', 'B22222'], function(val, li){
+    console.log(val);
+}, true)
+*/
 UI.autoComplete = function(ele, array, cb, prefix){
     ele = $(ele);
     if(typeof array === 'function'){
@@ -190,6 +214,9 @@ UI.autoComplete = function(ele, array, cb, prefix){
     });
 }
 
+/**
+* Checkbox控件
+*/
 UI.cbx = function(){
     $('.zCbx').off('change', 'input').on('change', 'input', function(){
         if(this.checked){
@@ -219,6 +246,11 @@ UI.cbx = function(){
     };
 };
 
+
+/**
+* 将select变成多选框
+* @param {function} cb - 点击确定之后的回调函数
+*/
 UI.multiSelect = function(cb){
     $("select.zMultiSelect").each(function(){
         var ele = $(this);
@@ -293,8 +325,13 @@ UI.multiSelect = function(cb){
     bindEvent();
 }
 
-//btn: jqeury选择器或对象，一般为按钮，点击触发
-//position: 值为 left、right、top、bottom，默认值为right
+/**
+* PopOver提示框，支持上下左右自定义
+* @param {object} btn - 作用对象，一般为btn，Jquery或者Jquery选择器
+* @param {string} title - 标题
+* @param {string} content - 内容
+* @param {string} popPosition - 位置，默认为right，可选值为：right、left、top、bottom
+*/
 UI.popOver = function(btn, title, content, popPosition){
     btn = $(btn);
     
@@ -336,7 +373,10 @@ UI.popOver = function(btn, title, content, popPosition){
     })
 }
 
-//关闭popOver，btn为popOver或者触发元素
+/**
+* 关闭PopOver提示框
+* @param {object} btn - 作用对象或者popOver本身
+*/
 UI.popOverRemove = function(btn){
     var btn = $(btn);
     if(btn.hasClass('.zPopOver')){

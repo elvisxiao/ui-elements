@@ -86,21 +86,9 @@ module.exports = function(grunt) {
                 src: [ 'public/dest/**/*.css']
             },
             scripts: {
-                src: [ 'public/dest/**/*.js']
+                src: [ 'public/dest/**/*.js', 'public/dest/doc/*']
             },
         },
-
-        //图片压缩
-        // imagemin: {
-        //      dynamic: {
-        //          files: [{
-        //              expand: true,
-        //              cwd: 'public/img',
-        //              src: ['**/*.{png,jpg,gif,jpeg}'],
-        //              dest: 'public/img'               
-        //          }]
-        //      }
-        // },
 
         //自动处理
         watch: {
@@ -113,9 +101,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: 'public/js/lib/**/**.js',
-                tasks: ['clean:scripts', 'browserify', 'uglify'],
+                tasks: ['clean:scripts', 'browserify', 'uglify', 'jsdoc'],
             }
         },
+
+        //js文档
+        jsdoc : {
+            dist : {
+                src: ['public/js/lib/**/**.js'], 
+                options: {
+                    destination: 'public/dest/doc'
+                }
+            }
+        }
     })
 
     grunt.loadNpmTasks('grunt-browserify');
@@ -127,6 +125,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     // grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jade');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
 
 
