@@ -69,11 +69,8 @@ router.post('/upload', function(req, res) {
 	// 	var path = require('path');
 
 	// 	fs.writeFileSync(path.join('public', savePath, fileName), new Buffer(data, 'binary'), {flag: 'a'});
-<<<<<<< HEAD
+
 		var file = {savePath: '/upload/' + req.files.file.path, flag: true};
-=======
-		var file = {savePath: '/upload/' + req.files.file.path, status: 'ok'};
->>>>>>> 657d80d2381803d58d44bed1b8c551f184963bf2
 		console.log(file);
 		res.send(file);
 	}
