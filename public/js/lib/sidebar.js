@@ -1,6 +1,6 @@
 /** 
 * @file 侧边栏
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 

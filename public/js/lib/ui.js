@@ -1,7 +1,12 @@
 /**
-基本的、单个UI元素
-@author Elvis
-@exports oc.ui
+* @file 基本的、单个UI元素
+* @author Elvis
+* @version 0.1 
+*/
+
+/**
+* 基本的、单个UI元素
+* @exports oc.ui
 */
 var UI = {};
 

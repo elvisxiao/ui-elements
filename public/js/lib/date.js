@@ -1,8 +1,13 @@
 
 /**
-用于Javascript Date类型的扩展
-@author Elvis
-@exports oc.date
+* @file 用于Javascript Date类型的扩展
+* @author Elvis
+* @version 0.1 
+*/ 
+
+/**
+* 用于Javascript Date类型的扩展
+* @exports oc.date
 
 * @example
 * // returns 2015年01月01日

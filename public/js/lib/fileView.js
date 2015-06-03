@@ -1,6 +1,6 @@
 /** 
 * @file CSV文件预览与标记 
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 

@@ -1,7 +1,12 @@
 /**
-用于Rest结构的Ajax交互，提交的数据均为application/json类型
-@author Elvis
-@exports oc.ajax
+* @file 用于Rest结构的Ajax交互，提交的数据均为application/json类型
+* @author Elvis
+* @version 0.1 
+*/ 
+
+/**
+* 用于Rest结构的Ajax交互，提交的数据均为application/json类型
+* @exports oc.ajax
 
 * @example
 * oc.ajax.get('/list', function(res){

@@ -1,7 +1,12 @@
 /**
-用于操作浏览器的本地存储 - LocalStorage
-@author Elvis
-@exports oc.localStorage
+* @file 用于操作浏览器的本地存储 - LocalStorage
+* @author Elvis Xiao
+* @version 0.1 
+*/
+
+/**
+* 用于操作浏览器的本地存储 - LocalStorage
+* @exports oc.localStorage
 
 * @example
 

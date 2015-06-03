@@ -1,6 +1,6 @@
 /** 
 * @file 生成无限级的树形结构
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 

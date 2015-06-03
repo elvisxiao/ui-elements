@@ -1,8 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
-用于Rest结构的Ajax交互，提交的数据均为application/json类型
-@author Elvis
-@exports oc.ajax
+* @file 用于Rest结构的Ajax交互，提交的数据均为application/json类型
+* @author Elvis
+* @version 0.1 
+*/ 
+
+/**
+* 用于Rest结构的Ajax交互，提交的数据均为application/json类型
+* @exports oc.ajax
 
 * @example
 * oc.ajax.get('/list', function(res){
@@ -372,9 +377,14 @@ module.exports = Ajax;
 },{}],3:[function(require,module,exports){
 
 /**
-用于Javascript Date类型的扩展
-@author Elvis
-@exports oc.date
+* @file 用于Javascript Date类型的扩展
+* @author Elvis
+* @version 0.1 
+*/ 
+
+/**
+* 用于Javascript Date类型的扩展
+* @exports oc.date
 
 * @example
 * // returns 2015年01月01日
@@ -457,11 +467,15 @@ ZDate.compare = function(date1, date2){
 
 module.exports = ZDate;
 },{}],4:[function(require,module,exports){
+/**
+* @file 以遮盖形式弹出错误提示，对话框等
+* @author Elvis Xiao
+* @version 0.1 
+*/
 
 /**
-以遮盖形式弹出错误提示，对话框等
-@author Elvis
-@exports oc.dialog
+* 以遮盖形式弹出错误提示，对话框等
+* @exports oc.dialog
 
 * @example
 * oc.dialog.tips('服务器端报错了', 2000)
@@ -641,7 +655,7 @@ module.exports = Dialog;
 },{}],5:[function(require,module,exports){
 /** 
 * @file CSV文件预览与标记 
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 
@@ -954,7 +968,7 @@ module.exports = FileView;
 },{"./asset/csv":2}],6:[function(require,module,exports){
 /** 
 * @file 前端图片裁剪预览
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 
@@ -1469,9 +1483,14 @@ window.module && window.module.exports && (module.exports = ImageCrop);
 })()
 },{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imageCrop":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
 /**
-用于操作浏览器的本地存储 - LocalStorage
-@author Elvis
-@exports oc.localStorage
+* @file 用于操作浏览器的本地存储 - LocalStorage
+* @author Elvis Xiao
+* @version 0.1 
+*/
+
+/**
+* 用于操作浏览器的本地存储 - LocalStorage
+* @exports oc.localStorage
 
 * @example
 
@@ -1545,7 +1564,7 @@ module.exports = LocalStorage;
 },{}],9:[function(require,module,exports){
 /** 
 * @file 侧边栏
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 
@@ -1646,7 +1665,7 @@ module.exports = Sidebar;
 },{}],10:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
-* @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
+* @author Elvis Xiao
 * @version 0.1 
 */ 
 
@@ -3745,9 +3764,14 @@ var TreeSelect = function(options){
 module.exports = TreeSelect;
 },{}],15:[function(require,module,exports){
 /**
-基本的、单个UI元素
-@author Elvis
-@exports oc.ui
+* @file 基本的、单个UI元素
+* @author Elvis
+* @version 0.1 
+*/
+
+/**
+* 基本的、单个UI元素
+* @exports oc.ui
 */
 var UI = {};
 

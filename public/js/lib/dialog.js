@@ -1,8 +1,12 @@
+/**
+* @file 以遮盖形式弹出错误提示，对话框等
+* @author Elvis Xiao
+* @version 0.1 
+*/
 
 /**
-以遮盖形式弹出错误提示，对话框等
-@author Elvis
-@exports oc.dialog
+* 以遮盖形式弹出错误提示，对话框等
+* @exports oc.dialog
 
 * @example
 * oc.dialog.tips('服务器端报错了', 2000)
