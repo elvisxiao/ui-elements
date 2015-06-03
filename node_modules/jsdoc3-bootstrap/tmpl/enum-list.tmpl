@@ -1,0 +1,32 @@
+<?js
+    var members = obj;
+?>
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?js
+            var self = this;
+            members.forEach(function(member) {
+                if (!member) { return; }
+                if (!member.isEnum) return;
+        ?>
+
+        <tr>
+            <td class="name"><a href="#<?js= member.name ?>"><?js= member.name ?></a></td>
+            <td>
+                <?js if (member.description) { ?>
+                    <?js= member.description.replace(/\n\n/g, '</p><p>') ?>
+                <?js } ?>
+            </td>
+        </tr>
+
+        <?js }); ?>
+        </tbody>
+</table>

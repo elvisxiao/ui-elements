@@ -1,0 +1,34 @@
+<?js
+
+  var events  = this.members.events;
+  var classes = this.members.classes;
+
+  var self = this;
+?>
+
+<?js function renderListing(heading, members, icon) { ?>
+
+  <div>
+    <?js if (members) { ?>
+
+      <h3 class="subsection-title">
+        <?js= process.env.HEADER_ICONS ? '<i class="fa fa-' + icon + '"></i>' : '' ?>
+        <?js= heading ?>
+      </h3>
+
+      <ul class="member-listing">
+        <?js members.forEach(function(member, index) { ?>
+          <li>
+              <?js= self.linkto(member.longname, member.name) ?>
+            </a>
+          </li>
+        <?js }) ?>
+      </ul>
+    <?js } ?>
+  </div>
+
+<?js } ?>
+
+<?js renderListing('Classes', this.members.classes, 'cubes') ?>
+
+<?js renderListing('Events', this.members.events, 'bolt') ?>

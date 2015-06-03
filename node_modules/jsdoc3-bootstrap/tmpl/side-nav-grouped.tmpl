@@ -1,0 +1,61 @@
+<?js
+
+var self = this;
+
+function renderThing(thing) { ?>
+
+  <li class="thing">
+
+    <?js if (thing.kind === 'class') { ?>
+      <i class="fa fa-cube"></i>
+    <?js } ?>
+
+    <?js if (thing.kind === 'event') { ?>
+      <i class="fa fa-bolt"></i>
+    <?js } ?>
+
+    <?js if (thing.isEnum) { ?>
+      <i class="fa fa-sitemap"></i>
+    <?js } ?>
+
+    <?js if (thing.scope === 'static' && thing.kind === 'function') { ?>
+      <i class="fa fa-cog"></i>
+    <?js } ?>
+
+    <?js= self.linkto(thing.longname, thing.name) ?>
+  </li>
+
+<?js } ?>
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  <?js this.sortedModules.forEach(function(entry) {
+    var mname = entry.name;
+    var things = entry.things;
+  ?>
+    <li data-module-name="<?js= mname ?>" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      <?js= mname ?>
+      <ul class="thing-list">
+        <?js things.forEach(function(thing) { ?>
+
+          <?js renderThing(thing) ?>
+
+          <ul class="thing-list">
+            <?js thing._subthings.forEach(function(sthing) { ?>
+              <?js renderThing(sthing); ?>
+            <?js }) ?>
+          </ul>
+
+        <?js }); ?>
+      </ul>
+    </li>
+  <?js }); ?>
+  </ul>
+</div>

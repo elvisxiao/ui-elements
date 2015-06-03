@@ -1,0 +1,60 @@
+<?js
+    var methods = obj;
+?>
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?js
+            var self = this;
+            methods.forEach(function(method) {
+              if (!method) { return; }
+
+              var returns = method.returns &&
+                method.returns[0] &&
+                method.returns[0].type &&
+                method.returns[0].type.names &&
+                method.returns[0].type.names[0];
+
+              method._returns = returns;
+
+        ?>
+
+        <tr>
+            <td class="name">
+              <?js var linkClasses = method.deprecated ? 'deprecated' : ''; ?>
+              <?js= self.linkto(method.longname, method.name, linkClasses) ?>
+
+              <?js if (method.readonly) { ?>
+                <i title="readonly" class="fa fa-lock"></i>
+              <?js } ?>
+              <?js if (method.virtual) { ?>
+                <i title="virtual or abstract" class="fa fa-adjust"></i>
+              <?js } ?>
+              <?js if (returns === 'Promise') { ?>
+                <i title="Promise-based async" class="fa fa-random"></i>
+              <?js } ?>
+            </td>
+            <td class="description">
+                <?js if (method.description) { ?>
+                    <?js= method.description.replace(/<\/p>[\s\S]*/, '') ?>
+                <?js } ?>
+
+                <?js if (method.inherits) { ?>
+                  (inherited from
+                    <?js= self.linkto(method.inherits, self.htmlsafe(method.inherits)) ?>)
+                <?js } ?>
+
+
+            </td>
+        </tr>
+
+        <?js }); ?>
+        </tbody>
+</table>
