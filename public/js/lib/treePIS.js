@@ -6,7 +6,7 @@ var TreePIS = function(options){
 		showLevel: 1
 	};
 	this.ele = null;
-	
+
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -15,6 +15,12 @@ var TreePIS = function(options){
 	
 	var self = this;
 
+	if(self.config.allUser){
+		self.allUserName = [];
+		self.config.allUser.map(function(model){
+			self.allUserName.push(model.name);
+		})
+	}
 
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');

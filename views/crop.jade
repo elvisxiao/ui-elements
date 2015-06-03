@@ -7,12 +7,21 @@ block content
         div.tc
             button#btnOpen.btn(type="button") 新窗口打开当前图片
     script.
+<<<<<<< HEAD
         var imageCrop = new oc.ImageCrop({
+=======
+        var imgCroppint = new oc.ImageCropping({
+>>>>>>> 657d80d2381803d58d44bed1b8c551f184963bf2
             container: '#container'
         });
         
         $('#btnOpen').click(function(){
+<<<<<<< HEAD
             if(imageCrop.img){
                 window.open(imageCrop.img.src);
+=======
+            if(imgCroppint.img){
+                window.open(imgCroppint.img.src);
+>>>>>>> 657d80d2381803d58d44bed1b8c551f184963bf2
             }
         })

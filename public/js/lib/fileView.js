@@ -40,6 +40,7 @@ var FileView = function(options){
     *maxHeight: 最大允许的高度，超出后会出现滚动条<br>
     *heads：指定头部列名
     */
+
     this.config = {
         container: 'body',
         canEdit: true,

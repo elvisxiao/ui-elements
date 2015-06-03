@@ -61,51 +61,51 @@ Ajax._send = function(url, method, data, cbOk, cbError){
 },
 
 /**
-Get方法
-@param {string} url - ajax的url地址
-@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
-@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
-**/
+* Get方法
+* @param {string} url - ajax的url地址
+* @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+* @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+*/
 Ajax.get = function(url, cbOk, cbError) {
 	this._send(url, null, null, cbOk, cbError);
 }
 
 /**
-Post方法
-@param {string} url - ajax的url地址
-@param {object} data - ajax的主题内容
-@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
-@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
-**/
+* Post方法
+* @param {string} url - ajax的url地址
+* @param {object} data - ajax的主题内容
+* @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+* @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+*/
 Ajax.post = function(url, data, cbOk, cbError) {
 	this._send(url, "post", data, cbOk, cbError);
 }
 
 /**
-*Put方法
-@param {string} url - ajax的url地址
-@param {object} data - ajax的主题内容
-@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
-@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
-**/
+* Put方法
+* @param {string} url - ajax的url地址
+* @param {object} data - ajax的主题内容
+* @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+* @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+*/
 Ajax.put = function(url, data, cbOk, cbError) {
 	this._send(url, "put", data, cbOk, cbError);
 }
 
 /**
-*Delete方法
-@param {string} url - ajax的url地址
-@param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
-@params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
-**/
+* Delete方法
+* @param {string} url - ajax的url地址
+* @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
+* @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
+*/
 Ajax.delete = function(url, cbOk, cbError) {
 	this._send(url, "delete", null, cbOk, cbError);
 }
 
 /**
-*Ajax出错时，通用处理方法
-@param {object} res - HTTP Response,Ajax是服务器端返回的响应
-**/
+* Ajax出错时，通用处理方法
+* @param {object} res - HTTP Response,Ajax是服务器端返回的响应
+*/
 Ajax.error = function(res){
     oc.dialog.tips('Request error: ' + res.responseText);
     console.log('Request error:', res);
@@ -370,6 +370,7 @@ module.exports = Ajax;
     }
 }(typeof window !== 'undefined' ? window : {}));
 },{}],3:[function(require,module,exports){
+
 /**
 用于Javascript Date类型的扩展
 @author Elvis
@@ -385,11 +386,11 @@ module.exports = Ajax;
 var ZDate = {};
 
 /**
-根据传入格式，格式化输出时间字符串
-@param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
-@returns {string} 格式化后的字符串
-**/
+* 根据传入格式，格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
 ZDate.format = function(date, format){
 	if(date.toString().indexOf('-') > 0){
         date = date.toString().replace(/-/g, '/');
@@ -434,11 +435,11 @@ ZDate.format = function(date, format){
 }
 
 /**
-比较时间大小，返回date1 - date2得到的timespane
-@param {date} date1 - 时间被减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@param {date}  date2 - 时间减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@returns {number} date1 - date2得到的timespane
-**/
+* 比较时间大小，返回date1 - date2得到的timespane
+* @param {date} date1 - 时间被减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {date}  date2 - 时间减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @returns {number} date1 - date2得到的timespane
+*/
 ZDate.compare = function(date1, date2){
     if(typeof date1 == "string"){
         date1 = date1.replace(/-/g, '/');
@@ -456,6 +457,7 @@ ZDate.compare = function(date1, date2){
 
 module.exports = ZDate;
 },{}],4:[function(require,module,exports){
+
 /**
 以遮盖形式弹出错误提示，对话框等
 @author Elvis
@@ -473,7 +475,7 @@ module.exports = ZDate;
 var Dialog = {};
 
 /**
-移除所有由oc.dialog生成的对话框
+* 移除所有由oc.dialog生成的对话框
 */
 Dialog.removeMadal = function(){
     this.removeAllTips();
@@ -481,17 +483,17 @@ Dialog.removeMadal = function(){
 },
 
 /**
-移除所有由dialog.open以外的对话框
+* 移除所有由dialog.open以外的对话框
 */
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
 },
 
 /**
-展示一个过了指定时间即消失的提示信息，一般内容简短
-@param {string} msg - 需要弹出的信息
-@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
-@param {function} callback - 时间到了之后回调的方法
+* 展示一个过了指定时间即消失的提示信息，一般内容简短
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.tips = function(msg, time, cb){
     if(time === undefined){
@@ -512,10 +514,10 @@ Dialog.tips = function(msg, time, cb){
 }
 
 /**
-展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
-@param {string} msg - 需要弹出的信息
-@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
-@param {function} callback - 时间到了之后回调的方法
+* 展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.loading = function(msg){
     this.removeMadal();
@@ -527,6 +529,13 @@ Dialog.loading = function(msg){
     return loading;
 }
 
+/**
+* 类似window.confirm，确认对话框
+* @param {string} msg - 需要弹出的信息
+* @param {function} cbOK - 用户点击了确认后的回调
+* @param {function} cbNO - 用户点击取消后的回调
+* @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
+*/
 Dialog.confirm = function(msg, cbOK, cbNO, required){
     var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
@@ -559,6 +568,12 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
     return confirm;
 }
 
+/**
+* 打开一个相对比较复杂的弹出框，需要手动关闭
+* @param {string} title - 弹出标题
+* @param {string} content - 弹出部分的内容，一般为html
+* @param {function} cb - 弹出框完全展现之后的回调接口
+*/
 Dialog.open = function(title, content, cb){
     this.removeMadal();
     if(!content){
@@ -601,6 +616,9 @@ Dialog.open = function(title, content, cb){
     })
 }
 
+/**
+* 关闭由oc.dialog.open打开的所有对话框
+*/
 Dialog.close = function(){
     var cover = $(".zDialogCover");
     if(!cover.length){
@@ -663,6 +681,7 @@ var FileView = function(options){
     *maxHeight: 最大允许的高度，超出后会出现滚动条<br>
     *heads：指定头部列名
     */
+
     this.config = {
         container: 'body',
         canEdit: true,
@@ -1524,7 +1543,6 @@ module.exports = LocalStorage;
 
 
 },{}],9:[function(require,module,exports){
-
 /** 
 * @file 侧边栏
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -3102,7 +3120,7 @@ var TreePIS = function(options){
 		showLevel: 1
 	};
 	this.ele = null;
-	
+
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
 			this.config[key] = options[key];
@@ -3111,6 +3129,12 @@ var TreePIS = function(options){
 	
 	var self = this;
 
+	if(self.config.allUser){
+		self.allUserName = [];
+		self.config.allUser.map(function(model){
+			self.allUserName.push(model.name);
+		})
+	}
 
 	self.render = function(){
 		self.ele = $('<ul class="zTree"></ul>');
@@ -4287,7 +4311,6 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
-
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
@@ -4523,7 +4546,7 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-			
+
 		}
 		xhr.upload.onprogress = function(e){
 			self._process(e.loaded, true);
@@ -4535,6 +4558,7 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+
 			if(xhr.readyState == 4 && xhr.status == 200){  
 				self._process(file.size);  
 				file.response = JSON.parse(xhr.response);
@@ -4545,7 +4569,6 @@ var Uploader = function(options) {
 					self.setStatus(file, self.STATUS.failed);	
 				}
 				cb();
-				
 		    }
 		}
 		xhr.send(data);

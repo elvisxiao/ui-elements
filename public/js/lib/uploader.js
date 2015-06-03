@@ -174,7 +174,6 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
-
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
 	}
 
@@ -410,7 +409,7 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-			
+
 		}
 		xhr.upload.onprogress = function(e){
 			self._process(e.loaded, true);
@@ -422,6 +421,7 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+
 			if(xhr.readyState == 4 && xhr.status == 200){  
 				self._process(file.size);  
 				file.response = JSON.parse(xhr.response);
@@ -432,7 +432,6 @@ var Uploader = function(options) {
 					self.setStatus(file, self.STATUS.failed);	
 				}
 				cb();
-				
 		    }
 		}
 		xhr.send(data);

@@ -86,6 +86,7 @@ module.exports = function(grunt) {
                 src: [ 'public/dest/**/*.css']
             },
             scripts: {
+
                 src: [ 'public/dest/**/*.js', 'public/dest/doc/*']
             },
         },
@@ -123,10 +124,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-stylus');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    // grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-jsdoc');
-
 
 
     //定义任务

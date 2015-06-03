@@ -1,3 +1,4 @@
+
 /**
 用于Javascript Date类型的扩展
 @author Elvis
@@ -13,11 +14,11 @@
 var ZDate = {};
 
 /**
-根据传入格式，格式化输出时间字符串
-@param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
-@returns {string} 格式化后的字符串
-**/
+* 根据传入格式，格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
 ZDate.format = function(date, format){
 	if(date.toString().indexOf('-') > 0){
         date = date.toString().replace(/-/g, '/');
@@ -62,11 +63,11 @@ ZDate.format = function(date, format){
 }
 
 /**
-比较时间大小，返回date1 - date2得到的timespane
-@param {date} date1 - 时间被减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@param {date}  date2 - 时间减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
-@returns {number} date1 - date2得到的timespane
-**/
+* 比较时间大小，返回date1 - date2得到的timespane
+* @param {date} date1 - 时间被减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {date}  date2 - 时间减数: 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @returns {number} date1 - date2得到的timespane
+*/
 ZDate.compare = function(date1, date2){
     if(typeof date1 == "string"){
         date1 = date1.replace(/-/g, '/');

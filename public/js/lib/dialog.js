@@ -1,3 +1,4 @@
+
 /**
 以遮盖形式弹出错误提示，对话框等
 @author Elvis
@@ -15,7 +16,7 @@
 var Dialog = {};
 
 /**
-移除所有由oc.dialog生成的对话框
+* 移除所有由oc.dialog生成的对话框
 */
 Dialog.removeMadal = function(){
     this.removeAllTips();
@@ -23,17 +24,17 @@ Dialog.removeMadal = function(){
 },
 
 /**
-移除所有由dialog.open以外的对话框
+* 移除所有由dialog.open以外的对话框
 */
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
 },
 
 /**
-展示一个过了指定时间即消失的提示信息，一般内容简短
-@param {string} msg - 需要弹出的信息
-@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
-@param {function} callback - 时间到了之后回调的方法
+* 展示一个过了指定时间即消失的提示信息，一般内容简短
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.tips = function(msg, time, cb){
     if(time === undefined){
@@ -54,10 +55,10 @@ Dialog.tips = function(msg, time, cb){
 }
 
 /**
-展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
-@param {string} msg - 需要弹出的信息
-@param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
-@param {function} callback - 时间到了之后回调的方法
+* 展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.loading = function(msg){
     this.removeMadal();
@@ -69,6 +70,13 @@ Dialog.loading = function(msg){
     return loading;
 }
 
+/**
+* 类似window.confirm，确认对话框
+* @param {string} msg - 需要弹出的信息
+* @param {function} cbOK - 用户点击了确认后的回调
+* @param {function} cbNO - 用户点击取消后的回调
+* @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
+*/
 Dialog.confirm = function(msg, cbOK, cbNO, required){
     var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
     confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
@@ -101,6 +109,12 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
     return confirm;
 }
 
+/**
+* 打开一个相对比较复杂的弹出框，需要手动关闭
+* @param {string} title - 弹出标题
+* @param {string} content - 弹出部分的内容，一般为html
+* @param {function} cb - 弹出框完全展现之后的回调接口
+*/
 Dialog.open = function(title, content, cb){
     this.removeMadal();
     if(!content){
@@ -143,6 +157,9 @@ Dialog.open = function(title, content, cb){
     })
 }
 
+/**
+* 关闭由oc.dialog.open打开的所有对话框
+*/
 Dialog.close = function(){
     var cover = $(".zDialogCover");
     if(!cover.length){

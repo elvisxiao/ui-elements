@@ -10,6 +10,7 @@ router.post('/', function(req, res) {
 	}
 
 	try{
+<<<<<<< HEAD
 		var repoName = '';
 		if(req.body.repository && req.body.repository.name){
 			repoName = req.body.repository.name
@@ -19,6 +20,11 @@ router.post('/', function(req, res) {
 			repoName = JSON.parse(req.body.payload).repository.name;
 		}
 		
+=======
+		console.log(req.body);
+		
+		var repoName = JSON.parse(req.body.payload).repository.name;
+>>>>>>> 657d80d2381803d58d44bed1b8c551f184963bf2
 		console.log('repo name:' + repoName);
 		var exec = require('child_process').exec;
 		var cmdStr = 'cd ~/bitbucket/' + pathMap[repoName] + ' && git pull';
