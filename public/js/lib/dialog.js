@@ -131,7 +131,7 @@ Dialog.open = function(title, content, cb){
 
     var width = dialog.outerWidth();
     var height = dialog.outerHeight();
-    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%'});
+    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%', 'width': width});
     
     var bodyHeight = $(document).outerHeight();
 
@@ -150,8 +150,11 @@ Dialog.open = function(title, content, cb){
     }
 
     if(height > 500){
-        dialog.css({'position': 'absolute'});
+        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + document.body.scrollLeft});
         top = $(document).scrollTop() + 50 + 'px';
+        $(document).scroll(function(){
+            dialog.css('margin-left', -width / 2 + document.body.scrollLeft);
+        })
     }
     dialog.animate({
         top: top,
