@@ -4,7 +4,7 @@
 	
 	oc.ui = require('./ui');
 	oc.dialog = require('./dialog');
-	oc.localSorage = require('./localStorage');
+	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
 	oc.TreeSelect = require('./treeSelect');
