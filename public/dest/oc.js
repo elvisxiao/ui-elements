@@ -1546,7 +1546,7 @@ LocalStorage.set = function(key, value){
 	}
 
 	var strVal = JSON.stringify(value);
-	this.storage.key = strVal;
+	this.storage[key] = strVal;
 }
 
 /**
