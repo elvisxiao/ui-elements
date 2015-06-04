@@ -164,19 +164,34 @@ Dialog.open = function(title, content, cb){
 /**
 * 关闭由oc.dialog.open打开的所有对话框
 */
-Dialog.close = function(){
-    var cover = $(".zDialogCover");
-    if(!cover.length){
-        return;
+Dialog.close = function(ele){
+    var doClose = function(cover){
+        if(!cover.length){
+            return;
+        }
+
+        var dialog = cover.find('.zDialog');
+        dialog.animate({
+            top: 0,
+            opacity: 0
+        }, 500, function(){
+            cover.remove();
+        })
     }
 
-    var dialog = cover.find('.zDialog');
-    dialog.animate({
-        top: 0,
-        opacity: 0
-    }, 500, function(){
-        cover.remove();
-    })
+    if(ele){
+        ele = $(ele);
+        if(ele.hasClass('zDialogCover')){
+            doClose(ele);
+        }
+        else{
+            doClose(ele.parents('.zDialogCover'));
+        }
+
+        return;
+    }
+    
+    doClose($(".zDialogCover"));
 }
 
 module.exports = Dialog;

@@ -50,7 +50,7 @@ var ImageCrop = function(options){
 		}
 	}
 
-	var self = this;
+    var self = this;
 
     /** @method _render 初始化界面
     *@memberof ImageCrop 
@@ -477,7 +477,8 @@ var ImageCrop = function(options){
         self.resetCover();
     }
 
+
     self.render();
 }
 
-window.module && window.module.exports && (module.exports = ImageCrop);
+module.exports = ImageCrop;

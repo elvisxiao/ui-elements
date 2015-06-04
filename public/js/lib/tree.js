@@ -129,7 +129,7 @@ var Tree = function(options){
 			var one = dataList[i];
 			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
 			if(one.description){
-				li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
+				li.addClass('zTreeItemDes').find('>p').attr('title', one.description).append('<span class="spanDesc"> - ' + one.description + '</span>');
 			}
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
@@ -215,9 +215,9 @@ var Tree = function(options){
 					return;
 				}
 				li.parents('.zTreeItem').addClass('hasMore');
-				li.data(model).find('>p').html(model.name).removeClass('zTreeEdit');
+				li.data(model).find('>p').html(model.name).removeClass('zTreeEdit zTreeAdd');
 				if(model.description){
-					li.addClass('zTreeItemDes').find('p').attr('title', model.description);
+					li.addClass('zTreeItemDes').find('>p').attr('title', model.description).append('<span class="spanDesc"> - ' + model.description + '</span>');
 				}
 			}
 			model.id? self.updateNode(model, clearEditStatus) : self.addNode(model, clearEditStatus)

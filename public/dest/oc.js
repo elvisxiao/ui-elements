@@ -633,19 +633,34 @@ Dialog.open = function(title, content, cb){
 /**
 * 关闭由oc.dialog.open打开的所有对话框
 */
-Dialog.close = function(){
-    var cover = $(".zDialogCover");
-    if(!cover.length){
-        return;
+Dialog.close = function(ele){
+    var doClose = function(cover){
+        if(!cover.length){
+            return;
+        }
+
+        var dialog = cover.find('.zDialog');
+        dialog.animate({
+            top: 0,
+            opacity: 0
+        }, 500, function(){
+            cover.remove();
+        })
     }
 
-    var dialog = cover.find('.zDialog');
-    dialog.animate({
-        top: 0,
-        opacity: 0
-    }, 500, function(){
-        cover.remove();
-    })
+    if(ele){
+        ele = $(ele);
+        if(ele.hasClass('zDialogCover')){
+            doClose(ele);
+        }
+        else{
+            doClose(ele.parents('.zDialogCover'));
+        }
+
+        return;
+    }
+    
+    doClose($(".zDialogCover"));
 }
 
 module.exports = Dialog;
@@ -1018,7 +1033,7 @@ var ImageCrop = function(options){
 		}
 	}
 
-	var self = this;
+    var self = this;
 
     /** @method _render 初始化界面
     *@memberof ImageCrop 
@@ -1445,10 +1460,11 @@ var ImageCrop = function(options){
         self.resetCover();
     }
 
+
     self.render();
 }
 
-window.module && window.module.exports && (module.exports = ImageCrop);
+module.exports = ImageCrop;
 },{}],7:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
@@ -1794,7 +1810,7 @@ var Tree = function(options){
 			var one = dataList[i];
 			var li = $('<li class="zTreeItem" draggable="true"><p>' + one.name + '</p></li>');
 			if(one.description){
-				li.addClass('zTreeItemDes').find('>p').attr('title', one.description);
+				li.addClass('zTreeItemDes').find('>p').attr('title', one.description).append('<span class="spanDesc"> - ' + one.description + '</span>');
 			}
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
@@ -1880,9 +1896,9 @@ var Tree = function(options){
 					return;
 				}
 				li.parents('.zTreeItem').addClass('hasMore');
-				li.data(model).find('>p').html(model.name).removeClass('zTreeEdit');
+				li.data(model).find('>p').html(model.name).removeClass('zTreeEdit zTreeAdd');
 				if(model.description){
-					li.addClass('zTreeItemDes').find('p').attr('title', model.description);
+					li.addClass('zTreeItemDes').find('>p').attr('title', model.description).append('<span class="spanDesc"> - ' + model.description + '</span>');
 				}
 			}
 			model.id? self.updateNode(model, clearEditStatus) : self.addNode(model, clearEditStatus)
