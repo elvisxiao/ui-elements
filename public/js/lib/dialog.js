@@ -144,7 +144,7 @@ Dialog.open = function(title, content, cb){
         })
     })
 
-    var top = '20%';
+    var top = '15%';
     if(height > bodyHeight){
         top = '5%';
     }
