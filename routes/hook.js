@@ -6,7 +6,8 @@ router.post('/', function(req, res) {
 	var pathMap = {
 		OCUI: 'ocui',
 		tinyp2p: 'tinyp2p',
-		DaoYang: 'daoyang'
+		DaoYang: 'daoyang',
+		// jijin:   'jijin'
 	}
 
 	try{
