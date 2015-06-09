@@ -539,20 +539,20 @@ ZDate.weekPicker = function(ipt){
         var weekCount = ZDate.getWeeksByYear(year);
 
         var tr = $('<tr></tr>').appendTo(tbody);
-        for(var i = 1; i <= weekCount; i++){
+        for(var i = 0; i < weekCount; i++){
             if(i % 7 === 0){
                 tr = $('<tr></tr>').appendTo(tbody);
             }
-            var str = i.toString();
-            if(i < 10){
-                str = '0' + i;
+            var str = (i + 1).toString();
+            if(i < 9){
+                str = '0' + str;
             }
             tr.append('<td>' + str + '</td>')
         }
 
         tbody.find('td:contains(' + week + ')').addClass('active');
 
-        table.on('click', 'thead i', function(){
+        table.on('click', 'thead i', function(e){
             var i = $(this);
             var eleYear = i.parent().find('.spanYear');
             var year = parseInt(eleYear.text());
@@ -563,7 +563,6 @@ ZDate.weekPicker = function(ipt){
                 year ++;
             }
             weekCount = ZDate.getWeeksByYear(year);
-            console.log(weekCount);
             if(weekCount == 52){
                 table.find('td:contains(53)').remove();
             }
@@ -579,12 +578,20 @@ ZDate.weekPicker = function(ipt){
             var text = year + week
             ipt.val(text);
         })
+        .on('click', function(e){
+            e.stopPropagation();
+        })
+
+        $(document).on('click', function(){
+            table.hide();
+        })
 
         return table;
     }
 
     ipt = $(ipt);
-    ipt.on('click', function(){
+    ipt.on('click', function(e){
+        e.stopPropagation();
         var ele = $('.zWeekPicker');
         if(ele.length === 0){
             ele = getEle();
