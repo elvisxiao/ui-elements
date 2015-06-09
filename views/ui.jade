@@ -39,6 +39,8 @@ block content
         div.mt50.pb20.pr(style="border-bottom:1px solid #ddd")
             button#btnPopOver.btn.btn-default.w100.mr50(type="button") PopOver
 
+        p.mt20 周选择器：
+            input#iptWeek.ipt(type="text")
             
 
     script.
@@ -48,3 +50,5 @@ block content
         $('#btnPopOver').click(function(){
             oc.ui.popOver(this, 'Test', 'Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.', 'bottom');
         })
+        
+        oc.date.weekPicker('#iptWeek');

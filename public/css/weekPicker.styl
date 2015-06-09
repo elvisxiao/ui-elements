@@ -1,0 +1,36 @@
+.zWeekPicker
+    position absolute
+    display none
+    background #fff 
+    border 1px solid #ddd 
+    box-shadow 0 0 3px rgba(0, 0, 0, .1)
+    thead 
+        th
+            text-align center
+            height 36px
+            line-height 36px
+            border-bottom 2px solid #ededed
+        .icon-arrow-left, .icon-arrow-right
+            color #666
+            vertical-align middle
+            display inline-block
+            width 36px
+            line-height 36px
+            font-size 18px
+            cursor pointer
+            &:hover
+                color #428bca
+        .icon-arrow-left
+            float left
+        .icon-arrow-right
+            float right 
+    td 
+        border-right 1px solid #eee 
+        border-bottom 1px solid #eee
+        padding 4px 16px
+        cursor pointer
+        &:hover
+            background rgba(66, 139, 202, .3)
+    td.active
+        background rgba(66, 139, 202, 1)
+        color #fff
