@@ -114,6 +114,12 @@ var ImageCrop = function(options){
         })
     }
 
+    /** 
+    * 图片加载完成后显示该图片
+    * @method imgLoaded 
+    * @memberof ImageCrop 
+    * @instance
+    */
     self.imgLoaded = function(){
         self.ele.find('.zImageCropDropInfo').hide();
         self.ele.find('.zImageCropFilter').css('display', 'block');
