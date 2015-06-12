@@ -672,10 +672,19 @@ Dialog.tips = function(msg, time, cb){
     tips.appendTo('body');
     var width = tips.width();
     tips.css('margin-left', -width / 2 + 'px');
-    setTimeout(function(){
-        tips.remove();
-        cb && cb();
-    }, time);
+
+    if(time > 0){
+        setTimeout(function(){
+            tips.remove();
+            cb && cb();
+        }, time);
+    }
+    else{
+        tips.append('<i class="icon-close"></i>');
+        tips.on('click', 'i.icon-close', function(){
+            tips.remove();
+        })
+    }
 }
 
 /**
@@ -770,10 +779,10 @@ Dialog.open = function(title, content, cb){
     }
 
     if(height > 500){
-        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + document.body.scrollLeft});
+        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
         top = $(document).scrollTop() + 50 + 'px';
         $(document).scroll(function(){
-            dialog.css('margin-left', -width / 2 + document.body.scrollLeft);
+            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
         })
     }
     dialog.animate({
@@ -1155,9 +1164,10 @@ module.exports = FileView;
 var ImageCrop = function(options){
 	/** @memberof ImageCrop */
 
-    /** @property {object} options 配置变量对象：<br /> container为容器对象 */
+    /** @property {object} options 配置变量对象：<br /> container为容器对象, remoteImg: 初始化时，加载远程图片 */
     this.config = {
-		container: 'body'
+		container: 'body',
+        remoteImg: 0
 	};
 
     /** @property {object} ele - 最外层Jquery对象 */
@@ -1180,6 +1190,7 @@ var ImageCrop = function(options){
 
     /** @property {number} scaleWidth - 未放大或者缩小的初始宽度 */
 	this.scaleWidth = 0; 
+
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -1210,6 +1221,10 @@ var ImageCrop = function(options){
 		self.filter = self.ele.find('.zImageCropFilter');
 
 		self.ele.appendTo(self.config.container);
+
+        if(self.config.remoteImg){
+            self.readFile(self.config.remoteImg);
+        }
 
 		self.bindEvents();
 	}
@@ -1245,6 +1260,17 @@ var ImageCrop = function(options){
         })
     }
 
+    self.imgLoaded = function(){
+        self.ele.find('.zImageCropDropInfo').hide();
+        self.ele.find('.zImageCropFilter').css('display', 'block');
+        self.drawImage();
+        self.scaleWidth = self.img.width;
+        self.scaleHeight = self.img.height;
+
+        self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
+        self.ele.find('.zCutRange input').val(100);
+        self.ele.find('.zRangePercent').html('100%');
+    }
     /** 
     * 通过FileReader读取文件内容
     * @method readFile 
@@ -1255,31 +1281,31 @@ var ImageCrop = function(options){
     self.readFile = function(file){
         var reader = new FileReader();
 
-        if(!/image\/.*/.test(file.type)){
-            if(window.oc){
-                oc.dialog.tips('Only image file is accept');
-            }
-            else{
-                alert('Only image file is accept');
-            }
-            return;
-        }
 
-        self.ele.find('.zImageCropDropInfo').hide();
-        self.ele.find('.zImageCropFilter').css('display', 'block');
-        
         reader.onload = function(e){
             self.img.src = this.result;
-            self.drawImage();
-            self.scaleWidth = self.img.width;
-            self.scaleHeight = self.img.height;
-
-            self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
-            self.ele.find('.zCutRange input').val(100);
-            self.ele.find('.zRangePercent').html('100%');
+            self.imgLoaded();
         }
 
-        reader.readAsDataURL(file);
+        if(typeof file === 'object'){
+            if(!/image\/.*/.test(file.type)){
+                if(window.oc){
+                    oc.dialog.tips('Only image file is accept');
+                }
+                else{
+                    alert('Only image file is accept');
+                }
+                return;
+            }
+
+            reader.readAsDataURL(file);
+        }
+        else{  //远程图片
+            // self.img = new Image();
+            self.img.src = file;
+            self.img.onload = self.imgLoaded;
+        }
+        
     }
 
     /**

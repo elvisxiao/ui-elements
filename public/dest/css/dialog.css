@@ -36,7 +36,25 @@
   left: 50%;
 }
 
-/* line 30 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 29 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+.tips .icon-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  font-size: 10px;
+  color: #999;
+  padding: 7px;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+.tips .icon-close:hover {
+  color: #444;
+}
+
+/* line 42 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips:after,
 .zDialog .zDialogTitle {
   box-sizing: border-box;
@@ -55,7 +73,7 @@
   font-size: 16px;
 }
 
-/* line 45 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 57 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips:before {
   content: "!";
   font-size: 24px;
@@ -72,13 +90,13 @@
   margin-right: 15px;
 }
 
-/* line 59 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 71 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog:before,
 .zDialog:after {
   display: none;
 }
 
-/* line 61 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 73 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog .zDialogTitle>.close {
   position: absolute;
   display: block;
@@ -90,7 +108,7 @@
   top: 0;
 }
 
-/* line 70 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 82 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialogCover:after {
   content: "";
   position: fixed;
@@ -104,18 +122,18 @@
   z-index: 999;
 }
 
-/* line 81 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 93 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .zDialog {
   top: 0;
   opacity: 0;
 }
 
-/* line 84 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 96 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:before {
   display: none;
 }
 
-/* line 86 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 98 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
 .tips.confirm:after {
   content: "Message";
 }

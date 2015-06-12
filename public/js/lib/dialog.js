@@ -52,10 +52,19 @@ Dialog.tips = function(msg, time, cb){
     tips.appendTo('body');
     var width = tips.width();
     tips.css('margin-left', -width / 2 + 'px');
-    setTimeout(function(){
-        tips.remove();
-        cb && cb();
-    }, time);
+
+    if(time > 0){
+        setTimeout(function(){
+            tips.remove();
+            cb && cb();
+        }, time);
+    }
+    else{
+        tips.append('<i class="icon-close"></i>');
+        tips.on('click', 'i.icon-close', function(){
+            tips.remove();
+        })
+    }
 }
 
 /**
@@ -150,10 +159,10 @@ Dialog.open = function(title, content, cb){
     }
 
     if(height > 500){
-        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + document.body.scrollLeft});
+        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
         top = $(document).scrollTop() + 50 + 'px';
         $(document).scroll(function(){
-            dialog.css('margin-left', -width / 2 + document.body.scrollLeft);
+            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
         })
     }
     dialog.animate({
