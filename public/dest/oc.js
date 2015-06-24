@@ -465,9 +465,9 @@ ZDate.compare = function(date1, date2){
 }   
 
 /**
-* 根据传入的年，获取改年一共有多少周
-* @param {nummber} year 四位的年（2015）
-* @returns {nummber} 这一年一共有多少周，（52/53）
+* 根据传入的年，获取该年一共有多少周
+* @param {number} year 四位的年（2015）
+* @returns {number} 这一年一共有多少周，（52/53）
 */
 ZDate.getWeeksByYear = function(year){
     var ret = 52;
