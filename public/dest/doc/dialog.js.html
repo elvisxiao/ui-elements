@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dialog.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dialog.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* @file 以遮盖形式弹出错误提示，对话框等
+* @author Elvis Xiao
+* @version 0.1 
+*/
+
+/**
+* 以遮盖形式弹出错误提示，对话框等
+* @exports oc.dialog
+
+* @example
+* oc.dialog.tips('服务器端报错了', 2000)
+* @example
+* oc.dialog.confirm('确定要删除？', function(){
+    console.log('well，真的删掉了');
+}, function(){
+    console.log('原来你只是逗我玩的');
+})
+*/
+var Dialog = {};
+
+/**
+* 移除所有由oc.dialog生成的对话框
+*/
+Dialog.removeMadal = function(){
+    this.removeAllTips();
+    this.close();
+},
+
+/**
+* 移除所有由dialog.open以外的对话框
+*/
+Dialog.removeAllTips = function(){
+    $(".zLoading, .tips").remove();
+},
+
+/**
+* 展示一个过了指定时间即消失的提示信息，一般内容简短
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
+*/
+Dialog.tips = function(msg, time, cb){
+    if(time === undefined){
+        time = 1500;
+    }
+    if(typeof time === 'function'){
+        cb = time;
+        time = 1000;
+    }
+    var tips = $('&lt;div class="tips">' + msg + '&lt;/div>');
+    tips.appendTo('body');
+    var width = tips.width();
+    tips.css('margin-left', -width / 2 + 'px');
+
+    if(time > 0){
+        setTimeout(function(){
+            tips.remove();
+            cb &amp;&amp; cb();
+        }, time);
+    }
+    else{
+        tips.append('&lt;i class="icon-close">&lt;/i>');
+        tips.on('click', 'i.icon-close', function(){
+            tips.remove();
+        })
+    }
+}
+
+/**
+* 展示一个Loading信息，一般用于Ajax时的等待过程，使用较少
+* @param {string} msg - 需要弹出的信息
+* @param {number} time - 信息显示时长，单位为毫秒，可省略，默认为1500
+* @param {function} callback - 时间到了之后回调的方法
+*/
+Dialog.loading = function(msg){
+    this.removeMadal();
+    var loading = $('&lt;div class="zLoading">&lt;/div>&lt;div class="tips">' + msg + '&lt;/div>');
+    loading.appendTo('body');
+    var width = $(".tips").width();
+    loading.css('margin-left', -width / 2 + 'px');
+
+    return loading;
+}
+
+/**
+* 类似window.confirm，确认对话框
+* @param {string} msg - 需要弹出的信息
+* @param {function} cbOK - 用户点击了确认后的回调
+* @param {function} cbNO - 用户点击取消后的回调
+* @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
+*/
+Dialog.confirm = function(msg, cbOK, cbNO, required){
+    var confirm = $('&lt;div class="zLoading">&lt;/div>&lt;div class="tips confirm" style="min-width: 500px;">' + msg + '&lt;div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10">&lt;button class="btn btn-info btn-sm btnOK mr20 w80">OK&lt;/button>&lt;button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel&lt;/button>&lt;/div>&lt;/div>');
+    confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
+        var ipt = confirm.find('input, textarea');
+        var val = '';
+        if(ipt.length > 0){
+            val = ipt.val();
+        }
+        
+        if($(this).hasClass('btnOK')){
+            if(required === true &amp;&amp; ipt.length > 0 &amp;&amp; (!val) ){
+                Dialog.tips('message is required.');
+                ipt.focus();
+                return;
+            }
+            cbOK &amp;&amp; cbOK(val);
+        }
+        else{
+            cbNO &amp;&amp; cbNO(val);
+        }
+
+        confirm.remove();
+    }).on('click', 'input, textarea', function(){
+        confirm.removeClass('has-error');
+    });
+
+    var width = $(".tips").width();
+    confirm.css('margin-left', -width / 2 + 'px');
+
+    return confirm;
+}
+
+/**
+* 打开一个相对比较复杂的弹出框，需要手动关闭
+* @param {string} title - 弹出标题
+* @param {string} content - 弹出部分的内容，一般为html
+* @param {function} cb - 弹出框完全展现之后的回调接口
+*/
+Dialog.open = function(title, content, cb){
+    this.removeMadal();
+    if(!content){
+        content = title;
+        title = '';
+    }
+    var dialogCover = $('&lt;div class="zDialogCover">&lt;div class="zDialog">&lt;p class="zDialogTitle">&lt;span class="close">×&lt;/span>' + title + '&lt;/p>&lt;/div>&lt;/div>').appendTo(document.body);
+    var dialog = dialogCover.find('.zDialog');
+    dialog.append(content);
+
+    var width = dialog.outerWidth();
+    var height = dialog.outerHeight();
+    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%', 'width': width});
+    
+    var bodyHeight = $(document).outerHeight();
+
+    dialog.on('click', '.close', function(){
+        dialog.animate({
+            top: 0,
+            opacity: 0
+        }, 500, function(){
+            dialogCover.remove();
+        })
+    })
+
+    var top = '15%';
+    if(height > bodyHeight){
+        top = '5%';
+    }
+
+    if(height > 500){
+        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
+        top = $(document).scrollTop() + 50 + 'px';
+        $(document).scroll(function(){
+            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
+        })
+    }
+    dialog.animate({
+        top: top,
+        opacity: 1
+    }, 500, function(){
+        cb &amp;&amp; cb();
+    })
+}
+
+/**
+* 关闭由oc.dialog.open打开的所有对话框
+*/
+Dialog.close = function(ele){
+    var doClose = function(cover){
+        if(!cover.length){
+            return;
+        }
+
+        var dialog = cover.find('.zDialog');
+        dialog.animate({
+            top: 0,
+            opacity: 0
+        }, 500, function(){
+            cover.remove();
+        })
+    }
+
+    if(ele){
+        ele = $(ele);
+        if(ele.hasClass('zDialogCover')){
+            doClose(ele);
+        }
+        else{
+            doClose(ele.parents('.zDialogCover'));
+        }
+
+        return;
+    }
+    
+    doClose($(".zDialogCover"));
+}
+
+module.exports = Dialog;
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="oc.module_ajax.html">ajax</a></li><li><a href="oc.module_date.html">date</a></li><li><a href="oc.module_dialog.html">dialog</a></li><li><a href="oc.module_localStorage.html">localStorage</a></li><li><a href="oc.module_ui.html">ui</a></li></ul><h3>Classes</h3><ul><li><a href="FileView.html">FileView</a></li><li><a href="ImageCrop.html">ImageCrop</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="Tree.html">Tree</a></li><li><a href="Uploader.html">Uploader</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Wed Jun 24 2015 17:20:52 GMT+0800 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

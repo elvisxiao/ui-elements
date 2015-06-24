@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fileView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fileView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+* @file CSV文件预览与标记 
+* @author Elvis Xiao
+* @version 0.1 
+*/ 
+
+
+/**
+* CSV文件预览与标记
+* @class FileView
+* @constructor
+* @param {object} options 配置变量对象：&lt;br /> container为容器对象&lt;br />canEdit：csv是否允许编辑状态&lt;br />maxHeight：最大高度&lt;br />heads：指定头部列
+* @example
+* var fileView = new FileView({
+    container: '#container',
+    maxHeight: 400
+})
+*/
+var FileView = function(options){
+    /** @memberof FileView */
+
+    /**@property {function} csv 读取csv文件的第三方库文件*/
+    this.csv = require('./asset/csv');
+
+    /**@property {object} ele - 最外层Jquery对象*/
+    this.ele = null;
+
+    /**@property {object} _dataList - 根据CSV内容，格式化后的Model集合 */
+    this._dataList = [];
+
+    /**@property {boolean} canEdit - 生成后的表格是否允许编辑 */
+    this.canEdit = true;
+
+    /**@property {number} maxHeight - 容器最大高度，超过此高度后将出现滚动条 */
+    this.maxHeight = 800;
+
+    /**@property {object} config - 初始化配置文件&lt;br>
+    *container: 容器选择器&lt;br>
+    *canEdit: csv是否可编辑&lt;br>
+    *maxHeight: 最大允许的高度，超出后会出现滚动条&lt;br>
+    *heads：指定头部列名
+    */
+
+    this.config = {
+        container: 'body',
+        canEdit: true,
+        maxHeight: 800,
+        heads: []
+    };
+
+    for(var key in options){
+        if(this.config.hasOwnProperty(key)){
+            this.config[key] = options[key];
+        }
+    }
+
+    var self = this;
+
+    /** 
+    * @method _render 初始化界面
+    * @memberof FileView 
+    * @instance
+    */
+    self._render = function(){
+        self.ele = $('&lt;div class="zUploader">&lt;/div>');
+        var uploadList = $('&lt;div class="zUploaderList">&lt;/div>');
+        uploadList.append(self._renderNoFile());
+        self.ele.append(uploadList);
+        self.ele.appendTo(self.config.container);
+    }
+
+    /** 
+    * @method _renderNoFile 没有文件时，显示的界面
+    * @memberof FileView 
+    * @instance */
+    self._renderNoFile = function(){
+        var div = $('&lt;div class="zUploaderNoFile" style="padding:15px 0 0 0;">&lt;/div>');
+        div.append('&lt;span class="zUploaderFileBtn ">&lt;input type="file" accept=".csv" />&lt;span class="zUploaderBtnText">点击选择文件&lt;/span>&lt;/div>');
+        div.append('&lt;p>或将文件拖到这里, 暂仅支持CSV格式&lt;/p>');
+
+        return div;
+    }
+
+    /**
+    * 绑定容器中的相关事件
+    * @method _bindEvent
+    * @memberof FileView 
+    * @instance 
+    */
+    self._bindEvent = function(){
+        self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
+            self._readFilesToTable(this.files[0]);
+        });
+
+        self.ele.find('.zUploaderNoFile')[0].addEventListener("drop", function(e){
+            $(this).css('border', '3px dashed #e6e6e6');
+            e.preventDefault();
+            self._readFilesToTable(e.dataTransfer.files[0]);
+        })
+        self.ele.on('dragenter', '.zUploaderNoFile', function(e){
+            e.preventDefault();
+            $(this).css('border', '3px dashed #aaa');
+        }).on('dragleave', '.zUploaderNoFile', function(e){
+            e.preventDefault();
+            $(this).css('border', '3px dashed #e6e6e6');
+        });
+        $(document).on({
+            dragleave: function(e){e.preventDefault();},
+            drop: function(e){e.preventDefault();},
+            dragenter: function(e){e.preventDefault();},
+            dragover: function(e){e.preventDefault();},
+        })
+
+        self.ele.on('blur', '.zFileTable tbody td input', function(){
+            var val = this.value;
+            var ele = $(this);
+            var td = ele.parent();
+            var index = td.attr('data-index');
+
+            var indexArr = index.split(',');
+            var i = indexArr[0];
+            var j = indexArr[1];
+            self._dataList[i][j] = val;
+        })
+    }
+
+    /**
+    * 读取CSV文件内容
+    * @method readCsv
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView 
+    * @instance
+    */
+    self.readCsv = function(file, cb){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $('input[type="file"]').replaceWith($('&lt;input type="file" accept=".csv">'));
+            var content = reader.result;
+            self._formatFileContent(content);
+            cb();
+        }
+        
+        reader.readAsText(file);
+    }
+    
+    /**
+    * 将CSV文件内容写成格式化的Model对象数组，并存入_dataList变量中 
+    * @method _formatFileContent 
+    * @param {string} content - 需要读取的文件内容
+    * @memberof FileView
+    * @instance
+    */
+    self._formatFileContent = function(content){
+        var models = self.csv.parse(content);
+        var firstItem = models[0];
+        var keys = [];
+        for(var key in firstItem){
+            keys.push(key);
+        }
+        self._dataList = [];
+        self._dataList.push(keys);
+        for(var i = 0; i &lt; models.length; i++){
+            var item = models[i];
+            var datas = [];
+            for(var key in item){
+                datas.push(item[key]);
+            }
+            self._dataList.push(datas);
+        }
+    }
+
+    /**
+    * 根据文件内容生成用Table展示出来
+    * @method _readFilesToTable
+    * @param {object} file - 需要读取的文件对象
+    * @memberof FileView
+    * @instance
+    */
+    self._readFilesToTable = function(file){
+        self.readCsv(file, function(){
+            $('.zFileTableContainer').remove();
+            var tableContainer = $('&lt;div class="zFileTableContainer">&lt;table class="zFileTable">&lt;/table>&lt;/div>');
+            if(self.config.maxHeight){
+                tableContainer.css('max-height', self.config.maxHeight + 'px');
+            }
+            var ret = tableContainer.find('.zFileTable');
+            if(self._dataList &amp;&amp; self._dataList.length > 0){
+                var keys = self._dataList[0];
+                var keysLen = keys.length;
+                var thead = $('&lt;thead>&lt;/thead>');
+                var tbody = $('&lt;tbody>&lt;/tbody>');
+                var theadTr = $('&lt;tr>&lt;th>&lt;/th>&lt;/tr>').appendTo(thead);
+                for(var i = 0; i &lt; keysLen; i++){
+                    theadTr.append('&lt;th>' + keys[i] + '&lt;/th>');
+                }
+
+                for(var i = 1; i &lt; self._dataList.length; i++){
+                    var item = self._dataList[i];
+                    var tr = $('&lt;tr>&lt;td>' + i + '&lt;/td>&lt;/tr>');
+                    for(var j = 0; j &lt; keysLen; j++){
+                        tr.append('&lt;td data-val="true", data-index="' + i + ',' + j + '">' + $.trim(item[j]) + '&lt;/td>');
+                    }
+                    tbody.append(tr);
+                }
+                ret.append(thead);
+                ret.append(tbody);
+            }
+            var uploadList = self.ele.find('.zUploaderList');
+            uploadList.find('.zFileTable').remove();
+            tableContainer.appendTo(uploadList);
+
+            self.setEditTable(ret);
+        })
+    }
+    
+    /**
+    * 将Table设置为编辑状态
+    * @method setEditTable 
+    * @param {object} table - Jquery对象
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.config.canEdit = true;
+    * fileView.setEditTable(fileView.ele.find('table'))
+    */
+    self.setEditTable = function(table){
+        if(self.config.canEdit === true){
+            table.find('tbody td[data-val]').each(function(){
+                var td = $(this);
+                var text = td.html();
+                td.html('&lt;span class="tdSpan">' + text + '&lt;/span>&lt;input class="tdIpt" type="text" value="' + text + '" />');
+            });           
+        }
+    }
+
+    /**
+    * 获取格式化后的数据
+    * @method getDataList 
+    * @return {object} models - 对象数组
+    * @memberof FileView
+    * @instance
+    * @example
+    * var dataList = fileView.getDataList()
+    */
+    self.getDataList = function(){
+        var models = [];
+        if (!self._dataList || self._dataList.length === 0){
+            return null;
+        }
+
+        var keys = self._dataList[0];
+        if(self.config.heads &amp;&amp; self.config.heads.length > 0){
+            if(self.config.heads.length > keys.length){
+                self.config.heads = self.config.heads.slice(0, keys.length);
+            }
+            keys = keys.slice(self.config.heads.length);
+            keys = self.config.heads.concat(keys);
+        }
+        var keyLength = keys.length;
+        for (var i = 1; i &lt; self._dataList.length; i++){
+            var line = self._dataList[i];
+            var one = {};
+            for (var j = 0; j &lt; keyLength; j++){
+                one[keys[j]] = $.trim(line[j]);
+            }
+            models.push(one);
+        }
+
+        return models;
+    }
+
+    /**
+    * 标记表格中某些格
+    * @method mark 
+    * @param {object} msgList - 对象数组：{row: 1, col: 1} 
+    * @memberof FileView
+    * @instance
+    * @example
+    //标记坐标为（0，0），（3，2）的格子
+    *fileView.mark([{row:0, col:0}, {row:3, col:2}]);
+    */
+    self.mark = function(msgList){
+        var length = msgList.length;
+        for(var i = 0; i &lt; length; i++){
+            var msgItem = msgList[i];
+            var dataIndex = msgItem.row + ',' + msgItem.col;
+            var td = self.ele.find('tbody td[data-index="' + dataIndex + '"]');
+            td.addClass('zFileTableMark').attr('title', msgItem.msg);
+        }
+    }
+
+    /**
+    * 清除表格中某些格
+    * @method clearMark 
+    * @memberof FileView
+    * @instance
+    * @example
+    * fileView.clearMark();
+    */
+    self.clearMark = function(){
+        self.ele.find('tbody .zFileTableMark').removeAttr('title').removeClass('zFileTableMark');
+    }
+
+    self._render();
+    self._bindEvent();
+}
+
+
+module.exports = FileView;
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="oc.module_ajax.html">ajax</a></li><li><a href="oc.module_date.html">date</a></li><li><a href="oc.module_dialog.html">dialog</a></li><li><a href="oc.module_localStorage.html">localStorage</a></li><li><a href="oc.module_ui.html">ui</a></li></ul><h3>Classes</h3><ul><li><a href="FileView.html">FileView</a></li><li><a href="ImageCrop.html">ImageCrop</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="Tree.html">Tree</a></li><li><a href="Uploader.html">Uploader</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Wed Jun 24 2015 17:20:52 GMT+0800 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
