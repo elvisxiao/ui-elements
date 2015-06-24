@@ -49,7 +49,7 @@
 }
 
 /* line 27 : /Users/elvis/bitbucket/ocui/public/css/weekPicker.styl */
-.zWeekPicker td {
+.zWeekPicker td:not(.zWeekPickerTag) {
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding: 4px 16px;
@@ -57,7 +57,7 @@
 }
 
 /* line 32 : /Users/elvis/bitbucket/ocui/public/css/weekPicker.styl */
-.zWeekPicker td:hover {
+.zWeekPicker td:not(.zWeekPickerTag):hover {
   background: rgba(66,139,202,0.3);
 }
 
@@ -65,4 +65,24 @@
 .zWeekPicker td.active {
   background: #428bca;
   color: #fff;
+}
+
+/* line 37 : /Users/elvis/bitbucket/ocui/public/css/weekPicker.styl */
+.zWeekPicker td.active:hover {
+  background: #428bca;
+}
+
+/* line 39 : /Users/elvis/bitbucket/ocui/public/css/weekPicker.styl */
+.zWeekPicker td.zWeekPickerTag {
+  padding-right: 10px;
+  text-align: right;
+  color: #428bca;
+  text-align: right;
+}
+
+/* line 44 : /Users/elvis/bitbucket/ocui/public/css/weekPicker.styl */
+.zWeekPicker td.zWeekPickerTag .icon-clock2 {
+  margin-right: 5px;
+  position: relative;
+  top: 1px;
 }

@@ -375,7 +375,7 @@ module.exports = Ajax;
     }
 }(typeof window !== 'undefined' ? window : {}));
 },{}],3:[function(require,module,exports){
-
+ 
 /**
 * @file 用于Javascript Date类型的扩展
 * @author Elvis
@@ -493,7 +493,15 @@ ZDate.getWeekString = function(date) {
         date = new Date();
     }
     if (typeof date === 'string') {
-        date = date.replace(/-/g, '/');
+        if(date.indexOf('-') > -1){
+            date = date.replace(/-/g, '/');
+        }
+        else{
+            var year = date.slice(0, 4);
+            var month = date.slice(4, 6);
+            var day = date.slice(6);
+            date = year + '/' + month + '/' + day;
+        }
     }
     date = new Date(date);
 
@@ -517,6 +525,33 @@ ZDate.getWeekString = function(date) {
     return date.getFullYear() * 100 + week + 2;
 }
 
+/**
+* 根据传入的date字符串或者timespan，返回该天在这一年中的第几周中：201406 - 2015年06周
+* @param {string} week 传入的周字符串，格式为:201510，代表2015年的第十周
+* @returns {object} 该周的起始时间值
+*/
+ZDate.getStartDateByWeek = function(week) {
+    if (!week) {
+        return '';
+    }
+
+    if (typeof week === 'string') {
+        week = parseInt(week);
+    }
+
+    var year = Math.floor(week / 100);
+    var w = week % 100;
+    var weekDate = new Date(year, 0, 1);
+
+    weekDate.setDate((w - 1) * 7 + 1 - weekDate.getDay());
+
+    return weekDate;
+}
+
+/**
+* 周选择器，类似与日期选择控件一样，用来选择周，如201523代表2015年第23周
+* @param {object} ipt 输入周的输入框对象或者jquery选择器
+*/
 ZDate.weekPicker = function(ipt){
     var ipt = $(ipt);
     var initVal = $.trim(ipt.val());
@@ -528,13 +563,12 @@ ZDate.weekPicker = function(ipt){
         if(!initVal){
             initVal = ZDate.getWeekString(curr).toString();
         }
-        year = initVal.slice(0, 4);
-        week = initVal.slice(4);
+        var year = initVal.slice(0, 4);
+        var week = initVal.slice(4);
         
         thead.append('<tr><th colspan="100"><i class="icon-arrow-left"></i><span class="spanYear">' + year + '</span><i class="icon-arrow-right"></i></th></tr>');
 
         var tbody = $('<tbody></tbody>').appendTo(table);
-        var year = thead.find('.spanYear').text();
 
         var weekCount = ZDate.getWeeksByYear(year);
 
@@ -549,8 +583,15 @@ ZDate.weekPicker = function(ipt){
             }
             tr.append('<td>' + str + '</td>')
         }
-
+       
         tbody.find('td:contains(' + week + ')').addClass('active');
+
+        var weekStart = ZDate.getStartDateByWeek(year + week);
+
+        var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
+        weekEnd = ZDate.format(weekEnd, 'mmdd');
+        weekStart = ZDate.format(weekStart, 'mmdd');
+        tbody.find('tr:last-child').append('<td colspan="10" class="zWeekPickerTag"><i class="icon-clock2"></i><span>' + weekStart + ' - ' + weekEnd + '</span></td>');
 
         table.on('click', 'thead i', function(e){
             var i = $(this);
@@ -567,16 +608,33 @@ ZDate.weekPicker = function(ipt){
                 table.find('td:contains(53)').remove();
             }
             else if(table.find('td:contains(53)').length === 0){
-                table.find('tbody tr:last-child').append('<td>53</td>');
+                // table.find('tbody tr:last-child').append('<td>53</td>');
+                $('<td>53</td>').insertBefore(table.find('td.zWeekPickerTag'));
             }
             eleYear.html(year);
         })
-        .on('click', 'tbody td', function(){
+        .on('click', 'tbody td:not(.zWeekPickerTag)', function(){
             table.hide();
             var year = table.find('.spanYear').text();
             var week = $(this).html();
             var text = year + week
             ipt.val(text);
+        })
+        .on('mouseenter', 'tbody td:not(.zWeekPickerTag)', function(){
+            var thisWeek = this.innerHTML;
+            var weekStart = ZDate.getStartDateByWeek(year + thisWeek);
+            var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
+            weekEnd = ZDate.format(weekEnd, 'mmdd');
+            weekStart = ZDate.format(weekStart, 'mmdd');
+            tbody.find('td.zWeekPickerTag span').html(weekStart + ' - ' + weekEnd);
+        })
+        .on('mouseleave', 'tbody', function(){
+            var weekStart = ZDate.getStartDateByWeek(year + week);
+            var weekEnd = new Date(weekStart).getTime() + 6 * 24 * 60 * 60000;
+            weekEnd = ZDate.format(weekEnd, 'mmdd');
+            weekStart = ZDate.format(weekStart, 'mmdd');
+            
+            tbody.find('td.zWeekPickerTag span').html(weekStart + ' - ' + weekEnd);
         })
         .on('click', function(e){
             e.stopPropagation();
@@ -3670,7 +3728,8 @@ var TreeSelect = function(options){
 		iptClass: '',
 		width: 'auto',
 		height: 'auto',
-		showAll: false
+		showAll: false,
+		forbidPNode: false //禁止选中非末级几点
 	};
 
 	this.selectedItem = null;
@@ -3778,7 +3837,12 @@ var TreeSelect = function(options){
 		.on('click', 'p', function(e){
 			e.stopPropagation();
 			var p = $(this);
-			self._selectedP(p);
+			if(self.config.forbidPNode && p.parent().find('ul>li').length > 0){
+				return;
+			}
+			else{
+				self._selectedP(p);
+			}
 		})
 		.on('input', 'input', function(e){
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');

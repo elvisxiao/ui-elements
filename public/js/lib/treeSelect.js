@@ -5,7 +5,8 @@ var TreeSelect = function(options){
 		iptClass: '',
 		width: 'auto',
 		height: 'auto',
-		showAll: false
+		showAll: false,
+		forbidPNode: false //禁止选中非末级几点
 	};
 
 	this.selectedItem = null;
@@ -113,7 +114,12 @@ var TreeSelect = function(options){
 		.on('click', 'p', function(e){
 			e.stopPropagation();
 			var p = $(this);
-			self._selectedP(p);
+			if(self.config.forbidPNode && p.parent().find('ul>li').length > 0){
+				return;
+			}
+			else{
+				self._selectedP(p);
+			}
 		})
 		.on('input', 'input', function(e){
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');

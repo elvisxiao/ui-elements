@@ -24,7 +24,7 @@
             float left
         .icon-arrow-right
             float right 
-    td 
+    td:not(.zWeekPickerTag)
         border-right 1px solid #eee 
         border-bottom 1px solid #eee
         padding 4px 16px
@@ -34,3 +34,14 @@
     td.active
         background rgba(66, 139, 202, 1)
         color #fff
+        &:hover
+            background rgba(66, 139, 202, 1)
+    td.zWeekPickerTag
+        padding-right 10px
+        text-align right
+        color #428bca
+        text-align right
+        .icon-clock2
+            margin-right 5px
+            position relative
+            top 1px
