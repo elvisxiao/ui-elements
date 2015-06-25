@@ -292,9 +292,10 @@ ZDate.weekPicker = function(ipt){
             var text = year + week
             ipt.val(text);
             
-            ev = document.createEvent("HTMLEvents");  
-            ev.initEvent("change", false, true);  
-            ipt[0].dispatchEvent(ev);  
+            ipt.change();
+            // ev = document.createEvent("HTMLEvents");  
+            // ev.initEvent("change", false, true);  
+            // ipt[0].dispatchEvent(ev);  
         })
     }
 
