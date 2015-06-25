@@ -172,6 +172,33 @@ ZDate.getStartDateByWeek = function(week) {
 }
 
 /**
+* 根据传入的date字符串或者timespan，返回该天在这一年中的第几周中：201406 - 2015年06周
+* @param {string} week 传入的周字符串，格式为:201510，代表2015年的第十周
+* @returns {string} 该周的下一周
+*/
+ZDate.getNextWeek = function(week) {
+    if (typeof week === 'string') {
+        week = week.replace(/-/g, '');
+        week = parseInt(week);
+    }
+    var year = Math.floor(week / 100);
+    var w = week % 100;
+    if (w < 52) {
+        return year * 100 + w + 1;
+    } 
+    if (w == 53) {
+        return (year + 1) * 100 + 1;
+    } 
+ 
+    if (this.getWeeksByYear(year) == 52) {
+        return (year + 1) * 100 + 1;
+    } 
+
+    return year * 100 + w + 1;
+}
+
+
+/**
 * 周选择器，类似与日期选择控件一样，用来选择周，如201523代表2015年第23周
 * @param {object} ipt 输入周的输入框对象或者jquery选择器
 */
