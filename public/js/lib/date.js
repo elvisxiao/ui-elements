@@ -179,7 +179,7 @@ ZDate.weekPicker = function(ipt){
     var ipt = $(ipt);
     var initVal = $.trim(ipt.val());
 
-    var getEle = function(){
+    var reanderTable = function(){
         var table = $('<table class="zWeekPicker"></table>');
         var thead = $('<thead></thead>').appendTo(table);
         var curr = new Date();
@@ -236,13 +236,6 @@ ZDate.weekPicker = function(ipt){
             }
             eleYear.html(year);
         })
-        .on('click', 'tbody td:not(.zWeekPickerTag)', function(){
-            table.hide();
-            var year = table.find('.spanYear').text();
-            var week = $(this).html();
-            var text = year + week
-            ipt.val(text);
-        })
         .on('mouseenter', 'tbody td:not(.zWeekPickerTag)', function(){
             var thisWeek = this.innerHTML;
             var weekStart = ZDate.getStartDateByWeek(year + thisWeek);
@@ -263,20 +256,18 @@ ZDate.weekPicker = function(ipt){
             e.stopPropagation();
         })
 
-        $(document).on('click', function(){
+        $('body').on('click', function(){
             table.hide();
         })
+        table.appendTo('body');
 
         return table;
     }
 
-    ipt = $(ipt);
-    ipt.on('click', function(e){
-        e.stopPropagation();
+    var setTablePosition = function(ipt){
         var ele = $('.zWeekPicker');
         if(ele.length === 0){
-            ele = getEle();
-            ele.appendTo('body');
+            ele = reanderTable();
         }
         var position = ipt.position();
         var val = $.trim(ipt.val());
@@ -293,6 +284,25 @@ ZDate.weekPicker = function(ipt){
             'top': position.top + ipt.outerHeight(),
             'display': 'block'
         })
+        
+        ele.off('click', 'tbody td:not(.zWeekPickerTag)').on('click', 'tbody td:not(.zWeekPickerTag)', function(){
+            ele.hide();
+            var year = ele.find('.spanYear').text();
+            var week = $(this).html();
+            var text = year + week
+            ipt.val(text);
+            
+            ev = document.createEvent("HTMLEvents");  
+            ev.initEvent("change", false, true);  
+            ipt[0].dispatchEvent(ev);  
+        })
+    }
+
+    ipt = $(ipt);
+
+    ipt.on('click', function(e){
+        e.stopPropagation();
+        setTablePosition(ipt);
     })
 }   
 
