@@ -172,7 +172,7 @@ ZDate.getStartDateByWeek = function(week) {
 }
 
 /**
-* 根据传入的date字符串或者timespan，返回该天在这一年中的第几周中：201406 - 2015年06周
+* 根据传入的周，获取下一周
 * @param {string} week 传入的周字符串，格式为:201510，代表2015年的第十周
 * @returns {string} 该周的下一周
 */
