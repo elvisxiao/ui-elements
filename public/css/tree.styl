@@ -51,6 +51,7 @@
         list-style-type none
         display none
         padding 0
+        padding-bottom 42px
         &:before
             content ''
             display block
@@ -69,7 +70,13 @@
             bottom 16px
             left 0
             border-bottom 1px solid #46b8da
-    
+        
+        >li.active
+            overflow hidden 
+            width 100%
+        >li:last-child
+            float left
+        
     .zTreeItem.hasMore
         >p
             &:before

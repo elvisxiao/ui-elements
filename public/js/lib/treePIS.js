@@ -176,8 +176,10 @@ var TreePIS = function(options){
 					return;
 				}
 				li.parents('.zTreeItem').addClass('hasMore');
-				
-				model.level = parseInt(parentModel.level) + 1;
+				if(!model.level){
+					model.level = parseInt(parentModel.level) + 1;
+				}
+				model.name = model.categoryName;
 				li.data(model).find('>p').html(model.categoryName).removeClass('zTreeEdit zTreeAdd');
 				if(model.description){
 					li.addClass('zTreeItemDes').find('p').attr('title', model.description);
