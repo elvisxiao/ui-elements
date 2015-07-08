@@ -56,6 +56,10 @@ router.get('/css', function(req, res) {
 	res.render('basecss');
 });
 
+router.get('/test', function(req, res) {
+	res.render('test');
+});
+
 router.post('/upload', function(req, res) {
 	try{
 	// 	console.log(req);
