@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-1z3sva');
-	src:url('fonts/icomoon.eot?#iefix-1z3sva') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?-1z3sva') format('truetype'),
-		url('fonts/icomoon.woff?-1z3sva') format('woff'),
-		url('fonts/icomoon.svg?-1z3sva#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-7uiclg');
+	src:url('fonts/icomoon.eot?#iefix-7uiclg') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?-7uiclg') format('truetype'),
+		url('fonts/icomoon.woff?-7uiclg') format('woff'),
+		url('fonts/icomoon.svg?-7uiclg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,6 +23,114 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-flow-tree:before {
+	content: "\e678";
+}
+.icon-flow-parallel:before {
+	content: "\e679";
+}
+.icon-flow-line:before {
+	content: "\e67a";
+}
+.icon-flow-cascade:before {
+	content: "\e67b";
+}
+.icon-flow-branch2:before {
+	content: "\e67c";
+}
+.icon-flow-branch:before {
+	content: "\e676";
+}
+.icon-user4:before {
+	content: "\e61c";
+}
+.icon-cart2:before {
+	content: "\e63a";
+}
+.icon-lock2:before {
+	content: "\e61e";
+}
+.icon-lock-open:before {
+	content: "\e61f";
+}
+.icon-checkmark3:before {
+	content: "\e620";
+}
+.icon-minus2:before {
+	content: "\e621";
+}
+.icon-plus2:before {
+	content: "\e622";
+}
+.icon-cross:before {
+	content: "\e623";
+}
+.icon-minus3:before {
+	content: "\e624";
+}
+.icon-plus3:before {
+	content: "\e625";
+}
+.icon-cross2:before {
+	content: "\e626";
+}
+.icon-minus4:before {
+	content: "\e627";
+}
+.icon-plus4:before {
+	content: "\e628";
+}
+.icon-info:before {
+	content: "\e629";
+}
+.icon-help:before {
+	content: "\e62a";
+}
+.icon-warning:before {
+	content: "\e62b";
+}
+.icon-list2:before {
+	content: "\e645";
+}
+.icon-arrow-left:before {
+	content: "\e62c";
+}
+.icon-arrow-down:before {
+	content: "\e62d";
+}
+.icon-arrow-up:before {
+	content: "\e62e";
+}
+.icon-arrow-right:before {
+	content: "\e62f";
+}
+.icon-arrow-left2:before {
+	content: "\e630";
+}
+.icon-arrow-down2:before {
+	content: "\e631";
+}
+.icon-arrow-up2:before {
+	content: "\e632";
+}
+.icon-arrow-right2:before {
+	content: "\e633";
+}
+.icon-arrow-left3:before {
+	content: "\e634";
+}
+.icon-arrow-down3:before {
+	content: "\e635";
+}
+.icon-arrow-up3:before {
+	content: "\e636";
+}
+.icon-uniE637:before {
+	content: "\e637";
+}
+.icon-facebook2:before {
+	content: "\e638";
+}
 .icon-uniE64C:before {
 	content: "\e64c";
 }
@@ -115,96 +223,6 @@
 }
 .icon-trashcan2:before {
 	content: "\e641";
-}
-.icon-user4:before {
-	content: "\e61c";
-}
-.icon-cart2:before {
-	content: "\e63a";
-}
-.icon-lock2:before {
-	content: "\e61e";
-}
-.icon-lock-open:before {
-	content: "\e61f";
-}
-.icon-checkmark3:before {
-	content: "\e620";
-}
-.icon-minus2:before {
-	content: "\e621";
-}
-.icon-plus2:before {
-	content: "\e622";
-}
-.icon-cross:before {
-	content: "\e623";
-}
-.icon-minus3:before {
-	content: "\e624";
-}
-.icon-plus3:before {
-	content: "\e625";
-}
-.icon-cross2:before {
-	content: "\e626";
-}
-.icon-minus4:before {
-	content: "\e627";
-}
-.icon-plus4:before {
-	content: "\e628";
-}
-.icon-info:before {
-	content: "\e629";
-}
-.icon-help:before {
-	content: "\e62a";
-}
-.icon-warning:before {
-	content: "\e62b";
-}
-.icon-list2:before {
-	content: "\e645";
-}
-.icon-arrow-left:before {
-	content: "\e62c";
-}
-.icon-arrow-down:before {
-	content: "\e62d";
-}
-.icon-arrow-up:before {
-	content: "\e62e";
-}
-.icon-arrow-right:before {
-	content: "\e62f";
-}
-.icon-arrow-left2:before {
-	content: "\e630";
-}
-.icon-arrow-down2:before {
-	content: "\e631";
-}
-.icon-arrow-up2:before {
-	content: "\e632";
-}
-.icon-arrow-right2:before {
-	content: "\e633";
-}
-.icon-arrow-left3:before {
-	content: "\e634";
-}
-.icon-arrow-down3:before {
-	content: "\e635";
-}
-.icon-arrow-up3:before {
-	content: "\e636";
-}
-.icon-uniE637:before {
-	content: "\e637";
-}
-.icon-facebook2:before {
-	content: "\e638";
 }
 .icon-edit:before {
 	content: "\e673";
@@ -605,6 +623,15 @@
 .icon-IcoMoon:before {
 	content: "\eaea";
 }
+.icon-milestone:before {
+	content: "\e677";
+}
+.icon-price-tag:before {
+	content: "\e935";
+}
+.icon-price-tags:before {
+	content: "\e936";
+}
 .icon-star:before {
 	content: "\f005";
 }
@@ -655,4 +682,7 @@
 }
 .icon-ship:before {
 	content: "\e674";
+}
+.icon-tags:before {
+	content: "\e675";
 }
