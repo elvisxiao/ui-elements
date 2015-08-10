@@ -66,22 +66,24 @@ block content
                     ]);
                 })
     script.
-        var slc1, slc2;
+        var slc1, slc2, slc3;
 
         $.getJSON('/mockData/bu.json', function(res){
-            console.log('treJSON', res);
             slc1 = new oc.BUSelect({
                 dataList: res,
                 container: '#buSelect'
             });
-        })
 
-        $.getJSON('/mockData/bu.json', function(res){
-            console.log('treJSON', res);
             slc2 = new oc.BUSelect({
                 dataList: res,
                 container: '#buSelect2',
                 limited: 1
+            });
+
+            slc3 = new oc.BUSelect({
+                dataList: res,
+                container: '#buSelect3',
+                onlyLast: true
             });
         })
 
