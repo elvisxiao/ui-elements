@@ -62,7 +62,7 @@
 /* line 35 : /Users/elvis/bitbucket/ocui/public/css/buSelect.styl */
 .mixSelectWrap ul li p.active {
   color: #fff;
-  background-color: #1abc9c;
+  background-color: #0099d8;
 }
 
 /* line 38 : /Users/elvis/bitbucket/ocui/public/css/buSelect.styl */
@@ -95,7 +95,7 @@
 /* line 57 : /Users/elvis/bitbucket/ocui/public/css/buSelect.styl */
 .buSlc .zBadge {
   margin: 2px 5px;
-  background-color: #1abc9c;
+  background-color: #0099d8;
   color: #fff;
   font-size: 12px;
   padding: 2px 5px;
