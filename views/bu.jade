@@ -1,0 +1,96 @@
+extends layout
+
+block content
+    style.
+        html, body{height:100%; padding:0 ;margin:0}
+    div(style="width: 1000px; margin: 0 auto;").pt20
+        h2 品线转BU
+        
+        .mt20 BU多选
+            div
+                #buSelect.w800
+
+            p.mt20
+                button#btnGetVal.btn.btn-primary.mr30 获取值
+      
+                button#btnSetVal.btn.btn-primary 设置值
+
+        .mt20 BU只能选一个
+            div
+                #buSelect2.w800
+
+        code 
+            pre.
+                var slc1, slc2;
+
+                $.getJSON('/mockData/bu.json', function(res){
+                    console.log('treJSON', res);
+                    slc1 = new oc.BUSelect({
+                        dataList: res,
+                        container: '#buSelect'
+                    });
+                })
+
+                $.getJSON('/mockData/bu.json', function(res){
+                    console.log('treJSON', res);
+                    slc2 = new oc.BUSelect({
+                        dataList: res,
+                        container: '#buSelect2',
+                        limited: 1
+                    });
+                })
+
+                $('#btnGetVal').on('click', function(){
+                    var val = slc1.getResult().join(',') || '别逗我，你还没选';
+                    alert(val);
+                })
+
+                $('#btnSetVal').on('click', function(){
+                    var val = slc1.setResult([
+                        {
+                            id: 4, 
+                            name: 'Internal battery'
+                        },
+                        {
+                            id: 9,
+                            name: 'Battery Case'
+                        }
+                    ]);
+                })
+    script.
+        var slc1, slc2;
+
+        $.getJSON('/mockData/bu.json', function(res){
+            console.log('treJSON', res);
+            slc1 = new oc.BUSelect({
+                dataList: res,
+                container: '#buSelect'
+            });
+        })
+
+        $.getJSON('/mockData/bu.json', function(res){
+            console.log('treJSON', res);
+            slc2 = new oc.BUSelect({
+                dataList: res,
+                container: '#buSelect2',
+                limited: 1
+            });
+        })
+
+        $('#btnGetVal').on('click', function(){
+            var val = slc1.getResult().join(',') || '别逗我，你还没选';
+            alert(val);
+        })
+
+        $('#btnSetVal').on('click', function(){
+            var val = slc1.setResult([
+                {
+                    id: 4, 
+                    name: 'Internal battery'
+                },
+                {
+                    id: 9,
+                    name: 'Battery Case'
+                }
+            ]);
+        })

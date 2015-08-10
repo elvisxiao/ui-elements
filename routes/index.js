@@ -23,6 +23,10 @@ router.get('/ui', function(req, res) {
 	res.render('ui');
 });
 
+router.get('/bu', function(req, res) {
+	res.render('bu');
+});
+
 router.get('/siderbar', function(req, res) {
 	res.render('siderbar');
 });

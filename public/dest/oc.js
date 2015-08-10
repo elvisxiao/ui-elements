@@ -375,6 +375,214 @@ module.exports = Ajax;
     }
 }(typeof window !== 'undefined' ? window : {}));
 },{}],3:[function(require,module,exports){
+var dropdown = require('./dropdown');
+
+var BUSelect = function(options){
+	this.config = {
+		container: 'body',
+		dataList: null,
+		limited: null,
+		onlyLast: false //禁止选中非末级几点
+	};
+	
+	this.ele = null;
+
+	for(var key in options){
+		if(this.config.hasOwnProperty(key)){
+			this.config[key] = options[key];
+		}
+	}
+	
+	$(this.config.container).addClass('buSlc');
+	var self = this;
+
+	self.formatData = function(){
+        var rootTree = {
+            "id"          : 1,
+            "fid"         : 0,
+            "items"    : [],
+            "name"        : "PIS",
+            "description" : "",
+            "level"       : 1
+        };
+
+        var treeMap = {};
+        treeMap[1] = rootTree;
+
+        self.config.dataList.map(function(relation){
+            var fid = relation["ancestor"];
+            fTree = treeMap[fid];
+            if(!fTree || !fTree.level){
+                return true;
+            }
+            var tree = {
+                "id"          : relation["descendant"],
+                "fid"         : fid,
+                "items"       : [],
+                "name"        : relation["categoryName"],
+                "description" : relation["description"],
+                "level"       : fTree["level"] + 1,
+                "segments"    : relation["segments"],
+            };
+            fTree["items"].push(tree);
+            treeMap[tree["id"]] = tree;
+        })
+
+        self.treeData = rootTree;
+        console.log('format data', rootTree);
+    }
+
+	self.initSelect = function(){
+        var div = $('<div class="mixSelectWrap"><p><input class="form-control zIpt" type="text" placeholder="Search here ..." /></p></div>');
+
+        self.renderTree(self.treeData, div, 0);
+
+        self.dropdownText = div[0].outerHTML;
+
+        self.bindEvents();
+    },
+
+    self.renderTree = function(dataList, ele, level){
+        if(!dataList){
+            return;
+        }
+
+        var ul = $('<ul></ul>');
+
+        if(dataList && dataList.length === undefined){ 
+            self.renderTree(dataList.items, ul, 1);
+
+            ul.appendTo(ele);
+
+            return;
+        }
+        
+        var len = dataList.length;
+
+        for(var i = 0; i < len; i++){
+            var one = dataList[i];
+
+            var li = $('<li><p style="padding-left: ' + level * 15 + 'px" data-id="' + one.id + '">' + one.name + '</p></li>');
+            
+            li.appendTo(ul);
+
+            if(one.items && one.items.length > 0){
+                this.renderTree(one.items, li, level + 1);
+            }
+        }
+
+        if(ul.find('li').length > 0){
+        	ul.appendTo(ele);
+            //非最后一级节点不允许选择 -----
+            if(self.config.onlyLast){
+            	ul.prev('p').addClass('disabled');
+            }
+        }
+    }
+	
+	self.getResult = function(){
+        var ret = [];
+        $(self.config.container).find('.zBadge').each(function(){
+            var badge = $(this);
+    
+            ret.push( parseInt(badge.attr('data-id')) );
+        })
+
+        return ret;
+    }
+
+    self.setResult = function(list, disabled){
+        var repoItem = $(self.config.container).html('');
+        if(! (list && list.length) ){
+            return;
+        }
+
+        for(var i = 0; i < list.length; i ++){
+            var one = list[i];
+            repoItem.append('<label class="zBadge" data-id="' + one.id + '"><i class="icon-cancel-circle"></i>' + one.name + '</label>');
+        }
+
+        if(disabled){
+            repoItem.find('.zBadge .icon-cancel-circle').remove();
+        }
+    }
+
+    self.bindEvents = function(){
+        var repoItem = $(self.config.container);
+        repoItem.on('click', '.zBadge .icon-cancel-circle', function(e){
+            e.stopPropagation();
+            $(this).parent().remove();
+        })
+        .on('click', function(e){
+            e.stopPropagation();
+            dropdown.remove(repoItem);
+            var drop = dropdown.show(this, '', self.dropdownText);
+            
+            var ul = drop.find('.mixSelectWrap>ul');
+            repoItem.find('.zBadge').each(function(){
+                var badge = $(this);
+                var id = this.getAttribute('data-id');
+                var p = ul.find('p[data-id="' + id + '"]').addClass('active').data('target', badge);
+                p.parent().find('>ul').hide();
+            })
+
+            drop.on('click', 'ul li p:not(.disabled)', function(e){
+                var p = $(this);
+                if(p.hasClass('active')){
+                    p.removeClass('active').data('target').remove();
+                    p.data('target', null);
+                    p.parent().find('>ul').show();
+                }
+                else{
+                    p.addClass('active');
+                    var label = $('<label class="zBadge" data-id="' + p.attr('data-id') + '"><i class="icon-cancel-circle"></i>' + p.html() + '</label>');
+                    label.appendTo(repoItem);
+                    p.data('target', label);
+                    p.parent().find('>ul').hide().find('p').each(function(){
+                        var one = $(this).removeClass('active');
+                        one.data('target') && one.data('target').remove();
+                        one.data('target', null);
+                    })
+
+                    if(self.config.limited > 0){
+                        var len = repoItem.find('.zBadge').length;
+                        
+                        if(len - self.config.limited > 0){
+                            repoItem.find('.zBadge:eq(' + (len - 2) + ')').remove();
+                        }
+
+                        dropdown.remove(repoItem);
+                    }
+                }
+            })
+            .on('input', '.zIpt', function(){
+                var val = $.trim(this.value).toUpperCase();
+
+                drop.find('ul p').hide().each(function(){
+                    var oneNode = $(this);
+                    if(oneNode.html().toUpperCase().indexOf(val) !== -1){
+                        oneNode.show();
+                        oneNode.parents('li').find('>p').show();
+                    }
+                })
+            })
+        })
+
+        $('body').off('click', '.zDropdown').on('click', '.zDropdown', function(e){
+            e.stopPropagation();
+        })
+
+        $('body').on('click', function(){
+            dropdown.remove(repoItem);
+        })
+    }
+
+	self.formatData();
+	self.initSelect();
+}
+
+module.exports = BUSelect;
+},{"./dropdown":6}],4:[function(require,module,exports){
  
 /**
 * @file 用于Javascript Date类型的扩展
@@ -713,7 +921,7 @@ ZDate.weekPicker = function(ipt){
 
 
 module.exports = ZDate;
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
 * @file 以遮盖形式弹出错误提示，对话框等
 * @author Elvis Xiao
@@ -926,7 +1134,116 @@ module.exports = Dialog;
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+module.exports = {
+    show: function(target, title, content, defaultDirect) {
+        var target = $(target);
+        if(target.data('zTarget')){
+            return;
+        }
+        var elePop = $('<div class="zDropdown"><div class="zDropdownBd"></div></div>');
+        
+        elePop.find('.zDropdownBd').append(content);
+        if(title){
+            var hd = $('<div class="zDropdownHd"></div>').append(title);
+            elePop.prepend(hd);
+        }
+
+        elePop.appendTo('body');
+        this._setPosition(target, elePop, title, defaultDirect);
+        elePop.data('zTarget', target);
+        target.data('zTarget', elePop);
+
+        return elePop;
+    },
+    
+    remove: function(ele){
+        if(!ele){
+            ele = $('.zDropdown');
+        }
+        else{
+            ele = $(ele);
+            if(!ele.hasClass('zDropdown')){
+                ele = ele.data('zTarget');
+            }
+        }
+
+        if(ele && ele.each){
+            ele.each(function(){
+                var one = $(this);
+                var target = one.data('zTarget');
+                one.remove();
+                one.data('zTarget', null);
+                target && target.data('zTarget', null);
+            })
+        }
+    },
+
+    _setPosition: function(target, elePop, hasTitle, defaultDirect){
+        var position = target.offset();
+        var left = position.left;
+        var top = position.top;
+        var win = $(window);
+        
+        var origin = {
+            upTop: top - elePop.outerHeight() - 8,
+            downTop: top + target.outerHeight() + 8,
+            leftLeft: left,
+            rightLeft: left - elePop.outerWidth() + target.outerWidth()
+        }
+
+        //设置左边距离
+        var targetLeft = origin.leftLeft;
+
+        if(defaultDirect === "right" && origin.rightLeft > win.scrollLeft() ){
+            targetLeft = origin.rightLeft;
+            elePop.addClass('zDropdownRight');
+        }
+        else if( left + elePop.outerWidth() > win.scrollLeft() + win.width() ){
+            targetLeft = origin.rightLeft;
+            elePop.addClass('zDropdownRight');
+        }
+
+        //设置顶部距离
+        var targetTop = origin.downTop;
+        if(defaultDirect === "up" && origin.upTop > win.scrollTop()){
+            targetTop = origin.upTop;
+            elePop.addClass('zDropdownUp');
+        }
+        else if((targetTop + elePop.height() > win.outerHeight() + win.scrollTop()) ){ //下面位置不够放时，尝试放到上面去
+            targetTop = origin.upTop;
+            //判断上面位置是否足够放置，如果不行，去上或下高度比较大的一个
+            if(targetTop < win.scrollTop() ){
+                var alignTop = top - win.scrollTop();
+                var alignBottom = win.outerHeight() - alignTop - target.outerHeight();
+                var maxHeight = alignTop > alignBottom? alignTop : alignBottom;
+                elePop.css('height', maxHeight - 20);
+                if(hasTitle){
+                    elePop.find('.zDropdownBd').css('height', maxHeight - 40);
+                }
+                if(alignBottom > alignTop){
+                    targetTop = origin.downTop;
+                }
+                else{//下面的位置比上面高度小，放上去
+                    targetTop = top - elePop.outerHeight() - 8;
+                    elePop.addClass('zDropdownUp');
+                }
+            }
+            else{ //上面位置够，放上去
+                elePop.addClass('zDropdownUp');
+            }
+        }
+        
+
+        elePop.css({
+            left: targetLeft,
+            top: targetTop,
+            "min-width": target.outerWidth()
+        })
+    }
+}
+
+},{}],7:[function(require,module,exports){
 /** 
 * @file CSV文件预览与标记 
 * @author Elvis Xiao
@@ -1239,7 +1556,7 @@ var FileView = function(options){
 module.exports = FileView;
 
 
-},{"./asset/csv":2}],6:[function(require,module,exports){
+},{"./asset/csv":2}],8:[function(require,module,exports){
 /** 
 * @file 前端图片裁剪预览
 * @author Elvis Xiao
@@ -1747,7 +2064,7 @@ var ImageCrop = function(options){
 }
 
 module.exports = ImageCrop;
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
 	window.oc = {};
@@ -1758,6 +2075,7 @@ module.exports = ImageCrop;
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
 	oc.TreeSelect = require('./treeSelect');
+	oc.BUSelect = require('./buSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
 	oc.ImageCrop = require('./imageCrop');
@@ -1783,7 +2101,7 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./date":3,"./dialog":4,"./fileView":5,"./imageCrop":6,"./localStorage":8,"./sidebar":9,"./tree":10,"./treeDialogSelect":11,"./treeOrganization":12,"./treePIS":13,"./treeSelect":14,"./ui":15,"./uploader":16}],8:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./sidebar":11,"./tree":12,"./treeDialogSelect":13,"./treeOrganization":14,"./treePIS":15,"./treeSelect":16,"./ui":17,"./uploader":18}],10:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -1863,7 +2181,7 @@ LocalStorage.clear = function(){
 module.exports = LocalStorage;
 
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -1964,7 +2282,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -2387,7 +2705,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -2712,7 +3030,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -3432,7 +3750,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -3760,7 +4078,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -4072,7 +4390,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
 * @file 基本的、单个UI元素
 * @author Elvis
@@ -4468,7 +4786,7 @@ UI.popOverRemove = function(btn){
 }
 
 module.exports = UI;
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -5004,4 +5322,4 @@ var Uploader = function(options) {
 }
 
 module.exports = Uploader;
-},{}]},{},[7]);
+},{}]},{},[9]);

@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
 
 process.env.NPM_CONFIG_PRODUCTION && (process.env.NPM_CONFIG_PRODUCTION = true);
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 4000);
 
 var server = app.listen(app.get('port'), process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0", function() {
    console.log('Express server listening on port ' + server.address().port);

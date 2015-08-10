@@ -8,6 +8,7 @@
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
 	oc.TreeSelect = require('./treeSelect');
+	oc.BUSelect = require('./buSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
 	oc.Tree = require('./tree');
 	oc.ImageCrop = require('./imageCrop');

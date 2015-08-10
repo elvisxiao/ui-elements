@@ -1,0 +1,631 @@
+[{
+    "operator": null,
+    "categoryName": null,
+    "categoryId": 0,
+    "ancestor": 31,
+    "descendant": 36,
+    "segments": null,
+    "depth": 1,
+    "description": null
+}, {
+    "operator": "system",
+    "categoryName": "Battery",
+    "categoryId": 2,
+    "ancestor": 1,
+    "descendant": 2,
+    "segments": null,
+    "depth": 1,
+    "description": "鐢垫睜"
+}, {
+    "operator": null,
+    "categoryName": "Portable charger",
+    "categoryId": 3,
+    "ancestor": 2,
+    "descendant": 3,
+    "segments": null,
+    "depth": 1,
+    "description": "Portable charger"
+}, {
+    "operator": "system",
+    "categoryName": "Internal battery",
+    "categoryId": 4,
+    "ancestor": 2,
+    "descendant": 4,
+    "segments": null,
+    "depth": 1,
+    "description": "Internal battery"
+}, {
+    "operator": "system",
+    "categoryName": "PowerCore mini & ultra portable",
+    "categoryId": 6,
+    "ancestor": 3,
+    "descendant": 6,
+    "segments": "A11",
+    "depth": 1,
+    "description": "PowerCore mini & ultra portable"
+}, {
+    "operator": "system",
+    "categoryName": "PowerCore",
+    "categoryId": 7,
+    "ancestor": 3,
+    "descendant": 7,
+    "segments": "A12",
+    "depth": 1,
+    "description": "PowerCore"
+}, {
+    "operator": "system",
+    "categoryName": "PowerCore+",
+    "categoryId": 8,
+    "ancestor": 3,
+    "descendant": 8,
+    "segments": "A13",
+    "depth": 1,
+    "description": "PowerCore+"
+}, {
+    "operator": "system",
+    "categoryName": "Battery Case",
+    "categoryId": 9,
+    "ancestor": 3,
+    "descendant": 9,
+    "segments": "A14",
+    "depth": 1,
+    "description": "Battery Case"
+}, {
+    "operator": "system",
+    "categoryName": "PowerCore Jump Starter",
+    "categoryId": 10,
+    "ancestor": 3,
+    "descendant": 10,
+    "segments": "A15",
+    "depth": 1,
+    "description": "PowerCore Jump Starter"
+}, {
+    "operator": "system",
+    "categoryName": "Specialty",
+    "categoryId": 11,
+    "ancestor": 3,
+    "descendant": 11,
+    "segments": "A16",
+    "depth": 1,
+    "description": "Specialty"
+}, {
+    "operator": "system",
+    "categoryName": "Others",
+    "categoryId": 12,
+    "ancestor": 3,
+    "descendant": 12,
+    "segments": "A10, A18, A19",
+    "depth": 1,
+    "description": "Others"
+}, {
+    "operator": "system",
+    "categoryName": "Cellphone internal battery",
+    "categoryId": 13,
+    "ancestor": 4,
+    "descendant": 13,
+    "segments": "A60, A61, A62, A63, A64",
+    "depth": 1,
+    "description": "Cellphone internal battery"
+}, {
+    "operator": null,
+    "categoryName": "Chargers",
+    "categoryId": 15,
+    "ancestor": 1,
+    "descendant": 15,
+    "segments": null,
+    "depth": 1,
+    "description": "鍏呯數鍣�"
+}, {
+    "operator": "system",
+    "categoryName": "Chargers (with no battery)",
+    "categoryId": 16,
+    "ancestor": 15,
+    "descendant": 16,
+    "segments": null,
+    "depth": 1,
+    "description": "Chargers (with no battery)"
+}, {
+    "operator": "system",
+    "categoryName": "Wall Charger",
+    "categoryId": 17,
+    "ancestor": 16,
+    "descendant": 17,
+    "segments": "A20",
+    "depth": 1,
+    "description": "Wall Charger"
+}, {
+    "operator": "system",
+    "categoryName": "Wall Charger (previous)",
+    "categoryId": 18,
+    "ancestor": 16,
+    "descendant": 18,
+    "segments": "A21",
+    "depth": 1,
+    "description": "Wall Charger (previous)"
+}, {
+    "operator": "system",
+    "categoryName": "Car Charger",
+    "categoryId": 19,
+    "ancestor": 16,
+    "descendant": 19,
+    "segments": "A22",
+    "depth": 1,
+    "description": "Car Charger"
+}, {
+    "operator": "system",
+    "categoryName": "Car Charger (previous)",
+    "categoryId": 20,
+    "ancestor": 16,
+    "descendant": 20,
+    "segments": "A23",
+    "depth": 1,
+    "description": "Car Charger (previous)"
+}, {
+    "operator": "system",
+    "categoryName": "Solar Charger",
+    "categoryId": 21,
+    "ancestor": 16,
+    "descendant": 21,
+    "segments": "A24",
+    "depth": 1,
+    "description": "Solar Charger"
+}, {
+    "operator": "system",
+    "categoryName": "Wireless Charger",
+    "categoryId": 22,
+    "ancestor": 16,
+    "descendant": 22,
+    "segments": "A25",
+    "depth": 1,
+    "description": "Wireless Charger"
+}, {
+    "operator": "system",
+    "categoryName": "Power Strip and Wall Socket",
+    "categoryId": 23,
+    "ancestor": 16,
+    "descendant": 23,
+    "segments": "A27",
+    "depth": 1,
+    "description": "Power Strip and Wall Socket"
+}, {
+    "operator": "system",
+    "categoryName": "Charging Station and Others",
+    "categoryId": 24,
+    "ancestor": 16,
+    "descendant": 24,
+    "segments": "A28",
+    "depth": 1,
+    "description": "Charging Station and Others"
+}, {
+    "operator": "system",
+    "categoryName": "Data",
+    "categoryId": 25,
+    "ancestor": 1,
+    "descendant": 25,
+    "segments": null,
+    "depth": 1,
+    "description": "鏁版嵁绫�"
+}, {
+    "operator": "system",
+    "categoryName": "Data Transfer",
+    "categoryId": 26,
+    "ancestor": 25,
+    "descendant": 26,
+    "segments": null,
+    "depth": 1,
+    "description": "Data Transfer"
+}, {
+    "operator": "system",
+    "categoryName": "USB 3.0 Hubs",
+    "categoryId": 27,
+    "ancestor": 26,
+    "descendant": 27,
+    "segments": "A75",
+    "depth": 1,
+    "description": "USB 3.0 Hubs"
+}, {
+    "operator": "system",
+    "categoryName": "Other USB 3.0 Devices",
+    "categoryId": 28,
+    "ancestor": 26,
+    "descendant": 28,
+    "segments": "A76",
+    "depth": 1,
+    "description": "Other USB 3.0 Devices"
+}, {
+    "operator": "system",
+    "categoryName": "Type-C devices",
+    "categoryId": 29,
+    "ancestor": 26,
+    "descendant": 29,
+    "segments": "A83",
+    "depth": 1,
+    "description": "Type-C devices"
+}, {
+    "operator": null,
+    "categoryName": "Audio",
+    "categoryId": 42,
+    "ancestor": 1,
+    "descendant": 42,
+    "segments": null,
+    "depth": 1,
+    "description": "闊抽"
+}, {
+    "operator": "system",
+    "categoryName": "Audio",
+    "categoryId": 43,
+    "ancestor": 42,
+    "descendant": 43,
+    "segments": null,
+    "depth": 1,
+    "description": "Audio"
+}, {
+    "operator": "system",
+    "categoryName": "Corded Headset",
+    "categoryId": 44,
+    "ancestor": 43,
+    "descendant": 44,
+    "segments": "A30",
+    "depth": 1,
+    "description": "Corded Headset"
+}, {
+    "operator": "system",
+    "categoryName": "Portable Bluetooth speaker",
+    "categoryId": 45,
+    "ancestor": 43,
+    "descendant": 45,
+    "segments": "A31",
+    "depth": 1,
+    "description": "Portable Bluetooth speaker"
+}, {
+    "operator": "system",
+    "categoryName": "Bluetooth Headset",
+    "categoryId": 46,
+    "ancestor": 43,
+    "descendant": 46,
+    "segments": "A32",
+    "depth": 1,
+    "description": "Bluetooth Headset"
+}, {
+    "operator": "system",
+    "categoryName": "Receiver and Transmitter",
+    "categoryId": 47,
+    "ancestor": 43,
+    "descendant": 47,
+    "segments": "A33",
+    "depth": 1,
+    "description": "Receiver and Transmitter"
+}, {
+    "operator": "system",
+    "categoryName": "Wifi Audio(Dongle & Speaker & etc)",
+    "categoryId": 48,
+    "ancestor": 43,
+    "descendant": 48,
+    "segments": "A34",
+    "depth": 1,
+    "description": "Wifi Audio(Dongle & Speaker & etc)"
+}, {
+    "operator": "system",
+    "categoryName": "Others(Corded Speaker &etc)",
+    "categoryId": 49,
+    "ancestor": 43,
+    "descendant": 49,
+    "segments": "A35, A00",
+    "depth": 1,
+    "description": "Others(Corded Speaker &etc)"
+}, {
+    "operator": "system",
+    "categoryName": "Previous audio products",
+    "categoryId": 50,
+    "ancestor": 43,
+    "descendant": 50,
+    "segments": "A79, A39",
+    "depth": 1,
+    "description": "Previous audio products"
+}, {
+    "operator": "system",
+    "categoryName": "Cable",
+    "categoryId": 51,
+    "ancestor": 1,
+    "descendant": 51,
+    "segments": null,
+    "depth": 1,
+    "description": "绾挎潗"
+}, {
+    "operator": "system",
+    "categoryName": "Cable and converter",
+    "categoryId": 52,
+    "ancestor": 51,
+    "descendant": 52,
+    "segments": null,
+    "depth": 1,
+    "description": "Cable and converter"
+}, {
+    "operator": "system",
+    "categoryName": "Charging cable and converter",
+    "categoryId": 53,
+    "ancestor": 52,
+    "descendant": 53,
+    "segments": "A81",
+    "depth": 1,
+    "description": "Charging cable and converter"
+}, {
+    "operator": "system",
+    "categoryName": "A/V cable and others",
+    "categoryId": 54,
+    "ancestor": 52,
+    "descendant": 54,
+    "segments": "A82",
+    "depth": 1,
+    "description": "A/V cable and others"
+}, {
+    "operator": "system",
+    "categoryName": "Smart Device",
+    "categoryId": 55,
+    "ancestor": 1,
+    "descendant": 55,
+    "segments": null,
+    "depth": 1,
+    "description": "鏅鸿兘"
+}, {
+    "operator": "system",
+    "categoryName": "Smart devices",
+    "categoryId": 56,
+    "ancestor": 55,
+    "descendant": 56,
+    "segments": null,
+    "depth": 1,
+    "description": "Smart devices"
+}, {
+    "operator": "system",
+    "categoryName": "IP Camera",
+    "categoryId": 57,
+    "ancestor": 56,
+    "descendant": 57,
+    "segments": "A91",
+    "depth": 1,
+    "description": "IP Camera"
+}, {
+    "operator": "system",
+    "categoryName": "Others (smart scale & wearables & etc)",
+    "categoryId": 58,
+    "ancestor": 56,
+    "descendant": 58,
+    "segments": "A90, A92, A93, A94, A95, A96, A97, A98, A99",
+    "depth": 1,
+    "description": "Others (smart scale & wearables & etc)"
+}, {
+    "operator": "system",
+    "categoryName": "LED BU",
+    "categoryId": 59,
+    "ancestor": 1,
+    "descendant": 59,
+    "segments": null,
+    "depth": 1,
+    "description": "LED BU"
+}, {
+    "operator": "system",
+    "categoryName": "LED Lights",
+    "categoryId": 60,
+    "ancestor": 59,
+    "descendant": 60,
+    "segments": null,
+    "depth": 1,
+    "description": "LED Lights"
+}, {
+    "operator": "system",
+    "categoryName": "Desktop Lamp",
+    "categoryId": 61,
+    "ancestor": 60,
+    "descendant": 61,
+    "segments": "T11",
+    "depth": 1,
+    "description": "Desktop Lamp"
+}, {
+    "operator": "system",
+    "categoryName": "Outdoor & Portable and Other Lamps",
+    "categoryId": 62,
+    "ancestor": 60,
+    "descendant": 62,
+    "segments": "T12",
+    "depth": 1,
+    "description": "Outdoor & Portable and Other Lamps"
+}, {
+    "operator": null,
+    "categoryName": "Protection",
+    "categoryId": 74,
+    "ancestor": 1,
+    "descendant": 74,
+    "segments": null,
+    "depth": 1,
+    "description": "Protection"
+}, {
+    "operator": "system",
+    "categoryName": "Input&Output Devices",
+    "categoryId": 78,
+    "ancestor": 74,
+    "descendant": 78,
+    "segments": null,
+    "depth": 1,
+    "description": " Input&Output Devices"
+}, {
+    "operator": "system",
+    "categoryName": "Keyboard & keyboard mouse combo",
+    "categoryId": 79,
+    "ancestor": 78,
+    "descendant": 79,
+    "segments": "A77",
+    "depth": 1,
+    "description": "Keyboard & keyboard mouse combo"
+}, {
+    "operator": "system",
+    "categoryName": "Mouse",
+    "categoryId": 80,
+    "ancestor": 78,
+    "descendant": 80,
+    "segments": "A78",
+    "depth": 1,
+    "description": "Mouse"
+}, {
+    "operator": null,
+    "categoryName": "Protectional Accessories",
+    "categoryId": 100,
+    "ancestor": 74,
+    "descendant": 100,
+    "segments": null,
+    "depth": 1,
+    "description": "Protectional Accessories"
+}, {
+    "operator": "system",
+    "categoryName": "Mounts & Holders & Stand",
+    "categoryId": 102,
+    "ancestor": 100,
+    "descendant": 102,
+    "segments": "A71",
+    "depth": 1,
+    "description": "Mounts & Holders & Stand"
+}, {
+    "operator": "system",
+    "categoryName": "Screen Protector",
+    "categoryId": 103,
+    "ancestor": 100,
+    "descendant": 103,
+    "segments": "A72, A73, A74",
+    "depth": 1,
+    "description": "Screen Protector"
+}, {
+    "operator": "system",
+    "categoryName": "PowerHouse",
+    "categoryId": 105,
+    "ancestor": 3,
+    "descendant": 105,
+    "segments": "A17",
+    "depth": 1,
+    "description": "PowerHouse"
+}, {
+    "operator": "system",
+    "categoryName": "Laptop internal battery",
+    "categoryId": 106,
+    "ancestor": 4,
+    "descendant": 106,
+    "segments": "A65, A66, A67, A68, A69",
+    "depth": 1,
+    "description": "Laptop internal battery"
+}, {
+    "operator": "system",
+    "categoryName": "Phone & Tablet Case",
+    "categoryId": 108,
+    "ancestor": 100,
+    "descendant": 108,
+    "segments": "A70",
+    "depth": 1,
+    "description": "Phone & Tablet Case"
+}, {
+    "operator": "system",
+    "categoryName": "Electronic Case & Pouch and Bag",
+    "categoryId": 109,
+    "ancestor": 100,
+    "descendant": 109,
+    "segments": "A79",
+    "depth": 1,
+    "description": "Electronic Case & Pouch and Bag"
+}, {
+    "operator": null,
+    "categoryName": "Other Accessories",
+    "categoryId": 111,
+    "ancestor": 100,
+    "descendant": 111,
+    "segments": "A80",
+    "depth": 1,
+    "description": "Accessories for other BU"
+}, {
+    "operator": null,
+    "categoryName": "Replacement",
+    "categoryId": 113,
+    "ancestor": 1,
+    "descendant": 113,
+    "segments": null,
+    "depth": 1,
+    "description": "鏇挎崲浠� Replacable Parts"
+}, {
+    "operator": null,
+    "categoryName": "Replacable Parts",
+    "categoryId": 114,
+    "ancestor": 113,
+    "descendant": 114,
+    "segments": null,
+    "depth": 1,
+    "description": "Replacable Parts"
+}, {
+    "operator": null,
+    "categoryName": "For LED BU",
+    "categoryId": 115,
+    "ancestor": 114,
+    "descendant": 115,
+    "segments": "T00",
+    "depth": 1,
+    "description": "For LED BU"
+}, {
+    "operator": null,
+    "categoryName": "For Battery BU",
+    "categoryId": 116,
+    "ancestor": 114,
+    "descendant": 116,
+    "segments": "T01",
+    "depth": 1,
+    "description": "For Battery BU"
+}, {
+    "operator": null,
+    "categoryName": "For Charger BU",
+    "categoryId": 117,
+    "ancestor": 114,
+    "descendant": 117,
+    "segments": "T02",
+    "depth": 1,
+    "description": "For Charger BU"
+}, {
+    "operator": null,
+    "categoryName": "For Audio BU",
+    "categoryId": 118,
+    "ancestor": 114,
+    "descendant": 118,
+    "segments": "T03",
+    "depth": 1,
+    "description": "For Audio BU"
+}, {
+    "operator": null,
+    "categoryName": "For Data BU",
+    "categoryId": 119,
+    "ancestor": 114,
+    "descendant": 119,
+    "segments": "T04",
+    "depth": 1,
+    "description": "For Data BU"
+}, {
+    "operator": null,
+    "categoryName": "For Protection BU",
+    "categoryId": 120,
+    "ancestor": 114,
+    "descendant": 120,
+    "segments": "T07",
+    "depth": 1,
+    "description": "For Protection BU"
+}, {
+    "operator": null,
+    "categoryName": "For Cable BU",
+    "categoryId": 121,
+    "ancestor": 114,
+    "descendant": 121,
+    "segments": "T08",
+    "depth": 1,
+    "description": "For Cable BU"
+}, {
+    "operator": null,
+    "categoryName": "For Smart Device BU",
+    "categoryId": 122,
+    "ancestor": 114,
+    "descendant": 122,
+    "segments": "T09",
+    "depth": 1,
+    "description": "For Smart Device BU"
+}]
