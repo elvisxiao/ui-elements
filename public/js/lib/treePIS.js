@@ -228,7 +228,7 @@ var TreePIS = function(options){
 				},
 				singularities: []
 			};
-			
+
 			addSubForm.find('[name="singularityName"]').each(function(){
 				var nextIpt = $(this).parent().next('td').find('input');
 				var one = {
@@ -244,9 +244,13 @@ var TreePIS = function(options){
 				model.singularities.push(one);
 			})
 
+
+			var btn = addSubForm.find('button[type="submit"]').html('<i class="zLoadingIcon"></i>').attr('disabled', true);
 			if(self.parentLi){ //add new
 				model.category.descendant = self.parentLi.data().id;
 				oc.ajax.post('/product/rest/v1/pis/categories/subcategory', model, function(res){
+					btn.html('Save').removeAttr('disabled');
+					oc.dialog.tips('Add success.');
 					var nodeModel = {
 						id: res,
 						fid: model.category.descendant,
@@ -261,10 +265,14 @@ var TreePIS = function(options){
 					var newLi = $('<li class="zTreeItem zTreeItemDes"><p title="' + nodeModel.description + '">' + nodeModel.name + '</p></li>').appendTo(ul);
 					newLi.data(nodeModel);
 					self.parentLi.addClass('hasMore');
+				}, function(res){
+					oc.dialog.tips('Update failed:' + res.responseText);
+					btn.html('Save').removeAttr('disabled');
 				})
 			}
 			else{ //update
 				oc.ajax.put('/product/rest/v1/pis/categories/subcategory/' + self.currentLi.data().id, model, function(res){
+					btn.html('Save').removeAttr('disabled');
 					oc.dialog.tips('Update success.');
 					$('.treeRightContainer').removeClass('active').find('input').val('');
 					var nodeModel = self.currentLi.data();
@@ -273,6 +281,9 @@ var TreePIS = function(options){
 
 					self.currentLi.find('>p').html(nodeModel.name).attr('title', nodeModel.description);
 					self.currentLi.data(nodeModel);
+				}, function(res){
+					oc.dialog.tips('Update failed:' + res.responseText);
+					btn.html('Save').removeAttr('disabled');
 				})
 			}
 			
