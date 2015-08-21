@@ -382,6 +382,7 @@ var BUSelect = function(options){
 		container: 'body',
 		dataList: null,
 		limited: null,
+        showLevel: null,
 		onlyLast: false //禁止选中非末级几点
 	};
 	
@@ -443,7 +444,7 @@ var BUSelect = function(options){
     },
 
     self.renderTree = function(dataList, ele, level){
-        if(!dataList){
+        if(!dataList || (self.config.showLevel && level > self.config.showLevel)){
             return;
         }
 

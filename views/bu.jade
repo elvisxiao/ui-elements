@@ -15,14 +15,18 @@ block content
       
                 button#btnSetVal.btn.btn-primary 设置值
 
-        .mt20 BU只能选一个
+        .mt20 BU只能选一个 - limited = 1
             div
                 #buSelect2.w800
 
-        .mt20 BU只能选最后一级别
+        .mt20 BU只能选最后一级别 - onlyLast = true
             div
                 #buSelect3.w800
 
+        .mt20 自定义选择显示的级别(显示第一级别) - showLevel = 1
+            div
+                #buSelect4.w800
+        
         code 
             pre.
                 var slc1, slc2, slc3;
@@ -44,9 +48,13 @@ block content
                         container: '#buSelect3',
                         onlyLast: true
                     });
+
+                    slc4 = new oc.BUSelect({
+                        dataList: res,
+                        container: '#buSelect4',
+                        showLevel: 1
+                    });
                 })
-
-
 
                 $('#btnGetVal').on('click', function(){
                     var val = slc1.getResult().join(',') || '别逗我，你还没选';
@@ -84,6 +92,12 @@ block content
                 dataList: res,
                 container: '#buSelect3',
                 onlyLast: true
+            });
+
+            slc4 = new oc.BUSelect({
+                dataList: res,
+                container: '#buSelect4',
+                showLevel: 1
             });
         })
 
