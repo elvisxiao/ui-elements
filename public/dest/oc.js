@@ -1384,10 +1384,15 @@ var FileView = function(options){
         reader.onload = function(e){
             $('input[type="file"]').replaceWith($('<input type="file" accept=".csv">'));
             var content = reader.result;
+            if(content.indexOf('�') !== -1){
+                reader.readAsText(file, "GB2312");
+                return;
+            }
             self._formatFileContent(content);
             cb();
         }
         
+        // reader.readAsText(file, "GB2312");
         reader.readAsText(file);
     }
     
@@ -2523,6 +2528,8 @@ var Tree = function(options){
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();
 			self.dragEle = $(this);
+			//firefox兼容----
+            e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.setData("dragEle", e.target);
 		})
 		.on('dragenter', '.zTreeItem>p', function(e){
 			e.stopPropagation();
@@ -3231,6 +3238,8 @@ var TreeOriganization = function(options){
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();
 			self.dragEle = $(this);
+			//firefox兼容----
+            e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.setData("dragEle", e.target);
 		})
 		.on('dragenter', 'ul', function(e){
 			e.stopPropagation();

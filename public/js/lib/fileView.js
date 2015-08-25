@@ -137,10 +137,15 @@ var FileView = function(options){
         reader.onload = function(e){
             $('input[type="file"]').replaceWith($('<input type="file" accept=".csv">'));
             var content = reader.result;
+            if(content.indexOf('�') !== -1){
+                reader.readAsText(file, "GB2312");
+                return;
+            }
             self._formatFileContent(content);
             cb();
         }
         
+        // reader.readAsText(file, "GB2312");
         reader.readAsText(file);
     }
     

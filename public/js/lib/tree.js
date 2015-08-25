@@ -237,6 +237,8 @@ var Tree = function(options){
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();
 			self.dragEle = $(this);
+			//firefox兼容----
+            e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.setData("dragEle", e.target);
 		})
 		.on('dragenter', '.zTreeItem>p', function(e){
 			e.stopPropagation();
