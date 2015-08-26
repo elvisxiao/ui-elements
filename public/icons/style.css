@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-7uiclg');
-	src:url('fonts/icomoon.eot?#iefix-7uiclg') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?-7uiclg') format('truetype'),
-		url('fonts/icomoon.woff?-7uiclg') format('woff'),
-		url('fonts/icomoon.svg?-7uiclg#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?lajg1m');
+	src:url('fonts/icomoon.eot?#iefixlajg1m') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?lajg1m') format('truetype'),
+		url('fonts/icomoon.woff?lajg1m') format('woff'),
+		url('fonts/icomoon.svg?lajg1m#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,6 +23,99 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-uniE64C:before {
+	content: "\e64c";
+}
+.icon-uniE64B:before {
+	content: "\e64b";
+}
+.icon-uniE64A:before {
+	content: "\e64a";
+}
+.icon-trashcan:before {
+	content: "\e640";
+}
+.icon-grid:before {
+	content: "\e66a";
+}
+.icon-list:before {
+	content: "\e642";
+}
+.icon-switch:before {
+	content: "\e64d";
+}
+.icon-uniE63F:before {
+	content: "\e63f";
+}
+.icon-user3:before {
+	content: "\e61a";
+}
+.icon-lock:before {
+	content: "\e639";
+}
+.icon-phone:before {
+	content: "\e646";
+}
+.icon-mail:before {
+	content: "\e61b";
+}
+.icon-heart:before {
+	content: "\e66d";
+}
+.icon-weather-stormy:before {
+	content: "\e670";
+}
+.icon-school:before {
+	content: "\e671";
+}
+.icon-th-small:before {
+	content: "\e66b";
+}
+.icon-zoom-in:before {
+	content: "\e61d";
+}
+.icon-input-checked:before {
+	content: "\e63b";
+}
+.icon-home-outline:before {
+	content: "\e64f";
+}
+.icon-input-checked-outline:before {
+	content: "\e63c";
+}
+.icon-power-outline:before {
+	content: "\e650";
+}
+.icon-shopping-cart:before {
+	content: "\e651";
+}
+.icon-settings:before {
+	content: "\e652";
+}
+.icon-checkbox-checked:before {
+	content: "\e63d";
+}
+.icon-comment:before {
+	content: "\e63e";
+}
+.icon-phone2:before {
+	content: "\e648";
+}
+.icon-tablet:before {
+	content: "\e649";
+}
+.icon-laptop:before {
+	content: "\e647";
+}
+.icon-diamond:before {
+	content: "\e653";
+}
+.icon-earth:before {
+	content: "\e64e";
+}
+.icon-trashcan2:before {
+	content: "\e641";
+}
 .icon-flow-tree:before {
 	content: "\e678";
 }
@@ -131,98 +224,8 @@
 .icon-facebook2:before {
 	content: "\e638";
 }
-.icon-uniE64C:before {
-	content: "\e64c";
-}
-.icon-uniE64B:before {
-	content: "\e64b";
-}
-.icon-uniE64A:before {
-	content: "\e64a";
-}
-.icon-trashcan:before {
-	content: "\e640";
-}
-.icon-grid:before {
-	content: "\e66a";
-}
-.icon-list:before {
-	content: "\e642";
-}
-.icon-switch:before {
-	content: "\e64d";
-}
-.icon-uniE63F:before {
-	content: "\e63f";
-}
-.icon-user3:before {
-	content: "\e61a";
-}
-.icon-lock:before {
-	content: "\e639";
-}
-.icon-phone:before {
-	content: "\e646";
-}
-.icon-mail:before {
-	content: "\e61b";
-}
-.icon-heart:before {
-	content: "\e66d";
-}
-.icon-weather-stormy:before {
-	content: "\e670";
-}
-.icon-school:before {
-	content: "\e671";
-}
-.icon-th-small:before {
-	content: "\e66b";
-}
-.icon-zoom-in:before {
-	content: "\e61d";
-}
-.icon-input-checked:before {
-	content: "\e63b";
-}
-.icon-home-outline:before {
-	content: "\e64f";
-}
-.icon-input-checked-outline:before {
-	content: "\e63c";
-}
-.icon-power-outline:before {
-	content: "\e650";
-}
-.icon-shopping-cart:before {
-	content: "\e651";
-}
-.icon-settings:before {
-	content: "\e652";
-}
-.icon-checkbox-checked:before {
-	content: "\e63d";
-}
-.icon-comment:before {
-	content: "\e63e";
-}
-.icon-phone2:before {
-	content: "\e648";
-}
-.icon-tablet:before {
-	content: "\e649";
-}
-.icon-laptop:before {
-	content: "\e647";
-}
-.icon-diamond:before {
-	content: "\e653";
-}
-.icon-earth:before {
-	content: "\e64e";
-}
-.icon-trashcan2:before {
-	content: "\e641";
+.icon-bolt:before {
+	content: "\e67d";
 }
 .icon-edit:before {
 	content: "\e673";
@@ -631,6 +634,12 @@
 }
 .icon-price-tags:before {
 	content: "\e936";
+}
+.icon-rocket:before {
+	content: "\e67e";
+}
+.icon-lightning:before {
+	content: "\e67f";
 }
 .icon-star:before {
 	content: "\f005";
