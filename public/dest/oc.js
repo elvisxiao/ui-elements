@@ -492,6 +492,20 @@ var BUSelect = function(options){
         return ret;
     }
 
+    self.getResultModels = function(){
+        var ids = this.getResult();
+
+        var models = [];
+        
+        self.config.dataList.map(function(one){
+            if($.inArray(one.descendant, ids) !== -1){
+                models.push(one);
+            }
+        })
+
+        return models;
+    }
+
     self.setResult = function(list, disabled){
         var repoItem = $(self.config.container).html('');
         if(! (list && list.length) ){

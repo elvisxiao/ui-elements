@@ -12,6 +12,8 @@ block content
 
             p.mt20
                 button#btnGetVal.btn.btn-primary.mr30 获取值
+
+                button#btnGetModel.btn.btn-primary.mr30 获取Models
       
                 button#btnSetVal.btn.btn-primary 设置值
 
@@ -30,7 +32,7 @@ block content
         code 
             pre.
                 var slc1, slc2, slc3;
-
+    
                 $.getJSON('/mockData/bu.json', function(res){
                     slc1 = new oc.BUSelect({
                         dataList: res,
@@ -55,12 +57,15 @@ block content
                         showLevel: 1
                     });
                 })
+    
 
+                //获取选中id
                 $('#btnGetVal').on('click', function(){
                     var val = slc1.getResult().join(',') || '别逗我，你还没选';
                     alert(val);
                 })
-
+                
+                //设置选中
                 $('#btnSetVal').on('click', function(){
                     var val = slc1.setResult([
                         {
@@ -72,6 +77,12 @@ block content
                             name: 'Battery Case'
                         }
                     ]);
+                })
+                //获取选中模型
+                $("#btnGetModel").on('click', function(){
+                    var models = slc1.getResultModels();
+                    console.log('你选择的models', models);
+                    alert('查看Console，里面有你想要的');
                 })
     script.
         var slc1, slc2, slc3;
@@ -117,4 +128,10 @@ block content
                     name: 'Battery Case'
                 }
             ]);
+        })
+        
+        $("#btnGetModel").on('click', function(){
+            var models = slc1.getResultModels();
+            console.log('你选择的models', models);
+            alert('查看Console，里面有你想要的');
         })
