@@ -52,9 +52,9 @@ ZDate.format = function(date, format){
     }
 
     if(!format){
-        return model.year + '-' + model.month + '-' + model.date;
+        format = 'yyyy-mm-dd';
     }
-
+    
     for(var key in reg){
         var param = reg[key];
         var val = model[param];
