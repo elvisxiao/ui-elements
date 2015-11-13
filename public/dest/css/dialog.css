@@ -1,7 +1,7 @@
 
-/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 1 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 1 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .zLoading {
   position: fixed;
   top: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-/* line 12 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 12 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips,
 .zDialog {
   border: 6px solid #ddd;
@@ -31,12 +31,12 @@
   box-sizing: border-box;
 }
 
-/* line 27 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 27 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips {
   left: 50%;
 }
 
-/* line 29 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 29 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips .icon-close {
   position: absolute;
   right: 0;
@@ -49,12 +49,12 @@
   cursor: pointer;
 }
 
-/* line 39 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 39 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips .icon-close:hover {
   color: #444;
 }
 
-/* line 42 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 42 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips:after,
 .zDialog .zDialogTitle {
   box-sizing: border-box;
@@ -73,7 +73,7 @@
   font-size: 16px;
 }
 
-/* line 57 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 57 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips:before {
   content: "!";
   font-size: 24px;
@@ -90,13 +90,13 @@
   margin-right: 15px;
 }
 
-/* line 71 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 71 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .zDialog:before,
 .zDialog:after {
   display: none;
 }
 
-/* line 73 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 73 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .zDialog .zDialogTitle>.close {
   position: absolute;
   display: block;
@@ -108,7 +108,7 @@
   top: 0;
 }
 
-/* line 82 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 82 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .zDialogCover:after {
   content: "";
   position: fixed;
@@ -122,18 +122,18 @@
   z-index: 999;
 }
 
-/* line 93 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 93 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .zDialog {
   top: 0;
   opacity: 0;
 }
 
-/* line 96 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 96 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips.confirm:before {
   display: none;
 }
 
-/* line 98 : /Users/elvis/bitbucket/ocui/public/css/dialog.styl */
+/* line 98 : /Users/elvis/code/ocui/public/css/dialog.styl */
 .tips.confirm:after {
   content: "Message";
 }

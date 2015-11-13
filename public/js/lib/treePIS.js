@@ -166,7 +166,7 @@ var TreePIS = function(options){
 				li.find('[name="name"]').focus();
 				return;
 			}
-
+			
 			i.removeClass('icon-checkmark').addClass('zLoadingIcon');
 			li.removeClass('zTreeItemDes');
 			
@@ -192,7 +192,7 @@ var TreePIS = function(options){
 			e.stopPropagation();
 			$('.treeRightContainer').removeClass('active');
 			var li = $(this).parents('.zTreeItem:eq(0)').addClass('active');
-
+			
 			var data = li.data();
 			if(data.level < 3){
 				var ul = li.find('>ul');

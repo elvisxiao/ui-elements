@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?5p6xmk');
-	src:url('fonts/icomoon.eot?#iefix5p6xmk') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?5p6xmk') format('truetype'),
-		url('fonts/icomoon.woff?5p6xmk') format('woff'),
-		url('fonts/icomoon.svg?5p6xmk#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?ylq3hi');
+	src:url('fonts/icomoon.eot?ylq3hi#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?ylq3hi') format('truetype'),
+		url('fonts/icomoon.woff?ylq3hi') format('woff'),
+		url('fonts/icomoon.svg?ylq3hi#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,6 +23,18 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-arrow-bottom-right:before {
+	content: "\e680";
+}
+.icon-arrow-top-right:before {
+	content: "\e681";
+}
+.icon-arrow-right3:before {
+	content: "\e682";
+}
+.icon-pointer:before {
+	content: "\e683";
+}
 .icon-uniE64C:before {
 	content: "\e64c";
 }
@@ -695,15 +707,7 @@
 .icon-tags:before {
 	content: "\e675";
 }
-.icon-arrow-bottom-right:before {
-	content: "\e680";
+.icon-uniE60D:before {
+	content: "\e684";
 }
-.icon-arrow-top-right:before {
-	content: "\e681";
-}
-.icon-arrow-right3:before {
-	content: "\e682";
-}
-.icon-pointer:before {
-	content: "\e683";
-}
+

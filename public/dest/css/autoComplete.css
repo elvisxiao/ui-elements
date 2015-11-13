@@ -1,7 +1,7 @@
 
-/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 2 : /Users/elvis/bitbucket/ocui/public/css/autoComplete.styl */
+/* line 2 : /Users/elvis/code/ocui/public/css/autoComplete.styl */
 .zAutoComplete {
   position: absolute;
   display: inline-block;
@@ -15,14 +15,14 @@
   line-height: 20px;
 }
 
-/* line 13 : /Users/elvis/bitbucket/ocui/public/css/autoComplete.styl */
+/* line 13 : /Users/elvis/code/ocui/public/css/autoComplete.styl */
 .zAutoComplete li {
   padding: 3px 20px;
   cursor: pointer;
   color: #666;
 }
 
-/* line 18 : /Users/elvis/bitbucket/ocui/public/css/autoComplete.styl */
+/* line 18 : /Users/elvis/code/ocui/public/css/autoComplete.styl */
 .zAutoComplete li.active {
   background: #428bca;
   color: #fff;

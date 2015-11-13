@@ -1,4 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// var progress = require('./progress');
+var dialog = require('./dialog');
+var security = require('./security');
 /**
 * @file 用于Rest结构的Ajax交互，提交的数据均为application/json类型
 * @author Elvis
@@ -31,8 +34,8 @@ var Ajax = {}
 @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入
 */
+
 Ajax._send = function(url, method, data, cbOk, cbError){
-    var self = this;
     var params = {
         url: url,
         type: "GET",
@@ -45,23 +48,26 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         params.type = method;
     }
     if(data){
+        data = security.removeXss(data);
+        
         params.data = JSON.stringify(data);
     }
 
     params.success = function(res){
+        // progress.done();
         cbOk(res);
     }
     if(cbError){
         params.error = function(res){
+            res.status === 404 && Ajax.cb404 && Ajax.cb404();
+            // progress.done();
             cbError(res);
         }
-        // $.ajax(params, cbOk, cbError).done(cbOK).fail(cbError);
     }
     else{
-        params.error = self.error;
-        // $.ajax(params, cbOk, cbError).done(cbOk).fail(self.error);
+        params.error = Ajax.error;
     }
-
+    // progress.start();
     $.ajax(params);
 },
 
@@ -72,7 +78,7 @@ Ajax._send = function(url, method, data, cbOk, cbError){
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
 Ajax.get = function(url, cbOk, cbError) {
-	this._send(url, null, null, cbOk, cbError);
+    this._send(url, null, null, cbOk, cbError);
 }
 
 /**
@@ -83,7 +89,7 @@ Ajax.get = function(url, cbOk, cbError) {
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
 Ajax.post = function(url, data, cbOk, cbError) {
-	this._send(url, "post", data, cbOk, cbError);
+    this._send(url, "post", data, cbOk, cbError);
 }
 
 /**
@@ -94,7 +100,7 @@ Ajax.post = function(url, data, cbOk, cbError) {
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
 Ajax.put = function(url, data, cbOk, cbError) {
-	this._send(url, "put", data, cbOk, cbError);
+    this._send(url, "put", data, cbOk, cbError);
 }
 
 /**
@@ -104,7 +110,7 @@ Ajax.put = function(url, data, cbOk, cbError) {
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
 Ajax.delete = function(url, cbOk, cbError) {
-	this._send(url, "delete", null, cbOk, cbError);
+    this._send(url, "delete", null, cbOk, cbError);
 }
 
 /**
@@ -112,14 +118,17 @@ Ajax.delete = function(url, cbOk, cbError) {
 * @param {object} res - HTTP Response,Ajax是服务器端返回的响应
 */
 Ajax.error = function(res){
-    oc.dialog.tips('Request error: ' + res.responseText);
-    console.log('Request error:', res);
+    // progress.done();
+    
+    res.status === 404 && Ajax.cb404 && Ajax.cb404();
+    dialog.tips('Request error:' + res.responseText.toString());
+    // console.log('Request error:', res);
 }
 
 module.exports = Ajax;
 
 
-},{}],2:[function(require,module,exports){
+},{"./dialog":5,"./security":11}],2:[function(require,module,exports){
 /*!
  * CSV-js: A JavaScript library for parsing CSV-encoded data.
  * Copyright (C) 2009-2013 Christopher Parker <http://www.cparker15.com/>
@@ -2117,7 +2126,7 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./sidebar":11,"./tree":12,"./treeDialogSelect":13,"./treeOrganization":14,"./treePIS":15,"./treeSelect":16,"./ui":17,"./uploader":18}],10:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./sidebar":12,"./tree":13,"./treeDialogSelect":14,"./treeOrganization":15,"./treePIS":16,"./treeSelect":17,"./ui":18,"./uploader":19}],10:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2198,6 +2207,33 @@ module.exports = LocalStorage;
 
 
 },{}],11:[function(require,module,exports){
+var Security = {};
+
+Security.removeXss = function(model){
+	for(var key in model){
+		var val = model[key];
+		if(!val){
+			continue;
+		}
+		if(typeof val === 'string'){
+			model[key] = val.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		}
+		else if(typeof val === 'object' && val.length){
+			for(var i = 0; i < val.length; i++){
+				var one = val[i];
+				Security.removeXss(one);
+			}
+		}
+		else if(typeof val === 'object'){
+			Security.removeXss(val);
+		}
+	}
+
+	return model;
+}
+
+module.exports = Security;
+},{}],12:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -2298,7 +2334,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -2723,7 +2759,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -3048,7 +3084,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -3770,7 +3806,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -3939,7 +3975,7 @@ var TreePIS = function(options){
 				li.find('[name="name"]').focus();
 				return;
 			}
-
+			
 			i.removeClass('icon-checkmark').addClass('zLoadingIcon');
 			li.removeClass('zTreeItemDes');
 			
@@ -3965,7 +4001,7 @@ var TreePIS = function(options){
 			e.stopPropagation();
 			$('.treeRightContainer').removeClass('active');
 			var li = $(this).parents('.zTreeItem:eq(0)').addClass('active');
-
+			
 			var data = li.data();
 			if(data.level < 3){
 				var ul = li.find('>ul');
@@ -4109,7 +4145,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -4421,7 +4457,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
 * @file 基本的、单个UI元素
 * @author Elvis
@@ -4817,7 +4853,7 @@ UI.popOverRemove = function(btn){
 }
 
 module.exports = UI;
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 

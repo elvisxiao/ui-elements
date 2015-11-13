@@ -1,14 +1,14 @@
 
-/* line 1 : /Users/elvis/bitbucket/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 2 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 2 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItem {
   font-size: 12px;
   width: 700px;
   border: 1px solid #ff0;
 }
 
-/* line 6 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 6 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItem label {
   display: inline-block;
   width: 80px;
@@ -16,27 +16,27 @@
   padding-right: 10px;
 }
 
-/* line 11 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 11 : /Users/elvis/code/ocui/public/css/tag.styl */
 
-/* line 12 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 12 : /Users/elvis/code/ocui/public/css/tag.styl */
 
-/* line 13 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 13 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItemHd p span {
   display: inline-block;
   width: 260px;
 }
 
-/* line 16 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 16 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItemHd p input {
   margin-right: 20px;
 }
 
-/* line 18 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 18 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItemBd {
   margin-top: 20px;
 }
 
-/* line 20 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 20 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItemBd textarea {
   width: 600px;
   max-width: 600px;
@@ -44,7 +44,7 @@
   max-height: 100px;
 }
 
-/* line 25 : /Users/elvis/bitbucket/ocui/public/css/tag.styl */
+/* line 25 : /Users/elvis/code/ocui/public/css/tag.styl */
 .tagItemBd li p span {
   display: inline-block;
   width: 338px;

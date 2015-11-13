@@ -146,23 +146,26 @@ p {
 	font-size: 16px;
 }
 .fs1 {
-	font-size: 32px;
+	font-size: 48px;
 }
 .fs2 {
-	font-size: 24px;
+	font-size: 32px;
 }
 .fs3 {
-	font-size: 22px;
+	font-size: 24px;
 }
 .fs4 {
-	font-size: 20px;
+	font-size: 22px;
 }
 .fs5 {
-	font-size: 16px;
+	font-size: 20px;
 }
 .fs6 {
-	font-size: 28px;
+	font-size: 16px;
 }
 .fs7 {
-	font-size: 48px;
+	font-size: 28px;
+}
+.fs8 {
+	font-size: 32px;
 }
