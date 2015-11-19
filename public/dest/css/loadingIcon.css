@@ -1,9 +1,7 @@
 
 /* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 
-/* line 1 : /Users/elvis/code/ocui/public/css/params.styl */
-
-/* line 7 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 5 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
 @-webkit-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -14,7 +12,7 @@
   }
 }
 
-/* line 11 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 9 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
 @-moz-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -25,7 +23,7 @@
   }
 }
 
-/* line 15 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 13 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
 @-o-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -36,34 +34,28 @@
   }
 }
 
-/* line 19 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 17 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
 .zLoadingIcon {
   font-family: 'icomoon';
   font-size: 25px;
   display: inline-block;
   color: #aaa;
   vertical-align: middle;
-  -webkit-animation: zLoading 1s linear infinite normal;
-  -moz-animation: zLoading 1s linear infinite normal;
-  -o-animation: zLoading 1s linear infinite normal;
   animation: zLoading 1s linear infinite normal;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
 
-/* line 32 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
+/* line 30 : /Users/elvis/code/ocui/public/css/loadingIcon.styl */
 .zLoadingIcon:before {
   content: "\e982";
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 @-moz-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -74,7 +66,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 @-webkit-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -85,7 +77,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 @-o-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -96,7 +88,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 @-ms-keyframes zLoading {
   0% {
     transform: rotate(0deg);
@@ -107,7 +99,7 @@
   }
 }
 
-/* line 3 : /Users/elvis/code/ocui/public/css/params.styl */
+/* line 1 : /Users/elvis/code/ocui/node_modules/grunt-contrib-stylus/node_modules/stylus/lib/functions/index.styl */
 @keyframes zLoading {
   0% {
     transform: rotate(0deg);

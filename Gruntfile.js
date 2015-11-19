@@ -83,10 +83,9 @@ module.exports = function(grunt) {
                 src: [ 'public/dest' ]
             },
             stylesheets: {
-                src: [ 'public/dest/**/*.css']
+                src: [ 'public/dest/**/oc.css']
             },
             scripts: {
-
                 src: [ 'public/dest/**/*.js', 'public/dest/doc/*']
             },
         },

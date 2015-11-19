@@ -17,16 +17,21 @@
 	oc.TreePIS = require('./treePIS');
 	oc.ajax = require('./ajax');
 	oc.date = require('./date');
-
-	
+	oc.Table = require('./table');
+	oc.tools = {
+		dojo: require('./toolsDojo')
+	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
-	if(cssPath){
+	if(cssPath) {
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 		cssPath = cssPath.replace('oc.css', 'icons/style.css');
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
-	else{
+	else {
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
+		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
+		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/icons/style.css'}).appendTo("head");
+
 	}
 })()

@@ -1,0 +1,93 @@
+$tableBorderColor = #e1e6eb
+
+table.ocTable
+    border 1px solid $tableBorderColor
+    font-size 12px
+    color #666
+    border-collapse initial !important
+    .cbxOcTable
+        position relative
+        top -3px
+    thead 
+        background #f5f6fa
+        color #999
+        font-weight normal
+        tr th 
+            font-weight normal
+            border-bottom 1px solid #e1e6eb
+            white-space nowrap
+            padding 0
+            height 34px
+            vertical-align middle
+            padding 0 8px
+            &[data-sort]
+                padding-right 18px
+                position relative
+                cursor pointer
+                &:hover
+                    background #f3f3f3
+                &::before, &::after
+                    content ""
+                    border-left 4px solid transparent
+                    border-right 4px solid transparent
+                    border-top 4px solid transparent
+                    border-bottom 6px solid #ddd
+                    position absolute
+                    right 5px
+                    top 5px
+                &::after
+                    top 17px
+                    border-top 6px solid #ddd
+                    border-bottom 0
+                &.sortUp
+                    &::after
+                        display none
+                    &::before
+                        border-bottom-color #7a80dd
+                &.sortDown
+                    &::before
+                        display none        
+                    &::after
+                        border-top-color #7a80dd
+    tbody, tfoot
+        tr 
+            td
+                border-bottom 1px solid $tableBorderColor
+                border-top 0
+    tbody
+        tr
+            &:hover
+                td 
+                    background #fafafa
+    tfoot 
+        vertical-align top
+        background #f5f6fa
+        .pagination
+            margin 0 10px
+            vertical-align top
+            li a 
+                border-radius 0 !important
+        span input 
+            padding 0
+            line-height 22px
+            border-color #ddd
+            height 22px
+            font-size 12px
+            text-align center
+        
+        nav 
+            float right
+            margin-top 0
+            width auto !important
+            border 0 !important
+            input, button
+                border-radius 0
+                height 30px
+                line-height 30px
+                padding 0
+                width 42px
+            button
+                font-size 12px
+                margin-left 5px
+                background $tableBorderColor
+        

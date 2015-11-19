@@ -331,7 +331,7 @@ var Uploader = function(options) {
 		}
 		else if(status === self.STATUS.failed){
 			// console.error('file "' + file.name + '" 失败:' + msg);
-			file.target.find('.zUploaderMsg').addClass('error').html('upload failed');
+			file.target.find('.zUploaderMsg').addClass('error').html('upload failed').attr('title', msg);
 		    file.status = 'failed';
 		}
 	}
@@ -405,6 +405,12 @@ var Uploader = function(options) {
     */
 	self._sendFileByFormData = function(file, cb){
 	    var xhr = new XMLHttpRequest();
+	    if(file.size === 0) {
+	    	self.setStatus(file, self.STATUS.failed, '文件大小为0');
+	    	cb();
+	    	return;
+	    }
+
 	    xhr.open('POST', self.config.uploadAction, true);
 		var data = new FormData();
 		data.append('file', file);
@@ -412,6 +418,9 @@ var Uploader = function(options) {
 
 		}
 		xhr.upload.onprogress = function(e){
+			if(e.lengthComputable) {
+		        var percentComplete = e.loaded / e.total;
+		    }
 			self._process(e.loaded, true);
 		}
 		xhr.upload.onerror = function(err){
@@ -421,7 +430,13 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status !== 200) {
+				self._process(0);	
+				self.setStatus(file, self.STATUS.failed, '文件传输中断:' + xhr.statusText);
+				cb();
 
+				return;
+			}
 			if(xhr.readyState == 4 && xhr.status == 200){  
 				self._process(file.size);  
 				file.response = JSON.parse(xhr.response);
@@ -455,7 +470,14 @@ var Uploader = function(options) {
 		}
 		var currentSize = self.uploadedSize + addSize;
 		if(addSize !== 0){
-			eleProcess.attr('data-count', currentSize).find('.zUploaderProcessInner').css('width', currentSize * 100 / self.queueSize + '%');
+			var width = 0;
+			if(self.queueSize !== 0) {
+				width = currentSize * 100 / self.queueSize;
+			}
+			if(width > 100) {
+				width = 100;
+			}
+			eleProcess.attr('data-count', currentSize).find('.zUploaderProcessInner').css('width', width + '%');
 		}
 		eleStatic.find('.zUploaderProcessText').html('( ' + (currentSize / 1000).toFixed(2) + ' KB / ' + (self.queueSize / 1000).toFixed(2)  + ' KB )');
 		if(isNotAppend !== true){
