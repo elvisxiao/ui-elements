@@ -25,6 +25,9 @@ var ZDate = {};
 * @returns {string} 格式化后的字符串
 */
 ZDate.format = function(date, format){
+    if(!date) {
+        return '';
+    }
     if(date.toString().indexOf('-') > 0){
         date = date.toString().replace(/-/g, '/');
     }

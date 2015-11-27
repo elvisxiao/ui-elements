@@ -2,15 +2,17 @@
  * @param  {string} param -- url or array list 
  * @return {object}
  */
-var Table = function(dataList) {
-
+var Table = function(dataList, total) {
 	this.pageNo = 1;    // 当前的页码数，默认为1
 	this.pageSize = 10; //单页显示行数，默认值为10
+    this.sortKey;
+    this.sortUp;
 
 	this.showSearchBox = false; // 是否显示搜索框 
 	this.showBtnExport = false; //是否显示导出按钮
     this.showCheckbox = false;
 
+    this.total = total; // 用于服务器端数据获取------
 	this.dataList = dataList;  //原始数据保存区
 	this.tdDataList = [];      //根据原始数据生成的Table数据
 
@@ -18,6 +20,7 @@ var Table = function(dataList) {
     this.filterTdDataList;    //根据搜索条件搜索出的td数据保存区
     this.pageData;        //当前页的数据
 
+    this.loadDataCallback; //服务器端加载数据的回调函数
     this.afterAppend;      //appendTo完成后调用
     this.afterLoadBody;   //数据重新加载后调用，一般在翻译，搜索后
 
@@ -169,6 +172,10 @@ var Table = function(dataList) {
     }
 
     self.getPageData = function() {
+        if(self.total) {
+            return self.dataList;
+        }
+
         var start = self.pageSize * (self.pageNo - 1);
         var dataList = self.filterDataList;
         var len = self.pageSize > dataList? dataList.length: self.pageSize;
@@ -204,7 +211,7 @@ var Table = function(dataList) {
         ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
         ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        var total = self.filterTdDataList.length;
+        var total = self.total || self.filterTdDataList.length;
         var totalPage = parseInt(total / self.pageSize);
         if(totalPage * self.pageSize < total) {
             totalPage ++;
@@ -287,10 +294,40 @@ var Table = function(dataList) {
         self.reloadFoot();
     }
 
+    //服务器端加载数据----------
+    self.loadData = function () {
+        self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        var params = {
+            pageNo: self.pageNo,
+            pageSize: self.pageSize
+        }
+        if(self.sortKey) {
+            params.orderBy = self.sortKey;
+            params.desc = self.sortUp? "asc": "desc";
+        }
+
+        self.loadDataCallback && self.loadDataCallback(params, function(dataList) {
+            self.dataList = dataList;
+            self.filterDataList = dataList;
+            self.rerender();
+        });
+    }
+
     self.bindFootEvents = function() {
-        self.table.on('click', 'tfoot .pagination li:not(.disabled, .active) a', function() {
+        self.table.on('click', 'tfoot .pagination li a', function(e) {
+            e.preventDefault();
             var a = $(this);
+            if(a.parent().hasClass('active') || a.parent().hasClass('disabled')) {
+                return;
+            }
             self.pageNo = parseInt(a.attr('data-page'));
+            //服务器端加载数据--------
+            if(self.total) {
+                self.loadData();
+
+                return;
+            }
+
             self.rerender();
         })
         .on('click', 'thead th[data-sort]', function() {
@@ -298,12 +335,24 @@ var Table = function(dataList) {
             th.parent().find('th').not(th).removeClass('sortUp').removeClass('sortDown');
             var key = th.attr('data-sort');
             var sortUp = true;
+
             if(th.hasClass('sortUp')) {
                 th.removeClass('sortUp').addClass('sortDown');
                 sortUp = false;
             }
             else{
                 th.removeClass('sortDown').addClass('sortUp');
+            }
+
+            self.pageNo = 1;
+
+            //服务器端加载数据--------
+            if(self.total) {
+                self.sortKey = key;
+                self.sortUp = sortUp;
+                self.loadData();
+
+                return;
             }
 
             self.filterTdDataList.sort(function(a, b) {
@@ -315,13 +364,19 @@ var Table = function(dataList) {
 
                 return sortUp? valA.localeCompare(valB) : valB.localeCompare(valA); 
             })
-            self.pageNo = 1;
             self.rerender();
         })
         .on('submit', 'tfoot form', function() {
             var form = self.table.find('tfoot form');
             self.pageSize = parseInt(form.find('input[name="pageSize"]').val());
             self.pageNo = parseInt(form.find('input[name="pageNo"]').val() || 1);
+
+            //服务器端加载数据--------
+            if(self.total) {
+                self.loadData();
+
+                return false;
+            }
 
             self.rerender();
 

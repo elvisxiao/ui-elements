@@ -52,6 +52,7 @@ var Uploader = function(options) {
 
 	this.config = {
 		container: 'body',
+		auto: false,
 		maxSize: 10,
 		uploadAction: '/upload',
 		postParams: {},
@@ -108,6 +109,9 @@ var Uploader = function(options) {
 		div.append('<span class="zUploaderControl"><span class="zUploaderFileBtn"><input type="file" multiple="multiple" />' + 
 			'<span class="zUploaderBtnText">继续添加</span></span><button class="zUploaderBtn" type="button">开始上传</button></span>');
 
+		if(self.config.auto) {
+			div.find('.zUploaderBtn').remove();
+		}
 		return div;
 	}
 
@@ -174,7 +178,7 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
-		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
 	}
 
 	/** 
@@ -187,12 +191,15 @@ var Uploader = function(options) {
 	self._pushFiles = function(files){
 		for(var i = 0; i < files.length; i++){
 			var file = files[i];
-			if($.inArray(file, self.files) > -1){
+			var finds = self.files.filter(function(oneFile) {
+				return oneFile.name == file.name && oneFile.lastModified == file.lastModified && oneFile.size == file.size;
+			})
+			if(finds.length > 0){
 				oc.dialog.tips(file.name + '文件已经存在');
 				continue; 
 			}
-			if(file.size > self.config.oneFileLimit){
-				oc.dialog.tips('文件' + file.name + '超出了最大限制');
+			if(file.size > self.config.oneFileLimit) {
+				oc.dialog.tips('文件' + file.name + '超出了最大限制（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
 				continue; 
 			}
 			
@@ -204,6 +211,11 @@ var Uploader = function(options) {
 			self.files.push(files[i]);
 		}
 		self.reloadList();
+
+		//自动上传
+		if(self.config.auto) {
+			self._upload();	
+		}
 	}
 
 	/** 
@@ -215,7 +227,7 @@ var Uploader = function(options) {
     */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
-			return alert('改文件当前不允许删除');
+			return alert('该文件当前不允许删除');
 		}
 		var file = self.files[index];
 		if(file.status === self.STATUS.success){
@@ -326,7 +338,9 @@ var Uploader = function(options) {
 		file.status = status;
 		if(status === self.STATUS.success){
 			file.target.find('.zUploaderMsg').addClass('ok').html('upload success');
-	    	file.target.find('.zUploaderItemHd').remove();
+			if(!self.deleteFile) {
+	    		file.target.find('.zUploaderItemHd').remove();
+			}
 	    	file.status = self.STATUS.success;
 		}
 		else if(status === self.STATUS.failed){
@@ -415,13 +429,14 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-
+			console.log('onload', data);
 		}
 		xhr.upload.onprogress = function(e){
-			if(e.lengthComputable) {
-		        var percentComplete = e.loaded / e.total;
-		    }
-			self._process(e.loaded, true);
+			self._process(e.loaded * file.size / e.total, true);
+			// if(e.lengthComputable) {
+		 //        var percentComplete = e.loaded / e.total;
+		 //    }
+			// self._process(e.loaded, true);
 		}
 		xhr.upload.onerror = function(err){
 			self._process(file.size);	
@@ -430,6 +445,9 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 3) {
+				console.log(xhr);
+			}
 			if(xhr.readyState == 4 && xhr.status !== 200) {
 				self._process(0);	
 				self.setStatus(file, self.STATUS.failed, '文件传输中断:' + xhr.statusText);
@@ -496,7 +514,6 @@ var Uploader = function(options) {
 			return model.status === self.STATUS.process;
 		});
 		if(processList.length > 0){
-
 			return alert('有文件正在上传，请稍后...');
 		}
 
@@ -514,10 +531,14 @@ var Uploader = function(options) {
 		// if(self.queueSize > 10000000){
 		// 	self.config.blobSize = 4000000;
 		// }
+		if(self.config.auto) {
+			self.ele.find('.zUploaderFileBtn').hide();
+		}
 		self._process(0);
 		var i = 0;
 		var uploadQueue = function(){
 			if(i === queueList.length){
+				self.ele.find('.zUploaderFileBtn').show();
 				self._setFootStatics();
 				self.config.callback && self.config.callback(self.files);
 				return;

@@ -68,6 +68,8 @@ block content
     script.
         var uploader = new oc.Uploader({
             container: '.fileContainer',
+            auto: true,
+            oneFileLimit: 1000 * 1024 * 1024,
             postParams: {
                 savePath: 'upload'
             },
@@ -79,6 +81,9 @@ block content
             },
             blobSize: 100
         })
+        uploader.deleteFile = function(file, cb) {
+            cb();
+        }
 
         uploader.files = [{
             name: 'test.jpg',
@@ -88,8 +93,5 @@ block content
             name: 'test2.jpg',
             status: uploader.STATUS.success
         }]
-        uploader.deleteFile = function(file){
-            console.log(file);
-        }
         uploader.reloadList();
         

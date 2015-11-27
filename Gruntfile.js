@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         cssmin: {
             build: {
                 files: {
-                    'public/dest/oc.css': [ 'public/dest/**/*.css' ]
+                    'public/dest/oc.css': [ 'public/dest/css/**/*.css']
                 }
             }
         },

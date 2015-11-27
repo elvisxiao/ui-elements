@@ -128,7 +128,7 @@ Ajax.error = function(res){
 module.exports = Ajax;
 
 
-},{"./dialog":5,"./security":11}],2:[function(require,module,exports){
+},{"./dialog":5,"./security":12}],2:[function(require,module,exports){
 /*!
  * CSV-js: A JavaScript library for parsing CSV-encoded data.
  * Copyright (C) 2009-2013 Christopher Parker <http://www.cparker15.com/>
@@ -634,6 +634,9 @@ var ZDate = {};
 * @returns {string} 格式化后的字符串
 */
 ZDate.format = function(date, format){
+    if(!date) {
+        return '';
+    }
     if(date.toString().indexOf('-') > 0){
         date = date.toString().replace(/-/g, '/');
     }
@@ -1152,6 +1155,33 @@ Dialog.close = function(ele){
     }
     
     doClose($(".zDialogCover"));
+}
+
+Dialog.tooltips = function(msg, ele) {
+    ele = $(ele);
+    var tips = $('<span class="zTooltips none">' + msg + '</span>');
+    tips.css({
+        position: 'fixed',
+        'font-size': '12px',
+        'background': '#fcf8e3', 
+        'border': '1px solid #faebcc',
+        'color': '#8a6d3b',
+        'z-index': '1001',
+        padding: '3px 10px'
+    })
+    tips.appendTo('body');
+    tips.fadeIn(500, function() {
+        setTimeout(function() {
+            tips.fadeOut(500, function() {
+                tips.remove();
+            })
+        }, 1500)
+    });
+
+    tips.css({
+        left: ele.offset().left - parseInt(tips.css('width')) - 20,
+        top: ele.offset().top
+    })
 }
 
 module.exports = Dialog;
@@ -2114,6 +2144,7 @@ module.exports = ImageCrop;
 	oc.ajax = require('./ajax');
 	oc.date = require('./date');
 	oc.Table = require('./table');
+	oc.location = require('./location');
 	oc.tools = {
 		dojo: require('./toolsDojo')
 	}
@@ -2126,12 +2157,12 @@ module.exports = ImageCrop;
 	else {
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/oc.css'}).appendTo("head");
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://ui.tinyp2p.com/dest/icons/style.css'}).appendTo("head");
-
+		
+		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/oc.css'}).appendTo("head");
+		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./sidebar":12,"./table":13,"./toolsDojo":14,"./tree":15,"./treeDialogSelect":16,"./treeOrganization":17,"./treePIS":18,"./treeSelect":19,"./ui":20,"./uploader":21}],10:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./location":11,"./sidebar":13,"./table":14,"./toolsDojo":15,"./tree":16,"./treeDialogSelect":17,"./treeOrganization":18,"./treePIS":19,"./treeSelect":20,"./ui":21,"./uploader":22}],10:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2212,6 +2243,51 @@ module.exports = LocalStorage;
 
 
 },{}],11:[function(require,module,exports){
+
+var Instance = {}
+
+Instance._generateString = function(params) {
+	if(typeof params === 'string') {
+		return params;
+	}
+	else if(typeof params === 'object') {
+		var arr = [];
+	    for(var key in params) {
+	    	arr.push(key + '=' + params[key]);
+	    }
+
+	    return arr.join('&');
+	}
+
+	return null;
+}
+
+Instance.setHash = function(hash, params) {
+    var searchStr = Instance._generateString(params);
+    var url = hash + (searchStr? '?' + searchStr : '');
+    var state = {
+	 	url : url
+	};
+
+	top.history.pushState(state, "", url);
+}
+
+Instance.setSearch = function(params) {
+	var searchStr = Instance._generateString(params);
+
+	location.search = '?' + searchStr;
+}
+
+Instance.setUrl = function(pathname, search, hash) {
+	var url = pathname;
+	var searchStr = Instance._generateString(search);
+
+}
+
+module.exports = Instance;
+
+
+},{}],12:[function(require,module,exports){
 var Security = {};
 
 Security.removeXss = function(model){
@@ -2238,7 +2314,7 @@ Security.removeXss = function(model){
 }
 
 module.exports = Security;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -2339,20 +2415,22 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * @param  {string} param -- url or array list 
  * @return {object}
  */
-var Table = function(dataList) {
-
+var Table = function(dataList, total) {
 	this.pageNo = 1;    // 当前的页码数，默认为1
 	this.pageSize = 10; //单页显示行数，默认值为10
+    this.sortKey;
+    this.sortUp;
 
 	this.showSearchBox = false; // 是否显示搜索框 
 	this.showBtnExport = false; //是否显示导出按钮
     this.showCheckbox = false;
 
+    this.total = total; // 用于服务器端数据获取------
 	this.dataList = dataList;  //原始数据保存区
 	this.tdDataList = [];      //根据原始数据生成的Table数据
 
@@ -2360,6 +2438,7 @@ var Table = function(dataList) {
     this.filterTdDataList;    //根据搜索条件搜索出的td数据保存区
     this.pageData;        //当前页的数据
 
+    this.loadDataCallback; //服务器端加载数据的回调函数
     this.afterAppend;      //appendTo完成后调用
     this.afterLoadBody;   //数据重新加载后调用，一般在翻译，搜索后
 
@@ -2511,6 +2590,10 @@ var Table = function(dataList) {
     }
 
     self.getPageData = function() {
+        if(self.total) {
+            return self.dataList;
+        }
+
         var start = self.pageSize * (self.pageNo - 1);
         var dataList = self.filterDataList;
         var len = self.pageSize > dataList? dataList.length: self.pageSize;
@@ -2546,7 +2629,7 @@ var Table = function(dataList) {
         ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
         ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        var total = self.filterTdDataList.length;
+        var total = self.total || self.filterTdDataList.length;
         var totalPage = parseInt(total / self.pageSize);
         if(totalPage * self.pageSize < total) {
             totalPage ++;
@@ -2629,10 +2712,40 @@ var Table = function(dataList) {
         self.reloadFoot();
     }
 
+    //服务器端加载数据----------
+    self.loadData = function () {
+        self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        var params = {
+            pageNo: self.pageNo,
+            pageSize: self.pageSize
+        }
+        if(self.sortKey) {
+            params.orderBy = self.sortKey;
+            params.desc = self.sortUp? "asc": "desc";
+        }
+
+        self.loadDataCallback && self.loadDataCallback(params, function(dataList) {
+            self.dataList = dataList;
+            self.filterDataList = dataList;
+            self.rerender();
+        });
+    }
+
     self.bindFootEvents = function() {
-        self.table.on('click', 'tfoot .pagination li:not(.disabled, .active) a', function() {
+        self.table.on('click', 'tfoot .pagination li a', function(e) {
+            e.preventDefault();
             var a = $(this);
+            if(a.parent().hasClass('active') || a.parent().hasClass('disabled')) {
+                return;
+            }
             self.pageNo = parseInt(a.attr('data-page'));
+            //服务器端加载数据--------
+            if(self.total) {
+                self.loadData();
+
+                return;
+            }
+
             self.rerender();
         })
         .on('click', 'thead th[data-sort]', function() {
@@ -2640,12 +2753,24 @@ var Table = function(dataList) {
             th.parent().find('th').not(th).removeClass('sortUp').removeClass('sortDown');
             var key = th.attr('data-sort');
             var sortUp = true;
+
             if(th.hasClass('sortUp')) {
                 th.removeClass('sortUp').addClass('sortDown');
                 sortUp = false;
             }
             else{
                 th.removeClass('sortDown').addClass('sortUp');
+            }
+
+            self.pageNo = 1;
+
+            //服务器端加载数据--------
+            if(self.total) {
+                self.sortKey = key;
+                self.sortUp = sortUp;
+                self.loadData();
+
+                return;
             }
 
             self.filterTdDataList.sort(function(a, b) {
@@ -2657,13 +2782,19 @@ var Table = function(dataList) {
 
                 return sortUp? valA.localeCompare(valB) : valB.localeCompare(valA); 
             })
-            self.pageNo = 1;
             self.rerender();
         })
         .on('submit', 'tfoot form', function() {
             var form = self.table.find('tfoot form');
             self.pageSize = parseInt(form.find('input[name="pageSize"]').val());
             self.pageNo = parseInt(form.find('input[name="pageNo"]').val() || 1);
+
+            //服务器端加载数据--------
+            if(self.total) {
+                self.loadData();
+
+                return false;
+            }
 
             self.rerender();
 
@@ -2712,7 +2843,7 @@ module.exports = Table;
 // define([], function() {
 //     return Table;
 // })
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 var Instance = {}
 
@@ -2729,7 +2860,7 @@ Instance.destroyByNode = function(node) {
 module.exports = Instance;
 
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -3154,7 +3285,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -3479,7 +3610,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -4201,7 +4332,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -4540,7 +4671,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -4852,7 +4983,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
 * @file 基本的、单个UI元素
 * @author Elvis
@@ -5248,7 +5379,7 @@ UI.popOverRemove = function(btn){
 }
 
 module.exports = UI;
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -5303,6 +5434,7 @@ var Uploader = function(options) {
 
 	this.config = {
 		container: 'body',
+		auto: false,
 		maxSize: 10,
 		uploadAction: '/upload',
 		postParams: {},
@@ -5359,6 +5491,9 @@ var Uploader = function(options) {
 		div.append('<span class="zUploaderControl"><span class="zUploaderFileBtn"><input type="file" multiple="multiple" />' + 
 			'<span class="zUploaderBtnText">继续添加</span></span><button class="zUploaderBtn" type="button">开始上传</button></span>');
 
+		if(self.config.auto) {
+			div.find('.zUploaderBtn').remove();
+		}
 		return div;
 	}
 
@@ -5425,7 +5560,7 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
-		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size/1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
 	}
 
 	/** 
@@ -5438,12 +5573,15 @@ var Uploader = function(options) {
 	self._pushFiles = function(files){
 		for(var i = 0; i < files.length; i++){
 			var file = files[i];
-			if($.inArray(file, self.files) > -1){
+			var finds = self.files.filter(function(oneFile) {
+				return oneFile.name == file.name && oneFile.lastModified == file.lastModified && oneFile.size == file.size;
+			})
+			if(finds.length > 0){
 				oc.dialog.tips(file.name + '文件已经存在');
 				continue; 
 			}
-			if(file.size > self.config.oneFileLimit){
-				oc.dialog.tips('文件' + file.name + '超出了最大限制');
+			if(file.size > self.config.oneFileLimit) {
+				oc.dialog.tips('文件' + file.name + '超出了最大限制（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
 				continue; 
 			}
 			
@@ -5455,6 +5593,11 @@ var Uploader = function(options) {
 			self.files.push(files[i]);
 		}
 		self.reloadList();
+
+		//自动上传
+		if(self.config.auto) {
+			self._upload();	
+		}
 	}
 
 	/** 
@@ -5466,7 +5609,7 @@ var Uploader = function(options) {
     */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
-			return alert('改文件当前不允许删除');
+			return alert('该文件当前不允许删除');
 		}
 		var file = self.files[index];
 		if(file.status === self.STATUS.success){
@@ -5577,7 +5720,9 @@ var Uploader = function(options) {
 		file.status = status;
 		if(status === self.STATUS.success){
 			file.target.find('.zUploaderMsg').addClass('ok').html('upload success');
-	    	file.target.find('.zUploaderItemHd').remove();
+			if(!self.deleteFile) {
+	    		file.target.find('.zUploaderItemHd').remove();
+			}
 	    	file.status = self.STATUS.success;
 		}
 		else if(status === self.STATUS.failed){
@@ -5666,13 +5811,14 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-
+			console.log('onload', data);
 		}
 		xhr.upload.onprogress = function(e){
-			if(e.lengthComputable) {
-		        var percentComplete = e.loaded / e.total;
-		    }
-			self._process(e.loaded, true);
+			self._process(e.loaded * file.size / e.total, true);
+			// if(e.lengthComputable) {
+		 //        var percentComplete = e.loaded / e.total;
+		 //    }
+			// self._process(e.loaded, true);
 		}
 		xhr.upload.onerror = function(err){
 			self._process(file.size);	
@@ -5681,6 +5827,9 @@ var Uploader = function(options) {
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 3) {
+				console.log(xhr);
+			}
 			if(xhr.readyState == 4 && xhr.status !== 200) {
 				self._process(0);	
 				self.setStatus(file, self.STATUS.failed, '文件传输中断:' + xhr.statusText);
@@ -5747,7 +5896,6 @@ var Uploader = function(options) {
 			return model.status === self.STATUS.process;
 		});
 		if(processList.length > 0){
-
 			return alert('有文件正在上传，请稍后...');
 		}
 
@@ -5765,10 +5913,14 @@ var Uploader = function(options) {
 		// if(self.queueSize > 10000000){
 		// 	self.config.blobSize = 4000000;
 		// }
+		if(self.config.auto) {
+			self.ele.find('.zUploaderFileBtn').hide();
+		}
 		self._process(0);
 		var i = 0;
 		var uploadQueue = function(){
 			if(i === queueList.length){
+				self.ele.find('.zUploaderFileBtn').show();
 				self._setFootStatics();
 				self.config.callback && self.config.callback(self.files);
 				return;

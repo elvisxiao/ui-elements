@@ -206,6 +206,33 @@ Dialog.close = function(ele){
     doClose($(".zDialogCover"));
 }
 
+Dialog.tooltips = function(msg, ele) {
+    ele = $(ele);
+    var tips = $('<span class="zTooltips none">' + msg + '</span>');
+    tips.css({
+        position: 'fixed',
+        'font-size': '12px',
+        'background': '#fcf8e3', 
+        'border': '1px solid #faebcc',
+        'color': '#8a6d3b',
+        'z-index': '1001',
+        padding: '3px 10px'
+    })
+    tips.appendTo('body');
+    tips.fadeIn(500, function() {
+        setTimeout(function() {
+            tips.fadeOut(500, function() {
+                tips.remove();
+            })
+        }, 1500)
+    });
+
+    tips.css({
+        left: ele.offset().left - parseInt(tips.css('width')) - 20,
+        top: ele.offset().top
+    })
+}
+
 module.exports = Dialog;
 
 
