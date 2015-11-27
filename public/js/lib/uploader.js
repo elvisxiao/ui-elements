@@ -429,22 +429,19 @@ var Uploader = function(options) {
 		var data = new FormData();
 		data.append('file', file);
 		xhr.upload.onload = function (e){
-			console.log('onload', data);
+			console.log('onload', e.loaded);
 		}
 		xhr.upload.onprogress = function(e){
+			console.log('process');
 			self._process(e.loaded * file.size / e.total, true);
-			// if(e.lengthComputable) {
-		 //        var percentComplete = e.loaded / e.total;
-		 //    }
-			// self._process(e.loaded, true);
 		}
 		xhr.upload.onerror = function(err){
 			self._process(file.size);	
-			// console.log('uploader error', err)
 			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
 			cb();
 		}
 		xhr.onreadystatechange = function(){
+			console.log('status change');
 			if(xhr.readyState == 3) {
 				console.log(xhr);
 			}
@@ -457,13 +454,20 @@ var Uploader = function(options) {
 			}
 			if(xhr.readyState == 4 && xhr.status == 200){  
 				self._process(file.size);  
-				file.response = JSON.parse(xhr.response);
-				if(file.response.flag === true){
-					self.setStatus(file, self.STATUS.success);	
+				try {
+					file.response = JSON.parse(xhr.response);
+					if(file.response.flag === true){
+						self.setStatus(file, self.STATUS.success);	
+					}
+					else{
+						self.setStatus(file, self.STATUS.failed);	
+					}
 				}
-				else{
+				catch(err) {
+					console.log('uploader未知错误', err);
 					self.setStatus(file, self.STATUS.failed);	
 				}
+
 				cb();
 		    }
 		}
@@ -487,14 +491,18 @@ var Uploader = function(options) {
 			eleProcesText = $('<span class="zUploaderProcessText"></span>').appendTo(eleStatic);
 		}
 		var currentSize = self.uploadedSize + addSize;
+		var maxSize = self.queueSize * 0.9;
+		if(currentSize > maxSize) {
+			currentSize = maxSize;
+		}
 		if(addSize !== 0){
 			var width = 0;
 			if(self.queueSize !== 0) {
 				width = currentSize * 100 / self.queueSize;
 			}
-			if(width > 100) {
-				width = 100;
-			}
+			// if(width > 90) {
+			// 	width = 90;
+			// }
 			eleProcess.attr('data-count', currentSize).find('.zUploaderProcessInner').css('width', width + '%');
 		}
 		eleStatic.find('.zUploaderProcessText').html('( ' + (currentSize / 1000).toFixed(2) + ' KB / ' + (self.queueSize / 1000).toFixed(2)  + ' KB )');
