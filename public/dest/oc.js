@@ -637,7 +637,7 @@ ZDate.format = function(date, format){
     if(!date) {
         return '';
     }
-    if(date.toString().indexOf('-') > 0){
+    if(date.toString().indexOf('-') > 0 && date.toString().length === 10){
         date = date.toString().replace(/-/g, '/');
     }
 
@@ -677,6 +677,53 @@ ZDate.format = function(date, format){
     }
 
     return format;
+}
+
+/**
+* 根据传入格式，返回UTC时间的毫秒数
+* @param {date} date 时间值 - 可以为Timespane
+* @returns {number} UTC时间毫秒数
+*/
+ZDate.getUTCTimespan = function(date) {
+    var date = new Date(date);
+    date = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), 
+        date.getUTCSeconds(), date.getUTCMilliseconds() );
+
+    return date.getTime();
+}
+
+/**
+* 根据传入格式，使用UTC时间格式化输出
+* 格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
+ZDate.formatUTC = function(date, format) {
+    if(!date) {
+        return '';
+    }
+    var date = ZDate.getUTCTimespan(date);
+    
+    return ZDate.format(date, format);
+}
+
+/**
+* 根据传入格式，使用PDT时间格式化输出
+* 格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
+ZDate.formatPDT = function(date, format) {
+    if(!date) {
+        return '';
+    }
+    var date = ZDate.getUTCTimespan(date);
+    
+    var pdtDate = date - 8 * 60 * 60000;
+    
+    return ZDate.format(date, format);
 }
 
 /**
