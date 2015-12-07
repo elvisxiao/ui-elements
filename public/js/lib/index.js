@@ -20,7 +20,8 @@
 	oc.Table = require('./table');
 	oc.location = require('./location');
 	oc.tools = {
-		dojo: require('./toolsDojo')
+		dojo: require('./toolsDojo'),
+		csv: require('./csvExport')
 	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath) {
