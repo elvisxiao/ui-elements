@@ -1,3 +1,4 @@
+var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
 * @author Elvis
@@ -391,5 +392,46 @@ UI.popOverRemove = function(btn){
         btn.next('.zPopOver').remove();
     }
 }
+
+UI.slide = function(width) {
+    var fixRight = $('<div class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
+    fixRight.appendTo(document.body);
+
+    setTimeout(function() {
+        if(!width) {
+            fixRight.addClass('active');   
+        }
+        else {
+            fixRight.prepend('<style>.zFixRight.active{width: ' + width + 'px;}</style>');
+            fixRight.addClass('active');
+        }
+    }, 50)
+    
+    fixRight.on('click', '.fixRightClose', function(e) {
+        fixRight.removeClass('active');
+        setTimeout(function() {
+            fixRight.remove();
+            toolsDojo.destroyByNode(fixRight.find('.fixRightBd')[0]);
+        }, 300)
+    })
+
+    return fixRight;
+}
+
+UI.destroySlide = function (ele) {
+    if(!ele) {
+        ele = $('.zFixRight');
+    }
+
+    ele.each(function() {
+        var one = $(this);
+        one.removeClass('active');
+        setTimeout(function() {
+            toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+            one.remove();
+        }, 300)
+    })
+}
+
 
 module.exports = UI;

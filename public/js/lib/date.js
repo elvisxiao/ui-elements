@@ -114,7 +114,33 @@ ZDate.formatPDT = function(date, format) {
     
     var pdtDate = date - 8 * 60 * 60000;
     
-    return ZDate.format(date, format);
+    return ZDate.format(pdtDate, format);
+}
+
+/**
+* 根据传入格式，格式必须为 '2015-12-12 13:01:01'
+* 格式化本地时间的Timespan
+* @param {str} 时间字符串 - '2015-01-01'、'2015-01-01 12'、 '2015-01-01 12:11'、'2015-01-01 12:12:12'格式
+* @returns {number} number timespan
+*/
+ZDate.getLocaleTimespan = function(str) {
+    if(!str || typeof str !== 'string') {
+        return null;
+    }
+
+    str = str.replace(/(^\s*)|(\s*$)/g, ""); 
+    if(str.length < 10) {
+        return null;
+    }
+
+    if(str.length === 10) { //2015-12-11格式
+        str += ' 00:00:00';
+    }
+    else if(str.length === 13) { //2015-12-11 12 格式
+        str += ':00:00';
+    }
+
+    return new Date(str).getTime();
 }
 
 /**

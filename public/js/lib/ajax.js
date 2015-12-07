@@ -118,7 +118,6 @@ Ajax.delete = function(url, cbOk, cbError) {
 */
 Ajax.error = function(res){
     // progress.done();
-    
     res.status === 404 && Ajax.cb404 && Ajax.cb404();
     dialog.tips('Request error:' + res.responseText.toString());
     // console.log('Request error:', res);

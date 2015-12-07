@@ -1,0 +1,40 @@
+.zFixRight
+    position fixed
+    right 0
+    width 0
+    top 0
+    bottom 0
+    overflow hidden
+    background #fff
+    box-shadow -3px 0 11px rgba(0,0,0,0.2)
+    z-index 10
+    transition all .3s ease-in-out
+    padding-top 40px
+    .fixRightHd
+        position absolute
+        top 0
+        left 0
+        right 0
+        height 40px
+        background #f5f6fa
+        padding-right 15px
+        i.icon-arrow-right
+            display inline-block
+            height 40px
+            line-height 40px
+            width 40px
+            text-align center
+            margin-right 5px
+            font-size 14px
+            cursor pointer
+    .fixRightBd
+        position absolute
+        top 40px
+        bottom 0
+        left 0
+        right 0
+        overflow auto
+        padding 15px
+        font-size 12px
+    &.active
+        width 800px

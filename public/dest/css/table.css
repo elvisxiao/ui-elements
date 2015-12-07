@@ -16,14 +16,20 @@ table.ocTable .cbxOcTable {
 }
 
 /* line 11 : /Users/elvis/code/ocui/public/css/table.styl */
+table.ocTable caption {
+  text-align: left;
+}
+
+/* line 13 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead {
   background: #f5f6fa;
   color: #999;
   font-weight: normal;
 }
 
-/* line 15 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 17 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th {
+  text-transform: capitalize;
   font-weight: normal;
   border-bottom: 1px solid #e1e6eb;
   white-space: nowrap;
@@ -33,19 +39,19 @@ table.ocTable thead tr th {
   padding: 0 8px;
 }
 
-/* line 23 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 26 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort] {
   padding-right: 18px;
   position: relative;
   cursor: pointer;
 }
 
-/* line 27 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 30 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort]:hover {
   background: #f3f3f3;
 }
 
-/* line 29 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 32 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort]::before,
 table.ocTable thead tr th[data-sort]::after {
   content: "";
@@ -58,77 +64,86 @@ table.ocTable thead tr th[data-sort]::after {
   top: 5px;
 }
 
-/* line 38 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 41 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort]::after {
   top: 17px;
   border-top: 6px solid #ddd;
   border-bottom: 0;
 }
 
-/* line 42 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 45 : /Users/elvis/code/ocui/public/css/table.styl */
 
-/* line 43 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 46 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort].sortUp::after {
   display: none;
 }
 
-/* line 45 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 48 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort].sortUp::before {
   border-bottom-color: #7a80dd;
 }
 
-/* line 47 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 50 : /Users/elvis/code/ocui/public/css/table.styl */
 
-/* line 48 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 51 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort].sortDown::before {
   display: none;
 }
 
-/* line 50 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 53 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable thead tr th[data-sort].sortDown::after {
   border-top-color: #7a80dd;
 }
 
-/* line 52 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 55 : /Users/elvis/code/ocui/public/css/table.styl */
 
-/* line 53 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 56 : /Users/elvis/code/ocui/public/css/table.styl */
 
-/* line 54 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 57 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tbody tr td,
 table.ocTable tfoot tr td {
   border-bottom: 1px solid #e1e6eb;
   border-top: 0;
 }
 
-/* line 57 : /Users/elvis/code/ocui/public/css/table.styl */
-
-/* line 58 : /Users/elvis/code/ocui/public/css/table.styl */
-
-/* line 59 : /Users/elvis/code/ocui/public/css/table.styl */
-
 /* line 60 : /Users/elvis/code/ocui/public/css/table.styl */
+table.ocTable tbody tr td .zLoadingIcon,
+table.ocTable tfoot tr td .zLoadingIcon {
+  font-size: 18px;
+  margin-right: 3px;
+  position: relative;
+  top: -1px;
+}
+
+/* line 65 : /Users/elvis/code/ocui/public/css/table.styl */
+
+/* line 66 : /Users/elvis/code/ocui/public/css/table.styl */
+
+/* line 67 : /Users/elvis/code/ocui/public/css/table.styl */
+
+/* line 68 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tbody tr:hover td {
   background: #fafafa;
 }
 
-/* line 62 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 70 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot {
   vertical-align: top;
   background: #f5f6fa;
 }
 
-/* line 65 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 73 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot .pagination {
   margin: 0 10px;
   vertical-align: top;
 }
 
-/* line 68 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 76 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot .pagination li a {
   border-radius: 0 !important;
 }
 
-/* line 70 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 78 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot span input {
   padding: 0;
   line-height: 22px;
@@ -138,7 +153,7 @@ table.ocTable tfoot span input {
   text-align: center;
 }
 
-/* line 78 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 86 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot nav {
   float: right;
   margin-top: 0;
@@ -146,7 +161,7 @@ table.ocTable tfoot nav {
   border: 0 !important;
 }
 
-/* line 83 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 91 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot nav input,
 table.ocTable tfoot nav button {
   border-radius: 0;
@@ -156,7 +171,7 @@ table.ocTable tfoot nav button {
   width: 42px;
 }
 
-/* line 89 : /Users/elvis/code/ocui/public/css/table.styl */
+/* line 97 : /Users/elvis/code/ocui/public/css/table.styl */
 table.ocTable tfoot nav button {
   font-size: 12px;
   margin-left: 5px;

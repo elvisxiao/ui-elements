@@ -119,7 +119,6 @@ Ajax.delete = function(url, cbOk, cbError) {
 */
 Ajax.error = function(res){
     // progress.done();
-    
     res.status === 404 && Ajax.cb404 && Ajax.cb404();
     dialog.tips('Request error:' + res.responseText.toString());
     // console.log('Request error:', res);
@@ -723,7 +722,33 @@ ZDate.formatPDT = function(date, format) {
     
     var pdtDate = date - 8 * 60 * 60000;
     
-    return ZDate.format(date, format);
+    return ZDate.format(pdtDate, format);
+}
+
+/**
+* 根据传入格式，格式必须为 '2015-12-12 13:01:01'
+* 格式化本地时间的Timespan
+* @param {str} 时间字符串 - '2015-01-01'、'2015-01-01 12'、 '2015-01-01 12:11'、'2015-01-01 12:12:12'格式
+* @returns {number} number timespan
+*/
+ZDate.getLocaleTimespan = function(str) {
+    if(!str || typeof str !== 'string') {
+        return null;
+    }
+
+    str = str.replace(/(^\s*)|(\s*$)/g, ""); 
+    if(str.length < 10) {
+        return null;
+    }
+
+    if(str.length === 10) { //2015-12-11格式
+        str += ' 00:00:00';
+    }
+    else if(str.length === 13) { //2015-12-11 12 格式
+        str += ':00:00';
+    }
+
+    return new Date(str).getTime();
 }
 
 /**
@@ -2463,35 +2488,33 @@ var Sidebar = function(dataList, container){
 
 module.exports = Sidebar;
 },{}],14:[function(require,module,exports){
+var toolsDojo = require('./toolsDojo');
+
 /**
  * @param  {string} param -- url or array list 
  * @return {object}
  */
-var Table = function(dataList, total) {
+var Table = function() {
 	this.pageNo = 1;    // 当前的页码数，默认为1
 	this.pageSize = 10; //单页显示行数，默认值为10
     this.sortKey;
     this.sortUp;
-
+    
 	this.showSearchBox = false; // 是否显示搜索框 
+    this.exportFile = '';
 	this.showBtnExport = false; //是否显示导出按钮
     this.showCheckbox = false;
 
-    this.total = total; // 用于服务器端数据获取------
-	this.dataList = dataList;  //原始数据保存区
-	this.tdDataList = [];      //根据原始数据生成的Table数据
-
-    this.filterDataList = dataList;      //根据条件查询出来的所有数据保存区, 暂时不用
-    this.filterTdDataList;    //根据搜索条件搜索出的td数据保存区
+    this.total = null; // 用于服务器端数据获取------
+    this.originDataList = null;
+	this.dataList = null;  //原始数据保存区
+    this.filterDataList = null;      //根据条件查询出来的所有数据保存区, 暂时不用
     this.pageData;        //当前页的数据
-
-    this.loadDataCallback; //服务器端加载数据的回调函数
-    this.afterAppend;      //appendTo完成后调用
-    this.afterLoadBody;   //数据重新加载后调用，一般在翻译，搜索后
-
-    this.filterFn;
-
-    this._timer; //定时器，私有对象
+    this.tdDataList = null;
+    this.filterTdDataList = null;
+    
+    this.ajaxCallback; //服务器端加载数据的回调函数
+    this.afterLoad;   //数据重新加载后调用，一般在翻页，搜索后
 
     this.table = $('<table class="table ocTable"></table>');
 	//表头的配置对象
@@ -2504,13 +2527,37 @@ var Table = function(dataList, total) {
 	};
 
 	var self = this;
-	
+
+    self.load = function(dataList, ajaxTotal) {
+        if(ajaxTotal) {
+            self.total = ajaxTotal;
+        }
+        self.originDataList = $.extend(true, [], dataList);
+
+        self.filterDataList = self.dataList = $.extend(true, [], dataList);
+
+        var body = self._renderBody();
+        var foot = self._renderFoot();
+        self.table.find('tbody').replaceWith(body);
+        self.table.find('tfoot').replaceWith(foot);
+
+        self._buildTdData();
+        self.filterDataList = self.dataList;
+
+        self.afterLoad && self.afterLoad();
+    }
+
+    self.loading = function() {
+        self.dataList = self.filterDataList = null;
+        self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon"></i> Loading ...</td></tr>');
+    }
+
 	//build Table的Caption部分
-	self.renderCaption = function() {
+	self._renderCaption = function() {
 		var caption = $('<caption></caption>');
         
         if(this.showBtnExport) {
-            caption.append('<button type="text" class="btnExport btn btn-info btn-sm fr">Export</button>');
+            caption.append('<button type="text" class="btnExport btn btn-gray btn-sm fr" style="margin-bottom: 5px;">Export</button>');
         }
         if(this.showSearchBox) {
             caption.append('<label class="form-inline w200"><input type="text" class="searchBox form-control input-sm" placeholder="Search here ..." /></label>');
@@ -2520,7 +2567,7 @@ var Table = function(dataList, total) {
 	}
 
 	//build Table的头部 -----
-	self.renderHead = function() {
+	self._renderHead = function() {
 		var thead = $('<thead><tr></tr></thead>');
 		var tr = thead.find('tr');
         if(self.showCheckbox) {
@@ -2557,44 +2604,33 @@ var Table = function(dataList, total) {
         }
         return val;
     }
+    
+    self._getVal = function(model, key) {
+        var arr = key.split('.');
+        var tdVal = model[key] !== undefined? model[key] : model;
+        if(arr.length > 1) {
+            for(var i = 0; i < arr.length; i++) {
+                tdVal = tdVal[arr[i]];
+                if(!tdVal) {
+                    break;
+                }
+            }
+        }
+        
+        return tdVal;
+    }
 
 	//build每一行的数据, 请根据实际情况复写----
 	self.renderTr = function(model) {
 		var tr = $('<tr></tr>');
         for(var key in self.headMapping) { 
             var arr = key.split('.');   //支持嵌套Model的render-----
-            var tdVal = model[key];
+            var tdVal = self._getVal(model, key);
             
             tr.append('<td>' + self._getDefault(tdVal) + '</td>');
         }
 
         return tr;
-	}
-
-	//根据headmapping生成一份表格数据---
-	self.buildTdData = function() {
-		self.tdDataList = [];
-
-		self.dataList.map(function(model) {
-            var one = {};
-            for(var key in self.headMapping) {
-                var arr = key.split('.');   //支持嵌套Model的render-----
-                var tdVal = model[key] !== undefined? model[key] : model;
-                if(arr.length > 1) {
-                    for(var i = 0; i < arr.length; i++) {
-                        tdVal = tdVal[arr[i]];
-                        if(!tdVal) {
-                            break;
-                        }
-                    }
-                }
-                one[key] = tdVal;
-            }
-
-            self.tdDataList.push(one);
-		})
-
-        self.filterTdDataList = self.tdDataList;
 	}
 
     self.filter = function(fn) {
@@ -2605,38 +2641,39 @@ var Table = function(dataList, total) {
         self.filterDataList = self.dataList.filter(function(model) {
             return fn(model);
         })
-        self.buildFilterTdData();
 
         self.pageNo = 1;
 
-        self.rerender();
+        self._reloadBody();
+        self._reloadFoot();
     }
 
-    //filterData改变的情况下，需要更新td数据
-    self.buildFilterTdData = function() {
-        self.filterTdDataList = [];
-
-        self.filterDataList.map(function(model) {
-            var one = {};
-            for(var key in self.headMapping) {
-                var arr = key.split('.');   //支持嵌套Model的render-----
-                var tdVal = model[key] || model;
-                if(arr.length > 1) {
-                    for(var i = 0; i < arr.length; i++) {
-                        tdVal = tdVal[arr[i]];
-                        if(!tdVal) {
-                            break;
-                        }
-                    }
-                }
-                one[key] = tdVal;
-            }
-
-            self.filterTdDataList.push(one);
+    //filterData改变的情况下，需要更新td数据, 暂时不用
+    self._buildTdData = function() {
+        self.dataList = self.dataList.map(function(model) {
+            self._setTrModel(model);
+            return model;
         })
     }
 
-    self.getPageData = function() {
+    self._setTrModel = function(model) {
+        var trModel = {};
+        var tr = self.renderTr(model);
+        var tds = tr.find('>td');
+        var i = 0;
+        for(var key in self.headMapping) {
+            var val = self._getVal(model, key);
+            trModel[key] = $(tds[i]).text();
+            if(typeof val === 'number') {
+                trModel[key] = parseFloat(trModel[key]);
+            }
+            i++;
+        }
+
+        model.trModel = trModel;
+    }
+
+    self._getPageData = function() {
         if(self.total) {
             return self.dataList;
         }
@@ -2649,12 +2686,17 @@ var Table = function(dataList, total) {
         return self.pageData;
     }
 
-    self.renderBody = function() {
+    self._renderBody = function() {
         var tbody = $('<tbody></tbody>');
 
-        if(self.filterDataList && self.filterDataList.length) {
-            var pageData = self.getPageData();
-            pageData.map(function(model) {
+        if(!self.filterDataList) {
+            tbody.append('<tr><td colspan="100"><i class="zLoadingIcon"></i> Loading ...</td></tr>');
+            return tbody;
+        }
+
+        if(self.filterDataList.length) {
+            self.pageData = self._getPageData();
+            self.pageData.map(function(model) {
                 var tr = self.renderTr(model);
                 if(self.showCheckbox) {
                     tr.prepend('<td><input type="checkbox" class="cbxOcTable"></td>');
@@ -2663,20 +2705,25 @@ var Table = function(dataList, total) {
             })
         }
         else {
-            tbody.append('<tr class="trEmpty"><td colspan="100">No data.</td></tr>');
+            self.pageData = [];
+            tbody.append('<tr class="trEmpty"><td colspan="100">No data</td></tr>');
         }
 
         return tbody;
     }
 
-    self.renderFoot = function() {
+    self._renderFoot = function() {
         var tfoot = $('<tfoot><tr><td colspan="100"><form><nav><ul class="pagination"></ul></nav></form></td></tr></tfoot>');
         var nav = tfoot.find('nav');
         var ul = tfoot.find('ul');
         ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
         ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        var total = self.total || self.filterTdDataList.length;
+        if(!self.dataList) {
+            return tfoot;
+        }
+
+        var total = self.total || self.filterDataList.length;
         var totalPage = parseInt(total / self.pageSize);
         if(totalPage * self.pageSize < total) {
             totalPage ++;
@@ -2717,13 +2764,13 @@ var Table = function(dataList, total) {
         return tfoot;
     }
 
-    self.render = function() {
-        self.buildTdData();
+    self._render = function() {
+        // self.buildTdData();
 
-        var caption = self.renderCaption();
-        var thead = self.renderHead();
-        var tbody = self.renderBody();
-        var foot = self.renderFoot();
+        var caption = self._renderCaption();
+        var thead = self._renderHead();
+        var tbody = self._renderBody();
+        var foot = self._renderFoot();
 
         self.table.html('').off('click');
         self.table.append(caption);
@@ -2731,36 +2778,31 @@ var Table = function(dataList, total) {
         self.table.append(tbody);
         self.table.append(foot);
 
-        self.bindEvents();
+        self._bindEvents();
     }
 
-    self.appendTo = function(ele) {
-        ele = $(ele);
-        self.render();
-        self.table.appendTo(ele);
+    self.placeAt = function(container) {
+        var container = $(container);
+        toolsDojo.destroyByNode(container[0]);
+        container.html('');
 
-        self.afterAppend && self.afterAppend();
-        self.afterLoadBody && self.afterLoadBody();
+        self._render();
+        self.table.appendTo(container);
     }
     
     //根据搜索条件、重新加载tbody中的数据----
-    self.reloadBody = function() {
-        var tbody = self.table.find('tbody').replaceWith(self.renderBody());
+    self._reloadBody = function() {
+        var tbody = self.table.find('tbody').replaceWith(self._renderBody());
 
-        self.afterLoadBody && self.afterLoadBody();
+        self.afterLoad && self.afterLoad();
     }
 
-    self.reloadFoot = function() {
-        self.table.find('tfoot').replaceWith(self.renderFoot());
-    }
-
-    self.rerender = function() {
-        self.reloadBody();
-        self.reloadFoot();
+    self._reloadFoot = function() {
+        self.table.find('tfoot').replaceWith(self._renderFoot());
     }
 
     //服务器端加载数据----------
-    self.loadData = function () {
+    self._loadData = function () {
         self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
         var params = {
             pageNo: self.pageNo,
@@ -2770,15 +2812,64 @@ var Table = function(dataList, total) {
             params.orderBy = self.sortKey;
             params.desc = self.sortUp? "asc": "desc";
         }
-
-        self.loadDataCallback && self.loadDataCallback(params, function(dataList) {
+        
+        self.ajaxCallback && self.ajaxCallback(params, function(dataList) {
             self.dataList = dataList;
-            self.filterDataList = dataList;
-            self.rerender();
+            self.pageNo = 1;
+            self._buildTdData();
+            self._reloadBody();
+            self._reloadFoot();
         });
     }
 
-    self.bindFootEvents = function() {
+    self.export = function(){
+        var text = this._renderExport();
+        var tempForm = document.createElement("form");
+        tempForm.id = "tempForm1";
+        tempForm.method = "post";
+        tempForm.action = '/product/owerp/util/csv.jsp';
+        tempForm.charset = "UTF-8";
+        var fileNameInput = document.createElement("input");
+        fileNameInput.type="hidden";
+        fileNameInput.name = "name";
+        fileNameInput.value = this.exportFile + '.csv';
+        tempForm.appendChild(fileNameInput);
+        var contentInput = document.createElement("input");
+        contentInput.type="hidden";
+        contentInput.name = "content";
+        contentInput.value = text;
+        tempForm.appendChild(contentInput);
+        document.body.appendChild(tempForm);
+        tempForm.submit();
+        document.body.removeChild(tempForm);
+    }
+
+    self._renderExport = function(){  // 导出数据默认调用方法，可以重写.....
+        var exportTable = "<table>";
+        var tHead = this._renderHead();
+        exportTable += tHead[0].outerHTML;
+        var tbody = $('<tbody></tbody>');
+        self.filterDataList.map(function(model) {
+            tbody.append(self.renderTr(model)[0]);
+        })
+        exportTable += tbody[0].outerHTML;
+        exportTable += '</table>';
+        table = $(exportTable);
+        table.find('[data-export="false"]').each(function(){
+            var index = $(this).index();
+            table.find('thead tr th:eq(' + index + ')').remove();
+            table.find('tbody tr').find('td:eq(' + index + ')').remove();
+        })
+        var text = table.html();
+        text = text.replace(/(<thead[^>]*>)|(<tbody[^>]*>)|(<\/thead>)|(<\/tbody>)|(<tr[^>]*>)/g, '');
+        text = text.replace(/(<th[^>]*>)|(<td[^>]*>)/g, '\"');
+        text = text.replace(/(<\/th>)|(<\/td>)/g, '\t\",');
+        text = text.replace(/,<\/tr>/g, '\n');
+        text = text.replace(/(<[^>]*>)|(<\/[^>]*>)/g, "");  //去除别的html标签
+        return text;
+    }
+
+    self._bindFootEvents = function() {
         self.table.on('click', 'tfoot .pagination li a', function(e) {
             e.preventDefault();
             var a = $(this);
@@ -2788,14 +2879,18 @@ var Table = function(dataList, total) {
             self.pageNo = parseInt(a.attr('data-page'));
             //服务器端加载数据--------
             if(self.total) {
-                self.loadData();
+                self._loadData();
 
                 return;
             }
 
-            self.rerender();
+            self._reloadBody();
+            self._reloadFoot();
         })
         .on('click', 'thead th[data-sort]', function() {
+            if(!self.dataList) {
+                return;
+            }
             var th = $(this);
             th.parent().find('th').not(th).removeClass('sortUp').removeClass('sortDown');
             var key = th.attr('data-sort');
@@ -2815,21 +2910,21 @@ var Table = function(dataList, total) {
             if(self.total) {
                 self.sortKey = key;
                 self.sortUp = sortUp;
-                self.loadData();
+                self._loadData();
 
                 return;
             }
 
-            self.filterTdDataList.sort(function(a, b) {
-                var valA = a[key];
-                var valB = b[key];
+            self.filterDataList.sort(function(a, b) {
+                var valA = a.trModel[key];
+                var valB = b.trModel[key];
                 if(typeof valA === 'number') {
                     return sortUp? valA - valB : valB - valA;
                 }
 
                 return sortUp? valA.localeCompare(valB) : valB.localeCompare(valA); 
             })
-            self.rerender();
+            self._reloadBody();
         })
         .on('submit', 'tfoot form', function() {
             var form = self.table.find('tfoot form');
@@ -2838,30 +2933,30 @@ var Table = function(dataList, total) {
 
             //服务器端加载数据--------
             if(self.total) {
-                self.loadData();
+                self._loadData();
 
                 return false;
             }
 
-            self.rerender();
+            self._reloadBody();
+            self._reloadFoot();
 
             return false;
         })
     }
 
-    self.bindEvents = function() {
+    self._bindEvents = function() {
         //search----
         self.table.off('input').on('input', 'caption .searchBox', function() {
             var searchStr = $.trim(this.value).toUpperCase();
-
             self.timer && clearTimeout(self.timer);
-
             self.timer = setTimeout(function(){
                 self.pageNo = 1;
-                self.filterTdDataList = self.tdDataList.filter(function(model) {
+                self.filterDataList = self.dataList.filter(function(model) {
                     var ret = false;
-                    for(var key in model) {
-                        if(model[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
+                    var trModel = model;
+                    for(var key in trModel) {
+                        if(trModel[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
                             ret = true;
                             break;
                         }
@@ -2870,7 +2965,8 @@ var Table = function(dataList, total) {
                     return ret;
                 })
 
-                self.reloadBody();
+                self._reloadBody();
+                self._reloadFoot();
             }, 500);
         })
         .off('click')
@@ -2880,17 +2976,17 @@ var Table = function(dataList, total) {
         .on('click', 'tbody input:checkbox.cbxOcTable', function() {
             self.table.find('thead input:checkbox.cbxOcTable').prop('checked', false);
         })
+        .on('click', 'caption .btnExport', function() {
+            self.export();
+        })
 
-        self.bindFootEvents();
+        self._bindFootEvents();
     }
 }
 
 
 module.exports = Table;
-// define([], function() {
-//     return Table;
-// })
-},{}],15:[function(require,module,exports){
+},{"./toolsDojo":15}],15:[function(require,module,exports){
 
 var Instance = {}
 
@@ -5031,6 +5127,7 @@ var TreeSelect = function(options){
 
 module.exports = TreeSelect;
 },{}],21:[function(require,module,exports){
+var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
 * @author Elvis
@@ -5425,8 +5522,49 @@ UI.popOverRemove = function(btn){
     }
 }
 
+UI.slide = function(width) {
+    var fixRight = $('<div class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
+    fixRight.appendTo(document.body);
+
+    setTimeout(function() {
+        if(!width) {
+            fixRight.addClass('active');   
+        }
+        else {
+            fixRight.prepend('<style>.zFixRight.active{width: ' + width + 'px;}</style>');
+            fixRight.addClass('active');
+        }
+    }, 50)
+    
+    fixRight.on('click', '.fixRightClose', function(e) {
+        fixRight.removeClass('active');
+        setTimeout(function() {
+            fixRight.remove();
+            toolsDojo.destroyByNode(fixRight.find('.fixRightBd')[0]);
+        }, 300)
+    })
+
+    return fixRight;
+}
+
+UI.destroySlide = function (ele) {
+    if(!ele) {
+        ele = $('.zFixRight');
+    }
+
+    ele.each(function() {
+        var one = $(this);
+        one.removeClass('active');
+        setTimeout(function() {
+            toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+            one.remove();
+        }, 300)
+    })
+}
+
+
 module.exports = UI;
-},{}],22:[function(require,module,exports){
+},{"./toolsDojo":15}],22:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 

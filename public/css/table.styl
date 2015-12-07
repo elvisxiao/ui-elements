@@ -8,11 +8,14 @@ table.ocTable
     .cbxOcTable
         position relative
         top -3px
+    caption 
+        text-align left
     thead 
         background #f5f6fa
         color #999
         font-weight normal
-        tr th 
+        tr th
+            text-transform capitalize
             font-weight normal
             border-bottom 1px solid #e1e6eb
             white-space nowrap
@@ -54,6 +57,11 @@ table.ocTable
             td
                 border-bottom 1px solid $tableBorderColor
                 border-top 0
+                .zLoadingIcon
+                    font-size 18px
+                    margin-right 3px
+                    position relative
+                    top -1px
     tbody
         tr
             &:hover
