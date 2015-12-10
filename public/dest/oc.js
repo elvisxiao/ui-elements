@@ -127,7 +127,7 @@ Ajax.error = function(res){
 module.exports = Ajax;
 
 
-},{"./dialog":5,"./security":12}],2:[function(require,module,exports){
+},{"./dialog":6,"./security":13}],2:[function(require,module,exports){
 /*!
  * CSV-js: A JavaScript library for parsing CSV-encoded data.
  * Copyright (C) 2009-2013 Christopher Parker <http://www.cparker15.com/>
@@ -605,7 +605,50 @@ var BUSelect = function(options){
 }
 
 module.exports = BUSelect;
-},{"./dropdown":6}],4:[function(require,module,exports){
+},{"./dropdown":7}],4:[function(require,module,exports){
+var csvExport=function(filename, rows) {
+    var processRow = function (row) {
+        var finalVal = '';
+        for (var j = 0; j < row.length; j++) {
+            var innerValue = row[j] === null ? '' : row[j].toString();
+            if (row[j] instanceof Date) {
+                innerValue = row[j].toLocaleString();
+            };
+            var result = innerValue.replace(/"/g, '""');
+            if (result.search(/("|,|\n)/g) >= 0)
+                result = '"' + result + '"';
+            if (j > 0)
+                finalVal += ',';
+            finalVal += result;
+        }
+        return finalVal + '\n';
+    };
+
+    var csvFile = '';
+    for (var i = 0; i < rows.length; i++) {
+        csvFile += processRow(rows[i]);
+    }
+
+    var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+
+module.exports = csvExport;
+},{}],5:[function(require,module,exports){
  
 /**
 * @file 用于Javascript Date类型的扩展
@@ -1020,7 +1063,7 @@ ZDate.weekPicker = function(ipt){
 
 
 module.exports = ZDate;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
 * @file 以遮盖形式弹出错误提示，对话框等
 * @author Elvis Xiao
@@ -1260,7 +1303,7 @@ module.exports = Dialog;
 
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = {
     show: function(target, title, content, defaultDirect) {
         var target = $(target);
@@ -1369,7 +1412,7 @@ module.exports = {
     }
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /** 
 * @file CSV文件预览与标记 
 * @author Elvis Xiao
@@ -1687,7 +1730,7 @@ var FileView = function(options){
 module.exports = FileView;
 
 
-},{"./asset/csv":2}],8:[function(require,module,exports){
+},{"./asset/csv":2}],9:[function(require,module,exports){
 /** 
 * @file 前端图片裁剪预览
 * @author Elvis Xiao
@@ -2195,7 +2238,7 @@ var ImageCrop = function(options){
 }
 
 module.exports = ImageCrop;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
 	window.oc = {};
@@ -2218,7 +2261,8 @@ module.exports = ImageCrop;
 	oc.Table = require('./table');
 	oc.location = require('./location');
 	oc.tools = {
-		dojo: require('./toolsDojo')
+		dojo: require('./toolsDojo'),
+		csv: require('./csvExport')
 	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath) {
@@ -2234,7 +2278,7 @@ module.exports = ImageCrop;
 		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/icons/style.css'}).appendTo("head");
 	}
 })()
-},{"./ajax":1,"./buSelect":3,"./date":4,"./dialog":5,"./fileView":7,"./imageCrop":8,"./localStorage":10,"./location":11,"./sidebar":13,"./table":14,"./toolsDojo":15,"./tree":16,"./treeDialogSelect":17,"./treeOrganization":18,"./treePIS":19,"./treeSelect":20,"./ui":21,"./uploader":22}],10:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./sidebar":14,"./table":15,"./toolsDojo":16,"./tree":17,"./treeDialogSelect":18,"./treeOrganization":19,"./treePIS":20,"./treeSelect":21,"./ui":22,"./uploader":23}],11:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2314,7 +2358,7 @@ LocalStorage.clear = function(){
 module.exports = LocalStorage;
 
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 
 var Instance = {}
 
@@ -2377,7 +2421,7 @@ Instance.setUrl = function(pathname, search, hash) {
 module.exports = Instance;
 
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var Security = {};
 
 Security.removeXss = function(model){
@@ -2404,7 +2448,7 @@ Security.removeXss = function(model){
 }
 
 module.exports = Security;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -2505,7 +2549,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 
 /**
@@ -3004,7 +3048,7 @@ var Table = function() {
 
 
 module.exports = Table;
-},{"./toolsDojo":15}],15:[function(require,module,exports){
+},{"./toolsDojo":16}],16:[function(require,module,exports){
 
 var Instance = {}
 
@@ -3021,7 +3065,7 @@ Instance.destroyByNode = function(node) {
 module.exports = Instance;
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -3446,7 +3490,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -3771,7 +3815,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -4493,7 +4537,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -4832,7 +4876,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -5144,7 +5188,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
@@ -5582,7 +5626,7 @@ UI.destroySlide = function (ele) {
 
 
 module.exports = UI;
-},{"./toolsDojo":15}],22:[function(require,module,exports){
+},{"./toolsDojo":16}],23:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -6169,4 +6213,4 @@ var Uploader = function(options) {
 }
 
 module.exports = Uploader;
-},{}]},{},[9]);
+},{}]},{},[10]);
