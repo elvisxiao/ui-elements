@@ -30,13 +30,31 @@ Instance.setHash = function(hash, params) {
 Instance.setSearch = function(params) {
 	var searchStr = Instance._generateString(params);
 
-	location.search = '?' + searchStr;
+	if(searchStr) {
+		var url = '?' + searchStr;
+		var state = {
+		 	url : url
+		};
+
+		top.history.pushState(state, "", url);
+	}
 }
 
 Instance.setUrl = function(pathname, search, hash) {
 	var url = pathname;
 	var searchStr = Instance._generateString(search);
+	if(searchStr) {
+		url += '?' + searchStr;
+	}
+	if(hash) {
+		url += hash;
+	}
+	
+	var state = {
+	 	url : url
+	};
 
+	top.history.pushState(state, "", url);
 }
 
 module.exports = Instance;
