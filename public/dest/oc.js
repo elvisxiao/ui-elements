@@ -2271,11 +2271,15 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
-		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
-		
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/oc.css'}).appendTo("head");
-		// $("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/icons/style.css'}).appendTo("head");
+		if(top.location.hastname === "local.oceanwing.com") {
+			$("<script>").attr({type: "text/javascript", src: 'http://http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
+		}
+		else {
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
+		}
 	}
 })()
 },{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./sidebar":14,"./table":15,"./toolsDojo":16,"./tree":17,"./treeDialogSelect":18,"./treeOrganization":19,"./treePIS":20,"./treeSelect":21,"./ui":22,"./uploader":23}],11:[function(require,module,exports){
