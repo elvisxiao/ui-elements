@@ -2694,7 +2694,7 @@ var Table = function() {
 
         return tr;
 	}
-
+    
     self.filter = function(fn) {
         if(!fn || typeof fn !== 'function') {
             return;
@@ -2724,10 +2724,12 @@ var Table = function() {
         var tds = tr.find('>td');
         var i = 0;
         for(var key in self.headMapping) {
-            var val = self._getVal(model, key);
-            trModel[key] = $(tds[i]).text();
-            if(typeof val === 'number') {
-                trModel[key] = parseFloat(trModel[key]);
+            // var val = self._getVal(model, key);
+            var val = $(tds[i]).text();
+            trModel[key] = val;
+            val = parseFloat(val);
+            if(!isNaN(val)) {
+                trModel[key] = val;
             }
             i++;
         }

@@ -1,3 +1,4 @@
 node_modules/
 public/upload/
 .DS_Store/
+public/dest/css
