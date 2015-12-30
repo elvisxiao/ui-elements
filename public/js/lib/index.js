@@ -30,8 +30,8 @@
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		if(top.location.hostname === "local.oceanwing.com") {
-			$("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
+		if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
+			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
 		}

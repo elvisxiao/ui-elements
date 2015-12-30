@@ -2271,8 +2271,8 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		if(top.location.hostname === "local.oceanwing.com") {
-			$("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
+		if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
+			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
 		}
@@ -2730,11 +2730,13 @@ var Table = function() {
         for(var key in self.headMapping) {
             // var val = self._getVal(model, key);
             var val = $(tds[i]).text();
-            trModel[key] = val;
-            val = parseFloat(val);
-            if(!isNaN(val)) {
-                trModel[key] = val;
+            // trModel[key] = val;
+
+            if(/^[1-9][0-9]*(\.)?[0-9]*$/.test(val)) {
+                val = parseFloat(val);
             }
+            trModel[key] = val;
+
             i++;
         }
 
@@ -2781,6 +2783,15 @@ var Table = function() {
     }
 
     self._renderFoot = function() {
+        if(self.pageNo) {
+            self.pageNo = parseInt(self.pageNo);
+        }
+        else {
+            self.pageNo = 1;
+        }
+        if(self.pageSize) {
+            self.pageSize = parseInt(self.pageSize);
+        }
         var tfoot = $('<tfoot><tr><td colspan="100"><form><nav><ul class="pagination"></ul></nav></form></td></tr></tfoot>');
         var nav = tfoot.find('nav');
         var ul = tfoot.find('ul');
@@ -2871,6 +2882,9 @@ var Table = function() {
 
     //服务器端加载数据----------
     self._loadData = function () {
+        if(!self.pageNo) {
+            self.pageNo = 1;
+        }
         self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
         var params = {
             pageNo: self.pageNo,
@@ -2883,7 +2897,9 @@ var Table = function() {
         
         self.ajaxCallback && self.ajaxCallback(params, function(dataList) {
             self.dataList = dataList;
-            self.pageNo = 1;
+            if(!self.pageNo) {
+                self.pageNo = 1;
+            }
             self._buildTdData();
             self._reloadBody();
             self._reloadFoot();
@@ -2990,7 +3006,7 @@ var Table = function() {
                     return sortUp? valA - valB : valB - valA;
                 }
 
-                return sortUp? valA.localeCompare(valB) : valB.localeCompare(valA); 
+                return sortUp? valA.toString().localeCompare(valB) : valB.toString().localeCompare(valA); 
             })
             self._reloadBody();
         })
