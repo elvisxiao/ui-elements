@@ -53,7 +53,7 @@ var Table = function() {
 
         self._buildTdData();
         self.filterDataList = self.dataList;
-
+        
         self.afterLoad && self.afterLoad();
     }
 

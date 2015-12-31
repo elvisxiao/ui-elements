@@ -2262,7 +2262,8 @@ module.exports = ImageCrop;
 	oc.location = require('./location');
 	oc.tools = {
 		dojo: require('./toolsDojo'),
-		csv: require('./csvExport')
+		csv: require('./csvExport'),
+		table: require('./toolsTable')
 	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath) {
@@ -2271,18 +2272,18 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
-			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
-		}
-		else {
+		// if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
+		// 	// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
+		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
+		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
+		// }
+		// else {
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
-		}
+		// }
 	}
 })()
-},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./sidebar":14,"./table":15,"./toolsDojo":16,"./tree":17,"./treeDialogSelect":18,"./treeOrganization":19,"./treePIS":20,"./treeSelect":21,"./ui":22,"./uploader":23}],11:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./sidebar":14,"./table":15,"./toolsDojo":16,"./toolsTable":17,"./tree":18,"./treeDialogSelect":19,"./treeOrganization":20,"./treePIS":21,"./treeSelect":22,"./ui":23,"./uploader":24}],11:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2609,7 +2610,7 @@ var Table = function() {
 
         self._buildTdData();
         self.filterDataList = self.dataList;
-
+        
         self.afterLoad && self.afterLoad();
     }
 
@@ -3088,6 +3089,91 @@ module.exports = Instance;
 
 
 },{}],17:[function(require,module,exports){
+var instance = {}
+
+var setThWidth = function(originTable){
+	var newTable = originTable.next('.zTableFixHead');
+	newTable.find('thead tr').each(function(i){
+		var tr = $(this);
+		var trOrigin = originTable.find('tr:eq(' + i + ')');
+		tr.find('th').each(function(j){
+			var th = $(this);
+			var thOrigin = trOrigin.find('th:eq(' + j + ')');
+			th.css('width', thOrigin.outerWidth());
+		})
+	})
+}
+
+var setStyle = function(originTable){
+	var newTable = originTable.next('.zTableFixHead');
+	var position = originTable.position();
+
+	newTable.css({
+		position: 'absolute',
+		left: position.left,
+		width: originTable.width(),
+		top:  position.top
+	})
+}
+
+var setScrollLeft = function(originTable){
+	var newTable = originTable.next('.zTableFixHead');
+
+	newTable.css({
+		left: originTable.position().left
+	})
+}
+
+instance.fixHead = function(eles){
+	eles = $(eles);
+	eles.each(function(){
+		var table = $(this);
+		
+		table.next('.zTableFixHead').remove();
+		newTable = $(this).clone().addClass('zTableFixHead');
+		newTable.find('tbody, tfoot').remove();
+
+		var originHead = table.find('thead');
+		table.after(newTable);
+
+		setThWidth(table);
+		setStyle(table);
+
+		table.parent().on('scroll', function(){
+			if(timer){
+				clearTimeout(timer);
+			}
+			else{
+				var timer = setTimeout(function(){
+					eles.each(function(){
+						var table = $(this);
+						setScrollLeft(table);
+					})
+				}, 100);
+			}
+		})
+	})
+
+	$(window).on('resize', function(){
+		if(timer){
+			clearTimeout(timer);
+		}
+		else{
+			var timer = setTimeout(function(){
+				eles.each(function(){
+					var table = $(this);
+					setThWidth(table);
+					setStyle(table);
+				})
+			}, 100);
+		}
+	})
+}
+
+
+module.exports = instance;
+
+},{}],18:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -3512,7 +3598,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -3837,7 +3923,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -4559,7 +4645,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -4898,7 +4984,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -5210,7 +5296,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
@@ -5648,7 +5734,7 @@ UI.destroySlide = function (ele) {
 
 
 module.exports = UI;
-},{"./toolsDojo":16}],23:[function(require,module,exports){
+},{"./toolsDojo":16}],24:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
