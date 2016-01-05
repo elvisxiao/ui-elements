@@ -21,7 +21,7 @@ var setStyle = function(originTable){
 		position: 'absolute',
 		left: position.left,
 		width: originTable.width(),
-		top:  position.top
+		top:  position.top + originTable.parent().scrollTop()
 	})
 }
 
