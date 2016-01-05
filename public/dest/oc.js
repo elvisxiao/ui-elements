@@ -3115,13 +3115,14 @@ var setThWidth = function(originTable){
 
 var setStyle = function(originTable){
 	var newTable = originTable.next('.zTableFixHead');
+	originTable.parent().scrollTop(0);
 	var position = originTable.position();
 
 	newTable.css({
 		position: 'absolute',
 		left: position.left,
 		width: originTable.width(),
-		top:  position.top + originTable.parent().scrollTop()
+		top:  position.top
 	})
 }
 
