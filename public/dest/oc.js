@@ -5703,7 +5703,8 @@ UI.popOverRemove = function(btn){
 }
 
 UI.slide = function(width) {
-    var fixRight = $('<div class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
+    var slideId = 'fixRight' + new Date().getTime();
+    var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
     fixRight.appendTo(document.body);
 
     setTimeout(function() {
@@ -5711,7 +5712,7 @@ UI.slide = function(width) {
             fixRight.addClass('active');   
         }
         else {
-            fixRight.prepend('<style>.zFixRight.active{width: ' + width + 'px;}</style>');
+            fixRight.prepend('<style>#' + slideId + '.zFixRight.active{width: ' + width + 'px;}</style>');
             fixRight.addClass('active');
         }
     }, 50)
