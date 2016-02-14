@@ -251,6 +251,7 @@ var Uploader = function(options) {
 	self._bindEvent = function(){
 		self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
 			self._pushFiles(this.files);
+			$(this).replaceWith(this.outerHTML);
 		}).on('click', '.zUploaderBtn', self._upload).on('click', '.zUploaderItemHd i', function(){
 			var fileItem = $(this).parents('.zUploaderItem');
 			var index = fileItem.index();
