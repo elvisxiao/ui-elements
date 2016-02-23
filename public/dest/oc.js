@@ -5962,7 +5962,7 @@ var Uploader = function(options) {
 		oneFileLimit: 10 * 1024 * 1024,
 		callback: null,
 		uploadOneCallback: null,
-		checkFileCallback: null
+		checkFileCallback: null //限制类型或者检测文件是否可用的回调--------
 	};
 
 	/** @property {function} deleteFile 对于已经上传完成的文件提供删除接口，如提供了，则文件可以被删除 */
@@ -6089,6 +6089,7 @@ var Uploader = function(options) {
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
 	}
 
+	//清除所有文件---
 	self.clear = function() {
 		self.files = [];
 		self.reloadList();
