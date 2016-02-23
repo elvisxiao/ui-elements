@@ -2257,6 +2257,7 @@ module.exports = ImageCrop;
 	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
+	oc.select = require('./select');
 	oc.TreeSelect = require('./treeSelect');
 	oc.BUSelect = require('./buSelect');
 	oc.TreeDialogSelect = require('./treeDialogSelect');
@@ -2292,7 +2293,7 @@ module.exports = ImageCrop;
 		// }
 	}
 })()
-},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./sidebar":14,"./table":15,"./toolsDojo":16,"./toolsTable":17,"./tree":18,"./treeDialogSelect":19,"./treeOrganization":20,"./treePIS":21,"./treeSelect":22,"./ui":23,"./uploader":24}],11:[function(require,module,exports){
+},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./select":14,"./sidebar":15,"./table":16,"./toolsDojo":17,"./toolsTable":18,"./tree":19,"./treeDialogSelect":20,"./treeOrganization":21,"./treePIS":22,"./treeSelect":23,"./ui":24,"./uploader":25}],11:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2463,6 +2464,160 @@ Security.removeXss = function(model){
 
 module.exports = Security;
 },{}],14:[function(require,module,exports){
+var dropdown = require('./dropdown');
+
+var instance = function(ele, showFilter){
+    initSelect(ele, showFilter);
+}
+
+var initSelect = function(ele, showFilter){
+    if(!ele){
+        ele = $('.zSlc');
+    }
+
+    ele.each(function(){
+        var slc = $(this);
+        divSlc = slc.next('.zSlcWrap');
+        var ipt = divSlc.find('input');
+        if(divSlc.length === 0){
+            divSlc = $('<div class="zSlcWrap"></div>');
+            ipt = $('<input class="zIpt" type="text" readonly/>').appendTo(divSlc).data('showFilter', true);
+            var position = slc.position();
+            divSlc.css({
+                position: 'relative',
+                display: slc.css('display'),
+                width: slc.outerWidth(),
+                height: slc.outerHeight()
+            })
+            slc.after(divSlc);
+        }
+        
+        var initVal = slc.val() || '';
+        if(initVal.join){
+            initVal = initVal.join(', ');
+        }
+        ipt.val(initVal || "");
+        slc.hide();
+    });
+}
+
+
+var initEvent = function(){
+    $(function(){
+        initSelect();
+        
+        $('body')
+        .on('click', function(){
+            dropdown.remove($('.zSlcBd').parents('.zDropdown'));
+        })
+        .off('click', '.zSlcWrap>input.zIpt')
+        .on('click', '.zSlcWrap>input.zIpt', function(e){
+        	e.stopPropagation();
+            var ele = $(this);
+            if(ele.data('zTarget') && ele.data('zTarget').length > 0){
+                dropdown.remove();
+            	return;
+            }
+
+            dropdown.remove();
+
+            var slcWrap = ele.parent();
+            var slc = slcWrap.prev('.zSlc');
+            var content = $('<div class="zSlcBd"></div>');
+
+            if(ele.data('showFilter')){
+                content.append('<div class="zFilter"><input type="text" class="zIpt w" /></div>').addClass('zSlcHasFilter');
+            }
+
+            slc.find('option, optgroup').each(function(){
+            	var item = $(this);
+                var p = $('<p data-val="' + item.attr('value') + '" class="' + item.attr('class') + '" style="' + item.attr('style') + '">' + item.html() + '</p>').appendTo(content);
+                if(this.nodeName === "OPTGROUP"){
+                    p.removeAttr('data-val').attr('disabled', 'disabled').attr('slcGroup', 'true').html(item.attr('label'));
+                }
+            	else{
+                    if(item.attr('disabled')){
+                        p.attr('disabled', item.attr('disabled'));
+                    }
+                    if(item[0].selected){
+                        p.attr('selected', item[0].selected? 'selected' : '');
+                    }
+                }
+            });
+
+            dropdown.show(ele, '', content[0].outerHTML);
+        })
+        .off('click', '.zSlcBd')
+        .on('click', '.zSlcBd', function(e){
+            e.stopPropagation();
+        })  
+        .off('input', '.zSlcBd>.zFilter>.zIpt')
+        .on('input', '.zSlcBd>.zFilter>.zIpt', function(){
+            var val = this.value.toUpperCase();
+            slcBd = $(this).parents('.zSlcBd');
+            var ps = slcBd.find('>p').hide();
+            for(var i = 0; i < ps.length; i++){
+                var oneP = $(ps[i]);
+                if(oneP.attr('disabled') || oneP.html().toUpperCase().indexOf(val) !== -1){
+                    oneP.show();
+                }
+            }
+        })
+        .off('click', '.zSlcBd>p')    
+        .on('click', '.zSlcBd>p', function(e){
+        	e.stopPropagation();
+        	var p = $(this);
+        	if(p.attr('disabled')){
+        		return;
+        	}
+
+        	var ipt = $(this).parents('.zDropdown').data('zTarget');
+        	var slc = ipt.parent().prev('.zSlc');
+        	
+        	var slcVal = p.attr('data-val');
+        	var slcOption = slc.find('option[value="' + slcVal + '"]');
+        	if(!slcVal || !slcOption.length){
+        		slcVal = p.text();
+        		slcOption = slc.find('option:contains("' + slcVal + '")').filter(function(){
+        			return this.innerText == slcVal;
+        		});
+        	}
+        	
+        	if(!slc.attr('multiple')){
+                ipt.val(slcVal);
+                slc.find('option').attr('selected', false);
+                slcOption.prop('selected', true);
+				dropdown.remove(ipt);
+                ipt.change();
+        	}
+        	else{
+        		if(p.attr('selected')){
+        			p.removeAttr('selected');
+        			slcOption[0].selected = false;
+                    slcOption.prop('selected', false);
+        		}
+        		else{
+        			p.attr('selected', 'selected');
+                    slcOption[0].selected = true;
+        			slcOption.prop('selected', true);
+        		}
+                var vals = slc.val();
+                if(vals){
+                    vals = vals.join(', ');
+                }
+                ipt.val(vals || '');
+                ipt.change();
+                slc.change();
+        	}
+        })
+    })  
+}
+
+initEvent();
+
+module.exports = instance;
+
+},{"./dropdown":7}],15:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -2563,7 +2718,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 
 /**
@@ -2808,7 +2963,7 @@ var Table = function() {
         ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
         ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        if(!self.dataList) {
+        if(!self.dataList || self.dataList.length == 0) {
             return tfoot;
         }
 
@@ -3080,7 +3235,7 @@ var Table = function() {
 
 
 module.exports = Table;
-},{"./toolsDojo":16}],16:[function(require,module,exports){
+},{"./toolsDojo":17}],17:[function(require,module,exports){
 
 var Instance = {}
 
@@ -3097,7 +3252,7 @@ Instance.destroyByNode = function(node) {
 module.exports = Instance;
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var instance = {}
 
 var setThWidth = function(originTable){
@@ -3183,7 +3338,7 @@ instance.fixHead = function(eles){
 
 module.exports = instance;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -3608,7 +3763,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -3933,7 +4088,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -4655,7 +4810,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -4994,7 +5149,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -5306,7 +5461,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
@@ -5745,7 +5900,7 @@ UI.destroySlide = function (ele) {
 
 
 module.exports = UI;
-},{"./toolsDojo":16}],24:[function(require,module,exports){
+},{"./toolsDojo":17}],25:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -5806,7 +5961,8 @@ var Uploader = function(options) {
 		postParams: {},
 		oneFileLimit: 10 * 1024 * 1024,
 		callback: null,
-		uploadOneCallback: null
+		uploadOneCallback: null,
+		checkFileCallback: null
 	};
 
 	/** @property {function} deleteFile 对于已经上传完成的文件提供删除接口，如提供了，则文件可以被删除 */
@@ -5926,7 +6082,16 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
+		
+		if(self.files.length < self.config.maxSize) {
+			self.ele.find('.zUploaderFoot .zUploaderFileBtn').show();
+		}
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
+	}
+
+	self.clear = function() {
+		self.files = [];
+		self.reloadList();
 	}
 
 	/** 
@@ -5955,8 +6120,15 @@ var Uploader = function(options) {
 				alert('超出了最大文件数量');
 				return false;
 			}
-			files[i].status = self.STATUS.waiting;
-			self.files.push(files[i]);
+
+			if(self.files.length >= self.config.maxSize - 1) {
+				self.ele.find('.zUploaderFoot .zUploaderFileBtn').hide();
+			}
+
+			if(!self.config.checkFileCallback || self.config.checkFileCallback(file)) {
+				files[i].status = self.STATUS.waiting;
+				self.files.push(files[i]);
+			}
 		}
 		self.reloadList();
 

@@ -242,7 +242,7 @@ var Table = function() {
         ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
         ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        if(!self.dataList) {
+        if(!self.dataList || self.dataList.length == 0) {
             return tfoot;
         }
 

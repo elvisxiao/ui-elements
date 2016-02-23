@@ -58,7 +58,8 @@ var Uploader = function(options) {
 		postParams: {},
 		oneFileLimit: 10 * 1024 * 1024,
 		callback: null,
-		uploadOneCallback: null
+		uploadOneCallback: null,
+		checkFileCallback: null
 	};
 
 	/** @property {function} deleteFile 对于已经上传完成的文件提供删除接口，如提供了，则文件可以被删除 */
@@ -178,7 +179,16 @@ var Uploader = function(options) {
 			file.target = zUploaderItem;
 			zUploaderList.append(zUploaderItem);
 		}
+		
+		if(self.files.length < self.config.maxSize) {
+			self.ele.find('.zUploaderFoot .zUploaderFileBtn').show();
+		}
 		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
+	}
+
+	self.clear = function() {
+		self.files = [];
+		self.reloadList();
 	}
 
 	/** 
@@ -207,8 +217,15 @@ var Uploader = function(options) {
 				alert('超出了最大文件数量');
 				return false;
 			}
-			files[i].status = self.STATUS.waiting;
-			self.files.push(files[i]);
+
+			if(self.files.length >= self.config.maxSize - 1) {
+				self.ele.find('.zUploaderFoot .zUploaderFileBtn').hide();
+			}
+
+			if(!self.config.checkFileCallback || self.config.checkFileCallback(file)) {
+				files[i].status = self.STATUS.waiting;
+				self.files.push(files[i]);
+			}
 		}
 		self.reloadList();
 
