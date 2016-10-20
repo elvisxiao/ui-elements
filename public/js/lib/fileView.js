@@ -16,6 +16,9 @@
     maxHeight: 400
 })
 */
+
+var dialog = require('./dialog.js');
+var ui = require('./ui.js');
 var FileView = function(options){
     /** @memberof FileView */
 
@@ -45,7 +48,10 @@ var FileView = function(options){
         container: 'body',
         canEdit: true,
         maxHeight: 800,
-        heads: []
+        heads: [],
+        removeEmptyLine: false,
+        afterLoad: null,
+        validHeads: null
     };
 
     for(var key in options){
@@ -75,8 +81,8 @@ var FileView = function(options){
     * @instance */
     self._renderNoFile = function(){
         var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
-        div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
-        div.append('<p>或将文件拖到这里, 暂仅支持CSV格式</p>');
+        div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv,.xls" /><span class="zUploaderBtnText">点击选择文件</span></div>');
+        div.append('<p>或将文件拖到这里, 暂仅支持CSV/XLS格式的文件</p>');
 
         return div;
     }
@@ -90,6 +96,8 @@ var FileView = function(options){
     self._bindEvent = function(){
         self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
             self._readFilesToTable(this.files[0]);
+            var ipt = self.ele.find('.zUploaderFileBtn input[type="file"]');
+            ipt.replaceWith(ipt[0].outerHTML);
         });
 
         self.ele.find('.zUploaderNoFile')[0].addEventListener("drop", function(e){
@@ -110,8 +118,8 @@ var FileView = function(options){
             dragenter: function(e){e.preventDefault();},
             dragover: function(e){e.preventDefault();},
         })
-
-        self.ele.on('blur', '.zFileTable tbody td input', function(){
+        
+        self.ele.on('change', '.zFileTable tbody td input', function(){
             var val = this.value;
             var ele = $(this);
             var td = ele.parent();
@@ -125,6 +133,79 @@ var FileView = function(options){
     }
 
     /**
+    * 根据文件类型分方式读取文件内容
+    * @method read
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView
+    * @instance
+    */
+    self.read = function(file, cb) {
+        //excel文件，使用服务器上传并读取---
+        if(file.name.indexOf('.csv') === -1) {
+            self.readXls(file, cb);
+        }
+        else {
+            self.readCsv(file, cb);
+        }
+    }
+
+
+
+    /**
+    * 读取Excel文件内容
+    * @method readXls
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView 
+    * @instance
+    */
+    self.readXls = function(file, cb){
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('POST', "/product/util/xlsReader.jsp", true);
+        var data = new FormData();
+        data.append('file', file);
+        xhr.upload.onerror = function(err){
+            oc.dialog.tips('上传文件时发生错误，请稍后再试');
+            ui.loading(self.ele, true);
+            cb();
+        }
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status !== 200) {
+                oc.dialog.tips('文件传输中断:' + xhr.statusText);
+                ui.loading(self.ele, true);
+                cb();
+                return;
+            }
+            if(xhr.readyState == 4 && xhr.status == 200) { 
+                ui.loading(self.ele, true);
+                try {
+                    self._dataList = JSON.parse(xhr.response);
+                    if(self.config.removeEmptyLine) {
+                        self._dataList = self._dataList.filter(function(one) {
+                            var isEmptyLine = true;
+                            for(var key in one) {
+                                if(one[key].toString().trim()) {
+                                    isEmptyLine = false;
+                                }
+                            }
+                            return !isEmptyLine;
+                        });
+                    }
+                    cb();
+                }
+                catch(err) {
+                    oc.dialog.tips('文件解析错误:' + err);
+                    cb();
+                }
+            }
+        }
+        ui.loading(self.ele);
+        xhr.send(data);
+    }
+
+    /**
     * 读取CSV文件内容
     * @method readCsv
     * @param {object} file - 需要读取的文件对象
@@ -134,18 +215,19 @@ var FileView = function(options){
     */
     self.readCsv = function(file, cb){
         var reader = new FileReader();
+        var tryGB2312 = false;
         reader.onload = function(e){
-            $('input[type="file"]').replaceWith($('<input type="file" accept=".csv">'));
+            $('input[type="file"]').replaceWith($('<input type="file" accept=".csv,.xls">'));
             var content = reader.result;
-            if(content.indexOf('�') !== -1){
+            if(content.indexOf('�') !== -1 && !tryGB2312){
                 reader.readAsText(file, "GB2312");
+                tryGB2312 = true;
                 return;
             }
             self._formatFileContent(content);
             cb();
         }
         
-        // reader.readAsText(file, "GB2312");
         reader.readAsText(file);
     }
     
@@ -157,7 +239,16 @@ var FileView = function(options){
     * @instance
     */
     self._formatFileContent = function(content){
-        var models = self.csv.parse(content);
+        var models = null;
+        try {
+            models = self.csv.parse(content);
+        }
+        catch(e) {
+            console.log('转换csv失败：', e);
+            dialog.tips('文件读取失败，请检查文件格式', -1);
+            return;
+        }
+
         var firstItem = models[0];
         var keys = [];
         for(var key in firstItem){
@@ -165,13 +256,22 @@ var FileView = function(options){
         }
         self._dataList = [];
         self._dataList.push(keys);
+
         for(var i = 0; i < models.length; i++){
             var item = models[i];
             var datas = [];
-            for(var key in item){
-                datas.push(item[key]);
+            var isEmptyLine = true;
+            for(var key in item) {
+                var value = $.trim(item[key]);
+                if(value) {
+                    isEmptyLine = false;
+                }
+                datas.push(value);
             }
-            self._dataList.push(datas);
+
+            if(!isEmptyLine || !self.config.removeEmptyLine) {
+                self._dataList.push(datas);
+            }
         }
     }
 
@@ -182,20 +282,55 @@ var FileView = function(options){
     * @memberof FileView
     * @instance
     */
+    self._removeEmptyCols = function(){
+        var keys = self._dataList[0].concat();
+        keys = keys.reverse();
+        var realLength = 0;
+        for(var i = 0; i < keys.length; i ++) {
+            if($.trim(keys[i]) || realLength !== 0) {
+                realLength ++;
+            }
+        }
+        keys.reverse();
+        self._dataList = self._dataList.map(function(one) {
+            return one.slice(0, realLength);
+        })
+    }
+
+    /**
+    * 根据文件内容生成用Table展示出来
+    * @method _readFilesToTable
+    * @param {object} file - 需要读取的文件对象
+    * @memberof FileView
+    * @instance
+    */
     self._readFilesToTable = function(file){
-        self.readCsv(file, function(){
+        self.read(file, function() {
             $('.zFileTableContainer').remove();
             var tableContainer = $('<div class="zFileTableContainer"><table class="zFileTable"></table></div>');
             if(self.config.maxHeight){
                 tableContainer.css('max-height', self.config.maxHeight + 'px');
             }
             var ret = tableContainer.find('.zFileTable');
-            if(self._dataList && self._dataList.length > 0){
+            if(self._dataList && self._dataList.length > 0) {
+                self._removeEmptyCols();
                 var keys = self._dataList[0];
+                if(self.config.validHeads && self.config.validHeads.length) {
+                    if(self.config.validHeads.length !== keys.length) {
+                        oc.dialog.tips("File head error: " + self.validHeads.join(','));
+                        return;
+                    }
+                    self.config.validHeads.map(function(key, index) {
+                        if(keys[index].toString().trim() !== key.toString().trim()) {
+                            oc.dialog.tips("File head error: " + self.config.validHeads.join(','));
+                            return;
+                        }
+                    });
+                }
                 var keysLen = keys.length;
                 var thead = $('<thead></thead>');
                 var tbody = $('<tbody></tbody>');
-                var theadTr = $('<tr><th></th></tr>').appendTo(thead);
+                var theadTr = $('<tr><th>NO.</th></tr>').appendTo(thead);
                 for(var i = 0; i < keysLen; i++){
                     theadTr.append('<th>' + keys[i] + '</th>');
                 }
@@ -204,7 +339,11 @@ var FileView = function(options){
                     var item = self._dataList[i];
                     var tr = $('<tr><td>' + i + '</td></tr>');
                     for(var j = 0; j < keysLen; j++){
-                        tr.append('<td data-val="true", data-index="' + i + ',' + j + '">' + $.trim(item[j]) + '</td>');
+                        var text = item[j];
+                        if(self.config.canEdit) {
+                            text = '<span class="tdSpan">' + text + '</span><input class="tdIpt" type="text" value="' + text + '" />'
+                        }
+                        tr.append('<td data-val="true", data-index="' + i + ',' + j + '">' + text + '</td>');
                     }
                     tbody.append(tr);
                 }
@@ -214,8 +353,8 @@ var FileView = function(options){
             var uploadList = self.ele.find('.zUploaderList');
             uploadList.find('.zFileTable').remove();
             tableContainer.appendTo(uploadList);
-
-            self.setEditTable(ret);
+            
+            self.config.afterLoad && self.config.afterLoad();
         })
     }
     

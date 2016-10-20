@@ -3,6 +3,7 @@
 	window.oc = {};
 	
 	oc.ui = require('./ui');
+	oc.algorithm = require('./algorithm');
 	oc.dialog = require('./dialog');
 	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
@@ -23,7 +24,9 @@
 	oc.tools = {
 		dojo: require('./toolsDojo'),
 		csv: require('./csvExport'),
-		table: require('./toolsTable')
+		table: require('./toolsTable'),
+		number: require('./toolsNumber'),
+		form: require('./toolsForm')
 	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath) {
@@ -32,14 +35,22 @@
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		// if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
-		// 	// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
-		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
-		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
-		// }
-		// else {
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
-		// }
+		if(location.href.indexOf('ocdebug') > -1) {
+			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/icons/style.css'}).appendTo("head");
+		}
+		else {
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css'}).appendTo("head");
+		}
 	}
+
+	window.z && (window.z = oc.dialog);
+	$(function() {
+		window.z && (window.z = oc.dialog);
+	})
+	setTimeout(function() {
+		window.z && (window.z = oc.dialog);
+	}, 1000)
 })()

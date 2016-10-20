@@ -1,0 +1,844 @@
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+
+@keyframes fadeInDown 
+    0% 
+        opacity 0
+        transform translate3d(0, -40px, 0)
+    100% 
+        opacity 1
+        transform none
+        
+@keyframes fadeInUp
+    0% 
+        opacity 0
+        transform translate3d(0, -5px, 0)
+    100% 
+        opacity 1
+        transform 0
+
+@keyframes spin
+    0% 
+        transform rotate(0deg)
+    100%
+        transform rotate(360deg)
+
+@keyframes spinPrimary
+    0% 
+        transform rotate(0deg)
+    50% 
+        color $primaray1
+    100% 
+        transform rotate(360deg)
+
+@keyframes spinInfo
+    0% 
+        transform rotate(0deg)
+    50% 
+        color $info1
+    100% 
+        transform rotate(360deg)
+
+@keyframes spinSuccess
+    0% 
+        transform rotate(0deg)
+    50% 
+        color $success1
+    100% 
+        transform rotate(360deg)
+
+@keyframes spinWarning
+    0% 
+        transform rotate(0deg)
+    50% 
+        color $warning1
+    100% 
+        transform rotate(360deg)
+        
+@keyframes spinDanger
+    0% 
+        transform rotate(0deg)
+    50% 
+        color $danger1
+    100% 
+        transform rotate(360deg)
+        
+// 进度条动画
+@keyframes progressStriped
+    0% 
+        background-position 0 
+    100% 
+        background-position 36px
+        
+// 从下方淡入
+.zFadeInDown
+    animation-name fadeInDown
+    animation-duration .15s
+
+// 从上方淡入
+.zFadeInUp
+    animation-name fadeInUp
+    animation-duration .15s
+
+// 旋转动画
+.zSpin:before
+    animation spin 0.8s linear infinite normal
+    display inline-block
+.zSpinPrimary:before
+    animation spinPrimary 0.8s linear infinite normal
+    display inline-block
+.zSpinInfo:before
+    animation spinInfo 0.8s linear infinite normal
+    display inline-block
+.zSpinSuccess:before
+    animation spinSuccess 0.8s linear infinite normal
+    display inline-block
+.zSpinWarning:before
+    animation spinWarning 0.8s linear infinite normal
+    display inline-block
+.zSpinDanger:before
+    animation spinDanger 0.8s linear infinite normal
+    display inline-block
+    
+//Bounce
+
+@keyframes bounce 
+    0%, 20%, 53%, 80%, 100% 
+        animation-timing-function cubic-bezier(0.215, 0.610, 0.355, 1.000)
+        transform translate3d(0,0,0)
+    40%, 43% 
+        animation-timing-function cubic-bezier(0.755, 0.050, 0.855, 0.060)
+        transform translate3d(0, -30px, 0)
+    70% 
+        animation-timing-function cubic-bezier(0.755, 0.050, 0.855, 0.060)
+        transform translate3d(0, -15px, 0)
+    90%
+        transform translate3d(0,-4px,0)
+.zBounce
+    animation-name bounce
+    transform-origin center bottom
+    animation-duration 1s
+
+@keyframes flash 
+    0%, 50%, 100% 
+        opacity 1
+    25%, 75% 
+        opacity 0
+.zFlash
+  animation-name flash
+  animation-duration 1s
+
+@keyframes pulse 
+    0% 
+        transform scale3d(1, 1, 1)
+    50% 
+        transform scale3d(1.25, 1.25, 1.25)
+    100%
+        transform scale3d(1, 1, 1)
+.zPulse 
+    animation-name pulse
+    animation-duration 1s
+
+@keyframes rubberBand 
+    0% 
+        transform scale3d(1, 1, 1)
+    30%
+        transform scale3d(1.25, 0.75, 1)
+    40% 
+        transform scale3d(0.75, 1.25, 1)
+    50% 
+        transform scale3d(1.15, 0.85, 1)
+    65% 
+        transform scale3d(.95, 1.05, 1)
+    75% 
+        transform scale3d(1.05, .95, 1)
+    100% 
+        transform scale3d(1, 1, 1)
+.zRubberBand
+    animation-name rubberBand
+    animation-duration 1s
+
+@keyframes shake 
+    0%, 100% 
+        transform translate3d(0, 0, 0)
+    10%, 30%, 50%, 70%, 90% 
+        transform translate3d(-10px, 0, 0)
+    20%, 40%, 60%, 80% 
+        transform translate3d(10px, 0, 0)
+.zShake 
+  animation-name shake
+  animation-duration 1s
+  
+
+@keyframes hinge 
+    0% 
+        transform-origin top left
+        animation-timing-function ease-in-out
+    20%, 60% 
+        transform rotate3d(0, 0, 1, 80deg)
+        transform-origin top left
+        animation-timing-function ease-in-out
+    40%, 80% 
+        transform rotate3d(0, 0, 1, 60deg)
+        transform-origin top left
+        animation-timing-function: ease-in-out
+        opacity 1
+    100% 
+        transform translate3d(0, 700px, 0)
+        opacity 0
+.zHinge 
+    animation-name hinge
+    animation-duration 1s
+
+@keyframes rollIn 
+    0% 
+        opacity 0
+        transform translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg)
+    100% 
+        opacity 1
+        transform none
+.zRollIn
+    animation-name rollIn
+    animation-duration 1s
+
+@keyframes rollOut 
+    0%
+        opacity 1
+    100% 
+        opacity 0
+        transform translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg)
+.zRollOut 
+    animation-name rollOut
+    animation-duration 1s
+
+  
+@keyframes swing 
+    20% 
+        transform rotate3d(0, 0, 1, 15deg)
+    40% 
+        transform rotate3d(0, 0, 1, -10deg)
+    60% 
+        transform rotate3d(0, 0, 1, 5deg)
+    80%     
+        transform rotate3d(0, 0, 1, -5deg)
+    100% 
+        transform rotate3d(0, 0, 1, 0deg)
+.zSwing
+    transform-origin top center
+    animation-name swing
+    animation-duration 1s
+
+@keyframes bounceIn 
+    0%, 20%, 40%, 60%, 80%, 100% 
+        animation-timing-function cubic-bezier(0.215, 0.610, 0.355, 1.000)
+    0% 
+        opacity 0
+        transform scale3d(.3, .3, .3)
+    20% 
+        transform scale3d(1.1, 1.1, 1.1)
+    40% 
+        transform scale3d(.9, .9, .9)
+    60% 
+        opacity 1
+        transform scale3d(1.03, 1.03, 1.03)
+    80%
+        transform: scale3d(.97, .97, .97);
+    100% 
+        opacity 1
+        transform scale3d(1, 1, 1)
+.zBounceIn 
+    animation-name bounceIn
+    animation-duration 1s
+
+@keyframes bounceInDown 
+    0%, 60%, 75%, 90%, 100% 
+        animation-timing-function cubic-bezier(0.215, 0.610, 0.355, 1.000)
+    0% 
+        opacity 0
+        transform translate3d(0, -3000px, 0)
+    60% 
+        opacity 1
+        transform translate3d(0, 25px, 0)
+    75%
+        transform translate3d(0, -10px, 0)
+    90% 
+        transform translate3d(0, 5px, 0)
+    100% 
+        transform none
+.zBounceInDown 
+    animation-name bounceInDown
+    animation-duration 1s
+
+@keyframes bounceInLeft 
+    0%, 60%, 75%, 90%, 100% 
+        animation-timing-function cubic-bezier(0.215, 0.610, 0.355, 1.000)
+    0% 
+        opacity 0
+        transform translate3d(-3000px, 0, 0)
+    60% 
+        opacity 1
+        transform translate3d(25px, 0, 0)
+    75% 
+        transform translate3d(-10px, 0, 0)
+    90% 
+        transform translate3d(5px, 0, 0)
+    100% 
+        transform none
+.zBounceInLeft
+    animation-name bounceInLeft
+    animation-duration 1s
+
+@keyframes bounceInRight 
+    0%, 60%, 75%, 90%, 100% 
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    0% 
+        opacity 0
+        transform translate3d(3000px, 0, 0)
+    60% 
+        opacity 1
+        transform translate3d(-25px, 0, 0)
+    75% 
+        transform translate3d(10px, 0, 0)
+    90% 
+        transform translate3d(-5px, 0, 0)
+    100% 
+        transform none
+.zBounceInRight
+    animation-name bounceInRight
+    animation-duration 1s
+
+@keyframes bounceInUp 
+    0%, 60%, 75%, 90%, 100% 
+        animation-timing-function cubic-bezier(0.215, 0.610, 0.355, 1.000)
+    0% 
+        opacity 0
+        transform translate3d(0, 3000px, 0)
+    60% 
+        opacity 1
+        transform translate3d(0, -20px, 0)
+    75% 
+        transform translate3d(0, 10px, 0)
+    90% 
+        transform translate3d(0, -5px, 0)
+    100% 
+        transform translate3d(0, 0, 0)
+.zBounceInUp
+    animation-name bounceInUp
+    animation-duration 1s
+    
+@keyframes bounceOut 
+    20% 
+        transform scale3d(.9, .9, .9)
+    50%, 55% 
+        opacity 1
+        transform scale3d(1.1, 1.1, 1.1)
+    100% 
+        opacity 0
+        transform scale3d(.3, .3, .3)
+.zBounceOut
+    animation-name bounceOut
+    animation-duration 1s
+    
+@keyframes bounceOutDown 
+    20% 
+        transform translate3d(0, 10px, 0)
+    40%, 45% 
+        opacity 1
+        transform translate3d(0, -20px, 0)
+    100% 
+        opacity 0
+        transform translate3d(0, 2000px, 0)
+.zBounceOutDown 
+    animation-name bounceOutDown
+    animation-duration 1s
+    
+@keyframes bounceOutLeft 
+  20% 
+    opacity 1
+    transform translate3d(20px, 0, 0)
+  100% 
+    opacity 0
+    transform translate3d(-2000px, 0, 0)
+.zBounceOutLeft
+    animation-name bounceOutLeft
+    animation-duration 1s
+    
+@keyframes bounceOutRight 
+    20% 
+        opacity 1
+        transform translate3d(-20px, 0, 0)
+    100% 
+        opacity 0
+        transform translate3d(2000px, 0, 0)
+.zBounceOutRight 
+    animation-name bounceOutRight
+    animation-duration 1s
+    
+@keyframes bounceOutUp 
+    20% 
+        transform translate3d(0, -10px, 0)
+    40%, 45% 
+        opacity 1
+        transform translate3d(0, 20px, 0)
+    100%
+        opacity 0
+        transform translate3d(0, -2000px, 0)
+.zBounceOutUp 
+    animation-name bounceOutUp
+    animation-duration 1s
+
+
+
+@keyframes fadeIn 
+    0% 
+        opacity 0
+    100% 
+        opacity 1
+.zFadeIn 
+    animation-name fadeIn
+    animation-duration 1s
+
+@keyframes fadeInDown 
+    0% 
+        opacity 0
+        transform translate3d(0, -100%, 0)
+    100% 
+        opacity 1
+        transform none
+.zFadeInDown 
+    animation-name fadeInDown
+    animation-duration 1s
+
+@keyframes fadeInLeft 
+    0% 
+        opacity 0
+        transform translate3d(-100%, 0, 0)
+    100% 
+        opacity 1
+        transform none
+.zFadeInLeft 
+    animation-name fadeInLeft
+    animation-duration 1s
+
+@keyframes fadeInRight 
+    0% 
+        opacity 0
+        transform translate3d(100%, 0, 0)
+    100% 
+        opacity 1
+        transform none
+.zFadeInRight 
+    animation-name fadeInRight
+    animation-duration 1s
+
+@keyframes fadeInUp 
+    0% 
+        opacity 0
+        transform translate3d(0, 100%, 0)
+    100% 
+        opacity 1
+        transform none
+.zFadeInUp 
+    animation-name fadeInUp
+    animation-duration 1s
+
+@keyframes fadeOut
+    0% 
+        opacity 1
+    100% 
+        opacity 0
+.zFadeOut
+    animation-name fadeOut
+    animation-duration 1s
+
+@keyframes fadeOutDown 
+    0% 
+        opacity 1
+    100% 
+        opacity 0
+        transform translate3d(0, 100%, 0)
+.zFadeOutDown 
+    animation-name fadeOutDown
+    animation-duration 1s
+
+@keyframes fadeOutLeft
+    0% 
+        opacity 1
+    100% 
+        opacity 0
+        transform translate3d(-100%, 0, 0)
+.zFadeOutLeft
+    animation-name fadeOutLeft
+    animation-duration 1s
+
+@keyframes fadeOutRight 
+    0% 
+        opacity 1
+    100% 
+        opacity 0
+        transform translate3d(100%, 0, 0)
+.zFadeOutRight 
+    animation-name fadeOutRight
+    animation-duration 1s
+
+@keyframes fadeOutUp 
+    0% 
+        opacity 1
+    100% 
+        opacity 0
+        transform translate3d(0, -100%, 0)
+.zFadeOutUp 
+    animation-name fadeOutUp
+    animation-duration 1s
+    
+
+
+@keyframes flip 
+    0% 
+        transform perspective(400px) rotate3d(0, 1, 0, -360deg)
+        animation-timing-function ease-out
+    40% 
+        transform perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg)
+        animation-timing-function ease-out
+    50% 
+        transform perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg)
+        animation-timing-function ease-in
+    80% 
+        transform perspective(400px) scale3d(.95, .95, .95)
+        animation-timing-function ease-in
+    100% 
+        transform perspective(400px)
+        animation-timing-function ease-in
+.zFlip 
+    backface-visibility visible
+    animation-name flip
+    animation-duration 1s
+
+@keyframes flipInX 
+    0% 
+        transform perspective(400px) rotate3d(1, 0, 0, 90deg)
+        animation-timing-function ease-in
+        opacity 0
+    40% 
+        transform perspective(400px) rotate3d(1, 0, 0, -20deg)
+        animation-timing-function ease-in
+    60% 
+        transform perspective(400px) rotate3d(1, 0, 0, 10deg)
+        opacity 1
+    80% 
+        transform perspective(400px) rotate3d(1, 0, 0, -5deg)
+    100% 
+        transform perspective(400px)
+.zFlipInX
+    backface-visibility visible !important
+    animation-name flipInX
+    animation-duration 1s
+
+
+@keyframes flipInY
+    0%
+        transform perspective(400px) rotate3d(0, 1, 0, 90deg)
+        animation-timing-function ease-in
+        opacity 0
+    40% 
+        transform perspective(400px) rotate3d(0, 1, 0, -20deg)
+        animation-timing-function ease-in
+    60% 
+        transform perspective(400px) rotate3d(0, 1, 0, 10deg)
+        opacity 1
+    80% 
+        transform perspective(400px) rotate3d(0, 1, 0, -5deg)
+    100%
+        transform perspective(400px)
+.zFlipInY
+    backface-visibility visible !important
+    animation-name flipInY
+    animation-duration 1s
+
+@keyframes flipOutX 
+    0% 
+        transform perspective(400px)
+    30% 
+        transform perspective(400px) rotate3d(1, 0, 0, -20deg)
+        opacity 1
+    100% 
+        transform perspective(400px) rotate3d(1, 0, 0, 90deg)
+        opacity 0
+.zFlipOutX
+    animation-name flipOutX
+    backface-visibility visible !important
+    animation-duration 1s
+
+@keyframes flipOutY 
+    0% 
+        transform perspective(400px)
+    30% 
+        transform perspective(400px) rotate3d(0, 1, 0, -15deg)
+        opacity 1
+    100% 
+        transform perspective(400px) rotate3d(0, 1, 0, 90deg)
+        opacity 0
+.zFlipOutY
+    backface-visibility visible !important
+    animation-name flipOutY
+    animation-duration 1s
+
+
+@keyframes rotateIn 
+    0%
+        transform-origin center
+        transform rotate3d(0, 0, 1, -200deg)
+        opacity 0
+    100% 
+        transform-origin center
+        transform none
+        opacity 1
+.zRotateIn
+    animation-name rotateIn
+    animation-duration 1s
+    
+@keyframes rotateInDownLeft 
+    0% 
+        transform-origin left bottom
+        transform rotate3d(0, 0, 1, -45deg)
+        opacity 0
+    100% 
+        transform-origin left bottom
+        transform none
+        opacity 1
+.zRotateInDownLeft 
+    animation-name rotateInDownLeft
+    animation-duration 1s
+
+@keyframes rotateInDownRight 
+    0% 
+        transform-origin right bottom
+        transform rotate3d(0, 0, 1, 45deg)
+        opacity 0
+    100% 
+        transform-origin right bottom
+        transform none
+        opacity 1
+.zRotateInDownRight 
+    animation-name rotateInDownRight
+    animation-duration 1s
+
+@keyframes rotateInUpLeft 
+    0% 
+        transform-origin left bottom
+        transform rotate3d(0, 0, 1, 45deg)
+        opacity 0
+    100% 
+        transform-origin left bottom
+        transform none
+        opacity 1
+.zRotateInUpLeft 
+    animation-name rotateInUpLeft
+    animation-duration 1s
+
+@keyframes rotateInUpRight 
+    0% 
+        transform-origin right bottom
+        transform rotate3d(0, 0, 1, -90deg)
+        opacity 0
+    100% 
+        transform-origin right bottom
+        transform none
+        opacity 1
+.zRotateInUpRight 
+    animation-name rotateInUpRight
+    animation-duration 1s
+
+@keyframes rotateOut 
+    0% 
+        transform-origin center
+        opacity 1
+    100% 
+        transform-origin center
+        transform rotate3d(0, 0, 1, 200deg)
+        opacity 0
+.zRotateOut 
+    animation-name rotateOut
+    animation-duration 1s
+
+@keyframes rotateOutDownLeft 
+    0%
+        transform-origin left bottom
+        opacity 1
+    100%
+        transform-origin left bottom
+        transform rotate3d(0, 0, 1, 45deg)
+        opacity 0
+.zRotateOutDownLeft 
+    animation-name rotateOutDownLeft
+    animation-duration 1s
+
+
+@keyframes rotateOutDownRight 
+    0% 
+        transform-origin right bottom
+        opacity 1
+    100% 
+        transform-origin right bottom
+        transform rotate3d(0, 0, 1, -45deg)
+        opacity 0
+.zRotateOutDownRight 
+    animation-name rotateOutDownRight
+    animation-duration 1s
+
+
+@keyframes rotateOutUpLeft 
+  0% 
+    transform-origin left bottom
+    opacity 1
+  100% 
+    transform-origin left bottom
+    transform rotate3d(0, 0, 1, -45deg)
+    opacity 0
+.zRotateOutUpLeft 
+    animation-name rotateOutUpLeft
+    animation-duration 1s
+
+
+@keyframes rotateOutUpRight 
+    0% 
+        transform-origin right bottom
+        opacity 1
+    100% 
+        transform-origin right bottom
+        transform rotate3d(0, 0, 1, 90deg)
+        opacity 0
+.zRotateOutUpRight
+    animation-name rotateOutUpRight
+    animation-duration 1s
+
+
+
+@keyframes zoomIn 
+    0% 
+        opacity 0
+        transform scale3d(.3, .3, .3)
+    50% 
+        opacity 1
+.zZoomIn 
+    animation-name zoomIn
+    animation-duration 1s
+    
+@keyframes zoomInDown 
+    0%
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(0, -1000px, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    60% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(0, 60px, 0)
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomInDown 
+    animation-name zoomInDown
+    animation-duration 1s
+    
+@keyframes zoomInLeft 
+    0% 
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(-1000px, 0, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    60% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(10px, 0, 0)
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomInLeft 
+    animation-name zoomInLeft
+    animation-duration 1s
+    
+@keyframes zoomInRight 
+    0% 
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(1000px, 0, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    60%
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(-10px, 0, 0)
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomInRight
+    animation-name zoomInRight
+    animation-duration 1s
+    
+@keyframes zoomInUp 
+    0% 
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(0, 1000px, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    60% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(0, -60px, 0)
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomInUp
+    animation-name zoomInUp
+    animation-duration 1s
+    
+@keyframes zoomOut 
+    0% 
+        opacity 1
+    50% 
+        opacity 0
+        transform scale3d(.3, .3, .3)
+    100% 
+        opacity 0
+.zZoomOut 
+    animation-name zoomOut
+    animation-duration 1s
+    
+@keyframes zoomOutDown 
+    40% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(0, -60px, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    100% 
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(0, 2000px, 0)
+        transform-origin center bottom
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomOutDown 
+    animation-name zoomOutDown
+    animation-duration 1s
+    
+@keyframes zoomOutLeft 
+    40% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(42px, 0, 0)
+    100% 
+        opacity 0
+        transform scale(.1) translate3d(-2000px, 0, 0)
+        transform-origin left center
+.zZoomOutLeft 
+    animation-name zoomOutLeft
+    animation-duration 1s
+    
+@keyframes zoomOutRight 
+    40% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(-42px, 0, 0)
+    100% 
+        opacity 0
+        transform scale(.1) translate3d(2000px, 0, 0)
+        transform-origin right center
+.zZoomOutRight 
+    animation-name zoomOutRight
+    animation-duration 1s
+    
+@keyframes zoomOutUp 
+    40% 
+        opacity 1
+        transform scale3d(.475, .475, .475) translate3d(0, 60px, 0)
+        animation-timing-function cubic-bezier(0.550, 0.055, 0.675, 0.190)
+    100% 
+        opacity 0
+        transform scale3d(.1, .1, .1) translate3d(0, -2000px, 0)
+        transform-origin center bottom
+        animation-timing-function cubic-bezier(0.175, 0.885, 0.320, 1)
+.zZoomOutUp 
+    animation-name zoomOutUp
+    animation-duration 1s
+
+
+    

@@ -4,9 +4,24 @@ var instance = function(ele, showFilter){
     initSelect(ele, showFilter);
 }
 
+
+var getSelectedText = function(slc) {
+    var ret = [];
+    slc.find('option').each(function() {
+        if(this.selected) {
+            ret.push($(this).text());
+        }
+    })
+
+    return ret;
+}
+
 var initSelect = function(ele, showFilter){
     if(!ele){
         ele = $('.zSlc');
+    }
+    if(showFilter === undefined) {
+        showFilter = true;
     }
 
     ele.each(function(){
@@ -15,7 +30,7 @@ var initSelect = function(ele, showFilter){
         var ipt = divSlc.find('input');
         if(divSlc.length === 0){
             divSlc = $('<div class="zSlcWrap"></div>');
-            ipt = $('<input class="zIpt" type="text" readonly/>').appendTo(divSlc).data('showFilter', true);
+            ipt = $('<input class="zIpt" type="text" readonly/>').appendTo(divSlc).data('showFilter', showFilter);
             var position = slc.position();
             divSlc.css({
                 position: 'relative',
@@ -26,15 +41,11 @@ var initSelect = function(ele, showFilter){
             slc.after(divSlc);
         }
         
-        var initVal = slc.val() || '';
-        if(initVal.join){
-            initVal = initVal.join(', ');
-        }
+        var initVal = getSelectedText(slc).join(', ');
         ipt.val(initVal || "");
         slc.hide();
     });
 }
-
 
 var initEvent = function(){
     $(function(){
@@ -80,6 +91,15 @@ var initEvent = function(){
             });
 
             dropdown.show(ele, '', content[0].outerHTML);
+
+            var eleDropdown = ele.data('zTarget');
+            eleDropdown.focus();
+            eleDropdown.on('keydown', function(e) {
+                if(e.keyCode == 65 && (e.ctrlKey || e.metaKey)) {
+                    eleDropdown.find('.zSlcBd>p').trigger('click');
+                    return false;
+                }
+            })
         })
         .off('click', '.zSlcBd')
         .on('click', '.zSlcBd', function(e){
@@ -118,7 +138,7 @@ var initEvent = function(){
         	}
         	
         	if(!slc.attr('multiple')){
-                ipt.val(slcVal);
+                ipt.val(slcOption.text());
                 slc.find('option').attr('selected', false);
                 slcOption.prop('selected', true);
 				dropdown.remove(ipt);
@@ -135,10 +155,7 @@ var initEvent = function(){
                     slcOption[0].selected = true;
         			slcOption.prop('selected', true);
         		}
-                var vals = slc.val();
-                if(vals){
-                    vals = vals.join(', ');
-                }
+                var vals = getSelectedText(slc).join(', ');
                 ipt.val(vals || '');
                 ipt.change();
                 slc.change();

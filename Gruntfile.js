@@ -96,7 +96,7 @@ module.exports = function(grunt) {
                 files: 'public/css/**/**.styl',
                 tasks: ['clean:stylesheets', 'stylus', 'cssmin'],
                 options: {
-                    livereload: '<%= pkg.name %>1',
+                    livereload: 30091,
                 }
             },
             js: {

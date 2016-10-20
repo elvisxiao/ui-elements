@@ -24,7 +24,9 @@ var security = require('./security');
 })
 
 */
-var Ajax = {}
+var Ajax = {
+    lastParams: null
+}
 
 /**
 @inner 内部方法
@@ -34,7 +36,7 @@ var Ajax = {}
 @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入
 */
 
-Ajax._send = function(url, method, data, cbOk, cbError){
+Ajax._send = function(url, method, data, cbOk, cbError, keepHTML){
     var params = {
         url: url,
         type: "GET",
@@ -47,7 +49,9 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         params.type = method;
     }
     if(data){
-        data = security.removeXss(data);
+        if(!keepHTML) { //默认去除xss，可以选择保留----
+            data = security.removeXss(data);
+        }
         
         params.data = JSON.stringify(data);
     }
@@ -67,7 +71,8 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         params.error = Ajax.error;
     }
     // progress.start();
-    $.ajax(params);
+    var handle = $.ajax(params);
+    window.app && window.app.ajaxHandles && window.app.ajaxHandles.push(handle);
 },
 
 /**
@@ -76,8 +81,8 @@ Ajax._send = function(url, method, data, cbOk, cbError){
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.get = function(url, cbOk, cbError) {
-    this._send(url, null, null, cbOk, cbError);
+Ajax.get = function(url, cbOk, cbError, keepHTML) {
+    this._send(url, null, null, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -87,8 +92,8 @@ Ajax.get = function(url, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.post = function(url, data, cbOk, cbError) {
-    this._send(url, "post", data, cbOk, cbError);
+Ajax.post = function(url, data, cbOk, cbError, keepHTML) {
+    this._send(url, "post", data, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -98,8 +103,8 @@ Ajax.post = function(url, data, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.put = function(url, data, cbOk, cbError) {
-    this._send(url, "put", data, cbOk, cbError);
+Ajax.put = function(url, data, cbOk, cbError, keepHTML) {
+    this._send(url, "put", data, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -108,8 +113,8 @@ Ajax.put = function(url, data, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.delete = function(url, cbOk, cbError) {
-    this._send(url, "delete", null, cbOk, cbError);
+Ajax.delete = function(url, cbOk, cbError, keepHTML) {
+    this._send(url, "delete", null, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -118,9 +123,15 @@ Ajax.delete = function(url, cbOk, cbError) {
 */
 Ajax.error = function(res){
     // progress.done();
-    res.status === 404 && Ajax.cb404 && Ajax.cb404();
-    dialog.tips('Request error:' + res.responseText.toString());
-    // console.log('Request error:', res);
+    if(res.status === 401 && Ajax.cb401) {
+        Ajax.cb401();
+    }
+    else if(res.status === 404 && Ajax.cb404) {
+        Ajax.cb404();
+    }
+    else if(res.responseText || res.text) {
+        dialog.tips('Request error:' + (res.responseText || res.text).toString());
+    }
 }
 
 module.exports = Ajax;

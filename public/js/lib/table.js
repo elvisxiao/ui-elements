@@ -10,6 +10,9 @@ var Table = function() {
     this.sortKey;
     this.sortUp;
     
+    this.showPager = true; //是否显示分页信息
+    this.hasNext; //是否有下一页---
+
 	this.showSearchBox = false; // 是否显示搜索框 
     this.exportFile = '';
 	this.showBtnExport = false; //是否显示导出按钮
@@ -39,19 +42,29 @@ var Table = function() {
 	var self = this;
 
     self.load = function(dataList, ajaxTotal) {
-        if(ajaxTotal) {
+        self.table.removeClass('zLoadingCover');
+        if(typeof ajaxTotal === 'number') {
             self.total = ajaxTotal;
+        }
+        if(typeof ajaxTotal === 'boolean') {
+            self.hasNext = ajaxTotal;
         }
         self.originDataList = $.extend(true, [], dataList);
 
         self.filterDataList = self.dataList = $.extend(true, [], dataList);
 
         var body = self._renderBody();
-        var foot = self._renderFoot();
+        
         self.table.find('tbody').replaceWith(body);
-        self.table.find('tfoot').replaceWith(foot);
+        if(self.showPager) {
+            var foot = self._renderFoot();
+            self.table.find('tfoot').replaceWith(foot);
+        }
+        else {
+            self.table.find('tfoot').remove();
+        }
 
-        self._buildTdData();
+        // self._buildTdData();
         self.filterDataList = self.dataList;
         
         self.afterLoad && self.afterLoad();
@@ -75,7 +88,7 @@ var Table = function() {
 
         return caption;
 	}
-
+    
 	//build Table的头部 -----
 	self._renderHead = function() {
 		var thead = $('<thead><tr></tr></thead>');
@@ -117,8 +130,9 @@ var Table = function() {
     
     self._getVal = function(model, key) {
         var arr = key.split('.');
-        var tdVal = model[key] !== undefined? model[key] : model;
+        var tdVal = model[key];
         if(arr.length > 1) {
+            tdVal = model;
             for(var i = 0; i < arr.length; i++) {
                 tdVal = tdVal[arr[i]];
                 if(!tdVal) {
@@ -160,6 +174,7 @@ var Table = function() {
 
     //filterData改变的情况下，需要更新td数据, 暂时不用
     self._buildTdData = function() {
+        //让ui先更新，后处理数据----
         self.dataList = self.dataList.map(function(model) {
             self._setTrModel(model);
             return model;
@@ -187,16 +202,27 @@ var Table = function() {
         model.trModel = trModel;
     }
 
+    self._getValByMappingKey = function(model, key) {
+        var tdVal = self._getVal(model, key);
+        var text = self._getDefault(tdVal);
+        return text;
+    }
+
     self._getPageData = function() {
-        if(self.total) {
+        if(self.total || typeof self.hasNext === 'boolean') {
             return self.dataList;
         }
 
         var start = self.pageSize * (self.pageNo - 1);
         var dataList = self.filterDataList;
-        var len = self.pageSize > dataList? dataList.length: self.pageSize;
+        if(self.showPager) {
+            var len = self.pageSize > dataList? dataList.length: self.pageSize;
+            self.pageData = self.filterDataList.slice(start, len + start);
+        }
+        else {
+            self.pageData = self.filterDataList;
+        }
         
-        self.pageData = self.filterDataList.slice(start, len + start);
         return self.pageData;
     }
 
@@ -210,13 +236,14 @@ var Table = function() {
 
         if(self.filterDataList.length) {
             self.pageData = self._getPageData();
-            self.pageData.map(function(model) {
+            for(var i = 0; i < self.pageData.length; i ++) {
+                var model = self.pageData[i];
                 var tr = self.renderTr(model);
                 if(self.showCheckbox) {
                     tr.prepend('<td><input type="checkbox" class="cbxOcTable"></td>');
                 }
                 tbody.append(tr);
-            })
+            }
         }
         else {
             self.pageData = [];
@@ -239,56 +266,70 @@ var Table = function() {
         var tfoot = $('<tfoot><tr><td colspan="100"><form><nav><ul class="pagination"></ul></nav></form></td></tr></tfoot>');
         var nav = tfoot.find('nav');
         var ul = tfoot.find('ul');
-        ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
-        ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
-
+        
         if(!self.dataList || self.dataList.length == 0) {
             return tfoot;
         }
 
-        var total = self.total || self.filterDataList.length;
-        var totalPage = parseInt(total / self.pageSize);
-        if(totalPage * self.pageSize < total) {
-            totalPage ++;
-        }
-
-        var start = self.pageNo - 2;
-        if(start < 1) {
-            start = 1;
-        }
-
-        var end = start + 4;
-        if(end > totalPage) {
-            end = totalPage;
-            start = end - 4;
-            start < 1 && (start = 1);
-        }
-
-        while(start <= end) {
-            var li = $('<li><a href="#" data-page="' + start + '">' + start + '</a></li>').appendTo(ul);
-            if(start === self.pageNo) {
-                li.addClass('active');
+        if(self.hasNext !== undefined) { //只显示上一页，下一页的分页信息
+            var prevLi = $('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">Prev</a></li>').appendTo(ul);
+            var nextLi = $('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">Next</a></li>').appendTo(ul);
+            if(!self.hasNext) {
+                nextLi.addClass('disabled');
             }
-            start ++;
+            if(self.pageNo == 1) {
+                prevLi.addClass('disabled');
+            }
+            nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Current page ' + self.dataList.length + ' items, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
         }
+        else { //带页码的分页信息
+            ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
+            ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        ul.append('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">›</a></li>');
-        ul.append('<li><a href="#" title="Last" data-page="' + totalPage + '">&raquo;</a></li>');
-        if(self.pageNo === 1) {
-            ul.find('li:lt(2)').addClass('disabled');
+            var total = self.total || self.filterDataList.length;
+            var totalPage = parseInt(total / self.pageSize);
+            if(totalPage * self.pageSize < total) {
+                totalPage ++;
+            }
+
+            var start = self.pageNo - 2;
+            if(start < 1) {
+                start = 1;
+            }
+
+            var end = start + 4;
+            if(end > totalPage) {
+                end = totalPage;
+                start = end - 4;
+                start < 1 && (start = 1);
+            }
+
+            while(start <= end) {
+                var li = $('<li><a href="#" data-page="' + start + '">' + start + '</a></li>').appendTo(ul);
+                if(start === self.pageNo) {
+                    li.addClass('active');
+                }
+                start ++;
+            }
+
+            ul.append('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">›</a></li>');
+            ul.append('<li><a href="#" title="Last" data-page="' + totalPage + '">&raquo;</a></li>');
+            if(self.pageNo === 1) {
+                ul.find('li:lt(2)').addClass('disabled');
+            }
+            if(self.pageNo === totalPage || totalPage === 0) {
+                var last = ul.find('li:last-child').addClass('disabled');
+                last.prev().addClass('disabled');
+            }
+            nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Total ' + total + ' rows in ' + totalPage + ' pages, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
+            nav.append('<span class="form-inline"><input type="number" name="pageNo" class="form-control w40" min="1" max="' + totalPage + '" /><button class="btn btn-default" type="submit">GO</button></span>');
         }
-        if(self.pageNo === totalPage || totalPage === 0) {
-            var last = ul.find('li:last-child').addClass('disabled');
-            last.prev().addClass('disabled');
-        }
-        nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Total ' + total + ' rows in ' + totalPage + ' pages, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
-        nav.append('<span class="form-inline"><input type="number" name="pageNo" class="form-control w40" min="1" max="' + totalPage + '" /><button class="btn btn-default" type="submit">GO</button></span>');
+        
 
         return tfoot;
     }
 
     self._render = function() {
-        // self.buildTdData();
 
         var caption = self._renderCaption();
         var thead = self._renderHead();
@@ -315,6 +356,7 @@ var Table = function() {
     
     //根据搜索条件、重新加载tbody中的数据----
     self._reloadBody = function() {
+        self.table.removeClass('zLoadingCover');
         var tbody = self.table.find('tbody').replaceWith(self._renderBody());
 
         self.afterLoad && self.afterLoad();
@@ -329,7 +371,8 @@ var Table = function() {
         if(!self.pageNo) {
             self.pageNo = 1;
         }
-        self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        // self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        self.table.addClass('zLoadingCover');
         var params = {
             pageNo: self.pageNo,
             pageSize: self.pageSize
@@ -344,7 +387,6 @@ var Table = function() {
             if(!self.pageNo) {
                 self.pageNo = 1;
             }
-            self._buildTdData();
             self._reloadBody();
             self._reloadFoot();
         });
@@ -406,7 +448,7 @@ var Table = function() {
             }
             self.pageNo = parseInt(a.attr('data-page'));
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self._loadData();
 
                 return;
@@ -435,7 +477,7 @@ var Table = function() {
             self.pageNo = 1;
 
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self.sortKey = key;
                 self.sortUp = sortUp;
                 self._loadData();
@@ -444,8 +486,16 @@ var Table = function() {
             }
 
             self.filterDataList.sort(function(a, b) {
-                var valA = a.trModel[key];
-                var valB = b.trModel[key];
+                var valA, valB;
+                if(a.trModel) {
+                    valA = a.trModel[key];
+                    valB = b.trModel[key];
+                }
+                else {
+                    valA = self._getValByMappingKey(a, key);
+                    valB = self._getValByMappingKey(b, key);
+                }
+
                 if(typeof valA === 'number') {
                     return sortUp? valA - valB : valB - valA;
                 }
@@ -460,7 +510,7 @@ var Table = function() {
             self.pageNo = parseInt(form.find('input[name="pageNo"]').val() || 1);
 
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self._loadData();
 
                 return false;
@@ -473,36 +523,51 @@ var Table = function() {
         })
     }
 
+    //搜索匹配所有列
+    self.search = function(searchStr) {
+        if(!self.dataList || !self.dataList.length) {
+            return;
+        }
+        if(!self.dataList[0].trModel) {
+            self._buildTdData();
+        }
+
+        self.pageNo = 1;
+        self.filterDataList = self.dataList.filter(function(model) {
+            var ret = false;
+            var trModel = model.trModel;
+            for(var key in trModel) {
+                if(trModel[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
+                    ret = true;
+                    break;
+                }
+            }
+
+            return ret;
+        })
+
+        self._reloadBody();
+        self._reloadFoot();
+    }
+
     self._bindEvents = function() {
         //search----
         self.table.off('input').on('input', 'caption .searchBox', function() {
             var searchStr = $.trim(this.value).toUpperCase();
             self.timer && clearTimeout(self.timer);
             self.timer = setTimeout(function(){
-                self.pageNo = 1;
-                self.filterDataList = self.dataList.filter(function(model) {
-                    var ret = false;
-                    var trModel = model;
-                    for(var key in trModel) {
-                        if(trModel[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
-                            ret = true;
-                            break;
-                        }
-                    }
-
-                    return ret;
-                })
-
-                self._reloadBody();
-                self._reloadFoot();
+                self.search(searchStr);
             }, 500);
         })
         .off('click')
         .on('click', 'thead input:checkbox.cbxOcTable', function() {
-            self.table.find('tbody input:checkbox.cbxOcTable').prop('checked', this.checked);
+            var checked = this.checked;
+            self.table.find('tbody input:checkbox.cbxOcTable').each(function() {
+                $(this).prop('checked', checked).change();
+            })
         })
         .on('click', 'tbody input:checkbox.cbxOcTable', function() {
-            self.table.find('thead input:checkbox.cbxOcTable').prop('checked', false);
+            self.table.find('thead input:checkbox.cbxOcTable').prop('checked', false).change();
         })
         .on('click', 'caption .btnExport', function() {
             self.export();

@@ -8,7 +8,7 @@ var TreeSelect = function(options){
 		showAll: false,
 		forbidPNode: false //禁止选中非末级几点
 	};
-
+	this.timerHandler = null;
 	this.selectedItem = null;
 	this.selectedList = null;
 	this.ele = null;
@@ -45,7 +45,7 @@ var TreeSelect = function(options){
 		if(self.config.showAll){
 			self.ele.find('input').val('All');
 		}
-	}
+	};
 
 	self._selectedP = function(p){
 		if(p.length === 0){
@@ -64,7 +64,7 @@ var TreeSelect = function(options){
 			else{
 				text = item.name + ' - ' + text;
 			}
-		})
+		});
 		self.selectedList.reverse();
 		self.ele.find('input').val(text).attr('data-id', self.selectedItem.id || '');
 		self.ele.removeClass('active');
@@ -73,7 +73,7 @@ var TreeSelect = function(options){
 		}
 		
 		self.valueChangeHanlder && self.valueChangeHanlder();
-	}
+	};
 
 	self._setActive = function(){
 		var model = self.ele.find('.zTreeSelectItem.active').data();
@@ -84,17 +84,18 @@ var TreeSelect = function(options){
 					self.currentActive = i;
 					return false;
 				}
-			})
+			});
 		}
 		else{
 			self.currentActive = null;
 		}
-	}
+	};
 
 	self._bindEvents = function(){
 		self.ele.on('click', function(e){
+			self.filterParams = {name: '', description: ''};
 			e.stopPropagation();
-			if(self.ele.hasClass('active')){
+			if(self.ele.hasClass('active') || self.ele.attr('disabled') == "disabled" || self.ele.find('input').attr('disabled') === "disabled"){
 				return;
 			}
 			self.ele.addClass('active');
@@ -106,9 +107,10 @@ var TreeSelect = function(options){
 					var li = $(this);
 					var model = li.data();
 					if(model == self.selectedItem){
-						li.find('>p').addClass('active');
+						li.addClass('active');
+						self.ele.find('>ul').scrollTop(li.offset().top - 32);
 					}
-				})
+				});
 			}
 		})
 		.on('click', 'p', function(e){
@@ -159,7 +161,7 @@ var TreeSelect = function(options){
 			}
 			
 			var target = self.ele.find('.zTreeSelectItem:visible:eq(' + self.currentActive + ')');
-			if(target.length == 0){
+			if(target.length == 0) {
 				return;
 			}
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');
@@ -181,28 +183,29 @@ var TreeSelect = function(options){
 					ul.scrollTop(scrollTop - 32);
 				}
 			}
-			
 		})
+		.on('blur', function() {
+			self.timerHandler && clearTimeout(self.timerHandler);
 
-		$(document).on('click', function(){
-			self.ele.removeClass('active');
-			if(!self.selectedItem){
-				self.filterParams.name = null;
-				if(self.config.showAll){
-					self.ele.find('input').val('All');
+			self.timerHandler = setTimeout(function() {
+				self.ele.removeClass('active');
+				if(!self.selectedItem){
+					self.filterParams.name = null;
+					if(self.config.showAll){
+						self.ele.find('input').val('All');
+					}
+					else{
+						self.ele.find('input').val('');
+					}
 				}
-				else{
-					self.ele.find('input').val('');
-				}
-			}
-		})
-	}
+			}, 200);
+		});
+	};
 
 	self._clear = function(){
 		self.selectedItem = null;
 		self.selectedList = [];
-		// self.ele.find('input').val('');
-	}
+	};
 	
 	self.setSelected = function(id){
 		if(!id){
@@ -238,7 +241,7 @@ var TreeSelect = function(options){
 			var item = li.data();
 			self.selectedList.push(item);
 			text = item.name + ' - ' + text;
-		})
+		});
 
 		self.selectedList.reverse();
 		self.ele.find('input').val(text);
@@ -248,7 +251,7 @@ var TreeSelect = function(options){
 		}
 		
 		return self.selectedList;
-	}
+	};
 
 	//采取模糊匹配....
 	self.filter = function(){

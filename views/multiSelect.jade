@@ -9,22 +9,29 @@ block content
     div(style="width: 1000px; margin: 0 auto;")
         h2 Demo - 多选框 zMultiSelect
         
-        select.zMultiSelect.w200(style="height:35px;")
+        select.zSlc.w200(multiple, style="height:35px; display: block; background:transparent;")
             option Test1 
             option Test2
             option Test3
+            option Test4
+            option Test5
+            option Test6
+            option Test7
+            option Test8
+            option Test9
+            option Test10
+        br
+        select.w200(multiple, style="height:135px; display: block; background:transparent;")
+            option Test1 
             option Test2
             option Test3
-            option Test2
-            option Test3
-            option Test2
-            option Test3
-            option Test2
-            option Test3
-            option Test2
-            option Test3
-            option Test2
-            option Test3
+            option Test4
+            option Test5
+            option Test6
+            option Test7
+            option Test8
+            option Test9
+            option Test10
         //- div.uploaderContainer UploaderTitle
         p.alert.alert-info.mt30 此控件依赖于jQuery，在使用前请先在页面引入jQuery。<br>CSV文件的编码格式须为UTF-8.
         p 使用步骤说明：
@@ -40,6 +47,6 @@ block content
                 
 
     script.
-        oc.ui.multiSelect();
+        oc.select();
 
 

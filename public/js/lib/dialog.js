@@ -17,7 +17,10 @@
     console.log('原来你只是逗我玩的');
 })
 */
-var Dialog = {};
+var Dialog = {
+    template: '<div class="zDialogCover"><div class="zDialog"><div class="zDialogHd"></div><div class="zDialogBd"></div><div class="zDialogFt"><button class="zDialogOk" type="button">确 认</button><button class="zDialogCancel" type="button">取 消</button></div></div></div>'
+};
+
 
 /**
 * 移除所有由oc.dialog生成的对话框
@@ -25,6 +28,7 @@ var Dialog = {};
 Dialog.removeMadal = function(){
     this.removeAllTips();
     this.close();
+    Dialog.resetBody();
 },
 
 /**
@@ -32,6 +36,7 @@ Dialog.removeMadal = function(){
 */
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
+    Dialog.resetBody();
 },
 
 /**
@@ -41,30 +46,40 @@ Dialog.removeAllTips = function(){
 * @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.tips = function(msg, time, cb){
+    if(!msg) {
+        return;
+    }
     if(time === undefined){
         time = 1500;
     }
     if(typeof time === 'function'){
         cb = time;
-        time = 1000;
+        time = 1500;
     }
-    var tips = $('<div class="tips">' + msg + '</div>');
-    tips.appendTo('body');
-    var width = tips.width();
-    tips.css('margin-left', -width / 2 + 'px');
-
-    if(time > 0){
-        setTimeout(function(){
-            tips.remove();
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogFt').remove();
+    dialog.find('.zDialogBd').html(msg);
+    if(time > 0) {
+        dialog.find('.zDialogHd').remove();
+        
+        setTimeout(function() {
+            dialog.remove();
             cb && cb();
-        }, time);
+            Dialog.resetBody();
+        }, time)
     }
-    else{
-        tips.append('<i class="icon-close"></i>');
-        tips.on('click', 'i.icon-close', function(){
-            tips.remove();
+    else {
+        dialog.find('.zDialogHd').append('Tips<i class="zDialogClose close">×</i>');
+        dialog.on('click', '.zDialogClose', function() {
+            dialog.remove();
+            cb && cb();
+            Dialog.resetBody();
         })
     }
+    dialog.appendTo('body');
+    $(document.body).addClass('zDialogOn');
+    
+    return dialog;
 }
 
 /**
@@ -75,12 +90,18 @@ Dialog.tips = function(msg, time, cb){
 */
 Dialog.loading = function(msg){
     this.removeMadal();
-    var loading = $('<div class="zLoading"></div><div class="tips">' + msg + '</div>');
-    loading.appendTo('body');
-    var width = $(".tips").width();
-    loading.css('margin-left', -width / 2 + 'px');
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogHd, .zDialogFt').remove();
+    dialog.find('.zDialogBd').html('<div class="zLoadingIcon"></div>' + msg);
+    dialog.appendTo('body');
 
-    return loading;
+    return dialog;
+}
+
+Dialog.resetBody = function() {
+    if($('.zDialogCover').length === 0) {
+        $(document.body).removeClass('zDialogOn');
+    }
 }
 
 /**
@@ -90,35 +111,56 @@ Dialog.loading = function(msg){
 * @param {function} cbNO - 用户点击取消后的回调
 * @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
 */
-Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
-    confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
+Dialog.confirm = function(msg, cbOK, cbNO, required, autoRemove){
+    var confirm = $(Dialog.template);
+    confirm.find('.zDialogBd').html(msg);
+    confirm.find('.zDialogHd').remove();
+
+    confirm.appendTo('body').on('click', '.zDialogOk, .zDialogCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
         if(ipt.length > 0){
             val = ipt.val();
         }
         
-        if($(this).hasClass('btnOK')){
+        if($(this).hasClass('zDialogOk')){
             if(required === true && ipt.length > 0 && (!val) ){
                 Dialog.tips('message is required.');
                 ipt.focus();
                 return;
             }
-            cbOK && cbOK(val);
+            if(autoRemove !== false) {
+                cbOK && cbOK(val);
+                confirm.remove();
+                Dialog.resetBody();
+            }
+            else {
+                if(val) {
+                    cbOK && cbOK(val, function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }
+                else {
+                    cbOK && cbOK(function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }   
+            }
         }
         else{
             cbNO && cbNO(val);
+            confirm.remove();
+            Dialog.resetBody();
         }
-
-        confirm.remove();
     }).on('click', 'input, textarea', function(){
         confirm.removeClass('has-error');
     });
 
-    var width = $(".tips").width();
-    confirm.css('margin-left', -width / 2 + 'px');
-
+    confirm.focus();
+    $(document.body).addClass('zDialogOn');
+    
     return confirm;
 }
 
@@ -128,96 +170,59 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
 * @param {string} content - 弹出部分的内容，一般为html
 * @param {function} cb - 弹出框完全展现之后的回调接口
 */
-Dialog.open = function(title, content, cb){
+Dialog.open = function(title, content, cb, showFoot){
     this.removeMadal();
     if(!content){
         content = title;
         title = '';
     }
-    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p></div></div>').appendTo(document.body);
-    var dialog = dialogCover.find('.zDialog');
-    dialog.append(content);
 
-    var width = dialog.outerWidth();
-    var height = dialog.outerHeight();
-    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%', 'width': width});
+    var dialog = $(Dialog.template);
+    dialog.find('.zDialogHd').append(title + '<i class="zDialogClose close">×</i>');
+    dialog.find('.zDialogBd').append(content);
+    if(typeof cb !== true && showFoot !== true) {
+        dialog.find('.zDialogFt').remove();
+    }
+
+    dialog.appendTo(document.body);
+    $(document.body).addClass('zDialogOn');
     
-    var bodyHeight = $(document).outerHeight();
-
-    dialog.on('click', '.close', function(){
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            dialogCover.remove();
-        })
+    if(cb && typeof cb == 'function') {
+        setTimeout(cb, 300);
+    }
+    
+    dialog.on('click', '.close, .zDialogClose, .zDialogCancel', function(){
+        dialog.onclose && dialog.onclose();
+        dialog.onClose && dialog.onClose();
+        dialog.remove();
+        Dialog.resetBody();
     })
 
-    var top = '15%';
-    if(height > bodyHeight){
-        top = '5%';
-    }
-
-    if(height > 500){
-        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
-        top = $(document).scrollTop() + 50 + 'px';
-        $(document).scroll(function(){
-            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
-        })
-    }
-    dialog.animate({
-        top: top,
-        opacity: 1
-    }, 500, function(){
-        cb && cb();
-    })
+    
+    return dialog;
 }
 
 /**
 * 关闭由oc.dialog.open打开的所有对话框
 */
 Dialog.close = function(ele){
-    var doClose = function(cover){
-        if(!cover.length){
-            return;
-        }
-
-        var dialog = cover.find('.zDialog');
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            cover.remove();
-        })
-    }
-
-    if(ele){
+    if(ele) {
         ele = $(ele);
-        if(ele.hasClass('zDialogCover')){
-            doClose(ele);
+        if(!ele.hasClass('zDialogCover')) {
+            ele = ele.parents('.zDialogCover');
         }
-        else{
-            doClose(ele.parents('.zDialogCover'));
-        }
-
-        return;
     }
-    
-    doClose($(".zDialogCover"));
+    else {
+        ele = $(".zDialogCover");
+    }
+    ele.remove();
+    Dialog.resetBody();
 }
 
 Dialog.tooltips = function(msg, ele) {
     ele = $(ele);
     var tips = $('<span class="zTooltips none">' + msg + '</span>');
-    tips.css({
-        position: 'fixed',
-        'font-size': '12px',
-        'background': '#fcf8e3', 
-        'border': '1px solid #faebcc',
-        'color': '#8a6d3b',
-        'z-index': '1001',
-        padding: '3px 10px'
-    })
+    
     tips.appendTo('body');
     tips.fadeIn(500, function() {
         setTimeout(function() {
@@ -226,12 +231,59 @@ Dialog.tooltips = function(msg, ele) {
             })
         }, 1500)
     });
-
+    
     tips.css({
         left: ele.offset().left - parseInt(tips.css('width')) - 20,
         top: ele.offset().top
     })
+    
+    return tips;
 }
+
+Dialog.warn = function(msg, ele) {
+    ele = $(ele);
+    
+    var removeTips = function(ele) {
+        if(!ele) {
+            return;
+        }
+        ele = ele.target || ele.srcElement || ele;
+        ele = $(ele);
+        var tips = ele.data('target');
+        if(tips) {
+            tips.data('timer') && clearTimeout(tips.data('timer'));
+            tips.remove();
+            ele.data('target', null);
+        }
+    };
+
+    if(ele.data('target')) {
+        removeTips(ele);
+    }
+
+    ele.off('click', removeTips);
+    ele.on('click', removeTips);
+    ele.on('blur', removeTips);
+
+    var tips = $('<span class="zTooltips warn none">' + msg + '</span>');
+    ele.after(tips);
+    tips.fadeIn(200, function() {
+        var timer = setTimeout(function() {
+            removeTips();
+        }, 5000);
+        tips.data('timer', timer);
+    });
+    
+    tips.css({
+        left: ele.position().left,
+        top: ele.position().top + ele.height() + 10
+    });
+    
+    ele.data('target', tips);
+    return tips;
+}
+
+
 
 module.exports = Dialog;
 

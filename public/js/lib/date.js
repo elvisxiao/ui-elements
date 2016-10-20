@@ -31,7 +31,10 @@ ZDate.format = function(date, format){
     if(date.toString().indexOf('-') > 0 && date.toString().length === 10){
         date = date.toString().replace(/-/g, '/');
     }
-
+    else if(/^\d{8}$/.test(date)) {
+        date = date.toString().replace(/(\d{4})(\d{2})/g, '$1/$2/');
+    };
+    
     var reg = {
         yyyy: 'year',
         hh: 'hours',
@@ -310,7 +313,7 @@ ZDate.weekPicker = function(ipt){
             tr.append('<td>' + str + '</td>')
         }
        
-        tbody.find('td:contains(' + week + ')').addClass('active');
+        tbody.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
 
         var weekStart = ZDate.getStartDateByWeek(year + week);
 
@@ -341,13 +344,14 @@ ZDate.weekPicker = function(ipt){
         })
         .on('mouseenter', 'tbody td:not(.zWeekPickerTag)', function(){
             var thisWeek = this.innerHTML;
-            var weekStart = ZDate.getStartDateByWeek(year + thisWeek);
+            var thisYear = $(this).parents('table:eq(0)').find('.spanYear').html();
+            var weekStart = ZDate.getStartDateByWeek(thisYear + thisWeek);
             var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
             weekEnd = ZDate.format(weekEnd, 'mmdd');
             weekStart = ZDate.format(weekStart, 'mmdd');
             tbody.find('td.zWeekPickerTag span').html(weekStart + ' - ' + weekEnd);
         })
-        .on('mouseleave', 'tbody', function(){
+        .on('mouseleave', 'tbody', function() {
             var weekStart = ZDate.getStartDateByWeek(year + week);
             var weekEnd = new Date(weekStart).getTime() + 6 * 24 * 60 * 60000;
             weekEnd = ZDate.format(weekEnd, 'mmdd');
@@ -372,19 +376,29 @@ ZDate.weekPicker = function(ipt){
         if(ele.length === 0){
             ele = reanderTable();
         }
-        var position = ipt.position();
+        var offset = ipt.offset();
         var val = $.trim(ipt.val());
-        if(val && val.length === 6){
-            var year = val.slice(0, 4);
-            var week = val.slice(4);
 
-            ele.find('.spanYear').html(year);
-            ele.find('td.active').removeClass('active');
-            ele.find('td:contains(' + week + ')').addClass('active');
+        if(!val || val.length !== 6) {
+            val = ZDate.getWeekString(new Date()).toString();
+        }
+        var year = val.slice(0, 4);
+        var week = val.slice(4);
+        var weekStart = ZDate.getStartDateByWeek(year + week);
+        var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
+        weekEnd = ZDate.format(weekEnd, 'mmdd');
+        weekStart = ZDate.format(weekStart, 'mmdd');
+        ele.find('.spanYear').html(year);
+        ele.find('td.active').removeClass('active');
+        ele.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
+        ele.find('.zWeekPickerTag>span').html(weekStart + ' - ' + weekEnd);
+        var left = offset.left;
+        if(left + ele.outerWidth() > $('body').width()) {
+            left = offset.left - ele.outerWidth() + ipt.outerWidth();
         }
         ele.css({
-            'left': position.left,
-            'top': position.top + ipt.outerHeight(),
+            'left': left,
+            'top': offset.top + ipt.outerHeight(),
             'display': 'block'
         })
         

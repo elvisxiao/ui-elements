@@ -11,10 +11,11 @@ table.ocTable
     caption 
         text-align left
     thead 
-        background #f5f6fa
+        // background #f5f6fa
         color #999
         font-weight normal
         tr th
+            background #f5f6fa
             text-transform capitalize
             font-weight normal
             border-bottom 1px solid #e1e6eb
@@ -63,7 +64,7 @@ table.ocTable
                     position relative
                     top -1px
     tbody
-        tr
+        tr:not(.info, .success, .danger, .warning)
             &:hover
                 td 
                     background #fafafa

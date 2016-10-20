@@ -25,7 +25,9 @@ var security = require('./security');
 })
 
 */
-var Ajax = {}
+var Ajax = {
+    lastParams: null
+}
 
 /**
 @inner 内部方法
@@ -35,7 +37,7 @@ var Ajax = {}
 @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入
 */
 
-Ajax._send = function(url, method, data, cbOk, cbError){
+Ajax._send = function(url, method, data, cbOk, cbError, keepHTML){
     var params = {
         url: url,
         type: "GET",
@@ -48,7 +50,9 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         params.type = method;
     }
     if(data){
-        data = security.removeXss(data);
+        if(!keepHTML) { //默认去除xss，可以选择保留----
+            data = security.removeXss(data);
+        }
         
         params.data = JSON.stringify(data);
     }
@@ -68,7 +72,8 @@ Ajax._send = function(url, method, data, cbOk, cbError){
         params.error = Ajax.error;
     }
     // progress.start();
-    $.ajax(params);
+    var handle = $.ajax(params);
+    window.app && window.app.ajaxHandles && window.app.ajaxHandles.push(handle);
 },
 
 /**
@@ -77,8 +82,8 @@ Ajax._send = function(url, method, data, cbOk, cbError){
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.get = function(url, cbOk, cbError) {
-    this._send(url, null, null, cbOk, cbError);
+Ajax.get = function(url, cbOk, cbError, keepHTML) {
+    this._send(url, null, null, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -88,8 +93,8 @@ Ajax.get = function(url, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.post = function(url, data, cbOk, cbError) {
-    this._send(url, "post", data, cbOk, cbError);
+Ajax.post = function(url, data, cbOk, cbError, keepHTML) {
+    this._send(url, "post", data, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -99,8 +104,8 @@ Ajax.post = function(url, data, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.put = function(url, data, cbOk, cbError) {
-    this._send(url, "put", data, cbOk, cbError);
+Ajax.put = function(url, data, cbOk, cbError, keepHTML) {
+    this._send(url, "put", data, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -109,8 +114,8 @@ Ajax.put = function(url, data, cbOk, cbError) {
 * @param {function} cbOk - 200响应的回调方法，会将返回的response作为参数传入
 * @params {function} cbError - 其他返回的响应事件，会将返回的response作为参数传入，可省略，省略时走error方法
 */
-Ajax.delete = function(url, cbOk, cbError) {
-    this._send(url, "delete", null, cbOk, cbError);
+Ajax.delete = function(url, cbOk, cbError, keepHTML) {
+    this._send(url, "delete", null, cbOk, cbError, keepHTML);
 }
 
 /**
@@ -119,15 +124,65 @@ Ajax.delete = function(url, cbOk, cbError) {
 */
 Ajax.error = function(res){
     // progress.done();
-    res.status === 404 && Ajax.cb404 && Ajax.cb404();
-    dialog.tips('Request error:' + res.responseText.toString());
-    // console.log('Request error:', res);
+    if(res.status === 401 && Ajax.cb401) {
+        Ajax.cb401();
+    }
+    else if(res.status === 404 && Ajax.cb404) {
+        Ajax.cb404();
+    }
+    else if(res.responseText || res.text) {
+        dialog.tips('Request error:' + (res.responseText || res.text).toString());
+    }
 }
 
 module.exports = Ajax;
 
 
-},{"./dialog":6,"./security":13}],2:[function(require,module,exports){
+},{"./dialog":7,"./security":14}],2:[function(require,module,exports){
+
+var Instance = {}
+
+
+Instance.depthFirstInTree = function(treeData, targetId, key) {
+    if(!key) {
+        key = 'items';
+    }
+
+    if(! (treeData instanceof Array) ) {
+        treeData = treeData[key];
+    }
+    var ret = [];
+
+    var find = function(list, arr, isFind) {
+        for(var i = 0; i < list.length; i ++) {
+            if(isFind) {
+                return;
+            }
+            var model = list[i];
+            arr.push(model);
+            if(model.id == targetId) {
+                ret = arr;
+                isFind = true;
+                return;
+            }
+            if(model.items && model.items.length) {
+                find(model.items, arr.concat([]));
+            }
+            arr.pop();
+        }
+        if(i === list.length) {
+            arr.pop();
+        }
+    };
+    find(treeData, [], false);
+
+    return ret.reverse();
+}
+
+module.exports = Instance;
+
+
+},{}],3:[function(require,module,exports){
 /*!
  * CSV-js: A JavaScript library for parsing CSV-encoded data.
  * Copyright (C) 2009-2013 Christopher Parker <http://www.cparker15.com/>
@@ -382,7 +437,7 @@ module.exports = Ajax;
         window.CSV = CSV;
     }
 }(typeof window !== 'undefined' ? window : {}));
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var dropdown = require('./dropdown');
 
 var BUSelect = function(options){
@@ -393,6 +448,8 @@ var BUSelect = function(options){
         showLevel: null,
 		onlyLast: false //禁止选中非末级几点
 	};
+
+    this.onchange = null;
 	
 	this.ele = null;
 
@@ -406,6 +463,11 @@ var BUSelect = function(options){
 	var self = this;
 
 	self.formatData = function(){
+        if(self.config.dataList.items) {
+            self.treeData = $.extend({}, self.config.dataList);
+            return;
+        }
+
         var rootTree = {
             "id"          : 1,
             "fid"         : 0,
@@ -436,12 +498,13 @@ var BUSelect = function(options){
             fTree["items"].push(tree);
             treeMap[tree["id"]] = tree;
         })
-
+        
         self.treeData = rootTree;
         console.log('format data', rootTree);
     }
 
 	self.initSelect = function(){
+        $(self.config.container).addClass('zBuSelect');
         var div = $('<div class="mixSelectWrap"><p><input class="form-control zIpt" type="text" placeholder="Search here ..." /></p></div>');
 
         self.renderTree(self.treeData, div, 0);
@@ -470,7 +533,7 @@ var BUSelect = function(options){
 
         for(var i = 0; i < len; i++){
             var one = dataList[i];
-
+            one.level = level;
             var li = $('<li><p style="padding-left: ' + level * 15 + 'px" data-id="' + one.id + '">' + one.name + '</p></li>');
             
             li.appendTo(ul);
@@ -493,9 +556,9 @@ var BUSelect = function(options){
         var ret = [];
         $(self.config.container).find('.zBadge').each(function(){
             var badge = $(this);
-    
+            
             ret.push( parseInt(badge.attr('data-id')) );
-        })
+        });
 
         return ret;
     }
@@ -504,14 +567,50 @@ var BUSelect = function(options){
         var ids = this.getResult();
 
         var models = [];
-        
-        self.config.dataList.map(function(one){
-            if($.inArray(one.descendant, ids) !== -1){
-                models.push(one);
+
+        (function(target) {
+            if(!target || !target.items || !target.items.map) {
+                return;
             }
-        })
+
+            for(var i = 0; i < target.items.length; i ++) {
+                var one = target.items[i];
+                if($.inArray( parseInt(one.descendant || one.id), ids) !== -1){
+                    one.parent = target;
+                    models.push(one);
+                }
+                arguments.callee.call(this, one);
+            }
+        })(self.config.dataList);
+
 
         return models;
+    }
+
+    //获取某个节点的Name----
+    self.getNameById = function(id) {
+        var ele = $(self.dropdownText);
+        return ele.find('p[data-id="' + id + '"]:eq(0)').text();
+    }
+    
+    //获取某个节点的级别，从1开始
+    self.getLevelById = function(id) {
+        var ele = $(self.dropdownText);
+        return ele.find('p[data-id="' + id + '"]:eq(0)').parents('li').length;
+    }
+
+    //获取某个节点的id
+    self.getIdByName = function(name) {
+        var ele = $(self.dropdownText);
+        var find = null;
+        ele.find('p[data-id]:contains(' + name + ')').each(function() {
+            var text = $(this).text();
+            if(text === name) {
+                find = $(this).attr('data-id');
+                return find;
+            }
+        })
+        return find;
     }
 
     self.setResult = function(list, disabled){
@@ -522,19 +621,27 @@ var BUSelect = function(options){
 
         for(var i = 0; i < list.length; i ++){
             var one = list[i];
-            repoItem.append('<label class="zBadge" data-id="' + one.id + '"><i class="icon-cancel-circle"></i>' + one.name + '</label>');
+            var name = one.name;
+            if(!name) {
+                name = self.getNameById(one.id);
+            }
+            repoItem.append('<label class="zBadge" data-id="' + one.id + '"><i class="icon-cancel-circle"></i>' + name + '</label>');
         }
 
         if(disabled){
             repoItem.find('.zBadge .icon-cancel-circle').remove();
         }
+
+        self.onchange && self.onchange();
     }
 
     self.bindEvents = function(){
         var repoItem = $(self.config.container);
-        repoItem.on('click', '.zBadge .icon-cancel-circle', function(e){
+        repoItem.off('click').on('click', '.zBadge .icon-cancel-circle', function(e){
             e.stopPropagation();
             $(this).parent().remove();
+            dropdown.remove(repoItem);
+            self.onchange && self.onchange();
         })
         .on('click', function(e){
             e.stopPropagation();
@@ -551,12 +658,14 @@ var BUSelect = function(options){
 
             drop.on('click', 'ul li p:not(.disabled)', function(e){
                 var p = $(this);
-                if(p.hasClass('active')){
+                if(p.hasClass('active')) {
                     p.removeClass('active').data('target').remove();
                     p.data('target', null);
                     p.parent().find('>ul').show();
+
+                    self.onchange && self.onchange();
                 }
-                else{
+                else {
                     p.addClass('active');
                     var label = $('<label class="zBadge" data-id="' + p.attr('data-id') + '"><i class="icon-cancel-circle"></i>' + p.html() + '</label>');
                     label.appendTo(repoItem);
@@ -567,15 +676,17 @@ var BUSelect = function(options){
                         one.data('target', null);
                     })
 
-                    if(self.config.limited > 0){
+                    if(self.config.limited > 0) {
                         var len = repoItem.find('.zBadge').length;
                         
                         if(len - self.config.limited > 0){
                             repoItem.find('.zBadge:eq(' + (len - 2) + ')').remove();
                         }
-
+                        
                         dropdown.remove(repoItem);
                     }
+                    
+                    self.onchange && self.onchange();
                 }
             })
             .on('input', '.zIpt', function(){
@@ -587,17 +698,17 @@ var BUSelect = function(options){
                         oneNode.show();
                         oneNode.parents('li').find('>p').show();
                     }
-                })
-            })
-        })
+                });
+            });
+        });
 
         $('body').off('click', '.zDropdown').on('click', '.zDropdown', function(e){
             e.stopPropagation();
-        })
+        });
 
         $('body').on('click', function(){
             dropdown.remove(repoItem);
-        })
+        });
     }
 
 	self.formatData();
@@ -605,7 +716,7 @@ var BUSelect = function(options){
 }
 
 module.exports = BUSelect;
-},{"./dropdown":7}],4:[function(require,module,exports){
+},{"./dropdown":8}],5:[function(require,module,exports){
 var Instance = {};
 
 Instance.processRow = function(row) {
@@ -657,7 +768,7 @@ Instance.export = function(filename, rows) {
 }
 
 module.exports = Instance;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
  
 /**
 * @file 用于Javascript Date类型的扩展
@@ -691,7 +802,10 @@ ZDate.format = function(date, format){
     if(date.toString().indexOf('-') > 0 && date.toString().length === 10){
         date = date.toString().replace(/-/g, '/');
     }
-
+    else if(/^\d{8}$/.test(date)) {
+        date = date.toString().replace(/(\d{4})(\d{2})/g, '$1/$2/');
+    };
+    
     var reg = {
         yyyy: 'year',
         hh: 'hours',
@@ -970,7 +1084,7 @@ ZDate.weekPicker = function(ipt){
             tr.append('<td>' + str + '</td>')
         }
        
-        tbody.find('td:contains(' + week + ')').addClass('active');
+        tbody.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
 
         var weekStart = ZDate.getStartDateByWeek(year + week);
 
@@ -1001,13 +1115,14 @@ ZDate.weekPicker = function(ipt){
         })
         .on('mouseenter', 'tbody td:not(.zWeekPickerTag)', function(){
             var thisWeek = this.innerHTML;
-            var weekStart = ZDate.getStartDateByWeek(year + thisWeek);
+            var thisYear = $(this).parents('table:eq(0)').find('.spanYear').html();
+            var weekStart = ZDate.getStartDateByWeek(thisYear + thisWeek);
             var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
             weekEnd = ZDate.format(weekEnd, 'mmdd');
             weekStart = ZDate.format(weekStart, 'mmdd');
             tbody.find('td.zWeekPickerTag span').html(weekStart + ' - ' + weekEnd);
         })
-        .on('mouseleave', 'tbody', function(){
+        .on('mouseleave', 'tbody', function() {
             var weekStart = ZDate.getStartDateByWeek(year + week);
             var weekEnd = new Date(weekStart).getTime() + 6 * 24 * 60 * 60000;
             weekEnd = ZDate.format(weekEnd, 'mmdd');
@@ -1032,19 +1147,29 @@ ZDate.weekPicker = function(ipt){
         if(ele.length === 0){
             ele = reanderTable();
         }
-        var position = ipt.position();
+        var offset = ipt.offset();
         var val = $.trim(ipt.val());
-        if(val && val.length === 6){
-            var year = val.slice(0, 4);
-            var week = val.slice(4);
 
-            ele.find('.spanYear').html(year);
-            ele.find('td.active').removeClass('active');
-            ele.find('td:contains(' + week + ')').addClass('active');
+        if(!val || val.length !== 6) {
+            val = ZDate.getWeekString(new Date()).toString();
+        }
+        var year = val.slice(0, 4);
+        var week = val.slice(4);
+        var weekStart = ZDate.getStartDateByWeek(year + week);
+        var weekEnd = weekStart.getTime() + 6 * 24 * 60 * 60000;
+        weekEnd = ZDate.format(weekEnd, 'mmdd');
+        weekStart = ZDate.format(weekStart, 'mmdd');
+        ele.find('.spanYear').html(year);
+        ele.find('td.active').removeClass('active');
+        ele.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
+        ele.find('.zWeekPickerTag>span').html(weekStart + ' - ' + weekEnd);
+        var left = offset.left;
+        if(left + ele.outerWidth() > $('body').width()) {
+            left = offset.left - ele.outerWidth() + ipt.outerWidth();
         }
         ele.css({
-            'left': position.left,
-            'top': position.top + ipt.outerHeight(),
+            'left': left,
+            'top': offset.top + ipt.outerHeight(),
             'display': 'block'
         })
         
@@ -1072,7 +1197,7 @@ ZDate.weekPicker = function(ipt){
 
 
 module.exports = ZDate;
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
 * @file 以遮盖形式弹出错误提示，对话框等
 * @author Elvis Xiao
@@ -1092,7 +1217,10 @@ module.exports = ZDate;
     console.log('原来你只是逗我玩的');
 })
 */
-var Dialog = {};
+var Dialog = {
+    template: '<div class="zDialogCover"><div class="zDialog"><div class="zDialogHd"></div><div class="zDialogBd"></div><div class="zDialogFt"><button class="zDialogOk" type="button">确 认</button><button class="zDialogCancel" type="button">取 消</button></div></div></div>'
+};
+
 
 /**
 * 移除所有由oc.dialog生成的对话框
@@ -1100,6 +1228,7 @@ var Dialog = {};
 Dialog.removeMadal = function(){
     this.removeAllTips();
     this.close();
+    Dialog.resetBody();
 },
 
 /**
@@ -1107,6 +1236,7 @@ Dialog.removeMadal = function(){
 */
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
+    Dialog.resetBody();
 },
 
 /**
@@ -1116,30 +1246,40 @@ Dialog.removeAllTips = function(){
 * @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.tips = function(msg, time, cb){
+    if(!msg) {
+        return;
+    }
     if(time === undefined){
         time = 1500;
     }
     if(typeof time === 'function'){
         cb = time;
-        time = 1000;
+        time = 1500;
     }
-    var tips = $('<div class="tips">' + msg + '</div>');
-    tips.appendTo('body');
-    var width = tips.width();
-    tips.css('margin-left', -width / 2 + 'px');
-
-    if(time > 0){
-        setTimeout(function(){
-            tips.remove();
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogFt').remove();
+    dialog.find('.zDialogBd').html(msg);
+    if(time > 0) {
+        dialog.find('.zDialogHd').remove();
+        
+        setTimeout(function() {
+            dialog.remove();
             cb && cb();
-        }, time);
+            Dialog.resetBody();
+        }, time)
     }
-    else{
-        tips.append('<i class="icon-close"></i>');
-        tips.on('click', 'i.icon-close', function(){
-            tips.remove();
+    else {
+        dialog.find('.zDialogHd').append('Tips<i class="zDialogClose close">×</i>');
+        dialog.on('click', '.zDialogClose', function() {
+            dialog.remove();
+            cb && cb();
+            Dialog.resetBody();
         })
     }
+    dialog.appendTo('body');
+    $(document.body).addClass('zDialogOn');
+    
+    return dialog;
 }
 
 /**
@@ -1150,12 +1290,18 @@ Dialog.tips = function(msg, time, cb){
 */
 Dialog.loading = function(msg){
     this.removeMadal();
-    var loading = $('<div class="zLoading"></div><div class="tips">' + msg + '</div>');
-    loading.appendTo('body');
-    var width = $(".tips").width();
-    loading.css('margin-left', -width / 2 + 'px');
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogHd, .zDialogFt').remove();
+    dialog.find('.zDialogBd').html('<div class="zLoadingIcon"></div>' + msg);
+    dialog.appendTo('body');
 
-    return loading;
+    return dialog;
+}
+
+Dialog.resetBody = function() {
+    if($('.zDialogCover').length === 0) {
+        $(document.body).removeClass('zDialogOn');
+    }
 }
 
 /**
@@ -1165,35 +1311,56 @@ Dialog.loading = function(msg){
 * @param {function} cbNO - 用户点击取消后的回调
 * @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
 */
-Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('<div class="zLoading"></div><div class="tips confirm" style="min-width: 500px;">' + msg + '<div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10"><button class="btn btn-info btn-sm btnOK mr20 w80">OK</button><button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel</button></div></div>');
-    confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
+Dialog.confirm = function(msg, cbOK, cbNO, required, autoRemove){
+    var confirm = $(Dialog.template);
+    confirm.find('.zDialogBd').html(msg);
+    confirm.find('.zDialogHd').remove();
+
+    confirm.appendTo('body').on('click', '.zDialogOk, .zDialogCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
         if(ipt.length > 0){
             val = ipt.val();
         }
         
-        if($(this).hasClass('btnOK')){
+        if($(this).hasClass('zDialogOk')){
             if(required === true && ipt.length > 0 && (!val) ){
                 Dialog.tips('message is required.');
                 ipt.focus();
                 return;
             }
-            cbOK && cbOK(val);
+            if(autoRemove !== false) {
+                cbOK && cbOK(val);
+                confirm.remove();
+                Dialog.resetBody();
+            }
+            else {
+                if(val) {
+                    cbOK && cbOK(val, function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }
+                else {
+                    cbOK && cbOK(function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }   
+            }
         }
         else{
             cbNO && cbNO(val);
+            confirm.remove();
+            Dialog.resetBody();
         }
-
-        confirm.remove();
     }).on('click', 'input, textarea', function(){
         confirm.removeClass('has-error');
     });
 
-    var width = $(".tips").width();
-    confirm.css('margin-left', -width / 2 + 'px');
-
+    confirm.focus();
+    $(document.body).addClass('zDialogOn');
+    
     return confirm;
 }
 
@@ -1203,96 +1370,59 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
 * @param {string} content - 弹出部分的内容，一般为html
 * @param {function} cb - 弹出框完全展现之后的回调接口
 */
-Dialog.open = function(title, content, cb){
+Dialog.open = function(title, content, cb, showFoot){
     this.removeMadal();
     if(!content){
         content = title;
         title = '';
     }
-    var dialogCover = $('<div class="zDialogCover"><div class="zDialog"><p class="zDialogTitle"><span class="close">×</span>' + title + '</p></div></div>').appendTo(document.body);
-    var dialog = dialogCover.find('.zDialog');
-    dialog.append(content);
 
-    var width = dialog.outerWidth();
-    var height = dialog.outerHeight();
-    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%', 'width': width});
+    var dialog = $(Dialog.template);
+    dialog.find('.zDialogHd').append(title + '<i class="zDialogClose close">×</i>');
+    dialog.find('.zDialogBd').append(content);
+    if(typeof cb !== true && showFoot !== true) {
+        dialog.find('.zDialogFt').remove();
+    }
+
+    dialog.appendTo(document.body);
+    $(document.body).addClass('zDialogOn');
     
-    var bodyHeight = $(document).outerHeight();
-
-    dialog.on('click', '.close', function(){
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            dialogCover.remove();
-        })
+    if(cb && typeof cb == 'function') {
+        setTimeout(cb, 300);
+    }
+    
+    dialog.on('click', '.close, .zDialogClose, .zDialogCancel', function(){
+        dialog.onclose && dialog.onclose();
+        dialog.onClose && dialog.onClose();
+        dialog.remove();
+        Dialog.resetBody();
     })
 
-    var top = '15%';
-    if(height > bodyHeight){
-        top = '5%';
-    }
-
-    if(height > 500){
-        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
-        top = $(document).scrollTop() + 50 + 'px';
-        $(document).scroll(function(){
-            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
-        })
-    }
-    dialog.animate({
-        top: top,
-        opacity: 1
-    }, 500, function(){
-        cb && cb();
-    })
+    
+    return dialog;
 }
 
 /**
 * 关闭由oc.dialog.open打开的所有对话框
 */
 Dialog.close = function(ele){
-    var doClose = function(cover){
-        if(!cover.length){
-            return;
-        }
-
-        var dialog = cover.find('.zDialog');
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            cover.remove();
-        })
-    }
-
-    if(ele){
+    if(ele) {
         ele = $(ele);
-        if(ele.hasClass('zDialogCover')){
-            doClose(ele);
+        if(!ele.hasClass('zDialogCover')) {
+            ele = ele.parents('.zDialogCover');
         }
-        else{
-            doClose(ele.parents('.zDialogCover'));
-        }
-
-        return;
     }
-    
-    doClose($(".zDialogCover"));
+    else {
+        ele = $(".zDialogCover");
+    }
+    ele.remove();
+    Dialog.resetBody();
 }
 
 Dialog.tooltips = function(msg, ele) {
     ele = $(ele);
     var tips = $('<span class="zTooltips none">' + msg + '</span>');
-    tips.css({
-        position: 'fixed',
-        'font-size': '12px',
-        'background': '#fcf8e3', 
-        'border': '1px solid #faebcc',
-        'color': '#8a6d3b',
-        'z-index': '1001',
-        padding: '3px 10px'
-    })
+    
     tips.appendTo('body');
     tips.fadeIn(500, function() {
         setTimeout(function() {
@@ -1301,25 +1431,72 @@ Dialog.tooltips = function(msg, ele) {
             })
         }, 1500)
     });
-
+    
     tips.css({
         left: ele.offset().left - parseInt(tips.css('width')) - 20,
         top: ele.offset().top
     })
+    
+    return tips;
 }
+
+Dialog.warn = function(msg, ele) {
+    ele = $(ele);
+    
+    var removeTips = function(ele) {
+        if(!ele) {
+            return;
+        }
+        ele = ele.target || ele.srcElement || ele;
+        ele = $(ele);
+        var tips = ele.data('target');
+        if(tips) {
+            tips.data('timer') && clearTimeout(tips.data('timer'));
+            tips.remove();
+            ele.data('target', null);
+        }
+    };
+
+    if(ele.data('target')) {
+        removeTips(ele);
+    }
+
+    ele.off('click', removeTips);
+    ele.on('click', removeTips);
+    ele.on('blur', removeTips);
+
+    var tips = $('<span class="zTooltips warn none">' + msg + '</span>');
+    ele.after(tips);
+    tips.fadeIn(200, function() {
+        var timer = setTimeout(function() {
+            removeTips();
+        }, 5000);
+        tips.data('timer', timer);
+    });
+    
+    tips.css({
+        left: ele.position().left,
+        top: ele.position().top + ele.height() + 10
+    });
+    
+    ele.data('target', tips);
+    return tips;
+}
+
+
 
 module.exports = Dialog;
 
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = {
     show: function(target, title, content, defaultDirect) {
         var target = $(target);
         if(target.data('zTarget')){
             return;
         }
-        var elePop = $('<div class="zDropdown"><div class="zDropdownBd"></div></div>');
+        var elePop = $('<div class="zDropdown" tabindex="1"><div class="zDropdownBd"></div></div>');
         
         elePop.find('.zDropdownBd').append(content);
         if(title){
@@ -1421,7 +1598,7 @@ module.exports = {
     }
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /** 
 * @file CSV文件预览与标记 
 * @author Elvis Xiao
@@ -1440,6 +1617,9 @@ module.exports = {
     maxHeight: 400
 })
 */
+
+var dialog = require('./dialog.js');
+var ui = require('./ui.js');
 var FileView = function(options){
     /** @memberof FileView */
 
@@ -1469,7 +1649,10 @@ var FileView = function(options){
         container: 'body',
         canEdit: true,
         maxHeight: 800,
-        heads: []
+        heads: [],
+        removeEmptyLine: false,
+        afterLoad: null,
+        validHeads: null
     };
 
     for(var key in options){
@@ -1499,8 +1682,8 @@ var FileView = function(options){
     * @instance */
     self._renderNoFile = function(){
         var div = $('<div class="zUploaderNoFile" style="padding:15px 0 0 0;"></div>');
-        div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv" /><span class="zUploaderBtnText">点击选择文件</span></div>');
-        div.append('<p>或将文件拖到这里, 暂仅支持CSV格式</p>');
+        div.append('<span class="zUploaderFileBtn "><input type="file" accept=".csv,.xls" /><span class="zUploaderBtnText">点击选择文件</span></div>');
+        div.append('<p>或将文件拖到这里, 暂仅支持CSV/XLS格式的文件</p>');
 
         return div;
     }
@@ -1514,6 +1697,8 @@ var FileView = function(options){
     self._bindEvent = function(){
         self.ele.on('change', '.zUploaderFileBtn input[type="file"]', function(){
             self._readFilesToTable(this.files[0]);
+            var ipt = self.ele.find('.zUploaderFileBtn input[type="file"]');
+            ipt.replaceWith(ipt[0].outerHTML);
         });
 
         self.ele.find('.zUploaderNoFile')[0].addEventListener("drop", function(e){
@@ -1534,8 +1719,8 @@ var FileView = function(options){
             dragenter: function(e){e.preventDefault();},
             dragover: function(e){e.preventDefault();},
         })
-
-        self.ele.on('blur', '.zFileTable tbody td input', function(){
+        
+        self.ele.on('change', '.zFileTable tbody td input', function(){
             var val = this.value;
             var ele = $(this);
             var td = ele.parent();
@@ -1549,6 +1734,79 @@ var FileView = function(options){
     }
 
     /**
+    * 根据文件类型分方式读取文件内容
+    * @method read
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView
+    * @instance
+    */
+    self.read = function(file, cb) {
+        //excel文件，使用服务器上传并读取---
+        if(file.name.indexOf('.csv') === -1) {
+            self.readXls(file, cb);
+        }
+        else {
+            self.readCsv(file, cb);
+        }
+    }
+
+
+
+    /**
+    * 读取Excel文件内容
+    * @method readXls
+    * @param {object} file - 需要读取的文件对象
+    * @param {function} cb - 文件读取完成后的回调函数
+    * @memberof FileView 
+    * @instance
+    */
+    self.readXls = function(file, cb){
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('POST', "/product/util/xlsReader.jsp", true);
+        var data = new FormData();
+        data.append('file', file);
+        xhr.upload.onerror = function(err){
+            oc.dialog.tips('上传文件时发生错误，请稍后再试');
+            ui.loading(self.ele, true);
+            cb();
+        }
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status !== 200) {
+                oc.dialog.tips('文件传输中断:' + xhr.statusText);
+                ui.loading(self.ele, true);
+                cb();
+                return;
+            }
+            if(xhr.readyState == 4 && xhr.status == 200) { 
+                ui.loading(self.ele, true);
+                try {
+                    self._dataList = JSON.parse(xhr.response);
+                    if(self.config.removeEmptyLine) {
+                        self._dataList = self._dataList.filter(function(one) {
+                            var isEmptyLine = true;
+                            for(var key in one) {
+                                if(one[key].toString().trim()) {
+                                    isEmptyLine = false;
+                                }
+                            }
+                            return !isEmptyLine;
+                        });
+                    }
+                    cb();
+                }
+                catch(err) {
+                    oc.dialog.tips('文件解析错误:' + err);
+                    cb();
+                }
+            }
+        }
+        ui.loading(self.ele);
+        xhr.send(data);
+    }
+
+    /**
     * 读取CSV文件内容
     * @method readCsv
     * @param {object} file - 需要读取的文件对象
@@ -1558,18 +1816,19 @@ var FileView = function(options){
     */
     self.readCsv = function(file, cb){
         var reader = new FileReader();
+        var tryGB2312 = false;
         reader.onload = function(e){
-            $('input[type="file"]').replaceWith($('<input type="file" accept=".csv">'));
+            $('input[type="file"]').replaceWith($('<input type="file" accept=".csv,.xls">'));
             var content = reader.result;
-            if(content.indexOf('�') !== -1){
+            if(content.indexOf('�') !== -1 && !tryGB2312){
                 reader.readAsText(file, "GB2312");
+                tryGB2312 = true;
                 return;
             }
             self._formatFileContent(content);
             cb();
         }
         
-        // reader.readAsText(file, "GB2312");
         reader.readAsText(file);
     }
     
@@ -1581,7 +1840,16 @@ var FileView = function(options){
     * @instance
     */
     self._formatFileContent = function(content){
-        var models = self.csv.parse(content);
+        var models = null;
+        try {
+            models = self.csv.parse(content);
+        }
+        catch(e) {
+            console.log('转换csv失败：', e);
+            dialog.tips('文件读取失败，请检查文件格式', -1);
+            return;
+        }
+
         var firstItem = models[0];
         var keys = [];
         for(var key in firstItem){
@@ -1589,13 +1857,22 @@ var FileView = function(options){
         }
         self._dataList = [];
         self._dataList.push(keys);
+
         for(var i = 0; i < models.length; i++){
             var item = models[i];
             var datas = [];
-            for(var key in item){
-                datas.push(item[key]);
+            var isEmptyLine = true;
+            for(var key in item) {
+                var value = $.trim(item[key]);
+                if(value) {
+                    isEmptyLine = false;
+                }
+                datas.push(value);
             }
-            self._dataList.push(datas);
+
+            if(!isEmptyLine || !self.config.removeEmptyLine) {
+                self._dataList.push(datas);
+            }
         }
     }
 
@@ -1606,20 +1883,55 @@ var FileView = function(options){
     * @memberof FileView
     * @instance
     */
+    self._removeEmptyCols = function(){
+        var keys = self._dataList[0].concat();
+        keys = keys.reverse();
+        var realLength = 0;
+        for(var i = 0; i < keys.length; i ++) {
+            if($.trim(keys[i]) || realLength !== 0) {
+                realLength ++;
+            }
+        }
+        keys.reverse();
+        self._dataList = self._dataList.map(function(one) {
+            return one.slice(0, realLength);
+        })
+    }
+
+    /**
+    * 根据文件内容生成用Table展示出来
+    * @method _readFilesToTable
+    * @param {object} file - 需要读取的文件对象
+    * @memberof FileView
+    * @instance
+    */
     self._readFilesToTable = function(file){
-        self.readCsv(file, function(){
+        self.read(file, function() {
             $('.zFileTableContainer').remove();
             var tableContainer = $('<div class="zFileTableContainer"><table class="zFileTable"></table></div>');
             if(self.config.maxHeight){
                 tableContainer.css('max-height', self.config.maxHeight + 'px');
             }
             var ret = tableContainer.find('.zFileTable');
-            if(self._dataList && self._dataList.length > 0){
+            if(self._dataList && self._dataList.length > 0) {
+                self._removeEmptyCols();
                 var keys = self._dataList[0];
+                if(self.config.validHeads && self.config.validHeads.length) {
+                    if(self.config.validHeads.length !== keys.length) {
+                        oc.dialog.tips("File head error: " + self.validHeads.join(','));
+                        return;
+                    }
+                    self.config.validHeads.map(function(key, index) {
+                        if(keys[index].toString().trim() !== key.toString().trim()) {
+                            oc.dialog.tips("File head error: " + self.config.validHeads.join(','));
+                            return;
+                        }
+                    });
+                }
                 var keysLen = keys.length;
                 var thead = $('<thead></thead>');
                 var tbody = $('<tbody></tbody>');
-                var theadTr = $('<tr><th></th></tr>').appendTo(thead);
+                var theadTr = $('<tr><th>NO.</th></tr>').appendTo(thead);
                 for(var i = 0; i < keysLen; i++){
                     theadTr.append('<th>' + keys[i] + '</th>');
                 }
@@ -1628,7 +1940,11 @@ var FileView = function(options){
                     var item = self._dataList[i];
                     var tr = $('<tr><td>' + i + '</td></tr>');
                     for(var j = 0; j < keysLen; j++){
-                        tr.append('<td data-val="true", data-index="' + i + ',' + j + '">' + $.trim(item[j]) + '</td>');
+                        var text = item[j];
+                        if(self.config.canEdit) {
+                            text = '<span class="tdSpan">' + text + '</span><input class="tdIpt" type="text" value="' + text + '" />'
+                        }
+                        tr.append('<td data-val="true", data-index="' + i + ',' + j + '">' + text + '</td>');
                     }
                     tbody.append(tr);
                 }
@@ -1638,8 +1954,8 @@ var FileView = function(options){
             var uploadList = self.ele.find('.zUploaderList');
             uploadList.find('.zFileTable').remove();
             tableContainer.appendTo(uploadList);
-
-            self.setEditTable(ret);
+            
+            self.config.afterLoad && self.config.afterLoad();
         })
     }
     
@@ -1739,7 +2055,7 @@ var FileView = function(options){
 module.exports = FileView;
 
 
-},{"./asset/csv":2}],9:[function(require,module,exports){
+},{"./asset/csv":3,"./dialog.js":7,"./ui.js":27}],10:[function(require,module,exports){
 /** 
 * @file 前端图片裁剪预览
 * @author Elvis Xiao
@@ -2247,12 +2563,13 @@ var ImageCrop = function(options){
 }
 
 module.exports = ImageCrop;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function(){
 	// window.$ = require('../jquery-2.1.3.min.js');
 	window.oc = {};
 	
 	oc.ui = require('./ui');
+	oc.algorithm = require('./algorithm');
 	oc.dialog = require('./dialog');
 	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
@@ -2273,7 +2590,9 @@ module.exports = ImageCrop;
 	oc.tools = {
 		dojo: require('./toolsDojo'),
 		csv: require('./csvExport'),
-		table: require('./toolsTable')
+		table: require('./toolsTable'),
+		number: require('./toolsNumber'),
+		form: require('./toolsForm')
 	}
 	var cssPath = $('script[data-occss]').attr('data-occss');
 	if(cssPath) {
@@ -2282,18 +2601,26 @@ module.exports = ImageCrop;
 		$("<link>").attr({ rel: "stylesheet", type: "text/css", href: cssPath}).appendTo("head");
 	}
 	else {
-		// if(top.location.hostname === "local.oceanwing.com" && location.href.indexOf('debug') > -1) {
-		// 	// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
-		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/oc.css'}).appendTo("head");
-		// 	$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://172.16.1.233:3009/dest/icons/style.css'}).appendTo("head");
-		// }
-		// else {
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://res.laptopmate.us/webapp/js/oc/icons/style.css'}).appendTo("head");
-		// }
+		if(location.href.indexOf('ocdebug') > -1) {
+			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/icons/style.css'}).appendTo("head");
+		}
+		else {
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css'}).appendTo("head");
+		}
 	}
+
+	window.z && (window.z = oc.dialog);
+	$(function() {
+		window.z && (window.z = oc.dialog);
+	})
+	setTimeout(function() {
+		window.z && (window.z = oc.dialog);
+	}, 1000)
 })()
-},{"./ajax":1,"./buSelect":3,"./csvExport":4,"./date":5,"./dialog":6,"./fileView":8,"./imageCrop":9,"./localStorage":11,"./location":12,"./select":14,"./sidebar":15,"./table":16,"./toolsDojo":17,"./toolsTable":18,"./tree":19,"./treeDialogSelect":20,"./treeOrganization":21,"./treePIS":22,"./treeSelect":23,"./ui":24,"./uploader":25}],11:[function(require,module,exports){
+},{"./ajax":1,"./algorithm":2,"./buSelect":4,"./csvExport":5,"./date":6,"./dialog":7,"./fileView":9,"./imageCrop":10,"./localStorage":12,"./location":13,"./select":15,"./sidebar":16,"./table":17,"./toolsDojo":18,"./toolsForm":19,"./toolsNumber":20,"./toolsTable":21,"./tree":22,"./treeDialogSelect":23,"./treeOrganization":24,"./treePIS":25,"./treeSelect":26,"./ui":27,"./uploader":28}],12:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2373,7 +2700,7 @@ LocalStorage.clear = function(){
 module.exports = LocalStorage;
 
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 var Instance = {}
 
@@ -2393,7 +2720,45 @@ Instance._generateString = function(params) {
 	return null;
 }
 
-Instance.setHash = function(hash, params) {
+Instance.getString = function(params) {
+	return this._generateString(params);
+}
+
+Instance.getParams = function(frame) {
+	if(!frame) {
+		frame = window;
+	}
+	
+	var params = {};
+
+	var searchString;
+	searchString = frame.location.search;
+    if(searchString && searchString.indexOf('=') > -1) { //将hash的参数转为paras对象，传入widget
+    	searchString = searchString.slice(1);
+    	var paraStrings = searchString.split('&');
+    	paraStrings.map(function(one) {
+    		var keyValue = one.split('=');
+    		var key = keyValue[0];
+    		var val = decodeURI(keyValue[1]);
+    		if(val.indexOf(',') > -1) {
+    			val = val.split(',');
+    		}
+    		if(params[key]) {
+    			if(typeof params[key] !== 'object') {
+    				params[key] = [params[key]];
+    			}
+    			params[key].push(val);
+    		}
+    		else {
+    			params[key] = val;
+    		}
+    	})
+    }
+    
+	return params;
+}
+
+Instance.setHash = function(hash, params, needReload) {
     var searchStr = Instance._generateString(params);
     var url = hash + (searchStr? '?' + searchStr : '');
     var state = {
@@ -2401,9 +2766,13 @@ Instance.setHash = function(hash, params) {
 	};
 
 	top.history.pushState(state, "", url);
+
+	if(typeof hash === "boolean" || typeof params === "boolean" || needReload === true) {
+		window.app && window.app.loadPage();
+	}
 }
 
-Instance.setSearch = function(params) {
+Instance.setSearch = function(params, needReload) {
 	var searchStr = Instance._generateString(params);
 
 	if(searchStr) {
@@ -2414,9 +2783,13 @@ Instance.setSearch = function(params) {
 
 		top.history.pushState(state, "", url);
 	}
+
+	if(typeof params === "boolean" || needReload === true) {
+		window.app && window.app.loadPage();
+	}
 }
 
-Instance.setUrl = function(pathname, search, hash) {
+Instance.setUrl = function(pathname, search, hash, needReload) {
 	var url = pathname;
 	var searchStr = Instance._generateString(search);
 	if(searchStr) {
@@ -2431,12 +2804,16 @@ Instance.setUrl = function(pathname, search, hash) {
 	};
 
 	top.history.pushState(state, "", url);
+
+	if(typeof pathname === "boolean" || typeof search === "boolean" || typeof hash === "boolean" || needReload === true) {
+		window.app && window.app.loadPage();
+	}
 }
 
 module.exports = Instance;
 
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var Security = {};
 
 Security.removeXss = function(model){
@@ -2463,16 +2840,31 @@ Security.removeXss = function(model){
 }
 
 module.exports = Security;
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var dropdown = require('./dropdown');
 
 var instance = function(ele, showFilter){
     initSelect(ele, showFilter);
 }
 
+
+var getSelectedText = function(slc) {
+    var ret = [];
+    slc.find('option').each(function() {
+        if(this.selected) {
+            ret.push($(this).text());
+        }
+    })
+
+    return ret;
+}
+
 var initSelect = function(ele, showFilter){
     if(!ele){
         ele = $('.zSlc');
+    }
+    if(showFilter === undefined) {
+        showFilter = true;
     }
 
     ele.each(function(){
@@ -2481,7 +2873,7 @@ var initSelect = function(ele, showFilter){
         var ipt = divSlc.find('input');
         if(divSlc.length === 0){
             divSlc = $('<div class="zSlcWrap"></div>');
-            ipt = $('<input class="zIpt" type="text" readonly/>').appendTo(divSlc).data('showFilter', true);
+            ipt = $('<input class="zIpt" type="text" readonly/>').appendTo(divSlc).data('showFilter', showFilter);
             var position = slc.position();
             divSlc.css({
                 position: 'relative',
@@ -2492,15 +2884,11 @@ var initSelect = function(ele, showFilter){
             slc.after(divSlc);
         }
         
-        var initVal = slc.val() || '';
-        if(initVal.join){
-            initVal = initVal.join(', ');
-        }
+        var initVal = getSelectedText(slc).join(', ');
         ipt.val(initVal || "");
         slc.hide();
     });
 }
-
 
 var initEvent = function(){
     $(function(){
@@ -2546,6 +2934,15 @@ var initEvent = function(){
             });
 
             dropdown.show(ele, '', content[0].outerHTML);
+
+            var eleDropdown = ele.data('zTarget');
+            eleDropdown.focus();
+            eleDropdown.on('keydown', function(e) {
+                if(e.keyCode == 65 && (e.ctrlKey || e.metaKey)) {
+                    eleDropdown.find('.zSlcBd>p').trigger('click');
+                    return false;
+                }
+            })
         })
         .off('click', '.zSlcBd')
         .on('click', '.zSlcBd', function(e){
@@ -2584,7 +2981,7 @@ var initEvent = function(){
         	}
         	
         	if(!slc.attr('multiple')){
-                ipt.val(slcVal);
+                ipt.val(slcOption.text());
                 slc.find('option').attr('selected', false);
                 slcOption.prop('selected', true);
 				dropdown.remove(ipt);
@@ -2601,10 +2998,7 @@ var initEvent = function(){
                     slcOption[0].selected = true;
         			slcOption.prop('selected', true);
         		}
-                var vals = slc.val();
-                if(vals){
-                    vals = vals.join(', ');
-                }
+                var vals = getSelectedText(slc).join(', ');
                 ipt.val(vals || '');
                 ipt.change();
                 slc.change();
@@ -2617,7 +3011,7 @@ initEvent();
 
 module.exports = instance;
 
-},{"./dropdown":7}],15:[function(require,module,exports){
+},{"./dropdown":8}],16:[function(require,module,exports){
 /** 
 * @file 侧边栏
 * @author Elvis Xiao
@@ -2718,7 +3112,7 @@ var Sidebar = function(dataList, container){
 }
 
 module.exports = Sidebar;
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 
 /**
@@ -2731,6 +3125,9 @@ var Table = function() {
     this.sortKey;
     this.sortUp;
     
+    this.showPager = true; //是否显示分页信息
+    this.hasNext; //是否有下一页---
+
 	this.showSearchBox = false; // 是否显示搜索框 
     this.exportFile = '';
 	this.showBtnExport = false; //是否显示导出按钮
@@ -2760,19 +3157,29 @@ var Table = function() {
 	var self = this;
 
     self.load = function(dataList, ajaxTotal) {
-        if(ajaxTotal) {
+        self.table.removeClass('zLoadingCover');
+        if(typeof ajaxTotal === 'number') {
             self.total = ajaxTotal;
+        }
+        if(typeof ajaxTotal === 'boolean') {
+            self.hasNext = ajaxTotal;
         }
         self.originDataList = $.extend(true, [], dataList);
 
         self.filterDataList = self.dataList = $.extend(true, [], dataList);
 
         var body = self._renderBody();
-        var foot = self._renderFoot();
+        
         self.table.find('tbody').replaceWith(body);
-        self.table.find('tfoot').replaceWith(foot);
+        if(self.showPager) {
+            var foot = self._renderFoot();
+            self.table.find('tfoot').replaceWith(foot);
+        }
+        else {
+            self.table.find('tfoot').remove();
+        }
 
-        self._buildTdData();
+        // self._buildTdData();
         self.filterDataList = self.dataList;
         
         self.afterLoad && self.afterLoad();
@@ -2796,7 +3203,7 @@ var Table = function() {
 
         return caption;
 	}
-
+    
 	//build Table的头部 -----
 	self._renderHead = function() {
 		var thead = $('<thead><tr></tr></thead>');
@@ -2838,8 +3245,9 @@ var Table = function() {
     
     self._getVal = function(model, key) {
         var arr = key.split('.');
-        var tdVal = model[key] !== undefined? model[key] : model;
+        var tdVal = model[key];
         if(arr.length > 1) {
+            tdVal = model;
             for(var i = 0; i < arr.length; i++) {
                 tdVal = tdVal[arr[i]];
                 if(!tdVal) {
@@ -2881,6 +3289,7 @@ var Table = function() {
 
     //filterData改变的情况下，需要更新td数据, 暂时不用
     self._buildTdData = function() {
+        //让ui先更新，后处理数据----
         self.dataList = self.dataList.map(function(model) {
             self._setTrModel(model);
             return model;
@@ -2908,16 +3317,27 @@ var Table = function() {
         model.trModel = trModel;
     }
 
+    self._getValByMappingKey = function(model, key) {
+        var tdVal = self._getVal(model, key);
+        var text = self._getDefault(tdVal);
+        return text;
+    }
+
     self._getPageData = function() {
-        if(self.total) {
+        if(self.total || typeof self.hasNext === 'boolean') {
             return self.dataList;
         }
 
         var start = self.pageSize * (self.pageNo - 1);
         var dataList = self.filterDataList;
-        var len = self.pageSize > dataList? dataList.length: self.pageSize;
+        if(self.showPager) {
+            var len = self.pageSize > dataList? dataList.length: self.pageSize;
+            self.pageData = self.filterDataList.slice(start, len + start);
+        }
+        else {
+            self.pageData = self.filterDataList;
+        }
         
-        self.pageData = self.filterDataList.slice(start, len + start);
         return self.pageData;
     }
 
@@ -2931,13 +3351,14 @@ var Table = function() {
 
         if(self.filterDataList.length) {
             self.pageData = self._getPageData();
-            self.pageData.map(function(model) {
+            for(var i = 0; i < self.pageData.length; i ++) {
+                var model = self.pageData[i];
                 var tr = self.renderTr(model);
                 if(self.showCheckbox) {
                     tr.prepend('<td><input type="checkbox" class="cbxOcTable"></td>');
                 }
                 tbody.append(tr);
-            })
+            }
         }
         else {
             self.pageData = [];
@@ -2960,56 +3381,70 @@ var Table = function() {
         var tfoot = $('<tfoot><tr><td colspan="100"><form><nav><ul class="pagination"></ul></nav></form></td></tr></tfoot>');
         var nav = tfoot.find('nav');
         var ul = tfoot.find('ul');
-        ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
-        ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
-
+        
         if(!self.dataList || self.dataList.length == 0) {
             return tfoot;
         }
 
-        var total = self.total || self.filterDataList.length;
-        var totalPage = parseInt(total / self.pageSize);
-        if(totalPage * self.pageSize < total) {
-            totalPage ++;
-        }
-
-        var start = self.pageNo - 2;
-        if(start < 1) {
-            start = 1;
-        }
-
-        var end = start + 4;
-        if(end > totalPage) {
-            end = totalPage;
-            start = end - 4;
-            start < 1 && (start = 1);
-        }
-
-        while(start <= end) {
-            var li = $('<li><a href="#" data-page="' + start + '">' + start + '</a></li>').appendTo(ul);
-            if(start === self.pageNo) {
-                li.addClass('active');
+        if(self.hasNext !== undefined) { //只显示上一页，下一页的分页信息
+            var prevLi = $('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">Prev</a></li>').appendTo(ul);
+            var nextLi = $('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">Next</a></li>').appendTo(ul);
+            if(!self.hasNext) {
+                nextLi.addClass('disabled');
             }
-            start ++;
+            if(self.pageNo == 1) {
+                prevLi.addClass('disabled');
+            }
+            nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Current page ' + self.dataList.length + ' items, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
         }
+        else { //带页码的分页信息
+            ul.append('<li><a href="#" title="First" data-page="1">&laquo;</a></li>');
+            ul.append('<li><a href="#" title="Previous" data-page="' + (self.pageNo - 1) + '">‹</a></li>');
 
-        ul.append('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">›</a></li>');
-        ul.append('<li><a href="#" title="Last" data-page="' + totalPage + '">&raquo;</a></li>');
-        if(self.pageNo === 1) {
-            ul.find('li:lt(2)').addClass('disabled');
+            var total = self.total || self.filterDataList.length;
+            var totalPage = parseInt(total / self.pageSize);
+            if(totalPage * self.pageSize < total) {
+                totalPage ++;
+            }
+
+            var start = self.pageNo - 2;
+            if(start < 1) {
+                start = 1;
+            }
+
+            var end = start + 4;
+            if(end > totalPage) {
+                end = totalPage;
+                start = end - 4;
+                start < 1 && (start = 1);
+            }
+
+            while(start <= end) {
+                var li = $('<li><a href="#" data-page="' + start + '">' + start + '</a></li>').appendTo(ul);
+                if(start === self.pageNo) {
+                    li.addClass('active');
+                }
+                start ++;
+            }
+
+            ul.append('<li><a href="#" title="Next" data-page="' + (self.pageNo + 1) + '">›</a></li>');
+            ul.append('<li><a href="#" title="Last" data-page="' + totalPage + '">&raquo;</a></li>');
+            if(self.pageNo === 1) {
+                ul.find('li:lt(2)').addClass('disabled');
+            }
+            if(self.pageNo === totalPage || totalPage === 0) {
+                var last = ul.find('li:last-child').addClass('disabled');
+                last.prev().addClass('disabled');
+            }
+            nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Total ' + total + ' rows in ' + totalPage + ' pages, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
+            nav.append('<span class="form-inline"><input type="number" name="pageNo" class="form-control w40" min="1" max="' + totalPage + '" /><button class="btn btn-default" type="submit">GO</button></span>');
         }
-        if(self.pageNo === totalPage || totalPage === 0) {
-            var last = ul.find('li:last-child').addClass('disabled');
-            last.prev().addClass('disabled');
-        }
-        nav.parent().prepend('<span class="form-inline pr" style="top: 5px">Total ' + total + ' rows in ' + totalPage + ' pages, show <input type="number" name="pageSize" class="form-control w40" min="1" max="2000" value="' + self.pageSize + '" title="1 ~ 2000之间的整数" /> rows each page.' );
-        nav.append('<span class="form-inline"><input type="number" name="pageNo" class="form-control w40" min="1" max="' + totalPage + '" /><button class="btn btn-default" type="submit">GO</button></span>');
+        
 
         return tfoot;
     }
 
     self._render = function() {
-        // self.buildTdData();
 
         var caption = self._renderCaption();
         var thead = self._renderHead();
@@ -3036,6 +3471,7 @@ var Table = function() {
     
     //根据搜索条件、重新加载tbody中的数据----
     self._reloadBody = function() {
+        self.table.removeClass('zLoadingCover');
         var tbody = self.table.find('tbody').replaceWith(self._renderBody());
 
         self.afterLoad && self.afterLoad();
@@ -3050,7 +3486,8 @@ var Table = function() {
         if(!self.pageNo) {
             self.pageNo = 1;
         }
-        self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        // self.table.find('tbody').html('<tr><td colspan="100"><i class="zLoadingIcon mr5"></i>Loading...</td></tr>');
+        self.table.addClass('zLoadingCover');
         var params = {
             pageNo: self.pageNo,
             pageSize: self.pageSize
@@ -3065,7 +3502,6 @@ var Table = function() {
             if(!self.pageNo) {
                 self.pageNo = 1;
             }
-            self._buildTdData();
             self._reloadBody();
             self._reloadFoot();
         });
@@ -3127,7 +3563,7 @@ var Table = function() {
             }
             self.pageNo = parseInt(a.attr('data-page'));
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self._loadData();
 
                 return;
@@ -3156,7 +3592,7 @@ var Table = function() {
             self.pageNo = 1;
 
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self.sortKey = key;
                 self.sortUp = sortUp;
                 self._loadData();
@@ -3165,8 +3601,16 @@ var Table = function() {
             }
 
             self.filterDataList.sort(function(a, b) {
-                var valA = a.trModel[key];
-                var valB = b.trModel[key];
+                var valA, valB;
+                if(a.trModel) {
+                    valA = a.trModel[key];
+                    valB = b.trModel[key];
+                }
+                else {
+                    valA = self._getValByMappingKey(a, key);
+                    valB = self._getValByMappingKey(b, key);
+                }
+
                 if(typeof valA === 'number') {
                     return sortUp? valA - valB : valB - valA;
                 }
@@ -3181,7 +3625,7 @@ var Table = function() {
             self.pageNo = parseInt(form.find('input[name="pageNo"]').val() || 1);
 
             //服务器端加载数据--------
-            if(self.total) {
+            if(self.total || typeof self.hasNext === 'boolean') {
                 self._loadData();
 
                 return false;
@@ -3194,36 +3638,51 @@ var Table = function() {
         })
     }
 
+    //搜索匹配所有列
+    self.search = function(searchStr) {
+        if(!self.dataList || !self.dataList.length) {
+            return;
+        }
+        if(!self.dataList[0].trModel) {
+            self._buildTdData();
+        }
+
+        self.pageNo = 1;
+        self.filterDataList = self.dataList.filter(function(model) {
+            var ret = false;
+            var trModel = model.trModel;
+            for(var key in trModel) {
+                if(trModel[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
+                    ret = true;
+                    break;
+                }
+            }
+
+            return ret;
+        })
+
+        self._reloadBody();
+        self._reloadFoot();
+    }
+
     self._bindEvents = function() {
         //search----
         self.table.off('input').on('input', 'caption .searchBox', function() {
             var searchStr = $.trim(this.value).toUpperCase();
             self.timer && clearTimeout(self.timer);
             self.timer = setTimeout(function(){
-                self.pageNo = 1;
-                self.filterDataList = self.dataList.filter(function(model) {
-                    var ret = false;
-                    var trModel = model;
-                    for(var key in trModel) {
-                        if(trModel[key].toString().toUpperCase().indexOf(searchStr) !== -1) {
-                            ret = true;
-                            break;
-                        }
-                    }
-
-                    return ret;
-                })
-
-                self._reloadBody();
-                self._reloadFoot();
+                self.search(searchStr);
             }, 500);
         })
         .off('click')
         .on('click', 'thead input:checkbox.cbxOcTable', function() {
-            self.table.find('tbody input:checkbox.cbxOcTable').prop('checked', this.checked);
+            var checked = this.checked;
+            self.table.find('tbody input:checkbox.cbxOcTable').each(function() {
+                $(this).prop('checked', checked).change();
+            })
         })
         .on('click', 'tbody input:checkbox.cbxOcTable', function() {
-            self.table.find('thead input:checkbox.cbxOcTable').prop('checked', false);
+            self.table.find('thead input:checkbox.cbxOcTable').prop('checked', false).change();
         })
         .on('click', 'caption .btnExport', function() {
             self.export();
@@ -3235,24 +3694,247 @@ var Table = function() {
 
 
 module.exports = Table;
-},{"./toolsDojo":17}],17:[function(require,module,exports){
+},{"./toolsDojo":18}],18:[function(require,module,exports){
 
 var Instance = {}
 
 Instance.destroyByNode = function(node) {
-    if(node.children && node.children.length) {
-        var widget = dojo.dijit.registry.byNode(node.children[0]);
-        if (widget) {
-            widget.destroyDescendants();
-            widget.destroyRecursive();
-        }
+    if(node && node.children && node.children.length) {
+    	if(window.dojo && dojo.dijit && dojo.dijit.registry) {
+    		var widget = dojo.dijit.registry.byNode(node.children[0]);
+	        if (widget) {
+	            widget.destroyDescendants();
+	            widget.destroyRecursive();
+	        }
+    	}
     }
 }
 
 module.exports = Instance;
 
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
+var dialog = require('./dialog');
+
+var Instance = {}
+
+Instance.loadingButton = function(btn, noDisable) {
+	btn = $(btn);
+    if(btn[0].nodeName !== "BUTTON") {
+    	btn = btn.find('button[type="submit"]:eq(0)');
+    }
+	var text = btn.html();
+	btn.html('<i class="zLoadingIcon"></i>').attr('data-html', text);
+	if(!noDisable) {
+		btn.attr('disabled', 'disabled');
+	}
+};
+
+Instance.resetButton = function(btn) {
+	btn = $(btn);
+    if(btn[0].nodeName !== "BUTTON") {
+    	btn = btn.find('button[type="submit"]:eq(0)');
+    }
+
+	var text = btn.attr('data-html');
+	btn.removeAttr('disabled').html(text)
+};
+
+Instance.validity = function(ele) {
+	ele = $(ele);
+
+	try {
+		if('INPUT,TEXTAREA,SELECT'.indexOf(ele[0].nodeName.toUpperCase()) === -1) {
+			ele = ele.find('input, textarea, select').filter(':visible');
+		}
+
+		var valid = true;
+		ele.each(function() {
+			var validity = this.validity;
+			if(!validity.valid) {
+				valid = false;
+
+				var errMsg = '';
+				if(this.title) {
+					errMsg = this.title;
+				}
+				else if(this.validationMessage) {
+					errMsg = this.validationMessage;
+				}
+				else if(validity.customError) {
+					errMsg = 'Custome validity is not pass.';
+				}
+				else if(validity.patternMismatch) {
+					errMsg = 'Format is not creact';
+				}
+				else if(validity.rangeOverflow) {
+					errMsg = 'Value is to large';
+				}
+				else if(validity.rangeUnderflow) {
+					errMsg = 'Value is to small';
+				}
+				else if(validity.stepMisMatch) {
+					errMsg = 'Not allowed value';
+				}
+				else if(validity.tooLong) {
+					errMsg = 'Value is too long';
+				}
+				else if(validity.typeMismatch) {
+					errMsg = 'Value is not matched';
+				}
+				else if(validity.valueMissing) {
+					errMsg = 'Value is required';
+				}
+				else {
+					errMsg = 'Format is not creact';
+				}
+
+				dialog.warn(errMsg, this);
+				this.focus();
+
+				return false;
+			}
+		});
+
+		return valid;
+	}
+	catch(err) {
+		console.log('validity错误：', err);
+		return true;
+	}
+};
+
+Instance.getValueByParam = function(model, param) {
+	if(param.indexOf('.') === -1) {
+		return model[param];
+	}
+	param = param.split('.');
+	var value = model;
+	for(var i = 0; i < param.length; i ++) {
+		var key = param[i];
+		value = value[key];
+		if(value === undefined) {
+			return undefined;
+		}
+	}
+
+	return value;
+};
+
+Instance.fill = function(form, model) {
+	form = $(form);
+	var ipts = form.find('input[name]:visible, select[name]:visible, textarea[name]:visible');
+
+	ipts.each(function() {
+		var name = this.name;
+		var value = Instance.getValueByParam(model, name) || '';
+		if(this.type == 'radio') {
+			ipts.filter('[name="' + name + '"]').prop('checked', false);
+			ipts.filter('[name="' + name + '"][value="' + value + '"]').prop('checked', true);
+		}
+		else if(this.type == 'checkbox') {
+			var iptValue = this.value;
+			if(value == iptValue || (value && value.indexOf && value.indexOf(iptValue) !== -1) ) {
+				this.checked = true;
+			}
+			else {
+				this.checked = false;
+			}
+		}
+		else {
+			$(this).val(value);
+		}
+	});
+};
+
+//isReplace: 如果为true, 相同key值将被替换，否则则生成数组, 默认替换---
+Instance.setValueByParam = function(model, param, value, isReplace) {
+	var target = null;
+	if(param.indexOf('.') === -1) {
+		if(!model[param] || isReplace) {
+			model[param] = value;
+		}
+		else {
+		    model[param] = model[param] instanceof Array? model[param] : [model[param]];
+		    model[param].push(value);
+		}
+	}
+	else {
+		param = param.split('.');
+		var target = model;
+		for(var i = 0; i < param.length - 1; i ++) {
+			var key = param[i];
+			if(!target[key]) {
+				target[key] = {};
+			}
+			target = target[key];
+		}
+
+		arguments.callee.call(this, target, param.slice(-1)[0], value, isReplace);
+	}
+}
+
+Instance.getJson = function(form, removeEmpty) {
+	var form = $(form);
+	var model = {};
+	var ipts = form.find('input[name]:visible, select[name]:visible, textarea[name]:visible');
+
+	ipts.each(function() {
+		var name = this.name;
+		var value = this.value;
+
+		if(this.type == 'checkbox') {
+			this.checked && Instance.setValueByParam(model, name, value);
+		}
+		else if(this.type === 'radio') {
+			this.checked && Instance.setValueByParam(model, name, value, true);
+		}
+		else if(!removeEmpty || value) {
+			Instance.setValueByParam(model, name, value, true);
+		}
+	});
+
+	return model
+}
+
+module.exports = Instance;
+
+
+},{"./dialog":7}],20:[function(require,module,exports){
+
+var Instance = {}
+
+
+Instance.toFixed = function(number, fixLength) {
+    if(!number || !number.toFixed) {
+        return '';
+    }
+    if(number === 0 || number === "0") {
+        return 0;
+    }
+    
+    return number.toFixed(fixLength || 2);
+}
+
+Instance.formatMoney = function(number, fixLength) {
+    if(typeof number !== "number") {
+    	number = parseFloat(number);
+    }
+    if(number == 0) {
+    	return 0;
+    }
+
+    if(fixLength) {
+    	number = number.toFixed(fixLength);
+    }
+
+    return number.toString().split('').reverse().join('').replace(/(\d{3}(?=\d)(?!\d+\.|$))/g, '$1,').split('').reverse().join('');
+}
+
+module.exports = Instance;
+
+
+},{}],21:[function(require,module,exports){
 var instance = {}
 
 var setThWidth = function(originTable){
@@ -3338,7 +4020,7 @@ instance.fixHead = function(eles){
 
 module.exports = instance;
 
-},{}],19:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /** 
 * @file 生成无限级的树形结构
 * @author Elvis Xiao
@@ -3384,6 +4066,8 @@ var Tree = function(options){
 		showLevel: 1
 	};
 	this.ele = null;
+	this.addClickCallback = null;
+	this.editClickCallback = null;
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -3527,10 +4211,13 @@ var Tree = function(options){
 			e.stopPropagation();
 			var p = $(this).parent().parent();
 			p.addClass('zTreeEdit');
-			p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
+			p.html('<input type="text" name="name" placeholder="name" maxLength="250"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
 			var model = p.parent().data();
 			p.find('[name="name"]').val(model.name);
 			p.find('[name="description"]').val(model.description);
+
+			self.editClickCallback && self.editClickCallback(p);
+
 		})
 		.on('click', '.zTreeEdit input, .zTreeEdit i, .zTreeControl', function(e){
 			e.stopPropagation();
@@ -3572,8 +4259,10 @@ var Tree = function(options){
 				ul = $('<ul></ul>').appendTo(li);
 			}
 			var newLi = $('<li class="zTreeItem"></li>');
-			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
+			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name" maxLength="250"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
+			
+			self.addClickCallback && self.addClickCallback(e);
 		})
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();
@@ -3763,7 +4452,7 @@ var Tree = function(options){
 }
 
 module.exports = Tree;
-},{}],20:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var TreeDialogSelect = function(ipt, dataList){
 	this.ele = $(ipt);
 	this.valueChangeHanlder = null;
@@ -4088,7 +4777,7 @@ var TreeDialogSelect = function(ipt, dataList){
 }
 
 module.exports = TreeDialogSelect;
-},{}],21:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 var TreeOriganization = function(options){
 	this.config = {
@@ -4810,7 +5499,7 @@ var TreeOriganization = function(options){
 }
 
 module.exports = TreeOriganization;
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 
 var TreePIS = function(options){
 	this.config = {
@@ -5149,7 +5838,7 @@ var TreePIS = function(options){
 }
 
 module.exports = TreePIS;
-},{}],23:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var TreeSelect = function(options){
 	this.config = {
 		container: 'body',
@@ -5160,7 +5849,7 @@ var TreeSelect = function(options){
 		showAll: false,
 		forbidPNode: false //禁止选中非末级几点
 	};
-
+	this.timerHandler = null;
 	this.selectedItem = null;
 	this.selectedList = null;
 	this.ele = null;
@@ -5197,7 +5886,7 @@ var TreeSelect = function(options){
 		if(self.config.showAll){
 			self.ele.find('input').val('All');
 		}
-	}
+	};
 
 	self._selectedP = function(p){
 		if(p.length === 0){
@@ -5216,7 +5905,7 @@ var TreeSelect = function(options){
 			else{
 				text = item.name + ' - ' + text;
 			}
-		})
+		});
 		self.selectedList.reverse();
 		self.ele.find('input').val(text).attr('data-id', self.selectedItem.id || '');
 		self.ele.removeClass('active');
@@ -5225,7 +5914,7 @@ var TreeSelect = function(options){
 		}
 		
 		self.valueChangeHanlder && self.valueChangeHanlder();
-	}
+	};
 
 	self._setActive = function(){
 		var model = self.ele.find('.zTreeSelectItem.active').data();
@@ -5236,17 +5925,18 @@ var TreeSelect = function(options){
 					self.currentActive = i;
 					return false;
 				}
-			})
+			});
 		}
 		else{
 			self.currentActive = null;
 		}
-	}
+	};
 
 	self._bindEvents = function(){
 		self.ele.on('click', function(e){
+			self.filterParams = {name: '', description: ''};
 			e.stopPropagation();
-			if(self.ele.hasClass('active')){
+			if(self.ele.hasClass('active') || self.ele.attr('disabled') == "disabled" || self.ele.find('input').attr('disabled') === "disabled"){
 				return;
 			}
 			self.ele.addClass('active');
@@ -5258,9 +5948,10 @@ var TreeSelect = function(options){
 					var li = $(this);
 					var model = li.data();
 					if(model == self.selectedItem){
-						li.find('>p').addClass('active');
+						li.addClass('active');
+						self.ele.find('>ul').scrollTop(li.offset().top - 32);
 					}
-				})
+				});
 			}
 		})
 		.on('click', 'p', function(e){
@@ -5311,7 +6002,7 @@ var TreeSelect = function(options){
 			}
 			
 			var target = self.ele.find('.zTreeSelectItem:visible:eq(' + self.currentActive + ')');
-			if(target.length == 0){
+			if(target.length == 0) {
 				return;
 			}
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');
@@ -5333,28 +6024,29 @@ var TreeSelect = function(options){
 					ul.scrollTop(scrollTop - 32);
 				}
 			}
-			
 		})
+		.on('blur', function() {
+			self.timerHandler && clearTimeout(self.timerHandler);
 
-		$(document).on('click', function(){
-			self.ele.removeClass('active');
-			if(!self.selectedItem){
-				self.filterParams.name = null;
-				if(self.config.showAll){
-					self.ele.find('input').val('All');
+			self.timerHandler = setTimeout(function() {
+				self.ele.removeClass('active');
+				if(!self.selectedItem){
+					self.filterParams.name = null;
+					if(self.config.showAll){
+						self.ele.find('input').val('All');
+					}
+					else{
+						self.ele.find('input').val('');
+					}
 				}
-				else{
-					self.ele.find('input').val('');
-				}
-			}
-		})
-	}
+			}, 200);
+		});
+	};
 
 	self._clear = function(){
 		self.selectedItem = null;
 		self.selectedList = [];
-		// self.ele.find('input').val('');
-	}
+	};
 	
 	self.setSelected = function(id){
 		if(!id){
@@ -5390,7 +6082,7 @@ var TreeSelect = function(options){
 			var item = li.data();
 			self.selectedList.push(item);
 			text = item.name + ' - ' + text;
-		})
+		});
 
 		self.selectedList.reverse();
 		self.ele.find('input').val(text);
@@ -5400,7 +6092,7 @@ var TreeSelect = function(options){
 		}
 		
 		return self.selectedList;
-	}
+	};
 
 	//采取模糊匹配....
 	self.filter = function(){
@@ -5461,7 +6153,7 @@ var TreeSelect = function(options){
 }
 
 module.exports = TreeSelect;
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var toolsDojo = require('./toolsDojo');
 /**
 * @file 基本的、单个UI元素
@@ -5535,13 +6227,14 @@ UI.toggleOneBtn = function(btn, on, off){
     console.log(val);
 }, true)
 */
-UI.autoComplete = function(ele, array, cb, prefix){
+UI.autoComplete = function(ele, array, cb, prefix, autoAddPrefix){
     ele = $(ele);
+    ele.attr('autocomplete', 'off');
     if(typeof array === 'function'){
         cb = array;
         array = null;
     }
-    ele.off('keyup').off('keydown').off('blur');
+    ele.off('keyup').off('keydown').off('blur').data('cb', cb);
     ele.on('keydown', function(e){
         var ipt = $(this);
         var ul = ipt.next('ul.zAutoComplete');
@@ -5552,6 +6245,8 @@ UI.autoComplete = function(ele, array, cb, prefix){
     })
     ele.on('keyup', function(e){
         var ipt = $(this);
+        var cb = ipt.data('cb');
+        
         var ul = ipt.next('ul.zAutoComplete');
 
         if(e.keyCode === 40){
@@ -5589,18 +6284,22 @@ UI.autoComplete = function(ele, array, cb, prefix){
             if(focusLi.length > 0){
                 var slcVal = focusLi.html();
                 var text = ipt.val();
-                // val = val.replace(/.*;|.*,|.*\s/g, '');
                 if(prefix){
                     var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
                     text = '';
                     if(mathedArray && mathedArray.length > 0){
                         text = mathedArray[0];
                     }
-                    ipt.val(text + slcVal);
+                    var value = text + slcVal;
+                    if(autoAddPrefix === true) {
+                        value += (typeof prefix === 'string'? prefix : ',');
+                    }
+                    ipt.val(value);
                 }
                 else{
                     ipt.val(slcVal);
                 }
+                ipt.change();
                 
                 ul.remove();
                 cb && cb(slcVal, ipt);
@@ -5621,7 +6320,7 @@ UI.autoComplete = function(ele, array, cb, prefix){
         if(!source){
             return;
         }
-
+        
         $('.zAutoComplete').remove();
         var val = $.trim(this.value);
         if(prefix){
@@ -5653,7 +6352,6 @@ UI.autoComplete = function(ele, array, cb, prefix){
         var left = ipt.position().left;
         ul.css({top: top, left: left}).on('click', 'li', function(){
             var slc = $(this).html();
-            // ipt.val(slc);
             var text = ipt.val();
             if(prefix){
                 var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
@@ -5661,13 +6359,17 @@ UI.autoComplete = function(ele, array, cb, prefix){
                 if(mathedArray && mathedArray.length > 0){
                     text = mathedArray[0];
                 }
-                // text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
-                ipt.val(text + slc);
+                var value = text + slc;
+                if(autoAddPrefix === true) {
+                    value += (typeof prefix === 'string'? prefix : ',');
+                }
+                ipt.val(value);
             }
             else{
                 ipt.val(slc);
             }
             $('.zAutoComplete').remove();
+            ipt.change();
             cb && cb(slc, ipt);
         })
         .on('mouseenter', 'li', function(){
@@ -5857,11 +6559,13 @@ UI.popOverRemove = function(btn){
     }
 }
 
-UI.slide = function(width) {
+UI.slide = function(width, showFullScreen) {
     var slideId = 'fixRight' + new Date().getTime();
-    var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
+    var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i><i class="icon-fullscreen fixRightFullScreen"></i></div><div class="fixRightBd"></div></div>');
     fixRight.appendTo(document.body);
-
+    if(showFullScreen) {
+        fixRight.find('.fixRightFullScreen').css('display', 'block');
+    }
     setTimeout(function() {
         if(!width) {
             fixRight.addClass('active');   
@@ -5874,10 +6578,27 @@ UI.slide = function(width) {
     
     fixRight.on('click', '.fixRightClose', function(e) {
         fixRight.removeClass('active');
+        if(fixRight.data('target')) {
+            $(fixRight.data('target')).find('tr.success').removeClass('success');
+        }
         setTimeout(function() {
-            fixRight.remove();
+            fixRight.onClose && fixRight.onClose();
+            if(fixRight.data('target')) {
+                $(fixRight.data('target')).find('tr.success').removeClass('success');
+            }
             toolsDojo.destroyByNode(fixRight.find('.fixRightBd')[0]);
-        }, 300)
+            fixRight.remove();
+        }, 300);
+    })
+    .on('click', '.fixRightFullScreen', function(e) {
+        var wrapEle = document.getElementById('ocOutWrap') || document.body;
+        var width = wrapEle.clientWidth;
+        if(parseInt(fixRight.css('width')) == width) {
+            fixRight.css('width', '');
+        }
+        else {
+            fixRight.css('width', width + 'px');
+        }
     })
 
     return fixRight;
@@ -5891,16 +6612,41 @@ UI.destroySlide = function (ele) {
     ele.each(function() {
         var one = $(this);
         one.removeClass('active');
+        if(one.data('target')) {
+            $(one.data('target')).find('tr.success').removeClass('success');
+        }
+        toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+        one.find('.fixRightBd').html('');
         setTimeout(function() {
-            toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+            one.onClose && one.onClose();
             one.remove();
         }, 300)
     })
 }
 
+UI.loading = function(ele, remove) {
+    if(!remove) {
+        $(ele).addClass('zLoadingCover');
+    }
+    else {
+        $(ele).removeClass('zLoadingCover');
+    }
+}
+
+UI.export = function(href, time) {
+    if(!href) {
+        return;
+    }
+    // window.open(href, '', 'width=1, height=1,toolbar=0,titlebar=0,menubar=0');
+    window.open(href);
+    // var iframe = $('<iframe src="' + href + '" style="display: none;"></iframe>').appendTo(document.body);
+    // setTimeout(function() {
+    //     iframe.remove();
+    // }, time || 180000);
+}
 
 module.exports = UI;
-},{"./toolsDojo":17}],25:[function(require,module,exports){
+},{"./toolsDojo":18}],28:[function(require,module,exports){
 /** 
 * @file 基于FormData和FileReader的文件预览、上传组件 
 * @author <a href="http://www.tinyp2p.com">Elvis Xiao</a> 
@@ -6506,4 +7252,4 @@ var Uploader = function(options) {
 }
 
 module.exports = Uploader;
-},{}]},{},[10]);
+},{}]},{},[11]);

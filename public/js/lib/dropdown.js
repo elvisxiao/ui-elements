@@ -4,7 +4,7 @@ module.exports = {
         if(target.data('zTarget')){
             return;
         }
-        var elePop = $('<div class="zDropdown"><div class="zDropdownBd"></div></div>');
+        var elePop = $('<div class="zDropdown" tabindex="1"><div class="zDropdownBd"></div></div>');
         
         elePop.find('.zDropdownBd').append(content);
         if(title){

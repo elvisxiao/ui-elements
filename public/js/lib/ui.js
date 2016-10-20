@@ -71,13 +71,14 @@ UI.toggleOneBtn = function(btn, on, off){
     console.log(val);
 }, true)
 */
-UI.autoComplete = function(ele, array, cb, prefix){
+UI.autoComplete = function(ele, array, cb, prefix, autoAddPrefix){
     ele = $(ele);
+    ele.attr('autocomplete', 'off');
     if(typeof array === 'function'){
         cb = array;
         array = null;
     }
-    ele.off('keyup').off('keydown').off('blur');
+    ele.off('keyup').off('keydown').off('blur').data('cb', cb);
     ele.on('keydown', function(e){
         var ipt = $(this);
         var ul = ipt.next('ul.zAutoComplete');
@@ -88,6 +89,8 @@ UI.autoComplete = function(ele, array, cb, prefix){
     })
     ele.on('keyup', function(e){
         var ipt = $(this);
+        var cb = ipt.data('cb');
+        
         var ul = ipt.next('ul.zAutoComplete');
 
         if(e.keyCode === 40){
@@ -125,18 +128,22 @@ UI.autoComplete = function(ele, array, cb, prefix){
             if(focusLi.length > 0){
                 var slcVal = focusLi.html();
                 var text = ipt.val();
-                // val = val.replace(/.*;|.*,|.*\s/g, '');
                 if(prefix){
                     var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
                     text = '';
                     if(mathedArray && mathedArray.length > 0){
                         text = mathedArray[0];
                     }
-                    ipt.val(text + slcVal);
+                    var value = text + slcVal;
+                    if(autoAddPrefix === true) {
+                        value += (typeof prefix === 'string'? prefix : ',');
+                    }
+                    ipt.val(value);
                 }
                 else{
                     ipt.val(slcVal);
                 }
+                ipt.change();
                 
                 ul.remove();
                 cb && cb(slcVal, ipt);
@@ -157,7 +164,7 @@ UI.autoComplete = function(ele, array, cb, prefix){
         if(!source){
             return;
         }
-
+        
         $('.zAutoComplete').remove();
         var val = $.trim(this.value);
         if(prefix){
@@ -189,7 +196,6 @@ UI.autoComplete = function(ele, array, cb, prefix){
         var left = ipt.position().left;
         ul.css({top: top, left: left}).on('click', 'li', function(){
             var slc = $(this).html();
-            // ipt.val(slc);
             var text = ipt.val();
             if(prefix){
                 var mathedArray = text.match(/(.|,|\s)*(;|,|\s)/);
@@ -197,13 +203,17 @@ UI.autoComplete = function(ele, array, cb, prefix){
                 if(mathedArray && mathedArray.length > 0){
                     text = mathedArray[0];
                 }
-                // text = text.replace(text.replace(/.*;|.*,|.*\s/g, ''), '');
-                ipt.val(text + slc);
+                var value = text + slc;
+                if(autoAddPrefix === true) {
+                    value += (typeof prefix === 'string'? prefix : ',');
+                }
+                ipt.val(value);
             }
             else{
                 ipt.val(slc);
             }
             $('.zAutoComplete').remove();
+            ipt.change();
             cb && cb(slc, ipt);
         })
         .on('mouseenter', 'li', function(){
@@ -393,11 +403,13 @@ UI.popOverRemove = function(btn){
     }
 }
 
-UI.slide = function(width) {
+UI.slide = function(width, showFullScreen) {
     var slideId = 'fixRight' + new Date().getTime();
-    var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i></div><div class="fixRightBd"></div></div>');
+    var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i><i class="icon-fullscreen fixRightFullScreen"></i></div><div class="fixRightBd"></div></div>');
     fixRight.appendTo(document.body);
-
+    if(showFullScreen) {
+        fixRight.find('.fixRightFullScreen').css('display', 'block');
+    }
     setTimeout(function() {
         if(!width) {
             fixRight.addClass('active');   
@@ -410,10 +422,27 @@ UI.slide = function(width) {
     
     fixRight.on('click', '.fixRightClose', function(e) {
         fixRight.removeClass('active');
+        if(fixRight.data('target')) {
+            $(fixRight.data('target')).find('tr.success').removeClass('success');
+        }
         setTimeout(function() {
-            fixRight.remove();
+            fixRight.onClose && fixRight.onClose();
+            if(fixRight.data('target')) {
+                $(fixRight.data('target')).find('tr.success').removeClass('success');
+            }
             toolsDojo.destroyByNode(fixRight.find('.fixRightBd')[0]);
-        }, 300)
+            fixRight.remove();
+        }, 300);
+    })
+    .on('click', '.fixRightFullScreen', function(e) {
+        var wrapEle = document.getElementById('ocOutWrap') || document.body;
+        var width = wrapEle.clientWidth;
+        if(parseInt(fixRight.css('width')) == width) {
+            fixRight.css('width', '');
+        }
+        else {
+            fixRight.css('width', width + 'px');
+        }
     })
 
     return fixRight;
@@ -427,12 +456,37 @@ UI.destroySlide = function (ele) {
     ele.each(function() {
         var one = $(this);
         one.removeClass('active');
+        if(one.data('target')) {
+            $(one.data('target')).find('tr.success').removeClass('success');
+        }
+        toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+        one.find('.fixRightBd').html('');
         setTimeout(function() {
-            toolsDojo.destroyByNode(one.find('.fixRightBd')[0]);
+            one.onClose && one.onClose();
             one.remove();
         }, 300)
     })
 }
 
+UI.loading = function(ele, remove) {
+    if(!remove) {
+        $(ele).addClass('zLoadingCover');
+    }
+    else {
+        $(ele).removeClass('zLoadingCover');
+    }
+}
+
+UI.export = function(href, time) {
+    if(!href) {
+        return;
+    }
+    // window.open(href, '', 'width=1, height=1,toolbar=0,titlebar=0,menubar=0');
+    window.open(href);
+    // var iframe = $('<iframe src="' + href + '" style="display: none;"></iframe>').appendTo(document.body);
+    // setTimeout(function() {
+    //     iframe.remove();
+    // }, time || 180000);
+}
 
 module.exports = UI;

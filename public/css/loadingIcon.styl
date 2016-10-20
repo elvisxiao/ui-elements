@@ -29,3 +29,24 @@
     font-smoothing antialiased
     &:before
         content "\e982"
+
+button .zLoadingIcon 
+    font-size 18px
+
+.zLoadingCover
+    position relative
+    opacity .7
+    -webkit-filter blur(1px)
+    filter blur(1px)
+    &:after
+        content "\e982"
+        font-family 'icomoon' !important
+        display block 
+        position absolute
+        left 50%
+        top 20%
+        margin-left -16px
+        font-size 28px
+        color green
+        animation zLoading 1s linear infinite normal
+        -webkit-filter blur(0px)

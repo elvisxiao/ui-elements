@@ -43,6 +43,8 @@ var Tree = function(options){
 		showLevel: 1
 	};
 	this.ele = null;
+	this.addClickCallback = null;
+	this.editClickCallback = null;
 
 	for(var key in options){
 		if(this.config.hasOwnProperty(key)){
@@ -186,10 +188,13 @@ var Tree = function(options){
 			e.stopPropagation();
 			var p = $(this).parent().parent();
 			p.addClass('zTreeEdit');
-			p.html('<input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
+			p.html('<input type="text" name="name" placeholder="name" maxLength="250"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i>');
 			var model = p.parent().data();
 			p.find('[name="name"]').val(model.name);
 			p.find('[name="description"]').val(model.description);
+
+			self.editClickCallback && self.editClickCallback(p);
+
 		})
 		.on('click', '.zTreeEdit input, .zTreeEdit i, .zTreeControl', function(e){
 			e.stopPropagation();
@@ -231,8 +236,10 @@ var Tree = function(options){
 				ul = $('<ul></ul>').appendTo(li);
 			}
 			var newLi = $('<li class="zTreeItem"></li>');
-			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
+			newLi.append('<p class="zTreeEdit zTreeAdd"><input type="text" name="name" placeholder="name" maxLength="250"><input type="text" name="description" placeholder="category, separate by dot or space"><i class="iconRight icon-checkmark"></i></p>');
 			newLi.appendTo(ul);
+			
+			self.addClickCallback && self.addClickCallback(e);
 		})
 		.on('dragstart', '.zTreeItem[draggable]', function(e){
 			e.stopPropagation();

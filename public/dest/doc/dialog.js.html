@@ -45,7 +45,10 @@
     console.log('原来你只是逗我玩的');
 })
 */
-var Dialog = {};
+var Dialog = {
+    template: '&lt;div class="zDialogCover">&lt;div class="zDialog">&lt;div class="zDialogHd">&lt;/div>&lt;div class="zDialogBd">&lt;/div>&lt;div class="zDialogFt">&lt;button class="zDialogOk" type="button">确 认&lt;/button>&lt;button class="zDialogCancel" type="button">取 消&lt;/button>&lt;/div>&lt;/div>&lt;/div>'
+};
+
 
 /**
 * 移除所有由oc.dialog生成的对话框
@@ -53,6 +56,7 @@ var Dialog = {};
 Dialog.removeMadal = function(){
     this.removeAllTips();
     this.close();
+    Dialog.resetBody();
 },
 
 /**
@@ -60,6 +64,7 @@ Dialog.removeMadal = function(){
 */
 Dialog.removeAllTips = function(){
     $(".zLoading, .tips").remove();
+    Dialog.resetBody();
 },
 
 /**
@@ -69,30 +74,40 @@ Dialog.removeAllTips = function(){
 * @param {function} callback - 时间到了之后回调的方法
 */
 Dialog.tips = function(msg, time, cb){
+    if(!msg) {
+        return;
+    }
     if(time === undefined){
         time = 1500;
     }
     if(typeof time === 'function'){
         cb = time;
-        time = 1000;
+        time = 1500;
     }
-    var tips = $('&lt;div class="tips">' + msg + '&lt;/div>');
-    tips.appendTo('body');
-    var width = tips.width();
-    tips.css('margin-left', -width / 2 + 'px');
-
-    if(time > 0){
-        setTimeout(function(){
-            tips.remove();
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogFt').remove();
+    dialog.find('.zDialogBd').html(msg);
+    if(time > 0) {
+        dialog.find('.zDialogHd').remove();
+        
+        setTimeout(function() {
+            dialog.remove();
             cb &amp;&amp; cb();
-        }, time);
+            Dialog.resetBody();
+        }, time)
     }
-    else{
-        tips.append('&lt;i class="icon-close">&lt;/i>');
-        tips.on('click', 'i.icon-close', function(){
-            tips.remove();
+    else {
+        dialog.find('.zDialogHd').append('Tips&lt;i class="zDialogClose close">×&lt;/i>');
+        dialog.on('click', '.zDialogClose', function() {
+            dialog.remove();
+            cb &amp;&amp; cb();
+            Dialog.resetBody();
         })
     }
+    dialog.appendTo('body');
+    $(document.body).addClass('zDialogOn');
+    
+    return dialog;
 }
 
 /**
@@ -103,12 +118,18 @@ Dialog.tips = function(msg, time, cb){
 */
 Dialog.loading = function(msg){
     this.removeMadal();
-    var loading = $('&lt;div class="zLoading">&lt;/div>&lt;div class="tips">' + msg + '&lt;/div>');
-    loading.appendTo('body');
-    var width = $(".tips").width();
-    loading.css('margin-left', -width / 2 + 'px');
+    var dialog = $(Dialog.template).addClass('tips');
+    dialog.find('.zDialogHd, .zDialogFt').remove();
+    dialog.find('.zDialogBd').html('&lt;div class="zLoadingIcon">&lt;/div>' + msg);
+    dialog.appendTo('body');
 
-    return loading;
+    return dialog;
+}
+
+Dialog.resetBody = function() {
+    if($('.zDialogCover').length === 0) {
+        $(document.body).removeClass('zDialogOn');
+    }
 }
 
 /**
@@ -118,35 +139,56 @@ Dialog.loading = function(msg){
 * @param {function} cbNO - 用户点击取消后的回调
 * @param {boolean} required - 如果弹出框中有个input输入框，则此参数用来设置此输入框是否必填
 */
-Dialog.confirm = function(msg, cbOK, cbNO, required){
-    var confirm = $('&lt;div class="zLoading">&lt;/div>&lt;div class="tips confirm" style="min-width: 500px;">' + msg + '&lt;div style="border-top: 1px dashed #ddd;" class="tc mt20 pt10">&lt;button class="btn btn-info btn-sm btnOK mr20 w80">OK&lt;/button>&lt;button class="btn btn-default btn-sm btnCancel w80" style="margin-right: 0">Cancel&lt;/button>&lt;/div>&lt;/div>');
-    confirm.appendTo('body').on('click', '.btnOK, .btnCancel', function(){
+Dialog.confirm = function(msg, cbOK, cbNO, required, autoRemove){
+    var confirm = $(Dialog.template);
+    confirm.find('.zDialogBd').html(msg);
+    confirm.find('.zDialogHd').remove();
+
+    confirm.appendTo('body').on('click', '.zDialogOk, .zDialogCancel', function(){
         var ipt = confirm.find('input, textarea');
         var val = '';
         if(ipt.length > 0){
             val = ipt.val();
         }
         
-        if($(this).hasClass('btnOK')){
+        if($(this).hasClass('zDialogOk')){
             if(required === true &amp;&amp; ipt.length > 0 &amp;&amp; (!val) ){
                 Dialog.tips('message is required.');
                 ipt.focus();
                 return;
             }
-            cbOK &amp;&amp; cbOK(val);
+            if(autoRemove !== false) {
+                cbOK &amp;&amp; cbOK(val);
+                confirm.remove();
+                Dialog.resetBody();
+            }
+            else {
+                if(val) {
+                    cbOK &amp;&amp; cbOK(val, function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }
+                else {
+                    cbOK &amp;&amp; cbOK(function() {
+                        confirm.remove();
+                        Dialog.resetBody();
+                    });
+                }   
+            }
         }
         else{
             cbNO &amp;&amp; cbNO(val);
+            confirm.remove();
+            Dialog.resetBody();
         }
-
-        confirm.remove();
     }).on('click', 'input, textarea', function(){
         confirm.removeClass('has-error');
     });
 
-    var width = $(".tips").width();
-    confirm.css('margin-left', -width / 2 + 'px');
-
+    confirm.focus();
+    $(document.body).addClass('zDialogOn');
+    
     return confirm;
 }
 
@@ -156,96 +198,59 @@ Dialog.confirm = function(msg, cbOK, cbNO, required){
 * @param {string} content - 弹出部分的内容，一般为html
 * @param {function} cb - 弹出框完全展现之后的回调接口
 */
-Dialog.open = function(title, content, cb){
+Dialog.open = function(title, content, cb, showFoot){
     this.removeMadal();
     if(!content){
         content = title;
         title = '';
     }
-    var dialogCover = $('&lt;div class="zDialogCover">&lt;div class="zDialog">&lt;p class="zDialogTitle">&lt;span class="close">×&lt;/span>' + title + '&lt;/p>&lt;/div>&lt;/div>').appendTo(document.body);
-    var dialog = dialogCover.find('.zDialog');
-    dialog.append(content);
 
-    var width = dialog.outerWidth();
-    var height = dialog.outerHeight();
-    dialog.css({'margin-left': -width / 2 + 'px', 'left': '50%', 'width': width});
+    var dialog = $(Dialog.template);
+    dialog.find('.zDialogHd').append(title + '&lt;i class="zDialogClose close">×&lt;/i>');
+    dialog.find('.zDialogBd').append(content);
+    if(typeof cb !== true &amp;&amp; showFoot !== true) {
+        dialog.find('.zDialogFt').remove();
+    }
+
+    dialog.appendTo(document.body);
+    $(document.body).addClass('zDialogOn');
     
-    var bodyHeight = $(document).outerHeight();
-
-    dialog.on('click', '.close', function(){
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            dialogCover.remove();
-        })
+    if(cb &amp;&amp; typeof cb == 'function') {
+        setTimeout(cb, 300);
+    }
+    
+    dialog.on('click', '.close, .zDialogClose, .zDialogCancel', function(){
+        dialog.onclose &amp;&amp; dialog.onclose();
+        dialog.onClose &amp;&amp; dialog.onClose();
+        dialog.remove();
+        Dialog.resetBody();
     })
 
-    var top = '15%';
-    if(height > bodyHeight){
-        top = '5%';
-    }
-
-    if(height > 500){
-        dialog.css({'position': 'absolute', 'margin-left': -width / 2 + $(document).scrollLeft()});
-        top = $(document).scrollTop() + 50 + 'px';
-        $(document).scroll(function(){
-            dialog.css('margin-left', -width / 2 + $(document).scrollLeft());
-        })
-    }
-    dialog.animate({
-        top: top,
-        opacity: 1
-    }, 500, function(){
-        cb &amp;&amp; cb();
-    })
+    
+    return dialog;
 }
 
 /**
 * 关闭由oc.dialog.open打开的所有对话框
 */
 Dialog.close = function(ele){
-    var doClose = function(cover){
-        if(!cover.length){
-            return;
-        }
-
-        var dialog = cover.find('.zDialog');
-        dialog.animate({
-            top: 0,
-            opacity: 0
-        }, 500, function(){
-            cover.remove();
-        })
-    }
-
-    if(ele){
+    if(ele) {
         ele = $(ele);
-        if(ele.hasClass('zDialogCover')){
-            doClose(ele);
+        if(!ele.hasClass('zDialogCover')) {
+            ele = ele.parents('.zDialogCover');
         }
-        else{
-            doClose(ele.parents('.zDialogCover'));
-        }
-
-        return;
     }
-    
-    doClose($(".zDialogCover"));
+    else {
+        ele = $(".zDialogCover");
+    }
+    ele.remove();
+    Dialog.resetBody();
 }
 
 Dialog.tooltips = function(msg, ele) {
     ele = $(ele);
     var tips = $('&lt;span class="zTooltips none">' + msg + '&lt;/span>');
-    tips.css({
-        position: 'fixed',
-        'font-size': '12px',
-        'background': '#fcf8e3', 
-        'border': '1px solid #faebcc',
-        'color': '#8a6d3b',
-        'z-index': '1001',
-        padding: '3px 10px'
-    })
+    
     tips.appendTo('body');
     tips.fadeIn(500, function() {
         setTimeout(function() {
@@ -254,12 +259,59 @@ Dialog.tooltips = function(msg, ele) {
             })
         }, 1500)
     });
-
+    
     tips.css({
         left: ele.offset().left - parseInt(tips.css('width')) - 20,
         top: ele.offset().top
     })
+    
+    return tips;
 }
+
+Dialog.warn = function(msg, ele) {
+    ele = $(ele);
+    
+    var removeTips = function(ele) {
+        if(!ele) {
+            return;
+        }
+        ele = ele.target || ele.srcElement || ele;
+        ele = $(ele);
+        var tips = ele.data('target');
+        if(tips) {
+            tips.data('timer') &amp;&amp; clearTimeout(tips.data('timer'));
+            tips.remove();
+            ele.data('target', null);
+        }
+    };
+
+    if(ele.data('target')) {
+        removeTips(ele);
+    }
+
+    ele.off('click', removeTips);
+    ele.on('click', removeTips);
+    ele.on('blur', removeTips);
+
+    var tips = $('&lt;span class="zTooltips warn none">' + msg + '&lt;/span>');
+    ele.after(tips);
+    tips.fadeIn(200, function() {
+        var timer = setTimeout(function() {
+            removeTips();
+        }, 5000);
+        tips.data('timer', timer);
+    });
+    
+    tips.css({
+        left: ele.position().left,
+        top: ele.position().top + ele.height() + 10
+    });
+    
+    ele.data('target', tips);
+    return tips;
+}
+
+
 
 module.exports = Dialog;
 
@@ -274,13 +326,13 @@ module.exports = Dialog;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="oc.module_ajax.html">ajax</a></li><li><a href="oc.module_date.html">date</a></li><li><a href="oc.module_dialog.html">dialog</a></li><li><a href="oc.module_localStorage.html">localStorage</a></li><li><a href="oc.module_ui.html">ui</a></li></ul><h3>Classes</h3><ul><li><a href="FileView.html">FileView</a></li><li><a href="ImageCrop.html">ImageCrop</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="Tree.html">Tree</a></li><li><a href="Uploader.html">Uploader</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Table">Table</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="oc.module_ajax.html">ajax</a></li><li><a href="oc.module_date.html">date</a></li><li><a href="oc.module_dialog.html">dialog</a></li><li><a href="oc.module_localStorage.html">localStorage</a></li><li><a href="oc.module_ui.html">ui</a></li></ul><h3>Classes</h3><ul><li><a href="dialog.html">dialog</a></li><li><a href="ImageCrop.html">ImageCrop</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="Tree.html">Tree</a></li><li><a href="Uploader.html">Uploader</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_dataList">_dataList</a></li><li><a href="global.html#canEdit">canEdit</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#csv">csv</a></li><li><a href="global.html#ele">ele</a></li><li><a href="global.html#maxHeight">maxHeight</a></li><li><a href="global.html#Table">Table</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Feb 23 2016 14:44:26 GMT+0800 (CST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Oct 18 2016 11:46:07 GMT+0800 (CST)
 </footer>
 
 <script> prettyPrint(); </script>
