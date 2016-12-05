@@ -5,6 +5,7 @@
 	oc.ui = require('./ui');
 	oc.algorithm = require('./algorithm');
 	oc.dialog = require('./dialog');
+	oc.dropdown = require('./dropdown');
 	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
@@ -41,8 +42,8 @@
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/icons/style.css'}).appendTo("head");
 		}
 		else {
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css?r=' + Math.random()}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css?r=' + + Math.random()}).appendTo("head");
 		}
 	}
 

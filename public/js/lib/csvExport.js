@@ -28,7 +28,10 @@ Instance.getCsvString = function(rows) {
 }
 
 Instance.export = function(filename, rows) {
-    var csvString = Instance.getCsvString(rows);
+    var csvString = rows;
+    if(typeof rows !== 'string') {
+        csvString = Instance.getCsvString(rows);
+    }
     
     var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) { // IE 10+

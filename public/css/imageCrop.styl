@@ -16,8 +16,9 @@
     overflow hidden
     font-size 14px
     .zImageCropDropInfo
-        margin-top 28%
+        top 28%
         color #888
+        position relative
     .btnCut
         display inline-block
         padding 5px 15px
@@ -109,6 +110,7 @@
         border-radius 6px
         text-align left
         z-index 2
+        font-size 12px
         input, b, span
             vertical-align middle
         .iptFile
@@ -116,21 +118,22 @@
             display inline-block
             line-height 28px
             border-radius 4px
-            width 75px
+            width 62px
             padding 0 8px
             border 1px solid transparent
+            white-space nowrap
             &:after
                 content ""
                 display inline-block
                 width 0
                 height 0
-                border-top 6px solid #666
-                border-right 6px solid transparent
-                border-left 6px solid transparent
-                border-bottom 6px solid transparent
+                border-top 5px solid #666
+                border-right 5px solid transparent
+                border-left 5px solid transparent
+                border-bottom 5px solid transparent
                 position relative
                 top 4px
-                margin-left 10px
+                margin-left 5px
             input[type="file"]
                 background transparent
                 opacity 0
@@ -144,6 +147,7 @@
         input[type="range"]
             width 100px
             display inline-block
+            margin-top 2px
         b
             color #888
             font-size 20px

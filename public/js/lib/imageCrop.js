@@ -21,7 +21,8 @@ var ImageCrop = function(options){
     /** @property {object} options 配置变量对象：<br /> container为容器对象, remoteImg: 初始化时，加载远程图片 */
     this.config = {
 		container: 'body',
-        remoteImg: 0
+        remoteImg: 0,
+        height: 500,
 	};
 
     /** @property {object} ele - 最外层Jquery对象 */
@@ -60,6 +61,12 @@ var ImageCrop = function(options){
     */
 	self.render = function(){
 		self.ele = $('<div class="zImageCrop"></div>');
+        if(self.config.height) {
+            self.ele.css({
+                'min-height': self.config.height + 'px',
+                height: self.config.height + 'px'
+            })
+        }
 		var wrap = $('<div class="zImageCropWrap"></div>').appendTo(self.ele);
 		wrap.append('<canvas class="zImageCropCanvas"></canvas>');
         wrap.append('<span class="zImageCropCover zImageCropCoverTop"></span>');
@@ -114,6 +121,10 @@ var ImageCrop = function(options){
         })
     }
 
+    self.getImage = function() {
+        return self.img;
+    }
+
     /** 
     * 图片加载完成后显示该图片
     * @method imgLoaded 
@@ -128,8 +139,13 @@ var ImageCrop = function(options){
         self.scaleHeight = self.img.height;
 
         self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
-        self.ele.find('.zCutRange input').val(100);
-        self.ele.find('.zRangePercent').html('100%');
+        var min = self.ele.width() * 100 / self.img.width;
+        if(min > 100) {
+            min = 100;
+        }
+        var max = min * 10;
+        var iptRange = self.ele.find('.zCutRange input').attr({min: min, max: max}).val(100);
+        self.ele.find('.zRangePercent').html(parseInt(iptRange.val()) + '%');
     }
     /** 
     * 通过FileReader读取文件内容
@@ -188,20 +204,23 @@ var ImageCrop = function(options){
             self.readFile(this.files[0]);
         })
         .on('input', '.zImageCropControl input[type="range"]', function(){
-            self.ele.find('.zImageCropControl .zRangePercent').html(this.value + '%');
+            self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(this.value) + '%');
             self.range();
         })
         .on('click', '.zImageCropControl b', function(){
             var range = parseInt(self.ele.find('.zImageCropControl .zRangePercent').html());
+            var iptRange = self.ele.find('input[type="range"]');
+            var min = parseFloat(iptRange.attr('min'));
+            var max = parseFloat(iptRange.attr('max'));
             if(this.innerHTML === '－'){
                 range -= 10;
-                (range < 50) && (range = 50);
+                (range < min) && (range = min);
             }
             else{
                 range += 10;
-                (range > 500) && (range = 500);
+                (range > max) && (range = max);
             }
-            self.ele.find('.zImageCropControl .zRangePercent').html(range + '%');
+            self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(range) + '%');
             self.ele.find('.zImageCropControl input[type="range"]').val(range);
             self.range();
         })
@@ -266,7 +285,7 @@ var ImageCrop = function(options){
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
         self.ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height);
-
+        self.resetFilter();
         self.resetCover();
     }
 
@@ -299,10 +318,9 @@ var ImageCrop = function(options){
             return;
         }
 
-        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
         var currRange = self.ele.find('.zImageCropControl input[type="range"]').val() / 100;
-        var width = self.filter.width();
-        var height = self.filter.height();
+        var width = self.filter.outerWidth();
+        var height = self.filter.outerHeight();
         self.canvas.width = width;
         self.canvas.height = height;
 
@@ -310,6 +328,7 @@ var ImageCrop = function(options){
             'margin-left': self.canvas.width / -2.0,
             'margin-top': self.canvas.height / -2.0,
         });
+        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
         self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, 
            width / currRange, height / currRange, 0, 0, width, height);
@@ -320,9 +339,9 @@ var ImageCrop = function(options){
         self.ele.find('.zImageCropCover').css({
             width: 0,
             height: 0
-        })
-        self.ele.find('.zImageCropControl input[type="range"]').val(100);
-        self.ele.find('.zImageCropControl .zRangePercent').html('100%');
+        });
+        var iptRange = self.ele.find('.zImageCropControl input[type="range"]').val(100);
+        self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(iptRange.val()) + '%');
         self.ele.find('.zImageCropControl .zCutImageSize').html(width + ' × ' + height);
         self.scaleWidth = width / currRange;
         self.scaleHeight = height / currRange;
@@ -345,7 +364,11 @@ var ImageCrop = function(options){
         if(top < 0){
             top = 0;
         }
-        self.resetFilter();
+        self.filter.css({
+            left: left,
+            top: top
+        })
+        // self.resetFilter();
 
         self.resetCover();
     }

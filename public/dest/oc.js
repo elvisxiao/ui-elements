@@ -142,7 +142,6 @@ module.exports = Ajax;
 
 var Instance = {}
 
-
 Instance.depthFirstInTree = function(treeData, targetId, key) {
     if(!key) {
         key = 'items';
@@ -177,6 +176,67 @@ Instance.depthFirstInTree = function(treeData, targetId, key) {
     find(treeData, [], false);
 
     return ret.reverse();
+}
+
+
+Instance.listToTree = function(list, idKey, parentIdKey, rootId, limitedLevel) {
+    if(!list || !list.length) {
+        return null;
+    }
+    list = list.slice(0);
+    if(!idKey) {
+        idKey = 'id';
+    }
+    if(!parentIdKey) {
+        parentIdKey = 'parentId';
+    }
+    if(!rootId) {
+        rootId = 1;
+    }
+
+    var rootNode = {};
+    rootNode[idKey] = rootId;
+    rootNode[parentIdKey] = 0;
+    list.sort(function(a, b) {
+        return a.ancestor - b.ancestor;
+    });
+
+    var len = list.length;
+    var map = {};
+    map[rootId] = rootNode;
+
+    var getLevel = function(item) {
+        item = $.extend({}, item);
+        var level = 1;
+        while(item[parentIdKey] != rootId && item[parentIdKey] > 0) {
+            item = map[item[parentIdKey]];
+            level ++;
+        }
+
+        return level;
+    }
+
+    for(var i = 0; i < len; i ++) {
+        var item = list[i];
+        var id = item[idKey];
+        var parentId = item[parentIdKey];
+        if(!map[parentId]) {
+            console.log('PIS Tree 数据错误，节点未找到父节点；', item);
+            return null;
+        }
+        var level = getLevel(item);
+        if(limitedLevel !== undefined && level > limitedLevel) {
+            continue;
+        }
+
+        if(!map[parentId].items) {
+            map[parentId].items = [];
+        }
+        map[parentId].items.push(item);
+        map[id] = item;
+    }
+
+    return map[rootId];
 }
 
 module.exports = Instance;
@@ -459,7 +519,7 @@ var BUSelect = function(options){
 		}
 	}
 	
-	$(this.config.container).addClass('buSlc');
+	this.ele = $(this.config.container).addClass('buSlc');
 	var self = this;
 
 	self.formatData = function(){
@@ -571,7 +631,7 @@ var BUSelect = function(options){
         (function(target) {
             if(!target || !target.items || !target.items.map) {
                 return;
-            }
+             }
 
             for(var i = 0; i < target.items.length; i ++) {
                 var one = target.items[i];
@@ -581,9 +641,8 @@ var BUSelect = function(options){
                 }
                 arguments.callee.call(this, one);
             }
-        })(self.config.dataList);
-
-
+        })(self.treeData);
+        
         return models;
     }
 
@@ -747,7 +806,10 @@ Instance.getCsvString = function(rows) {
 }
 
 Instance.export = function(filename, rows) {
-    var csvString = Instance.getCsvString(rows);
+    var csvString = rows;
+    if(typeof rows !== 'string') {
+        csvString = Instance.getCsvString(rows);
+    }
     
     var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) { // IE 10+
@@ -1266,7 +1328,7 @@ Dialog.tips = function(msg, time, cb){
             dialog.remove();
             cb && cb();
             Dialog.resetBody();
-        }, time)
+        }, time + 500)
     }
     else {
         dialog.find('.zDialogHd').append('Tips<i class="zDialogClose close">×</i>');
@@ -1652,7 +1714,9 @@ var FileView = function(options){
         heads: [],
         removeEmptyLine: false,
         afterLoad: null,
-        validHeads: null
+        showLineNo: false,
+        validHeads: null,
+        showLineNo: false
     };
 
     for(var key in options){
@@ -1931,14 +1995,20 @@ var FileView = function(options){
                 var keysLen = keys.length;
                 var thead = $('<thead></thead>');
                 var tbody = $('<tbody></tbody>');
-                var theadTr = $('<tr><th>NO.</th></tr>').appendTo(thead);
+                var theadTr = $('<tr></tr>').appendTo(thead);
+                if(self.config.showLineNo) {
+                    theadTr.append('<th>NO.</th>');
+                }
                 for(var i = 0; i < keysLen; i++){
                     theadTr.append('<th>' + keys[i] + '</th>');
                 }
 
                 for(var i = 1; i < self._dataList.length; i++){
                     var item = self._dataList[i];
-                    var tr = $('<tr><td>' + i + '</td></tr>');
+                    var tr = $('<tr></tr>');
+                    if(self.config.showLineNo) {
+                        tr.append('<td>' + i + '</td>');
+                    }
                     for(var j = 0; j < keysLen; j++){
                         var text = item[j];
                         if(self.config.canEdit) {
@@ -2079,7 +2149,8 @@ var ImageCrop = function(options){
     /** @property {object} options 配置变量对象：<br /> container为容器对象, remoteImg: 初始化时，加载远程图片 */
     this.config = {
 		container: 'body',
-        remoteImg: 0
+        remoteImg: 0,
+        height: 500,
 	};
 
     /** @property {object} ele - 最外层Jquery对象 */
@@ -2118,6 +2189,12 @@ var ImageCrop = function(options){
     */
 	self.render = function(){
 		self.ele = $('<div class="zImageCrop"></div>');
+        if(self.config.height) {
+            self.ele.css({
+                'min-height': self.config.height + 'px',
+                height: self.config.height + 'px'
+            })
+        }
 		var wrap = $('<div class="zImageCropWrap"></div>').appendTo(self.ele);
 		wrap.append('<canvas class="zImageCropCanvas"></canvas>');
         wrap.append('<span class="zImageCropCover zImageCropCoverTop"></span>');
@@ -2172,6 +2249,10 @@ var ImageCrop = function(options){
         })
     }
 
+    self.getImage = function() {
+        return self.img;
+    }
+
     /** 
     * 图片加载完成后显示该图片
     * @method imgLoaded 
@@ -2186,8 +2267,13 @@ var ImageCrop = function(options){
         self.scaleHeight = self.img.height;
 
         self.ele.find('.zCutImageSize').html(self.img.width + ' × ' + self.img.height);
-        self.ele.find('.zCutRange input').val(100);
-        self.ele.find('.zRangePercent').html('100%');
+        var min = self.ele.width() * 100 / self.img.width;
+        if(min > 100) {
+            min = 100;
+        }
+        var max = min * 10;
+        var iptRange = self.ele.find('.zCutRange input').attr({min: min, max: max}).val(100);
+        self.ele.find('.zRangePercent').html(parseInt(iptRange.val()) + '%');
     }
     /** 
     * 通过FileReader读取文件内容
@@ -2246,20 +2332,23 @@ var ImageCrop = function(options){
             self.readFile(this.files[0]);
         })
         .on('input', '.zImageCropControl input[type="range"]', function(){
-            self.ele.find('.zImageCropControl .zRangePercent').html(this.value + '%');
+            self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(this.value) + '%');
             self.range();
         })
         .on('click', '.zImageCropControl b', function(){
             var range = parseInt(self.ele.find('.zImageCropControl .zRangePercent').html());
+            var iptRange = self.ele.find('input[type="range"]');
+            var min = parseFloat(iptRange.attr('min'));
+            var max = parseFloat(iptRange.attr('max'));
             if(this.innerHTML === '－'){
                 range -= 10;
-                (range < 50) && (range = 50);
+                (range < min) && (range = min);
             }
             else{
                 range += 10;
-                (range > 500) && (range = 500);
+                (range > max) && (range = max);
             }
-            self.ele.find('.zImageCropControl .zRangePercent').html(range + '%');
+            self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(range) + '%');
             self.ele.find('.zImageCropControl input[type="range"]').val(range);
             self.range();
         })
@@ -2324,7 +2413,7 @@ var ImageCrop = function(options){
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
         self.ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height);
-
+        self.resetFilter();
         self.resetCover();
     }
 
@@ -2357,10 +2446,9 @@ var ImageCrop = function(options){
             return;
         }
 
-        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
         var currRange = self.ele.find('.zImageCropControl input[type="range"]').val() / 100;
-        var width = self.filter.width();
-        var height = self.filter.height();
+        var width = self.filter.outerWidth();
+        var height = self.filter.outerHeight();
         self.canvas.width = width;
         self.canvas.height = height;
 
@@ -2368,6 +2456,7 @@ var ImageCrop = function(options){
             'margin-left': self.canvas.width / -2.0,
             'margin-top': self.canvas.height / -2.0,
         });
+        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
 
         self.ctx.drawImage(self.img, self.filter.position().left / currRange, self.filter.position().top / currRange, 
            width / currRange, height / currRange, 0, 0, width, height);
@@ -2378,9 +2467,9 @@ var ImageCrop = function(options){
         self.ele.find('.zImageCropCover').css({
             width: 0,
             height: 0
-        })
-        self.ele.find('.zImageCropControl input[type="range"]').val(100);
-        self.ele.find('.zImageCropControl .zRangePercent').html('100%');
+        });
+        var iptRange = self.ele.find('.zImageCropControl input[type="range"]').val(100);
+        self.ele.find('.zImageCropControl .zRangePercent').html(parseInt(iptRange.val()) + '%');
         self.ele.find('.zImageCropControl .zCutImageSize').html(width + ' × ' + height);
         self.scaleWidth = width / currRange;
         self.scaleHeight = height / currRange;
@@ -2403,7 +2492,11 @@ var ImageCrop = function(options){
         if(top < 0){
             top = 0;
         }
-        self.resetFilter();
+        self.filter.css({
+            left: left,
+            top: top
+        })
+        // self.resetFilter();
 
         self.resetCover();
     }
@@ -2571,6 +2664,7 @@ module.exports = ImageCrop;
 	oc.ui = require('./ui');
 	oc.algorithm = require('./algorithm');
 	oc.dialog = require('./dialog');
+	oc.dropdown = require('./dropdown');
 	oc.localStorage = require('./localStorage');
 	oc.FileView = require('./fileView');
 	oc.Uploader = require('./uploader');
@@ -2607,8 +2701,8 @@ module.exports = ImageCrop;
 			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/icons/style.css'}).appendTo("head");
 		}
 		else {
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css?r=' + Math.random()}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css?r=' + + Math.random()}).appendTo("head");
 		}
 	}
 
@@ -2620,7 +2714,7 @@ module.exports = ImageCrop;
 		window.z && (window.z = oc.dialog);
 	}, 1000)
 })()
-},{"./ajax":1,"./algorithm":2,"./buSelect":4,"./csvExport":5,"./date":6,"./dialog":7,"./fileView":9,"./imageCrop":10,"./localStorage":12,"./location":13,"./select":15,"./sidebar":16,"./table":17,"./toolsDojo":18,"./toolsForm":19,"./toolsNumber":20,"./toolsTable":21,"./tree":22,"./treeDialogSelect":23,"./treeOrganization":24,"./treePIS":25,"./treeSelect":26,"./ui":27,"./uploader":28}],12:[function(require,module,exports){
+},{"./ajax":1,"./algorithm":2,"./buSelect":4,"./csvExport":5,"./date":6,"./dialog":7,"./dropdown":8,"./fileView":9,"./imageCrop":10,"./localStorage":12,"./location":13,"./select":15,"./sidebar":16,"./table":17,"./toolsDojo":18,"./toolsForm":19,"./toolsNumber":20,"./toolsTable":21,"./tree":22,"./treeDialogSelect":23,"./treeOrganization":24,"./treePIS":25,"./treeSelect":26,"./ui":27,"./uploader":28}],12:[function(require,module,exports){
 /**
 * @file 用于操作浏览器的本地存储 - LocalStorage
 * @author Elvis Xiao
@@ -2724,37 +2818,51 @@ Instance.getString = function(params) {
 	return this._generateString(params);
 }
 
+Instance.formatParams = function(searchStr) {
+	if(!searchStr || typeof searchStr !== 'string') {
+		return searchStr;
+	}
+	if(searchStr.indexOf('=') === -1) {
+		return {};
+	}
+	if(searchStr.indexOf('?') === 0) {
+		searchStr = searchStr.slice(1);
+	}
+	var params = {};
+	var paraStrings = searchStr.split('&');
+	
+	paraStrings.map(function(one) {
+		var keyValue = one.split('=');
+		var key = keyValue[0];
+		var val = decodeURI(keyValue[1]);
+		if(val.indexOf(',') > -1) {
+			val = val.split(',');
+		}
+		if(params[key]) {
+			if(typeof params[key] !== 'object') {
+				params[key] = [params[key]];
+			}
+			params[key].push(val);
+		}
+		else {
+			params[key] = val;
+		}
+	})
+
+	return params;
+}
+
 Instance.getParams = function(frame) {
 	if(!frame) {
 		frame = window;
 	}
 	
-	var params = {};
-
-	var searchString;
 	searchString = frame.location.search;
-    if(searchString && searchString.indexOf('=') > -1) { //将hash的参数转为paras对象，传入widget
-    	searchString = searchString.slice(1);
-    	var paraStrings = searchString.split('&');
-    	paraStrings.map(function(one) {
-    		var keyValue = one.split('=');
-    		var key = keyValue[0];
-    		var val = decodeURI(keyValue[1]);
-    		if(val.indexOf(',') > -1) {
-    			val = val.split(',');
-    		}
-    		if(params[key]) {
-    			if(typeof params[key] !== 'object') {
-    				params[key] = [params[key]];
-    			}
-    			params[key].push(val);
-    		}
-    		else {
-    			params[key] = val;
-    		}
-    	})
-    }
-    
+	var params = Instance.formatParams(searchString);
+	if(!params) {
+		params = {};
+	}
+
 	return params;
 }
 
@@ -2791,6 +2899,38 @@ Instance.setSearch = function(params, needReload) {
 
 Instance.setUrl = function(pathname, search, hash, needReload) {
 	var url = pathname;
+	var params1 = {};
+	var index = url.indexOf('?');
+	if(index > 0) {
+		params1 = Instance.formatParams(url.slice(index + 1));
+		url = url.slice(0, index);
+	}
+	var searchStr = '';
+	if(search) {
+		var params2 = Instance.formatParams(search);
+		params2 = $.extend(params1, params2);
+		searchStr = Instance._generateString(params2);
+	}
+	if(searchStr) {
+		url += '?' + searchStr;
+	}
+	if(hash) {
+		url += hash;
+	}
+	
+	var state = {
+	 	url : url
+	};
+	
+	top.history.pushState(state, "", url);
+
+	if(typeof pathname === "boolean" || typeof search === "boolean" || typeof hash === "boolean" || needReload === true) {
+		window.app && window.app.loadPage();
+	}
+}
+
+Instance.replaceUrl = function(pathname, search, hash, needReload) {
+	var url = pathname;
 	var searchStr = Instance._generateString(search);
 	if(searchStr) {
 		url += '?' + searchStr;
@@ -2802,16 +2942,13 @@ Instance.setUrl = function(pathname, search, hash, needReload) {
 	var state = {
 	 	url : url
 	};
-
-	top.history.pushState(state, "", url);
-
+	
+	window.history.replaceState(state, "", url);
+	
 	if(typeof pathname === "boolean" || typeof search === "boolean" || typeof hash === "boolean" || needReload === true) {
 		window.app && window.app.loadPage();
 	}
 }
-
-module.exports = Instance;
-
 
 },{}],14:[function(require,module,exports){
 var Security = {};
@@ -3498,7 +3635,7 @@ var Table = function() {
         }
         
         self.ajaxCallback && self.ajaxCallback(params, function(dataList) {
-            self.dataList = dataList;
+            self.dataList = self.filterDataList = dataList;
             if(!self.pageNo) {
                 self.pageNo = 1;
             }
@@ -3509,24 +3646,51 @@ var Table = function() {
 
     self.export = function(){
         var text = this._renderExport();
-        var tempForm = document.createElement("form");
-        tempForm.id = "tempForm1";
-        tempForm.method = "post";
-        tempForm.action = '/product/owerp/util/csv.jsp';
-        tempForm.charset = "UTF-8";
-        var fileNameInput = document.createElement("input");
-        fileNameInput.type="hidden";
-        fileNameInput.name = "name";
-        fileNameInput.value = this.exportFile + '.csv';
-        tempForm.appendChild(fileNameInput);
-        var contentInput = document.createElement("input");
-        contentInput.type="hidden";
-        contentInput.name = "content";
-        contentInput.value = text;
-        tempForm.appendChild(contentInput);
-        document.body.appendChild(tempForm);
-        tempForm.submit();
-        document.body.removeChild(tempForm);
+        var filename = self.exportFile;
+        if(!filename) {
+            filename = new Date().getTime();
+        }
+        else if(filename.indexOf('.csv') === -1) {
+            filename += '.csv';
+        }
+        
+        var blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        }
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        // var tempForm = document.createElement("form");
+        // tempForm.id = "tempForm1";
+        // tempForm.method = "post";
+        // tempForm.action = '/product/owerp/util/csv.jsp';
+        // tempForm.charset = "UTF-8";
+        // var fileNameInput = document.createElement("input");
+        // fileNameInput.type="hidden";
+        // fileNameInput.name = "name";
+        // fileNameInput.value = this.exportFile + '.csv';
+        // tempForm.appendChild(fileNameInput);
+        // var contentInput = document.createElement("input");
+        // contentInput.type="hidden";
+        // contentInput.name = "content";
+        // contentInput.value = text;
+        // tempForm.appendChild(contentInput);
+        // document.body.appendChild(tempForm);
+        // tempForm.submit();
+        // document.body.removeChild(tempForm);
     }
 
     self._renderExport = function(){  // 导出数据默认调用方法，可以重写.....
@@ -3648,6 +3812,7 @@ var Table = function() {
         }
 
         self.pageNo = 1;
+        searchStr = (searchStr || '').toUpperCase();
         self.filterDataList = self.dataList.filter(function(model) {
             var ret = false;
             var trModel = model.trModel;
@@ -3913,7 +4078,10 @@ Instance.toFixed = function(number, fixLength) {
         return 0;
     }
     
-    return number.toFixed(fixLength || 2);
+    if(fixLength === undefined || fixLength === null) {
+        fixLength = 2;
+    }
+    return number.toFixed(fixLength);
 }
 
 Instance.formatMoney = function(number, fixLength) {
@@ -6514,7 +6682,8 @@ UI.popOver = function(btn, title, content, popPosition){
 
     var ele = $('<div class="zPopOver zPopOver' + popPosition + '"></div>');
     ele.append('<div class="zPopOverTitle">' + title + '<i class="icon-close"></i></div>');
-    ele.append('<div class="zPopOverContent">' + content + '</div>');
+    var popOverContent = $('<div class="zPopOverContent"></div>').appendTo(ele);
+    popOverContent.append(content);
     btn = $(btn);
     var position = btn.position();
     btn.after(ele);
@@ -6582,7 +6751,7 @@ UI.slide = function(width, showFullScreen) {
             $(fixRight.data('target')).find('tr.success').removeClass('success');
         }
         setTimeout(function() {
-            fixRight.onClose && fixRight.onClose();
+            fixRight.data('onClose') && fixRight.data('onClose')();
             if(fixRight.data('target')) {
                 $(fixRight.data('target')).find('tr.success').removeClass('success');
             }
@@ -6619,6 +6788,7 @@ UI.destroySlide = function (ele) {
         one.find('.fixRightBd').html('');
         setTimeout(function() {
             one.onClose && one.onClose();
+            one.data('onClose') && one.data('onClose')();
             one.remove();
         }, 300)
     })

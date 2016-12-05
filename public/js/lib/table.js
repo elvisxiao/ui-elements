@@ -383,7 +383,7 @@ var Table = function() {
         }
         
         self.ajaxCallback && self.ajaxCallback(params, function(dataList) {
-            self.dataList = dataList;
+            self.dataList = self.filterDataList = dataList;
             if(!self.pageNo) {
                 self.pageNo = 1;
             }
@@ -394,24 +394,51 @@ var Table = function() {
 
     self.export = function(){
         var text = this._renderExport();
-        var tempForm = document.createElement("form");
-        tempForm.id = "tempForm1";
-        tempForm.method = "post";
-        tempForm.action = '/product/owerp/util/csv.jsp';
-        tempForm.charset = "UTF-8";
-        var fileNameInput = document.createElement("input");
-        fileNameInput.type="hidden";
-        fileNameInput.name = "name";
-        fileNameInput.value = this.exportFile + '.csv';
-        tempForm.appendChild(fileNameInput);
-        var contentInput = document.createElement("input");
-        contentInput.type="hidden";
-        contentInput.name = "content";
-        contentInput.value = text;
-        tempForm.appendChild(contentInput);
-        document.body.appendChild(tempForm);
-        tempForm.submit();
-        document.body.removeChild(tempForm);
+        var filename = self.exportFile;
+        if(!filename) {
+            filename = new Date().getTime();
+        }
+        else if(filename.indexOf('.csv') === -1) {
+            filename += '.csv';
+        }
+        
+        var blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        }
+        else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        // var tempForm = document.createElement("form");
+        // tempForm.id = "tempForm1";
+        // tempForm.method = "post";
+        // tempForm.action = '/product/owerp/util/csv.jsp';
+        // tempForm.charset = "UTF-8";
+        // var fileNameInput = document.createElement("input");
+        // fileNameInput.type="hidden";
+        // fileNameInput.name = "name";
+        // fileNameInput.value = this.exportFile + '.csv';
+        // tempForm.appendChild(fileNameInput);
+        // var contentInput = document.createElement("input");
+        // contentInput.type="hidden";
+        // contentInput.name = "content";
+        // contentInput.value = text;
+        // tempForm.appendChild(contentInput);
+        // document.body.appendChild(tempForm);
+        // tempForm.submit();
+        // document.body.removeChild(tempForm);
     }
 
     self._renderExport = function(){  // 导出数据默认调用方法，可以重写.....
@@ -533,6 +560,7 @@ var Table = function() {
         }
 
         self.pageNo = 1;
+        searchStr = (searchStr || '').toUpperCase();
         self.filterDataList = self.dataList.filter(function(model) {
             var ret = false;
             var trModel = model.trModel;

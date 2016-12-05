@@ -66,7 +66,7 @@ Dialog.tips = function(msg, time, cb){
             dialog.remove();
             cb && cb();
             Dialog.resetBody();
-        }, time)
+        }, time + 500)
     }
     else {
         dialog.find('.zDialogHd').append('Tips<i class="zDialogClose close">×</i>');

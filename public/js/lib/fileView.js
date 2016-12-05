@@ -51,7 +51,9 @@ var FileView = function(options){
         heads: [],
         removeEmptyLine: false,
         afterLoad: null,
-        validHeads: null
+        showLineNo: false,
+        validHeads: null,
+        showLineNo: false
     };
 
     for(var key in options){
@@ -330,14 +332,20 @@ var FileView = function(options){
                 var keysLen = keys.length;
                 var thead = $('<thead></thead>');
                 var tbody = $('<tbody></tbody>');
-                var theadTr = $('<tr><th>NO.</th></tr>').appendTo(thead);
+                var theadTr = $('<tr></tr>').appendTo(thead);
+                if(self.config.showLineNo) {
+                    theadTr.append('<th>NO.</th>');
+                }
                 for(var i = 0; i < keysLen; i++){
                     theadTr.append('<th>' + keys[i] + '</th>');
                 }
 
                 for(var i = 1; i < self._dataList.length; i++){
                     var item = self._dataList[i];
-                    var tr = $('<tr><td>' + i + '</td></tr>');
+                    var tr = $('<tr></tr>');
+                    if(self.config.showLineNo) {
+                        tr.append('<td>' + i + '</td>');
+                    }
                     for(var j = 0; j < keysLen; j++){
                         var text = item[j];
                         if(self.config.canEdit) {

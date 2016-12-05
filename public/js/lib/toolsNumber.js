@@ -10,7 +10,10 @@ Instance.toFixed = function(number, fixLength) {
         return 0;
     }
     
-    return number.toFixed(fixLength || 2);
+    if(fixLength === undefined || fixLength === null) {
+        fixLength = 2;
+    }
+    return number.toFixed(fixLength);
 }
 
 Instance.formatMoney = function(number, fixLength) {

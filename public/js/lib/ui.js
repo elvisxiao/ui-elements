@@ -358,7 +358,8 @@ UI.popOver = function(btn, title, content, popPosition){
 
     var ele = $('<div class="zPopOver zPopOver' + popPosition + '"></div>');
     ele.append('<div class="zPopOverTitle">' + title + '<i class="icon-close"></i></div>');
-    ele.append('<div class="zPopOverContent">' + content + '</div>');
+    var popOverContent = $('<div class="zPopOverContent"></div>').appendTo(ele);
+    popOverContent.append(content);
     btn = $(btn);
     var position = btn.position();
     btn.after(ele);
@@ -426,7 +427,7 @@ UI.slide = function(width, showFullScreen) {
             $(fixRight.data('target')).find('tr.success').removeClass('success');
         }
         setTimeout(function() {
-            fixRight.onClose && fixRight.onClose();
+            fixRight.data('onClose') && fixRight.data('onClose')();
             if(fixRight.data('target')) {
                 $(fixRight.data('target')).find('tr.success').removeClass('success');
             }
@@ -463,6 +464,7 @@ UI.destroySlide = function (ele) {
         one.find('.fixRightBd').html('');
         setTimeout(function() {
             one.onClose && one.onClose();
+            one.data('onClose') && one.data('onClose')();
             one.remove();
         }, 300)
     })

@@ -19,7 +19,7 @@ var BUSelect = function(options){
 		}
 	}
 	
-	$(this.config.container).addClass('buSlc');
+	this.ele = $(this.config.container).addClass('buSlc');
 	var self = this;
 
 	self.formatData = function(){
@@ -131,7 +131,7 @@ var BUSelect = function(options){
         (function(target) {
             if(!target || !target.items || !target.items.map) {
                 return;
-            }
+             }
 
             for(var i = 0; i < target.items.length; i ++) {
                 var one = target.items[i];
@@ -141,9 +141,8 @@ var BUSelect = function(options){
                 }
                 arguments.callee.call(this, one);
             }
-        })(self.config.dataList);
-
-
+        })(self.treeData);
+        
         return models;
     }
 

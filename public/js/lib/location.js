@@ -21,37 +21,51 @@ Instance.getString = function(params) {
 	return this._generateString(params);
 }
 
+Instance.formatParams = function(searchStr) {
+	if(!searchStr || typeof searchStr !== 'string') {
+		return searchStr;
+	}
+	if(searchStr.indexOf('=') === -1) {
+		return {};
+	}
+	if(searchStr.indexOf('?') === 0) {
+		searchStr = searchStr.slice(1);
+	}
+	var params = {};
+	var paraStrings = searchStr.split('&');
+	
+	paraStrings.map(function(one) {
+		var keyValue = one.split('=');
+		var key = keyValue[0];
+		var val = decodeURI(keyValue[1]);
+		if(val.indexOf(',') > -1) {
+			val = val.split(',');
+		}
+		if(params[key]) {
+			if(typeof params[key] !== 'object') {
+				params[key] = [params[key]];
+			}
+			params[key].push(val);
+		}
+		else {
+			params[key] = val;
+		}
+	})
+
+	return params;
+}
+
 Instance.getParams = function(frame) {
 	if(!frame) {
 		frame = window;
 	}
 	
-	var params = {};
-
-	var searchString;
 	searchString = frame.location.search;
-    if(searchString && searchString.indexOf('=') > -1) { //将hash的参数转为paras对象，传入widget
-    	searchString = searchString.slice(1);
-    	var paraStrings = searchString.split('&');
-    	paraStrings.map(function(one) {
-    		var keyValue = one.split('=');
-    		var key = keyValue[0];
-    		var val = decodeURI(keyValue[1]);
-    		if(val.indexOf(',') > -1) {
-    			val = val.split(',');
-    		}
-    		if(params[key]) {
-    			if(typeof params[key] !== 'object') {
-    				params[key] = [params[key]];
-    			}
-    			params[key].push(val);
-    		}
-    		else {
-    			params[key] = val;
-    		}
-    	})
-    }
-    
+	var params = Instance.formatParams(searchString);
+	if(!params) {
+		params = {};
+	}
+
 	return params;
 }
 
@@ -88,6 +102,38 @@ Instance.setSearch = function(params, needReload) {
 
 Instance.setUrl = function(pathname, search, hash, needReload) {
 	var url = pathname;
+	var params1 = {};
+	var index = url.indexOf('?');
+	if(index > 0) {
+		params1 = Instance.formatParams(url.slice(index + 1));
+		url = url.slice(0, index);
+	}
+	var searchStr = '';
+	if(search) {
+		var params2 = Instance.formatParams(search);
+		params2 = $.extend(params1, params2);
+		searchStr = Instance._generateString(params2);
+	}
+	if(searchStr) {
+		url += '?' + searchStr;
+	}
+	if(hash) {
+		url += hash;
+	}
+	
+	var state = {
+	 	url : url
+	};
+	
+	top.history.pushState(state, "", url);
+
+	if(typeof pathname === "boolean" || typeof search === "boolean" || typeof hash === "boolean" || needReload === true) {
+		window.app && window.app.loadPage();
+	}
+}
+
+Instance.replaceUrl = function(pathname, search, hash, needReload) {
+	var url = pathname;
 	var searchStr = Instance._generateString(search);
 	if(searchStr) {
 		url += '?' + searchStr;
@@ -99,13 +145,10 @@ Instance.setUrl = function(pathname, search, hash, needReload) {
 	var state = {
 	 	url : url
 	};
-
-	top.history.pushState(state, "", url);
-
+	
+	window.history.replaceState(state, "", url);
+	
 	if(typeof pathname === "boolean" || typeof search === "boolean" || typeof hash === "boolean" || needReload === true) {
 		window.app && window.app.loadPage();
 	}
 }
-
-module.exports = Instance;
-
