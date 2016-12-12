@@ -1850,11 +1850,11 @@ var FileView = function(options){
                     if(self.config.removeEmptyLine) {
                         self._dataList = self._dataList.filter(function(one) {
                             var isEmptyLine = true;
-                            for(var key in one) {
-                                if(one[key].toString().trim()) {
+                            one.map(function(item) {
+                                if($.tirm(item)) {
                                     isEmptyLine = false;
                                 }
-                            }
+                            })
                             return !isEmptyLine;
                         });
                     }
@@ -2949,6 +2949,8 @@ Instance.replaceUrl = function(pathname, search, hash, needReload) {
 		window.app && window.app.loadPage();
 	}
 }
+
+module.exports = Instance;
 
 },{}],14:[function(require,module,exports){
 var Security = {};

@@ -187,11 +187,11 @@ var FileView = function(options){
                     if(self.config.removeEmptyLine) {
                         self._dataList = self._dataList.filter(function(one) {
                             var isEmptyLine = true;
-                            for(var key in one) {
-                                if(one[key].toString().trim()) {
+                            one.map(function(item) {
+                                if($.tirm(item)) {
                                     isEmptyLine = false;
                                 }
-                            }
+                            })
                             return !isEmptyLine;
                         });
                     }

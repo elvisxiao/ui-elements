@@ -152,3 +152,5 @@ Instance.replaceUrl = function(pathname, search, hash, needReload) {
 		window.app && window.app.loadPage();
 	}
 }
+
+module.exports = Instance;
