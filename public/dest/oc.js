@@ -1851,7 +1851,7 @@ var FileView = function(options){
                         self._dataList = self._dataList.filter(function(one) {
                             var isEmptyLine = true;
                             one.map(function(item) {
-                                if($.tirm(item)) {
+                                if($.trim(item)) {
                                     isEmptyLine = false;
                                 }
                             })
