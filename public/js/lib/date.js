@@ -121,6 +121,25 @@ ZDate.formatPDT = function(date, format) {
 }
 
 /**
+* 根据传入格式，使用北京时间格式化输出
+* 格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
+ZDate.formatCN = function(date, format) {
+    if(!date) {
+        return '';
+    }
+    var date = ZDate.getUTCTimespan(date);
+    
+    var cnData = date + 8 * 60 * 60000;
+    
+    return ZDate.format(cnData, format);
+}
+
+
+/**
 * 根据传入格式，格式必须为 '2015-12-12 13:01:01'
 * 格式化本地时间的Timespan
 * @param {str} 时间字符串 - '2015-01-01'、'2015-01-01 12'、 '2015-01-01 12:11'、'2015-01-01 12:12:12'格式

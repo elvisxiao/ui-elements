@@ -3,7 +3,7 @@ var Instance = {}
 
 
 Instance.toFixed = function(number, fixLength) {
-    if(!number || !number.toFixed) {
+    if(number === undefined || number === null || !number.toFixed) {
         return '';
     }
     if(number === 0 || number === "0") {

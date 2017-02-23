@@ -119,6 +119,29 @@ Ajax.delete = function(url, cbOk, cbError, keepHTML) {
 }
 
 /**
+* Download文件方法
+* @param {string} url - ajax的url地址
+* @param {object} data - ajax的主题内容
+*/
+Ajax.download = function(options){
+    if(!options || !options.url) {
+        alert('无URL属性');
+        return;
+    }
+
+    var form = $('<form style="display: none;"></form>');
+    if(options.data && typeof options.data === 'object') {
+        for(var key in options.data) {
+            if(options.data.hasOwnProperty(key)) {
+                form.append('<input type="hidden" name="' + key + '" value="' + JSON.stringify(options.data[key]) + '" />')
+            }
+        }
+    }
+    
+    form.attr('action', options.url).attr('method', options.method || 'GET').submit();
+}
+
+/**
 * Ajax出错时，通用处理方法
 * @param {object} res - HTTP Response,Ajax是服务器端返回的响应
 */
@@ -952,6 +975,25 @@ ZDate.formatPDT = function(date, format) {
     
     return ZDate.format(pdtDate, format);
 }
+
+/**
+* 根据传入格式，使用北京时间格式化输出
+* 格式化输出时间字符串
+* @param {date} date 时间值 - 可以为Timespane，或者'2015/01/01'、'2015-01-01'或其他可new Date()的时间字符串
+* @param {string} format 格式化输出方式 - yyyy年，mm月，dd天，hh小时，MM分钟，ss秒，ms，分秒
+* @returns {string} 格式化后的字符串
+*/
+ZDate.formatCN = function(date, format) {
+    if(!date) {
+        return '';
+    }
+    var date = ZDate.getUTCTimespan(date);
+    
+    var cnData = date + 8 * 60 * 60000;
+    
+    return ZDate.format(cnData, format);
+}
+
 
 /**
 * 根据传入格式，格式必须为 '2015-12-12 13:01:01'
@@ -3356,9 +3398,10 @@ var Table = function() {
             if(text === undefined) {
                 text = key;
             }
-
             var th = $('<th>' + text + '</th>');
 
+
+            
             if(params.sort) {
             	th.attr('data-sort', key);
             }
@@ -3367,6 +3410,15 @@ var Table = function() {
             }
             if(params.width) {
             	th.css('width', params.width + 'px');
+            }
+            if(params.title) {
+                th.attr('title', params.title).append('<i class="icon icon-info"></i>');
+            }
+
+            for(var paramKey in params) {
+                if(params.hasOwnProperty(paramKey) && ['sort', 'export', 'width', 'title'].indexOf(paramKey) === -1) {
+                    th.attr(paramKey, params[paramKey]);
+                }
             }
 
             tr.append(th);
@@ -3698,10 +3750,12 @@ var Table = function() {
     self._renderExport = function(){  // 导出数据默认调用方法，可以重写.....
         var exportTable = "<table>";
         var tHead = this._renderHead();
+        tHead.find('.cbxOcTable').parents('th:eq(0)').remove();
         exportTable += tHead[0].outerHTML;
         var tbody = $('<tbody></tbody>');
         self.filterDataList.map(function(model) {
-            tbody.append(self.renderTr(model)[0]);
+            var tr = self.renderTr(model);
+            tbody.append(tr);
         })
         exportTable += tbody[0].outerHTML;
         exportTable += '</table>';
@@ -3887,9 +3941,15 @@ var Instance = {}
 
 Instance.loadingButton = function(btn, noDisable) {
 	btn = $(btn);
+	if(!btn.length) {
+		return;
+	}
     if(btn[0].nodeName !== "BUTTON") {
     	btn = btn.find('button[type="submit"]:eq(0)');
     }
+    if(!btn.length) {
+		return;
+	}
 	var text = btn.html();
 	btn.html('<i class="zLoadingIcon"></i>').attr('data-html', text);
 	if(!noDisable) {
@@ -3899,10 +3959,15 @@ Instance.loadingButton = function(btn, noDisable) {
 
 Instance.resetButton = function(btn) {
 	btn = $(btn);
+	if(!btn.length) {
+		return;
+	}
     if(btn[0].nodeName !== "BUTTON") {
     	btn = btn.find('button[type="submit"]:eq(0)');
     }
-
+    if(!btn.length) {
+		return;
+	}
 	var text = btn.attr('data-html');
 	btn.removeAttr('disabled').html(text)
 };
@@ -3988,13 +4053,16 @@ Instance.getValueByParam = function(model, param) {
 	return value;
 };
 
-Instance.fill = function(form, model) {
+Instance.fill = function(form, model, attributeKey) {
 	form = $(form);
 	var ipts = form.find('input[name]:visible, select[name]:visible, textarea[name]:visible');
 
 	ipts.each(function() {
 		var name = this.name;
-		var value = Instance.getValueByParam(model, name) || '';
+		var value = Instance.getValueByParam(model, name);
+		if(value === undefined || value === null) {
+			value = '';
+		}
 		if(this.type == 'radio') {
 			ipts.filter('[name="' + name + '"]').prop('checked', false);
 			ipts.filter('[name="' + name + '"][value="' + value + '"]').prop('checked', true);
@@ -4009,9 +4077,25 @@ Instance.fill = function(form, model) {
 			}
 		}
 		else {
-			$(this).val(value);
+			$(this).val(value.toString());
 		}
 	});
+
+	if(attributeKey) {
+		var otherEles = form.find('[' + attributeKey + ']');
+		otherEles.each(function() {
+			var name = this.getAttribute(attributeKey);
+			var value = Instance.getValueByParam(model, name);
+			if(value === undefined || value === null) {
+				value = '';
+			}
+			if(value && (value instanceof Array)) {
+				value = value.join(',');
+			}
+			$(this).html(value.toString());
+		})
+	}
+
 };
 
 //isReplace: 如果为true, 相同key值将被替换，否则则生成数组, 默认替换---
@@ -4073,7 +4157,7 @@ var Instance = {}
 
 
 Instance.toFixed = function(number, fixLength) {
-    if(!number || !number.toFixed) {
+    if(number === undefined || number === null || !number.toFixed) {
         return '';
     }
     if(number === 0 || number === "0") {
@@ -6730,10 +6814,10 @@ UI.popOverRemove = function(btn){
     }
 }
 
-UI.slide = function(width, showFullScreen) {
+UI.slide = function(width, showFullScreen, body) {
     var slideId = 'fixRight' + new Date().getTime();
     var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i><i class="icon-fullscreen fixRightFullScreen"></i></div><div class="fixRightBd"></div></div>');
-    fixRight.appendTo(document.body);
+    fixRight.appendTo(body || document.body);
     if(showFullScreen) {
         fixRight.find('.fixRightFullScreen').css('display', 'block');
     }

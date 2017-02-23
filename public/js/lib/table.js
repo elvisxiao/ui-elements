@@ -102,9 +102,10 @@ var Table = function() {
             if(text === undefined) {
                 text = key;
             }
-
             var th = $('<th>' + text + '</th>');
 
+
+            
             if(params.sort) {
             	th.attr('data-sort', key);
             }
@@ -113,6 +114,15 @@ var Table = function() {
             }
             if(params.width) {
             	th.css('width', params.width + 'px');
+            }
+            if(params.title) {
+                th.attr('title', params.title).append('<i class="icon icon-info"></i>');
+            }
+
+            for(var paramKey in params) {
+                if(params.hasOwnProperty(paramKey) && ['sort', 'export', 'width', 'title'].indexOf(paramKey) === -1) {
+                    th.attr(paramKey, params[paramKey]);
+                }
             }
 
             tr.append(th);
@@ -444,10 +454,12 @@ var Table = function() {
     self._renderExport = function(){  // 导出数据默认调用方法，可以重写.....
         var exportTable = "<table>";
         var tHead = this._renderHead();
+        tHead.find('.cbxOcTable').parents('th:eq(0)').remove();
         exportTable += tHead[0].outerHTML;
         var tbody = $('<tbody></tbody>');
         self.filterDataList.map(function(model) {
-            tbody.append(self.renderTr(model)[0]);
+            var tr = self.renderTr(model);
+            tbody.append(tr);
         })
         exportTable += tbody[0].outerHTML;
         exportTable += '</table>';

@@ -404,10 +404,10 @@ UI.popOverRemove = function(btn){
     }
 }
 
-UI.slide = function(width, showFullScreen) {
+UI.slide = function(width, showFullScreen, body) {
     var slideId = 'fixRight' + new Date().getTime();
     var fixRight = $('<div id="' + slideId + '" class="zFixRight"><div class="fixRightHd"><i class="icon-arrow-right fixRightClose"></i><i class="icon-fullscreen fixRightFullScreen"></i></div><div class="fixRightBd"></div></div>');
-    fixRight.appendTo(document.body);
+    fixRight.appendTo(body || document.body);
     if(showFullScreen) {
         fixRight.find('.fixRightFullScreen').css('display', 'block');
     }

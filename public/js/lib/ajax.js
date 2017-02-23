@@ -118,6 +118,29 @@ Ajax.delete = function(url, cbOk, cbError, keepHTML) {
 }
 
 /**
+* Download文件方法
+* @param {string} url - ajax的url地址
+* @param {object} data - ajax的主题内容
+*/
+Ajax.download = function(options){
+    if(!options || !options.url) {
+        alert('无URL属性');
+        return;
+    }
+
+    var form = $('<form style="display: none;"></form>');
+    if(options.data && typeof options.data === 'object') {
+        for(var key in options.data) {
+            if(options.data.hasOwnProperty(key)) {
+                form.append('<input type="hidden" name="' + key + '" value="' + JSON.stringify(options.data[key]) + '" />')
+            }
+        }
+    }
+    
+    form.attr('action', options.url).attr('method', options.method || 'GET').submit();
+}
+
+/**
 * Ajax出错时，通用处理方法
 * @param {object} res - HTTP Response,Ajax是服务器端返回的响应
 */

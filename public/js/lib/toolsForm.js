@@ -4,9 +4,15 @@ var Instance = {}
 
 Instance.loadingButton = function(btn, noDisable) {
 	btn = $(btn);
+	if(!btn.length) {
+		return;
+	}
     if(btn[0].nodeName !== "BUTTON") {
     	btn = btn.find('button[type="submit"]:eq(0)');
     }
+    if(!btn.length) {
+		return;
+	}
 	var text = btn.html();
 	btn.html('<i class="zLoadingIcon"></i>').attr('data-html', text);
 	if(!noDisable) {
@@ -16,10 +22,15 @@ Instance.loadingButton = function(btn, noDisable) {
 
 Instance.resetButton = function(btn) {
 	btn = $(btn);
+	if(!btn.length) {
+		return;
+	}
     if(btn[0].nodeName !== "BUTTON") {
     	btn = btn.find('button[type="submit"]:eq(0)');
     }
-
+    if(!btn.length) {
+		return;
+	}
 	var text = btn.attr('data-html');
 	btn.removeAttr('disabled').html(text)
 };
@@ -105,13 +116,16 @@ Instance.getValueByParam = function(model, param) {
 	return value;
 };
 
-Instance.fill = function(form, model) {
+Instance.fill = function(form, model, attributeKey) {
 	form = $(form);
 	var ipts = form.find('input[name]:visible, select[name]:visible, textarea[name]:visible');
 
 	ipts.each(function() {
 		var name = this.name;
-		var value = Instance.getValueByParam(model, name) || '';
+		var value = Instance.getValueByParam(model, name);
+		if(value === undefined || value === null) {
+			value = '';
+		}
 		if(this.type == 'radio') {
 			ipts.filter('[name="' + name + '"]').prop('checked', false);
 			ipts.filter('[name="' + name + '"][value="' + value + '"]').prop('checked', true);
@@ -126,9 +140,25 @@ Instance.fill = function(form, model) {
 			}
 		}
 		else {
-			$(this).val(value);
+			$(this).val(value.toString());
 		}
 	});
+
+	if(attributeKey) {
+		var otherEles = form.find('[' + attributeKey + ']');
+		otherEles.each(function() {
+			var name = this.getAttribute(attributeKey);
+			var value = Instance.getValueByParam(model, name);
+			if(value === undefined || value === null) {
+				value = '';
+			}
+			if(value && (value instanceof Array)) {
+				value = value.join(',');
+			}
+			$(this).html(value.toString());
+		})
+	}
+
 };
 
 //isReplace: 如果为true, 相同key值将被替换，否则则生成数组, 默认替换---
