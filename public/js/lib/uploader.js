@@ -563,11 +563,13 @@ var Uploader = function(options) {
 		}
 		self._process(0);
 		var i = 0;
+		let uploadFiles = [];
 		var uploadQueue = function(){
 			if(i === queueList.length){
+				uploadFiles.push(queueList[i]);
 				self.ele.find('.zUploaderFileBtn').show();
 				self._setFootStatics();
-				self.config.callback && self.config.callback(self.files);
+				self.config.callback && self.config.callback(self.files, uploadFiles);
 				return;
 			}
 			

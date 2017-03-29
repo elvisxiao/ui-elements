@@ -38,7 +38,7 @@ Instance.depthFirstInTree = function(treeData, targetId, key) {
 }
 
 
-Instance.listToTree = function(list, idKey, parentIdKey, rootId, limitedLevel) {
+Instance.listToTree = function(list, idKey, parentIdKey, rootId, limitedLevel, ignoreDuty) {
     if(!list || !list.length) {
         return null;
     }
@@ -81,7 +81,12 @@ Instance.listToTree = function(list, idKey, parentIdKey, rootId, limitedLevel) {
         var parentId = item[parentIdKey];
         if(!map[parentId]) {
             console.log('PIS Tree 数据错误，节点未找到父节点；', item);
-            return null;
+            if(!ignoreDuty) {
+                return null;
+            }
+            else {
+                continue;
+            }
         }
         var level = getLevel(item);
         if(limitedLevel !== undefined && level > limitedLevel) {
