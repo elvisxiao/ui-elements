@@ -106,9 +106,9 @@ var Uploader = function(options) {
     */
 	self._renderFoot = function(){
 		var div = $('<div class="zUploaderFoot"></div>');
-		div.append('<p class="zUploaderStatic">选中0个文件，共0K</p>');
+		div.append('<p class="zUploaderStatic">Selected 0 File，Total 0K</p>');
 		div.append('<span class="zUploaderControl"><span class="zUploaderFileBtn"><input type="file" multiple="multiple" />' + 
-			'<span class="zUploaderBtnText">继续添加</span></span><button class="zUploaderBtn" type="button">开始上传</button></span>');
+			'<span class="zUploaderBtnText">Add</span></span><button class="zUploaderBtn" type="button">Upload</button></span>');
 
 		if(self.config.auto) {
 			div.find('.zUploaderBtn').remove();
@@ -126,8 +126,8 @@ var Uploader = function(options) {
 	self._renderNoFile = function(){
 	    var div = $('<div class="zUploaderNoFile"></div>');
 	    div.append('<div class="icon"><i class="icon-images"></i></div>');
-	    div.append('<span class="zUploaderFileBtn "><input type="file" multiple="multiple" /><span class="zUploaderBtnText">点击选择文件</span></div>');
-	    div.append('<p>或将文件拖到这里，单次最多可上传文件' + self.config.maxSize + '个</p>');
+	    div.append('<span class="zUploaderFileBtn "><input type="file" multiple="multiple" /><span class="zUploaderBtnText">Select a file </span></div>');
+	    div.append('<p>Drag files here to select them, limited ' + self.config.maxSize + ' files</p>');
 
 	    return div;
 	}
@@ -183,7 +183,7 @@ var Uploader = function(options) {
 		if(self.files.length < self.config.maxSize) {
 			self.ele.find('.zUploaderFoot .zUploaderFileBtn').show();
 		}
-		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('Selected ' + waitingCount + ' files，total ' + (size / 1000.0).toFixed(2) + 'K');
 	}
 
 	//清除所有文件---
@@ -206,16 +206,16 @@ var Uploader = function(options) {
 				return oneFile.name == file.name && oneFile.lastModified == file.lastModified && oneFile.size == file.size;
 			})
 			if(finds.length > 0){
-				oc.dialog.tips(file.name + '文件已经存在');
+				oc.dialog.tips(file.name + ' file already exist');
 				continue; 
 			}
 			if(file.size > self.config.oneFileLimit) {
-				oc.dialog.tips('文件' + file.name + '超出了最大限制（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
+				oc.dialog.tips('File ' + file.name + ' is over max size limited（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
 				continue; 
 			}
 			
 			if(self.files.length === self.config.maxSize){
-				alert('超出了最大文件数量');
+				alert('Files quanlity is over limted size');
 				return false;
 			}
 
@@ -245,7 +245,7 @@ var Uploader = function(options) {
     */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
-			return alert('该文件当前不允许删除');
+			return alert('This file is not allow delete');
 		}
 		var file = self.files[index];
 		if(file.status === self.STATUS.success){
@@ -320,6 +320,13 @@ var Uploader = function(options) {
 		var fileName = file.name;
 		if(fileName.length > 25){
 			fileName = fileName.slice(0, 20) + ' ...';
+		}
+		if(file.status === self.STATUS.success && file.response.files && file.response.files.length && file.response.files[0].path) {
+			var path = file.response.files[0].path;
+			if(/\w{8}-\w{4}-\w+/.test(path)) {
+				path = '/product/util/accessory.jsp?id=' + path + '&name=' + file.name;
+			}
+			fileName = '<a href="' + path + '" target="_blank">' + fileName + '</a>';
 		}
 		item.append('<p class="zUploaderName">'+ fileName + '</p>');
 		if (file.status === self.STATUS.success){
@@ -456,7 +463,7 @@ var Uploader = function(options) {
 		}
 		xhr.upload.onerror = function(err){
 			self._process(file.size);	
-			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
+			self.setStatus(file, self.STATUS.failed, 'file upload abort:' + res.statusText);
 			cb();
 		}
 		xhr.onreadystatechange = function(){
@@ -466,7 +473,7 @@ var Uploader = function(options) {
 			}
 			if(xhr.readyState == 4 && xhr.status !== 200) {
 				self._process(0);	
-				self.setStatus(file, self.STATUS.failed, '文件传输中断:' + xhr.statusText);
+				self.setStatus(file, self.STATUS.failed, 'file upload abort:' + xhr.statusText);
 				cb();
 
 				return;
@@ -483,7 +490,7 @@ var Uploader = function(options) {
 					}
 				}
 				catch(err) {
-					console.log('uploader未知错误', err);
+					console.log('uploader unkonwn error', err);
 					self.setStatus(file, self.STATUS.failed);	
 				}
 
@@ -541,7 +548,7 @@ var Uploader = function(options) {
 			return model.status === self.STATUS.process;
 		});
 		if(processList.length > 0){
-			return alert('有文件正在上传，请稍后...');
+			return alert('Some file is uploading, please wait a moment ...');
 		}
 
 		self.queueSize = 0;
@@ -563,16 +570,16 @@ var Uploader = function(options) {
 		}
 		self._process(0);
 		var i = 0;
-		let uploadFiles = [];
+		var uploadFiles = [];
 		var uploadQueue = function(){
 			if(i === queueList.length){
-				uploadFiles.push(queueList[i]);
 				self.ele.find('.zUploaderFileBtn').show();
 				self._setFootStatics();
 				self.config.callback && self.config.callback(self.files, uploadFiles);
 				return;
 			}
-			
+
+			uploadFiles.push(queueList[i]);
 			self._uploadOneFile(queueList[i], function(){
 				self.config.uploadOneCallback && self.config.uploadOneCallback(queueList[i]);
 				uploadQueue(i++);
@@ -593,9 +600,9 @@ var Uploader = function(options) {
 		});
 		var successCount = successList.length;
 		var failedCount = self.files.length - successCount;
-		var text = '已成功上传' + successCount + '个文件';
+		var text = 'Uploaded ' + successCount + ' files';
 		if(failedCount > 0){
-			text += '，' + failedCount + '个文件上传失败，<a class="zUploaderReset" href="#">重置失败文件？</a>';
+			text += '，' + failedCount + ' files upload failed, <a class="zUploaderReset" href="#">reset those files？</a>';
 		}
 		self.ele.find('.zUploaderStatic').html(text);
 	}

@@ -9,66 +9,13 @@ html(lang="zh-CN")
         script(src="/dest/oc.js", data-occss="/dest/oc.css")
         link(rel='stylesheet', href='/icons/style.css')
     body
-        style.
-            body,html,.part{
-                width: 100%;
-                height: 100%;
-            }
-            body{
-                overflow: hidden;
-            }
-            .part{
-                background-size:auto 100%;
-                background-repeat: no-repeat;
-                background-position: top left;
-            }
-            @media screen and (min-device-aspect-ratio: 1/1){
-                .part{
-                    background-size:100% auto;
-                }
-            }
-            #part1{
-                background-image: url(/img/tmp/anker/1.jpg);
-            }
-            #part2{
-                background-image: url(/img/tmp/anker/2.jpg);
-            }
-            #part3{
-                background-image: url(/img/tmp/anker/3.jpg);
-            }
-            #part4{
-                background-image: url(/img/tmp/anker/4.jpg);
-            }
-            #part5{
-                background-image: url(/img/tmp/anker/5.jpg);
-            }
-            
-            #part7{
-                background-image: url(/img/tmp/anker/7.jpg);
-            }
-            #part8{
-                background-image: url(/img/tmp/anker/8.jpg);
-            }
-
-        div#part1.part
-        div#part2.part
-        div#part3.part
-        div#part4.part
-        div#part5.part
-        div#part7.part
-        div#part8.part
-
-        script.
-            var body = $(document.body);
-            var i = 0;
-            body.on('click', function(){
-                i++;
-                if(i > 6){
-                    return;
-                }
-                body.animate({'top': '-=100%'}, 1000);
-            })
+        button#btn(type="button") 提 交
+        iframe#iframe(src="http://172.16.4.29:3999/iframe/case_add", style="width: 100%; height: 600px")
 
         
-    
+        script.
+            $('#btn').on('click', function() {
+                //- document.getElementById('iframe').contentWindow.csc_case_iframe_save();
+                document.getElementById('iframe').src = 'http://172.16.4.29:3999/iframe/case_add#aaa'
+            })
         

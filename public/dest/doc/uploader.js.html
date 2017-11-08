@@ -134,9 +134,9 @@ var Uploader = function(options) {
     */
 	self._renderFoot = function(){
 		var div = $('&lt;div class="zUploaderFoot">&lt;/div>');
-		div.append('&lt;p class="zUploaderStatic">选中0个文件，共0K&lt;/p>');
+		div.append('&lt;p class="zUploaderStatic">Selected 0 File，Total 0K&lt;/p>');
 		div.append('&lt;span class="zUploaderControl">&lt;span class="zUploaderFileBtn">&lt;input type="file" multiple="multiple" />' + 
-			'&lt;span class="zUploaderBtnText">继续添加&lt;/span>&lt;/span>&lt;button class="zUploaderBtn" type="button">开始上传&lt;/button>&lt;/span>');
+			'&lt;span class="zUploaderBtnText">Add&lt;/span>&lt;/span>&lt;button class="zUploaderBtn" type="button">Upload&lt;/button>&lt;/span>');
 
 		if(self.config.auto) {
 			div.find('.zUploaderBtn').remove();
@@ -154,8 +154,8 @@ var Uploader = function(options) {
 	self._renderNoFile = function(){
 	    var div = $('&lt;div class="zUploaderNoFile">&lt;/div>');
 	    div.append('&lt;div class="icon">&lt;i class="icon-images">&lt;/i>&lt;/div>');
-	    div.append('&lt;span class="zUploaderFileBtn ">&lt;input type="file" multiple="multiple" />&lt;span class="zUploaderBtnText">点击选择文件&lt;/span>&lt;/div>');
-	    div.append('&lt;p>或将文件拖到这里，单次最多可上传文件' + self.config.maxSize + '个&lt;/p>');
+	    div.append('&lt;span class="zUploaderFileBtn ">&lt;input type="file" multiple="multiple" />&lt;span class="zUploaderBtnText">Select a file &lt;/span>&lt;/div>');
+	    div.append('&lt;p>Drag files here to select them, limited ' + self.config.maxSize + ' files&lt;/p>');
 
 	    return div;
 	}
@@ -211,7 +211,7 @@ var Uploader = function(options) {
 		if(self.files.length &lt; self.config.maxSize) {
 			self.ele.find('.zUploaderFoot .zUploaderFileBtn').show();
 		}
-		self.ele.find('.zUploaderStatic').html('选中' + waitingCount + '个文件，共' + (size / 1000.0).toFixed(2) + 'K');
+		self.ele.find('.zUploaderStatic').html('Selected ' + waitingCount + ' files，total ' + (size / 1000.0).toFixed(2) + 'K');
 	}
 
 	//清除所有文件---
@@ -234,16 +234,16 @@ var Uploader = function(options) {
 				return oneFile.name == file.name &amp;&amp; oneFile.lastModified == file.lastModified &amp;&amp; oneFile.size == file.size;
 			})
 			if(finds.length > 0){
-				oc.dialog.tips(file.name + '文件已经存在');
+				oc.dialog.tips(file.name + ' file already exist');
 				continue; 
 			}
 			if(file.size > self.config.oneFileLimit) {
-				oc.dialog.tips('文件' + file.name + '超出了最大限制（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
+				oc.dialog.tips('File ' + file.name + ' is over max size limited（' + parseInt(self.config.oneFileLimit / 1024) + 'K)');
 				continue; 
 			}
 			
 			if(self.files.length === self.config.maxSize){
-				alert('超出了最大文件数量');
+				alert('Files quanlity is over limted size');
 				return false;
 			}
 
@@ -273,7 +273,7 @@ var Uploader = function(options) {
     */
 	self._deleteFile = function(index){
 		if(self.files[index].status === self.STATUS.process){
-			return alert('该文件当前不允许删除');
+			return alert('This file is not allow delete');
 		}
 		var file = self.files[index];
 		if(file.status === self.STATUS.success){
@@ -348,6 +348,13 @@ var Uploader = function(options) {
 		var fileName = file.name;
 		if(fileName.length > 25){
 			fileName = fileName.slice(0, 20) + ' ...';
+		}
+		if(file.status === self.STATUS.success &amp;&amp; file.response.files &amp;&amp; file.response.files.length &amp;&amp; file.response.files[0].path) {
+			var path = file.response.files[0].path;
+			if(/\w{8}-\w{4}-\w+/.test(path)) {
+				path = '/product/util/accessory.jsp?id=' + path + '&amp;name=' + file.name;
+			}
+			fileName = '&lt;a href="' + path + '" target="_blank">' + fileName + '&lt;/a>';
 		}
 		item.append('&lt;p class="zUploaderName">'+ fileName + '&lt;/p>');
 		if (file.status === self.STATUS.success){
@@ -484,7 +491,7 @@ var Uploader = function(options) {
 		}
 		xhr.upload.onerror = function(err){
 			self._process(file.size);	
-			self.setStatus(file, self.STATUS.failed, '文件传输中断:' + res.statusText);
+			self.setStatus(file, self.STATUS.failed, 'file upload abort:' + res.statusText);
 			cb();
 		}
 		xhr.onreadystatechange = function(){
@@ -494,7 +501,7 @@ var Uploader = function(options) {
 			}
 			if(xhr.readyState == 4 &amp;&amp; xhr.status !== 200) {
 				self._process(0);	
-				self.setStatus(file, self.STATUS.failed, '文件传输中断:' + xhr.statusText);
+				self.setStatus(file, self.STATUS.failed, 'file upload abort:' + xhr.statusText);
 				cb();
 
 				return;
@@ -511,7 +518,7 @@ var Uploader = function(options) {
 					}
 				}
 				catch(err) {
-					console.log('uploader未知错误', err);
+					console.log('uploader unkonwn error', err);
 					self.setStatus(file, self.STATUS.failed);	
 				}
 
@@ -569,7 +576,7 @@ var Uploader = function(options) {
 			return model.status === self.STATUS.process;
 		});
 		if(processList.length > 0){
-			return alert('有文件正在上传，请稍后...');
+			return alert('Some file is uploading, please wait a moment ...');
 		}
 
 		self.queueSize = 0;
@@ -591,14 +598,16 @@ var Uploader = function(options) {
 		}
 		self._process(0);
 		var i = 0;
+		var uploadFiles = [];
 		var uploadQueue = function(){
 			if(i === queueList.length){
 				self.ele.find('.zUploaderFileBtn').show();
 				self._setFootStatics();
-				self.config.callback &amp;&amp; self.config.callback(self.files);
+				self.config.callback &amp;&amp; self.config.callback(self.files, uploadFiles);
 				return;
 			}
-			
+
+			uploadFiles.push(queueList[i]);
 			self._uploadOneFile(queueList[i], function(){
 				self.config.uploadOneCallback &amp;&amp; self.config.uploadOneCallback(queueList[i]);
 				uploadQueue(i++);
@@ -619,9 +628,9 @@ var Uploader = function(options) {
 		});
 		var successCount = successList.length;
 		var failedCount = self.files.length - successCount;
-		var text = '已成功上传' + successCount + '个文件';
+		var text = 'Uploaded ' + successCount + ' files';
 		if(failedCount > 0){
-			text += '，' + failedCount + '个文件上传失败，&lt;a class="zUploaderReset" href="#">重置失败文件？&lt;/a>';
+			text += '，' + failedCount + ' files upload failed, &lt;a class="zUploaderReset" href="#">reset those files？&lt;/a>';
 		}
 		self.ele.find('.zUploaderStatic').html(text);
 	}
@@ -646,7 +655,7 @@ module.exports = Uploader;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Mar 20 2017 15:38:12 GMT+0800 (CST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Nov 08 2017 16:27:33 GMT+0800 (CST)
 </footer>
 
 <script> prettyPrint(); </script>

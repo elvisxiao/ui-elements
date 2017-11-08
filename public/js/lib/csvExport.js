@@ -32,11 +32,13 @@ Instance.export = function(filename, rows) {
     if(typeof rows !== 'string') {
         csvString = Instance.getCsvString(rows);
     }
-    
+    var csvString = '\uFEFF' + csvString;
+
     var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) { // IE 10+
         navigator.msSaveBlob(blob, filename);
-    } else {
+    } 
+    else {
         var link = document.createElement("a");
         if (link.download !== undefined) { // feature detection
             // Browsers that support HTML5 download attribute

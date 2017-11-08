@@ -38,12 +38,12 @@
 	else {
 		if(location.href.indexOf('ocdebug') > -1) {
 			// $("<script>").attr({type: "text/javascript", src: 'http://172.16.1.233:3009/dest/oc.js'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/dest/oc.css'}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://localhost:3009/icons/style.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//localhost:3009/dest/oc.css'}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//localhost:3009/icons/style.css'}).appendTo("head");
 		}
 		else {
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/oc.css?r=' + Math.random()}).appendTo("head");
-			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: 'http://static.oceanwing.com/webapp/js/oc/icons/style.css?r=' + + Math.random()}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//static.oceanwing.com/webapp/js/oc/oc.css?r=' + Math.random()}).appendTo("head");
+			$("<link>").attr({ rel: "stylesheet", type: "text/css", href: '//static.oceanwing.com/webapp/js/oc/icons/style.css?r=' + + Math.random()}).appendTo("head");
 		}
 	}
 

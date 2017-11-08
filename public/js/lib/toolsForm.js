@@ -132,7 +132,8 @@ Instance.fill = function(form, model, attributeKey) {
 		}
 		else if(this.type == 'checkbox') {
 			var iptValue = this.value;
-			if(value == iptValue || (value && value.indexOf && value.indexOf(iptValue) !== -1) ) {
+			
+			if(value.toString() === iptValue || (value && value.indexOf && value.indexOf(iptValue) !== -1) ) {
 				this.checked = true;
 			}
 			else {

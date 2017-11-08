@@ -152,8 +152,6 @@ var FileView = function(options){
         }
     }
 
-
-
     /**
     * 读取Excel文件内容
     * @method readXls
@@ -452,6 +450,11 @@ var FileView = function(options){
     */
     self.clearMark = function(){
         self.ele.find('tbody .zFileTableMark').removeAttr('title').removeClass('zFileTableMark');
+    }
+
+    self.clear = function() {
+        self._dataList = [];
+        self.ele.find('.zFileTableContainer').remove();
     }
 
     self._render();
