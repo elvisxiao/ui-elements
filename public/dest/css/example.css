@@ -1,0 +1,22 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+
+/* line 2 : /Users/elvis/code/ocui/public/css/example.styl */
+.zExample {
+  border: 1px solid #dfdfdf;
+  padding: 3px 10px 0 10px;
+}
+
+/* line 5 : /Users/elvis/code/ocui/public/css/example.styl */
+.zExample:before {
+  content: 'DEMO';
+  font-size: 12px;
+  color: #888;
+}
+
+/* line 9 : /Users/elvis/code/ocui/public/css/example.styl */
+.zExample .zCode {
+  margin-left: -10px;
+  margin-right: -10px;
+  border: 0;
+}

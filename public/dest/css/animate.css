@@ -1,0 +1,5629 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+
+/* line 2 : /Users/elvis/code/ocui/public/css/animate.styl */
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+
+/* line 74 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInDown {
+  animation-name: fadeInDown;
+  animation-duration: 0.15s;
+}
+
+/* line 79 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInUp {
+  animation-name: fadeInUp;
+  animation-duration: 0.15s;
+}
+
+/* line 84 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpin:before {
+  animation: spin 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 87 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpinPrimary:before {
+  animation: spinPrimary 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 90 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpinInfo:before {
+  animation: spinInfo 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 93 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpinSuccess:before {
+  animation: spinSuccess 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 96 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpinWarning:before {
+  animation: spinWarning 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 99 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSpinDanger:before {
+  animation: spinDanger 0.8s linear infinite normal;
+  display: inline-block;
+}
+
+/* line 117 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounce {
+  animation-name: bounce;
+  transform-origin: center bottom;
+  animation-duration: 1s;
+}
+
+/* line 127 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlash {
+  animation-name: flash;
+  animation-duration: 1s;
+}
+
+/* line 138 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zPulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+}
+
+/* line 157 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRubberBand {
+  animation-name: rubberBand;
+  animation-duration: 1s;
+}
+
+/* line 168 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zShake {
+  animation-name: shake;
+  animation-duration: 1s;
+}
+
+/* line 189 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zHinge {
+  animation-name: hinge;
+  animation-duration: 1s;
+}
+
+/* line 200 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRollIn {
+  animation-name: rollIn;
+  animation-duration: 1s;
+}
+
+/* line 210 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRollOut {
+  animation-name: rollOut;
+  animation-duration: 1s;
+}
+
+/* line 226 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zSwing {
+  transform-origin: top center;
+  animation-name: swing;
+  animation-duration: 1s;
+}
+
+/* line 249 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceIn {
+  animation-name: bounceIn;
+  animation-duration: 1s;
+}
+
+/* line 268 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceInDown {
+  animation-name: bounceInDown;
+  animation-duration: 1s;
+}
+
+/* line 287 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceInLeft {
+  animation-name: bounceInLeft;
+  animation-duration: 1s;
+}
+
+/* line 306 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceInRight {
+  animation-name: bounceInRight;
+  animation-duration: 1s;
+}
+
+/* line 325 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceInUp {
+  animation-name: bounceInUp;
+  animation-duration: 1s;
+}
+
+/* line 338 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceOut {
+  animation-name: bounceOut;
+  animation-duration: 1s;
+}
+
+/* line 351 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceOutDown {
+  animation-name: bounceOutDown;
+  animation-duration: 1s;
+}
+
+/* line 362 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceOutLeft {
+  animation-name: bounceOutLeft;
+  animation-duration: 1s;
+}
+
+/* line 373 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceOutRight {
+  animation-name: bounceOutRight;
+  animation-duration: 1s;
+}
+
+/* line 386 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zBounceOutUp {
+  animation-name: bounceOutUp;
+  animation-duration: 1s;
+}
+
+/* line 397 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+/* line 408 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInDown {
+  animation-name: fadeInDown;
+  animation-duration: 1s;
+}
+
+/* line 419 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInLeft {
+  animation-name: fadeInLeft;
+  animation-duration: 1s;
+}
+
+/* line 430 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInRight {
+  animation-name: fadeInRight;
+  animation-duration: 1s;
+}
+
+/* line 441 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeInUp {
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+}
+
+/* line 450 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeOut {
+  animation-name: fadeOut;
+  animation-duration: 1s;
+}
+
+/* line 460 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeOutDown {
+  animation-name: fadeOutDown;
+  animation-duration: 1s;
+}
+
+/* line 470 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeOutLeft {
+  animation-name: fadeOutLeft;
+  animation-duration: 1s;
+}
+
+/* line 480 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeOutRight {
+  animation-name: fadeOutRight;
+  animation-duration: 1s;
+}
+
+/* line 490 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFadeOutUp {
+  animation-name: fadeOutUp;
+  animation-duration: 1s;
+}
+
+/* line 512 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlip {
+  backface-visibility: visible;
+  animation-name: flip;
+  animation-duration: 1s;
+}
+
+/* line 532 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlipInX {
+  backface-visibility: visible !important;
+  animation-name: flipInX;
+  animation-duration: 1s;
+}
+
+/* line 553 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlipInY {
+  backface-visibility: visible !important;
+  animation-name: flipInY;
+  animation-duration: 1s;
+}
+
+/* line 567 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlipOutX {
+  animation-name: flipOutX;
+  backface-visibility: visible !important;
+  animation-duration: 1s;
+}
+
+/* line 581 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zFlipOutY {
+  backface-visibility: visible !important;
+  animation-name: flipOutY;
+  animation-duration: 1s;
+}
+
+/* line 596 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateIn {
+  animation-name: rotateIn;
+  animation-duration: 1s;
+}
+
+/* line 609 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateInDownLeft {
+  animation-name: rotateInDownLeft;
+  animation-duration: 1s;
+}
+
+/* line 622 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateInDownRight {
+  animation-name: rotateInDownRight;
+  animation-duration: 1s;
+}
+
+/* line 635 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateInUpLeft {
+  animation-name: rotateInUpLeft;
+  animation-duration: 1s;
+}
+
+/* line 648 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateInUpRight {
+  animation-name: rotateInUpRight;
+  animation-duration: 1s;
+}
+
+/* line 660 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateOut {
+  animation-name: rotateOut;
+  animation-duration: 1s;
+}
+
+/* line 672 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateOutDownLeft {
+  animation-name: rotateOutDownLeft;
+  animation-duration: 1s;
+}
+
+/* line 685 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateOutDownRight {
+  animation-name: rotateOutDownRight;
+  animation-duration: 1s;
+}
+
+/* line 698 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateOutUpLeft {
+  animation-name: rotateOutUpLeft;
+  animation-duration: 1s;
+}
+
+/* line 711 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zRotateOutUpRight {
+  animation-name: rotateOutUpRight;
+  animation-duration: 1s;
+}
+
+/* line 723 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomIn {
+  animation-name: zoomIn;
+  animation-duration: 1s;
+}
+
+/* line 736 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomInDown {
+  animation-name: zoomInDown;
+  animation-duration: 1s;
+}
+
+/* line 749 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomInLeft {
+  animation-name: zoomInLeft;
+  animation-duration: 1s;
+}
+
+/* line 762 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomInRight {
+  animation-name: zoomInRight;
+  animation-duration: 1s;
+}
+
+/* line 775 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomInUp {
+  animation-name: zoomInUp;
+  animation-duration: 1s;
+}
+
+/* line 787 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomOut {
+  animation-name: zoomOut;
+  animation-duration: 1s;
+}
+
+/* line 801 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomOutDown {
+  animation-name: zoomOutDown;
+  animation-duration: 1s;
+}
+
+/* line 813 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomOutLeft {
+  animation-name: zoomOutLeft;
+  animation-duration: 1s;
+}
+
+/* line 825 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomOutRight {
+  animation-name: zoomOutRight;
+  animation-duration: 1s;
+}
+
+/* line 839 : /Users/elvis/code/ocui/public/css/animate.styl */
+.zZoomOutUp {
+  animation-name: zoomOutUp;
+  animation-duration: 1s;
+}
+
+/* line 4 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 4 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 4 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 4 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 4 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 12 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: 0;
+  }
+}
+
+/* line 12 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: 0;
+  }
+}
+
+/* line 12 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: 0;
+  }
+}
+
+/* line 12 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: 0;
+  }
+}
+
+/* line 12 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: 0;
+  }
+}
+
+/* line 20 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 20 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 20 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 20 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 20 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 26 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spinPrimary {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $primaray1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 26 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spinPrimary {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $primaray1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 26 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spinPrimary {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $primaray1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 26 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spinPrimary {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $primaray1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 26 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spinPrimary {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $primaray1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 34 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spinInfo {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $info1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 34 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spinInfo {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $info1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 34 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spinInfo {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $info1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 34 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spinInfo {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $info1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 34 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spinInfo {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $info1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 42 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spinSuccess {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $success1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 42 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spinSuccess {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $success1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 42 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spinSuccess {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $success1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 42 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spinSuccess {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $success1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 42 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spinSuccess {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $success1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spinWarning {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $warning1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spinWarning {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $warning1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spinWarning {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $warning1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spinWarning {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $warning1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 50 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spinWarning {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $warning1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 58 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes spinDanger {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $danger1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 58 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes spinDanger {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $danger1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 58 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes spinDanger {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $danger1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 58 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes spinDanger {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $danger1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 58 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes spinDanger {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: $danger1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* line 67 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes progressStriped {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: 36px;
+  }
+}
+
+/* line 67 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes progressStriped {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: 36px;
+  }
+}
+
+/* line 67 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes progressStriped {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: 36px;
+  }
+}
+
+/* line 67 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes progressStriped {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: 36px;
+  }
+}
+
+/* line 67 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes progressStriped {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: 36px;
+  }
+}
+
+/* line 105 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* line 105 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* line 105 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* line 105 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* line 105 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* line 122 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* line 122 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* line 122 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* line 122 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* line 122 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* line 131 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 131 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 131 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 131 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 131 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 142 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 142 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 142 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 142 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 142 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 161 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* line 161 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* line 161 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* line 161 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* line 161 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* line 173 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20%, 60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40%, 80% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 700px, 0);
+    opacity: 0;
+  }
+}
+
+/* line 173 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20%, 60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40%, 80% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 700px, 0);
+    opacity: 0;
+  }
+}
+
+/* line 173 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20%, 60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40%, 80% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 700px, 0);
+    opacity: 0;
+  }
+}
+
+/* line 173 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20%, 60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40%, 80% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 700px, 0);
+    opacity: 0;
+  }
+}
+
+/* line 173 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20%, 60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40%, 80% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 700px, 0);
+    opacity: 0;
+  }
+}
+
+/* line 193 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rollIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 193 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rollIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 193 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rollIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 193 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rollIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 193 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rollIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 204 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rollOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+  }
+}
+
+/* line 204 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rollOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+  }
+}
+
+/* line 204 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rollOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+  }
+}
+
+/* line 204 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rollOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+  }
+}
+
+/* line 204 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rollOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+  }
+}
+
+/* line 215 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes swing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* line 215 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes swing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* line 215 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes swing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* line 215 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes swing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* line 215 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes swing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* line 231 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 231 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 231 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 231 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 231 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* line 253 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceInDown {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 253 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceInDown {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 253 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceInDown {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 253 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceInDown {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 253 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceInDown {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 272 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 272 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 272 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 272 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 272 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 291 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 291 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 291 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 291 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 291 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* line 310 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* line 310 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* line 310 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* line 310 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* line 310 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* line 329 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%, 55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+/* line 329 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%, 55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+/* line 329 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%, 55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+/* line 329 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%, 55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+/* line 329 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%, 55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+/* line 342 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+/* line 342 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+/* line 342 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+/* line 342 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+/* line 342 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+/* line 355 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+/* line 355 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+/* line 355 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+/* line 355 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+/* line 355 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+/* line 366 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceOutRight {
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+/* line 366 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceOutRight {
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+/* line 366 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceOutRight {
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+/* line 366 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceOutRight {
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+/* line 366 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceOutRight {
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
+/* line 377 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes bounceOutUp {
+  20% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+/* line 377 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes bounceOutUp {
+  20% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+/* line 377 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes bounceOutUp {
+  20% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+/* line 377 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes bounceOutUp {
+  20% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+/* line 377 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes bounceOutUp {
+  20% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+/* line 392 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* line 392 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* line 392 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* line 392 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* line 392 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* line 401 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 401 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 401 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 401 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 401 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 412 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 412 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 412 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 412 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 412 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 423 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 423 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 423 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 423 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 423 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 434 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 434 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 434 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 434 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 434 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* line 445 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 445 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 445 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 445 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 445 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 454 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* line 454 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* line 454 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* line 454 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* line 454 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* line 464 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* line 464 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* line 464 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* line 464 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* line 464 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* line 474 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* line 474 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* line 474 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* line 474 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* line 474 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* line 484 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* line 484 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* line 484 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* line 484 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* line 484 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* line 496 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flip {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: perspective(400px);
+    animation-timing-function: ease-in;
+  }
+}
+
+/* line 496 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flip {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: perspective(400px);
+    animation-timing-function: ease-in;
+  }
+}
+
+/* line 496 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flip {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: perspective(400px);
+    animation-timing-function: ease-in;
+  }
+}
+
+/* line 496 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flip {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: perspective(400px);
+    animation-timing-function: ease-in;
+  }
+}
+
+/* line 496 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flip {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    transform: perspective(400px);
+    animation-timing-function: ease-in;
+  }
+}
+
+/* line 517 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 517 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 517 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 517 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 517 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 538 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 538 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 538 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 538 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 538 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  100% {
+    transform: perspective(400px);
+  }
+}
+
+/* line 558 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flipOutX {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 558 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flipOutX {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 558 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flipOutX {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 558 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flipOutX {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 558 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flipOutX {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 572 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes flipOutY {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 572 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes flipOutY {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 572 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes flipOutY {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 572 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes flipOutY {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 572 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes flipOutY {
+  0% {
+    transform: perspective(400px);
+  }
+
+  30% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 587 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateIn {
+  0% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 587 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateIn {
+  0% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 587 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateIn {
+  0% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 587 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateIn {
+  0% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 587 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateIn {
+  0% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 600 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 600 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 600 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 600 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 600 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 613 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateInDownRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 613 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateInDownRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 613 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateInDownRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 613 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateInDownRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 613 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateInDownRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 626 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateInUpLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 626 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateInUpLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 626 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateInUpLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 626 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateInUpLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 626 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateInUpLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 639 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateInUpRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 639 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateInUpRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 639 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateInUpRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 639 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateInUpRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 639 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateInUpRight {
+  0% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* line 652 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateOut {
+  0% {
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+/* line 652 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateOut {
+  0% {
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+/* line 652 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateOut {
+  0% {
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+/* line 652 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateOut {
+  0% {
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+/* line 652 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateOut {
+  0% {
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+/* line 664 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateOutDownLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+
+/* line 664 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateOutDownLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+
+/* line 664 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateOutDownLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+
+/* line 664 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateOutDownLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+
+/* line 664 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateOutDownLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, 45deg);
+    opacity: 0;
+  }
+}
+
+/* line 677 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateOutDownRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 677 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateOutDownRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 677 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateOutDownRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 677 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateOutDownRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 677 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateOutDownRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 690 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 690 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 690 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 690 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 690 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* line 703 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 703 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 703 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 703 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 703 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* line 717 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* line 717 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* line 717 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* line 717 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* line 717 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* line 727 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 727 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 727 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 727 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 727 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomInDown {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 740 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 740 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 740 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 740 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 740 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 753 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomInRight {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 753 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomInRight {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 753 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomInRight {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 753 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomInRight {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 753 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomInRight {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 766 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 766 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 766 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 766 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 766 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 779 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 779 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 779 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 779 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 779 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 791 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 791 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 791 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 791 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 791 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 805 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomOutLeft {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(-2000px, 0, 0);
+    transform-origin: left center;
+  }
+}
+
+/* line 805 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomOutLeft {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(-2000px, 0, 0);
+    transform-origin: left center;
+  }
+}
+
+/* line 805 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomOutLeft {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(-2000px, 0, 0);
+    transform-origin: left center;
+  }
+}
+
+/* line 805 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomOutLeft {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(-2000px, 0, 0);
+    transform-origin: left center;
+  }
+}
+
+/* line 805 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomOutLeft {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(-2000px, 0, 0);
+    transform-origin: left center;
+  }
+}
+
+/* line 817 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomOutRight {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(2000px, 0, 0);
+    transform-origin: right center;
+  }
+}
+
+/* line 817 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomOutRight {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(2000px, 0, 0);
+    transform-origin: right center;
+  }
+}
+
+/* line 817 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomOutRight {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(2000px, 0, 0);
+    transform-origin: right center;
+  }
+}
+
+/* line 817 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomOutRight {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(2000px, 0, 0);
+    transform-origin: right center;
+  }
+}
+
+/* line 817 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomOutRight {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate3d(2000px, 0, 0);
+    transform-origin: right center;
+  }
+}
+
+/* line 829 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-moz-keyframes zoomOutUp {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 829 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-webkit-keyframes zoomOutUp {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 829 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-o-keyframes zoomOutUp {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 829 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@-ms-keyframes zoomOutUp {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* line 829 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+@keyframes zoomOutUp {
+  40% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}

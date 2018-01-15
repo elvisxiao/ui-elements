@@ -1,0 +1,25 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+
+/* line 1 : /Users/elvis/code/ocui/public/css/reset.styl */
+.btn-gray {
+  background: #f5f5f5;
+  color: #333;
+  border-color: #ccc;
+}
+
+/* line 5 : /Users/elvis/code/ocui/public/css/reset.styl */
+.btn-gray:hover {
+  background: #eee;
+}
+
+/* line 8 : /Users/elvis/code/ocui/public/css/reset.styl */
+.datepicker.datepicker-dropdown {
+  min-width: 225px;
+}
+
+/* line 11 : /Users/elvis/code/ocui/public/css/reset.styl */
+.zIpt {
+  height: 32px !important;
+  line-height: 30px;
+}

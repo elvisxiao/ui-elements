@@ -1,0 +1,75 @@
+
+/* line 1 : /Users/elvis/code/ocui/node_modules/stylus/lib/functions/index.styl */
+
+/* line 1 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight {
+  position: fixed;
+  right: 0;
+  width: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: -3px 0 11px rgba(0,0,0,0.2);
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+  padding-top: 40px;
+  box-sizing: border-box;
+}
+
+/* line 14 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight .fixRightHd {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #f5f6fa;
+  padding-right: 15px;
+}
+
+/* line 22 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight .fixRightHd i.icon-arrow-right {
+  background-image: none;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  text-align: center;
+  margin-right: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* line 32 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight .fixRightHd i.fixRightFullScreen {
+  position: absolute;
+  right: 10px;
+  top: 11px;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  color: #666;
+}
+
+/* line 40 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight .fixRightHd i.fixRightFullScreen:hover {
+  color: #333;
+}
+
+/* line 42 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight .fixRightBd {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  padding: 15px;
+  font-size: 12px;
+}
+
+/* line 51 : /Users/elvis/code/ocui/public/css/slide.styl */
+.zFixRight.active {
+  width: 800px;
+}
