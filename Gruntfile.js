@@ -101,7 +101,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: 'public/js/lib/**/**.js',
-                tasks: ['clean:scripts', 'browserify', 'uglify', 'jsdoc'],
+                tasks: ['clean:scripts', 'browserify', 'uglify'],
             }
         },
 
