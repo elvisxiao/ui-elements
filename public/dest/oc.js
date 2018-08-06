@@ -1168,7 +1168,8 @@ ZDate.weekPicker = function(ipt){
     var initVal = $.trim(ipt.val());
 
     var reanderTable = function(){
-        var table = $('<table class="zWeekPicker"></table>');
+        var tableContainer = $('<div class="zWeekPicker"><table></table></div>');
+        var table = tableContainer.find('table');
         var thead = $('<thead></thead>').appendTo(table);
         var curr = new Date();
         if(!initVal){
@@ -1246,11 +1247,67 @@ ZDate.weekPicker = function(ipt){
         })
 
         $('body').on('click', function(){
-            table.hide();
+            tableContainer.hide();
         })
-        table.appendTo('body');
+        tableContainer.appendTo('body');
 
-        return table;
+        return tableContainer;
+    }
+
+
+    var _put = function(dropBody, top, maxHeight, isTop) {
+        dropBody.style.top = top + 'px';
+        dropBody.style.maxHeight = maxHeight + 'px';
+        if(isTop) {
+            dropBody.style.transform = 'translate(0, -100%)';
+        }
+        else {
+            dropBody.style.transform = 'none';
+        }
+    }
+
+    var setPosition = function(dropBody, dropHead) {
+        var bodyWidth = dropBody.clientWidth;
+        var headWidth = dropHead.clientWidth;
+        bodyWidth = bodyWidth > headWidth? bodyWidth : headWidth;
+        this.isSetMinWidth && (dropBody.style.minWidth = bodyWidth + 'px');
+        var docRight = document.documentElement.clientWidth + document.body.scrollLeft;
+        var headLeft = $(dropHead).offset().left;
+
+        var left = headLeft + bodyWidth > docRight? headLeft + headWidth - bodyWidth : headLeft;
+        dropBody.style.left =  left + 'px';
+        
+        var docHeight = document.documentElement.clientHeight;
+        var docTop = document.body.scrollTop;
+        var docBottom = docHeight + document.body.scrollTop;
+        var headTop = $(dropHead).offset().top;
+        var headHeight = $(dropHead).outerHeight();
+        var headBottom = headTop + headHeight;
+
+        var bodyHeight = dropBody.clientHeight;
+
+        var bottomSpace = docBottom - headBottom - 10;
+        var topSpace = headTop - docTop - 50;
+        
+         // 可以放到下面
+        if(bottomSpace > bodyHeight) {
+            _put(dropBody, headBottom, bottomSpace);
+            return -1;
+        }
+        
+        //上面可以容纳
+        if(topSpace > bodyHeight) {
+            _put(dropBody, headTop, topSpace, true);
+            return 1;
+        }
+
+        var maxHeight = (topSpace > bottomSpace? topSpace : bottomSpace) + 'px';
+        // console.log('都容纳不了', [topSpace, bottomSpace, maxHeight, bodyHeight]);
+        $(dropBody).css({'max-height': maxHeight});
+        var isTop = topSpace > bottomSpace;
+        _put(dropBody, isTop? headTop : headBottom, maxHeight, isTop);
+
+        return isTop? 1: -1;
     }
 
     var setTablePosition = function(ipt){
@@ -1258,7 +1315,8 @@ ZDate.weekPicker = function(ipt){
         if(ele.length === 0){
             ele = reanderTable();
         }
-        var offset = ipt.offset();
+            
+        // var offset = ipt.offset();
         var val = $.trim(ipt.val());
 
         if(!val || val.length !== 6) {
@@ -1274,17 +1332,11 @@ ZDate.weekPicker = function(ipt){
         ele.find('td.active').removeClass('active');
         ele.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
         ele.find('.zWeekPickerTag>span').html(weekStart + ' - ' + weekEnd);
-        var left = offset.left;
-        if(left + ele.outerWidth() > $('body').width()) {
-            left = offset.left - ele.outerWidth() + ipt.outerWidth();
-        }
-        ele.css({
-            'left': left,
-            'top': offset.top + ipt.outerHeight(),
-            'display': 'block'
-        })
+        ele.css({ 'display': 'block' });
         
-        ele.off('click', 'tbody td:not(.zWeekPickerTag)').on('click', 'tbody td:not(.zWeekPickerTag)', function(){
+        setPosition(ele[0], ipt[0]);
+        
+        ele.find('table').off('click', 'tbody td:not(.zWeekPickerTag)').on('click', 'tbody td:not(.zWeekPickerTag)', function(){
             ele.hide();
             var year = ele.find('.spanYear').text();
             var week = $(this).html();
@@ -1296,6 +1348,7 @@ ZDate.weekPicker = function(ipt){
             // ev.initEvent("change", false, true);  
             // ipt[0].dispatchEvent(ev);  
         })
+
     }
 
     ipt = $(ipt);
@@ -3177,6 +3230,7 @@ var initEvent = function(){
                 slcOption.prop('selected', true);
 				dropdown.remove(ipt);
                 ipt.change();
+                slc.trigger('change');
         	}
         	else{
         		if(p.attr('selected')){
@@ -3193,6 +3247,7 @@ var initEvent = function(){
                 ipt.val(vals || '');
                 ipt.change();
                 slc.change();
+                slc.trigger('change');
         	}
         })
     })  
@@ -3718,6 +3773,7 @@ var Table = function() {
             filename += '.csv';
         }
         
+        text = '\uFEFF' + text;
         var blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, filename);
@@ -6112,7 +6168,8 @@ var TreeSelect = function(options){
 		width: 'auto',
 		height: 'auto',
 		showAll: false,
-		forbidPNode: false //禁止选中非末级几点
+		forbidPNode: false, //禁止选中非末级几点
+		disabledKey: null
 	};
 	this.timerHandler = null;
 	this.selectedItem = null;
@@ -6155,6 +6212,9 @@ var TreeSelect = function(options){
 
 	self._selectedP = function(p){
 		if(p.length === 0){
+			return;
+		}
+		if(p.attr('disabled')) {
 			return;
 		}
 		var text = '';
@@ -6208,15 +6268,22 @@ var TreeSelect = function(options){
 			self._setActive();
 			self.filter();
 
+			self.ele.find('>ul').scrollTop(0);
+			self.ele.find('.zTreeSelectItem.active').removeClass('active');
 			if(self.selectedItem){
-				self.ele.find('.zTreeSelectItem').each(function(){
-					var li = $(this);
-					var model = li.data();
-					if(model == self.selectedItem){
-						li.addClass('active');
-						self.ele.find('>ul').scrollTop(li.offset().top - 32);
-					}
-				});
+				setTimeout(function() {
+					self.ele.find('.zTreeSelectItem').each(function(i, ele){
+						var li = $(this);
+						var model = li.data();
+						if(model == self.selectedItem){
+							self.currentActive = i;
+							li.addClass('active');
+							self.ele.find('>ul').scrollTop(li.position().top - 32);
+
+							return false;
+						}
+					});
+				}, 1)
 			}
 		})
 		.on('click', 'p', function(e){
@@ -6236,8 +6303,9 @@ var TreeSelect = function(options){
 			self.filter();
 		})
 		.on('mouseenter', 'li.zTreeSelectItem p', function(){
+			return;
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');
-			$(this).parent().addClass('active');
+			$(this).parent('.zTreeSelectItem:eq(0)').addClass('active');
 			self._setActive();
 		})
 		.find('input').on('keyup', function(e){
@@ -6275,7 +6343,7 @@ var TreeSelect = function(options){
 			
 			var ul = self.ele.find('>ul');
 			var height = ul.height();
-			var offset = target.offset().top;
+			var offset = target.position().top;
 			var scrollTop = ul.scrollTop();
 			if(code === 40){
 				var scroll = offset - height;
@@ -6391,6 +6459,7 @@ var TreeSelect = function(options){
 		if(!dataList){
 			return;
 		}
+
 		var len = dataList.length;
 		var ul = $('<ul></ul>');
 		if(level === 0){
@@ -6402,6 +6471,14 @@ var TreeSelect = function(options){
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
 			var li = $('<li class="zTreeSelectItem" data-level="' + level + '"><p style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
+			//标记该项目不可用
+			if(self.config.disabledKey && one[self.config.disabledKey]) {
+				li.find('>p').attr('disabled', true).append('<span style="margin-left:3px">(disabled)</span>');
+			}
+			if(self.config.forbidPNode && one.items && one.items.length) {
+				li.find('>p').attr('disabled', true);
+			}
+
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
 				self._renderRecusive(one.items, li, level + 1);

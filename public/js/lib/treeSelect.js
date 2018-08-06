@@ -6,7 +6,8 @@ var TreeSelect = function(options){
 		width: 'auto',
 		height: 'auto',
 		showAll: false,
-		forbidPNode: false //禁止选中非末级几点
+		forbidPNode: false, //禁止选中非末级几点
+		disabledKey: null
 	};
 	this.timerHandler = null;
 	this.selectedItem = null;
@@ -49,6 +50,9 @@ var TreeSelect = function(options){
 
 	self._selectedP = function(p){
 		if(p.length === 0){
+			return;
+		}
+		if(p.attr('disabled')) {
 			return;
 		}
 		var text = '';
@@ -102,15 +106,22 @@ var TreeSelect = function(options){
 			self._setActive();
 			self.filter();
 
+			self.ele.find('>ul').scrollTop(0);
+			self.ele.find('.zTreeSelectItem.active').removeClass('active');
 			if(self.selectedItem){
-				self.ele.find('.zTreeSelectItem').each(function(){
-					var li = $(this);
-					var model = li.data();
-					if(model == self.selectedItem){
-						li.addClass('active');
-						self.ele.find('>ul').scrollTop(li.offset().top - 32);
-					}
-				});
+				setTimeout(function() {
+					self.ele.find('.zTreeSelectItem').each(function(i, ele){
+						var li = $(this);
+						var model = li.data();
+						if(model == self.selectedItem){
+							self.currentActive = i;
+							li.addClass('active');
+							self.ele.find('>ul').scrollTop(li.position().top - 32);
+
+							return false;
+						}
+					});
+				}, 1)
 			}
 		})
 		.on('click', 'p', function(e){
@@ -130,8 +141,9 @@ var TreeSelect = function(options){
 			self.filter();
 		})
 		.on('mouseenter', 'li.zTreeSelectItem p', function(){
+			return;
 			self.ele.find('.zTreeSelectItem.active').removeClass('active');
-			$(this).parent().addClass('active');
+			$(this).parent('.zTreeSelectItem:eq(0)').addClass('active');
 			self._setActive();
 		})
 		.find('input').on('keyup', function(e){
@@ -169,7 +181,7 @@ var TreeSelect = function(options){
 			
 			var ul = self.ele.find('>ul');
 			var height = ul.height();
-			var offset = target.offset().top;
+			var offset = target.position().top;
 			var scrollTop = ul.scrollTop();
 			if(code === 40){
 				var scroll = offset - height;
@@ -285,6 +297,7 @@ var TreeSelect = function(options){
 		if(!dataList){
 			return;
 		}
+
 		var len = dataList.length;
 		var ul = $('<ul></ul>');
 		if(level === 0){
@@ -296,6 +309,14 @@ var TreeSelect = function(options){
 		for(var i = 0; i < len; i++){
 			var one = dataList[i];
 			var li = $('<li class="zTreeSelectItem" data-level="' + level + '"><p style="padding-left:' + (level * 20 + 10) + 'px">' + one.name + '</p></li>');
+			//标记该项目不可用
+			if(self.config.disabledKey && one[self.config.disabledKey]) {
+				li.find('>p').attr('disabled', true).append('<span style="margin-left:3px">(disabled)</span>');
+			}
+			if(self.config.forbidPNode && one.items && one.items.length) {
+				li.find('>p').attr('disabled', true);
+			}
+
 			li.appendTo(ul).data(one);
 			if(one.items && one.items.length > 0){
 				self._renderRecusive(one.items, li, level + 1);

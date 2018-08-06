@@ -143,6 +143,7 @@ var initEvent = function(){
                 slcOption.prop('selected', true);
 				dropdown.remove(ipt);
                 ipt.change();
+                slc.trigger('change');
         	}
         	else{
         		if(p.attr('selected')){
@@ -159,6 +160,7 @@ var initEvent = function(){
                 ipt.val(vals || '');
                 ipt.change();
                 slc.change();
+                slc.trigger('change');
         	}
         })
     })  

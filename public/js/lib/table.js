@@ -412,6 +412,7 @@ var Table = function() {
             filename += '.csv';
         }
         
+        text = '\uFEFF' + text;
         var blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, filename);

@@ -305,7 +305,8 @@ ZDate.weekPicker = function(ipt){
     var initVal = $.trim(ipt.val());
 
     var reanderTable = function(){
-        var table = $('<table class="zWeekPicker"></table>');
+        var tableContainer = $('<div class="zWeekPicker"><table></table></div>');
+        var table = tableContainer.find('table');
         var thead = $('<thead></thead>').appendTo(table);
         var curr = new Date();
         if(!initVal){
@@ -383,11 +384,67 @@ ZDate.weekPicker = function(ipt){
         })
 
         $('body').on('click', function(){
-            table.hide();
+            tableContainer.hide();
         })
-        table.appendTo('body');
+        tableContainer.appendTo('body');
 
-        return table;
+        return tableContainer;
+    }
+
+
+    var _put = function(dropBody, top, maxHeight, isTop) {
+        dropBody.style.top = top + 'px';
+        dropBody.style.maxHeight = maxHeight + 'px';
+        if(isTop) {
+            dropBody.style.transform = 'translate(0, -100%)';
+        }
+        else {
+            dropBody.style.transform = 'none';
+        }
+    }
+
+    var setPosition = function(dropBody, dropHead) {
+        var bodyWidth = dropBody.clientWidth;
+        var headWidth = dropHead.clientWidth;
+        bodyWidth = bodyWidth > headWidth? bodyWidth : headWidth;
+        this.isSetMinWidth && (dropBody.style.minWidth = bodyWidth + 'px');
+        var docRight = document.documentElement.clientWidth + document.body.scrollLeft;
+        var headLeft = $(dropHead).offset().left;
+
+        var left = headLeft + bodyWidth > docRight? headLeft + headWidth - bodyWidth : headLeft;
+        dropBody.style.left =  left + 'px';
+        
+        var docHeight = document.documentElement.clientHeight;
+        var docTop = document.body.scrollTop;
+        var docBottom = docHeight + document.body.scrollTop;
+        var headTop = $(dropHead).offset().top;
+        var headHeight = $(dropHead).outerHeight();
+        var headBottom = headTop + headHeight;
+
+        var bodyHeight = dropBody.clientHeight;
+
+        var bottomSpace = docBottom - headBottom - 10;
+        var topSpace = headTop - docTop - 50;
+        
+         // 可以放到下面
+        if(bottomSpace > bodyHeight) {
+            _put(dropBody, headBottom, bottomSpace);
+            return -1;
+        }
+        
+        //上面可以容纳
+        if(topSpace > bodyHeight) {
+            _put(dropBody, headTop, topSpace, true);
+            return 1;
+        }
+
+        var maxHeight = (topSpace > bottomSpace? topSpace : bottomSpace) + 'px';
+        // console.log('都容纳不了', [topSpace, bottomSpace, maxHeight, bodyHeight]);
+        $(dropBody).css({'max-height': maxHeight});
+        var isTop = topSpace > bottomSpace;
+        _put(dropBody, isTop? headTop : headBottom, maxHeight, isTop);
+
+        return isTop? 1: -1;
     }
 
     var setTablePosition = function(ipt){
@@ -395,7 +452,8 @@ ZDate.weekPicker = function(ipt){
         if(ele.length === 0){
             ele = reanderTable();
         }
-        var offset = ipt.offset();
+            
+        // var offset = ipt.offset();
         var val = $.trim(ipt.val());
 
         if(!val || val.length !== 6) {
@@ -411,17 +469,11 @@ ZDate.weekPicker = function(ipt){
         ele.find('td.active').removeClass('active');
         ele.find('td:contains(' + week + '):not(.zWeekPickerTag)').addClass('active');
         ele.find('.zWeekPickerTag>span').html(weekStart + ' - ' + weekEnd);
-        var left = offset.left;
-        if(left + ele.outerWidth() > $('body').width()) {
-            left = offset.left - ele.outerWidth() + ipt.outerWidth();
-        }
-        ele.css({
-            'left': left,
-            'top': offset.top + ipt.outerHeight(),
-            'display': 'block'
-        })
+        ele.css({ 'display': 'block' });
         
-        ele.off('click', 'tbody td:not(.zWeekPickerTag)').on('click', 'tbody td:not(.zWeekPickerTag)', function(){
+        setPosition(ele[0], ipt[0]);
+        
+        ele.find('table').off('click', 'tbody td:not(.zWeekPickerTag)').on('click', 'tbody td:not(.zWeekPickerTag)', function(){
             ele.hide();
             var year = ele.find('.spanYear').text();
             var week = $(this).html();
@@ -433,6 +485,7 @@ ZDate.weekPicker = function(ipt){
             // ev.initEvent("change", false, true);  
             // ipt[0].dispatchEvent(ev);  
         })
+
     }
 
     ipt = $(ipt);
