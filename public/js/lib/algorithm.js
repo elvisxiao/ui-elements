@@ -23,8 +23,8 @@ Instance.depthFirstInTree = function(treeData, targetId, key) {
                 isFind = true;
                 return;
             }
-            if(model.items && model.items.length) {
-                find(model.items, arr.concat([]));
+            if(model[key] && model[key].length) {
+                find(model[key], arr.concat([]));
             }
             arr.pop();
         }
